@@ -1,0 +1,233 @@
+.prediction-detail-content {
+
+    @mixin clearfix;
+    float:right;
+    height:100vh;
+    width:100%;
+
+    &--header-team {
+        &--inplay {
+            background-image: url("../../images/bg_header_match_detail.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
+        &--pregame {
+            background-image: url("../../images/bg_header_match_pregame_detail.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
+        &--stats-livestream-menu {
+            background-color:$mainWhite;
+            height:75px;     
+            box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+            position: relative;
+            width: 100%;
+            z-index:1;    
+        }
+
+        &--stats-livestream {
+            text-align:center;
+            text-transform: uppercase;
+            line-height:8.3;
+            color:rgba($mainBlue,0.5);
+            height:75px;
+            font-size:12px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+        
+        &--stats-livestream:hover {
+             background-color:rgba($mainBlack,0.1);
+             color:$mainBlue;
+        }
+
+        &--active {
+            color:$mainBlue !important;
+        }
+        
+    }
+
+    &--btn {
+        @mixin clearfix;
+        
+        box-shadow: 0px 1px 7px 3px rgba($mainBlack, 0.2);
+        border-radius:4px;
+        padding: 9px 10px;
+        top:90px;
+        right:16px;
+        left:16px;
+        position:absolute;
+        z-index:2;
+        color:$mainWhite;
+
+        &--inplay{
+            background-image:url("../../images/bg_in_play_item@1x.png");
+        }
+
+        &--pregame{
+            background-image:url("../../images/bg_pre_game_item@2x.png");
+        }
+
+        div:first-child {
+            width: 126px;
+            height:18px;
+            position:relative;
+            float: left;
+            overflow: hidden;
+            white-space: nowrap;
+
+            @mixin atSmaller {
+                max-width:230px;
+                width: auto;
+            } 
+            @mixin at672 {
+                 width: 126px;
+            }
+            @mixin at912 {
+                max-width:230px;
+                width: auto;
+            }
+
+            span {
+                position:absolute;
+                left:0;
+                animation: leftmarquee 5s linear infinite;
+                
+                @mixin atSmaller {
+                    position:static;
+                }
+
+                @mixin at672 {
+                    position:absolute;
+                }
+
+                @mixin at912 {
+                    position:static;
+                }
+            }
+            
+        }
+
+        span:not(:first-child):nth-last-child(-n+2){
+            float:right;
+        }
+
+        span:first-child,span:nth-child(4) {
+            font-weight:bold;
+        }
+
+        img {
+           margin-bottom: -4px;
+        }
+
+        &--scorewatchmarque{
+            //transform:translateX(0) !important;
+            animation: leftmarquee 5s linear infinite;
+        }
+
+
+        
+
+        @mixin at672 {
+            top:92px;
+        }
+    }
+
+    &--panel-live {
+        color:$mainWhite;
+        text-transform:uppercase;
+        text-align:center;
+        font-weight:bold;
+        font-size:12px;
+        padding-top:5px;
+        width:50px;
+        height:35px;
+        background-color:rgba($mainBlack,0.5);
+        position:absolute;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        right:0;
+        left:0;
+    }
+
+    &--team-score {
+
+        @mixin clearfix;
+        position:absolute;
+        height:50px;
+        bottom:0;
+        right:16px;
+        left:16px;
+        color:$mainWhite;
+        font-weight:bold;
+
+        div {
+            float:left;
+        }
+
+        &--comma {
+            width:8%;
+            text-align:center;
+        }
+
+        &--home {
+            width:46%;
+        }
+
+        &--away {
+            width:46%;
+            span {
+                float:right;
+            }
+        }
+    }
+
+    &--stats-livestream-content {
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+    }
+
+    &--is-visible {
+        display:block !important;
+    }
+
+    &--stats {
+        background-color: white;
+        width: 100%;
+        overflow: auto;
+        bottom: 1px;
+        position: absolute;
+        top: 235px;
+        z-index: 0;
+        display:none;
+        
+        @mixin at672 {
+            top:185px;
+            bottom: 64px;
+        }
+    }
+    &--livestream {
+        background-image: url(../../images/Live-streaming-coming-soon.png);
+        background-size: auto 100%;
+        height: 320px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        display:none;
+    }
+   
+}
+
+@keyframes leftmarquee {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}

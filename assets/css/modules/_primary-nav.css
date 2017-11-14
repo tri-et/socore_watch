@@ -1,0 +1,188 @@
+.primary-nav{
+
+    ul {
+        margin:0;
+        padding:0;
+        box-shadow: 0 4px 10px 0 rgba($mainBlack, 0.2);
+        display:flex;
+        height:64px;
+        @mixin clearfix;
+    }
+
+    li {
+        list-style:none;
+        float:left; 
+        height:100%;
+    }
+
+    li:not(:first-child):not(:nth-child(2)){
+        display:none;
+    }
+
+    &--is-hide-text-menu {
+        display:none;
+        color:$mainBlue;
+
+        @mixin atLarge {
+            display:block !important;
+        }
+
+        @mixin atSmall {
+            display:none;
+        }
+    }
+
+    &--tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    &--tooltiptext {
+        visibility: hidden;
+        background-color: rgba($mainBlack,0.6);
+        color: #fff;
+        text-align: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        position: absolute;
+        right: 90%;
+        bottom: auto;
+        top: 20px;
+        width: max-content;
+        
+    }
+
+    &--tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color:transparent transparent transparent rgba($mainBlack,0.6);
+    }
+
+    
+
+       
+    @mixin atMedium {
+        li {
+            display: block !important;
+            box-shadow: 1px 0 0 0 rgba($mainBlack, 0.2);
+        }
+
+        li:first-child {
+            display:none !important;
+        }
+
+        li:nth-child(3){
+            flex:1;
+        }
+
+        li:last-child {
+            box-shadow:none;
+        }
+        
+        img {
+            display:block !important;
+        }
+
+
+         a:hover  &--highlight, &--activemenu {
+
+            color:$mainBlue !important;
+            visibility: visible !important;
+        }
+
+        a:hover {
+             background-color:rgba($mainBlack,0.1) !important;
+        }
+        a:hover &--highlightmenuright {
+            visibility: visible !important;
+        }
+        &--activemenu &--highlight {
+            visibility: visible !important;
+        }
+
+        &--icon-padding {
+            padding-right:0px !important;
+        }
+
+        &--tooltip:hover &--tooltiptext{
+            visibility: visible;
+        }
+    }
+
+    @mixin atLarge {
+        &--icon-padding {
+            padding-right:18px !important;
+        }
+
+        &--tooltip:hover &--tooltiptext{
+            visibility: hidden;
+        }
+    }
+
+    a {
+        @mixin clearfix;
+        color:rgba($mainBlack, 0.4);
+        font-size:16px;
+        font-weight:600;
+        text-decoration:none;
+        padding:1rem 1rem 0.45rem 1rem;
+        text-transform: uppercase;
+        display:inline-block;
+        width: max-content;
+
+        img {
+            float:left;
+            padding-right:18px;
+            display:none;
+        }
+
+        span {
+            padding-top:8px;
+            float:left;
+        }
+
+        @mixin clearfix;
+    }
+
+
+    &--highlight {
+        border-top: 4px solid #6087DB;
+        border-radius: 10px;
+        margin-top:19px;
+        padding:0;
+        visibility: hidden;
+    }
+
+    &--highlightmenuright {
+        margin-top:23px;
+        visibility: hidden;
+    }
+
+    &--icon-menu-bar{
+        color:$mainBlue !important;
+        font-size:24px;
+        padding:1.2rem 0.5rem 1.2rem 1.2rem;
+        cursor:pointer;
+    }
+
+    &--icon-menu-livescore {
+        padding-top:6px;
+    }
+
+    &--icon-menu-help{
+        padding-top:5px;
+    }
+
+    &--icon-menu-about {
+        padding-top:2px;
+    }
+
+    &--icon-menu-login {
+        padding-top:2px;
+    }
+}

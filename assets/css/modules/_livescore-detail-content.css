@@ -1,0 +1,170 @@
+.livescore-detail-content {
+    @mixin clearfix;
+    float:right;
+    height:100vh;
+    width:100%;
+
+    &--header {
+        //background-color:rgba(0,0,0,0.2);
+        height:59px;
+        padding-top:9px;
+        box-shadow: 0 1px 0 0 rgba($mainBlack,0.2);
+
+        &--teamname {
+            display: inline-grid;
+            line-height: 1.5;
+            margin-left:10px;
+            float: left;
+            color:#009933;
+        }
+
+        &--score {
+            display: inline-grid;
+            line-height: 1.5;
+            margin-right:10px;
+            float: right;
+            color:#577DBB;
+        }
+    }
+
+    &--header-league {
+        height:67px;
+        padding-top:14px;
+
+        &--league {
+            float:left;
+            display: inline-grid;
+            text-transform: capitalize;
+            color:#C5C5C5;
+            font-size:15px;
+            margin-left:10px;
+            line-height: 1.5;
+        }
+
+        &--nameleague {
+            float:right;
+            display: inline-grid;
+            text-align:right;
+            margin-right:10px;
+            line-height: 1.5;
+            color:rgba($mainBlack,0.7);
+        }
+    }
+
+    &--header-stats-timeline {
+        @mixin clearfix;
+
+        background-image: url(../../images/bg_mobile_quarter@2x.png);
+        box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+        height:53px;
+        background-size: cover;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        div {
+            float:left;
+            color: $mainWhite;
+            text-transform:uppercase;
+            text-shadow: rgba(0, 0, 0, 0.54) 1px 1px 4px;
+        }
+
+        div:first-child {
+            width:25%;
+            font-size:12px;
+            margin-top:21px;
+        }
+
+        div:nth-child(2) {
+            width:50%;
+            text-align:center;
+            font-weight:bold;
+            font-size:16px;
+            margin-top:18px;
+        }
+
+        div:last-child {
+            width:25%;
+            text-align:right;
+            font-size:12px;
+            margin-top:21px;
+        }
+    }
+
+    &--stats-timeline {
+        background-color: white;
+        width: 100%;
+        overflow: auto;
+        bottom: 1px;
+        position: absolute;
+        top: 119px;
+        z-index: 0;
+
+        @mixin at672 {
+            top:69px;
+            bottom: 64px;
+        }
+    }
+
+    &--stats-detail {
+        //background-color:rgba($mainBlack,0.2);
+
+        ul {
+            margin:0;
+            padding:0;
+        }
+
+        li {
+
+            @mixin clearfix;
+            list-style:none;
+            padding:14px 10px;
+            
+
+            div {
+                float:left;
+            }
+
+            div:first-child {
+                width:5%;
+            }
+
+            div:nth-child(2) {
+                width:30%;
+            }
+
+            div:nth-child(3) {
+                width:30%;
+                text-align:center;
+                text-transform: capitalize;
+                color:#C5C5C5;
+            }
+
+            div:nth-child(4) {
+                width:30%;
+            }
+
+            div:last-child {
+                width:5%;
+                text-align:right;
+            }
+        }
+    }
+
+    &--home-percent-line {
+        float:right;
+        border:none;
+        border-top: 6px solid #FF785A;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width:50%;
+    }
+
+    &--away-percent-line {
+        float:left;
+        border:none;
+        border-top: 6px solid #36CC64;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width:60%;
+    }
+}

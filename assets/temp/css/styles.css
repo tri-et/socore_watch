@@ -1,0 +1,2405 @@
+/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+   ========================================================================== */
+
+/**
+ * Remove the margin in all browsers (opinionated).
+ */
+
+body {
+  margin: 0;
+}
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+article,
+aside,
+footer,
+header,
+nav,
+section {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in IE.
+ */
+
+figcaption,
+figure,
+main { /* 1 */
+  display: block;
+}
+
+/**
+ * Add the correct margin in IE 8.
+ */
+
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+
+hr {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+
+a {
+  background-color: transparent; /* 1 */
+  -webkit-text-decoration-skip: objects; /* 2 */
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57- and Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted; /* 2 */
+}
+
+/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+ */
+
+b,
+strong {
+  font-weight: inherit;
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+ * Add the correct font style in Android 4.3-.
+ */
+
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Add the correct background and color in IE 9-.
+ */
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+audio,
+video {
+  display: inline-block;
+}
+
+/**
+ * Add the correct display in iOS 4-7.
+ */
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Remove the border on images inside links in IE 10-.
+ */
+
+img {
+  border-style: none;
+}
+
+/**
+ * Hide the overflow in IE.
+ */
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * 1. Change the font styles in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: sans-serif; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+
+button,
+input { /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+
+button,
+select { /* 1 */
+  text-transform: none;
+}
+
+/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari.
+ */
+
+button,
+html [type="button"], /* 1 */
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+
+legend {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+ * 1. Add the correct display in IE 9-.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+
+progress {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Remove the default vertical scrollbar in IE.
+ */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-.
+ */
+
+[type="checkbox"],
+[type="radio"] {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ */
+
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+
+/*
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox.
+ */
+
+details, /* 1 */
+menu {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+
+summary {
+  display: list-item;
+}
+
+/* Scripting
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 9-.
+ */
+
+canvas {
+  display: inline-block;
+}
+
+/**
+ * Add the correct display in IE.
+ */
+
+template {
+  display: none;
+}
+
+/* Hidden
+   ========================================================================== */
+
+/**
+ * Add the correct display in IE 10-.
+ */
+
+[hidden] {
+  display: none;
+}
+
+body{
+    font-family: 'Roboto-Regular';
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
+    background-color: #F1F1F1;
+    outline: none;
+    border: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+
+.wrapper {
+    overflow:hidden;
+    padding-left:18px;
+    padding-right:18px;
+    max-width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.header-menu{
+    background-color:#FFF;
+    position:absolute;
+    top:0;
+    right:0;
+    left:0;
+    max-width:1568px;
+    margin-left:auto;
+    margin-right:auto;
+    z-index:0;
+}
+
+@media (min-width:672px){
+
+.header-menu{
+        z-index:3
+}
+    }
+
+.primary-nav ul {
+        margin:0;
+        padding:0;
+        -webkit-box-shadow: 0 4px 10px 0 rgba(0,0,0, 0.2);
+                box-shadow: 0 4px 10px 0 rgba(0,0,0, 0.2);
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+        height:64px;
+    }
+
+.primary-nav ul::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.primary-nav li {
+        list-style:none;
+        float:left; 
+        height:100%;
+    }
+
+.primary-nav li:not(:first-child):not(:nth-child(2)){
+        display:none;
+    }
+
+.primary-nav--is-hide-text-menu {
+        display:none;
+        color:#36569B;
+    }
+
+@media (min-width:1200px){
+
+.primary-nav--is-hide-text-menu {
+            display:block !important
+    }
+    }
+
+@media (min-width:560px){
+
+.primary-nav--is-hide-text-menu {
+            display:none
+    }
+    }
+
+.primary-nav--tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+.primary-nav--tooltiptext {
+        visibility: hidden;
+        background-color: rgba(0,0,0,0.6);
+        color: #fff;
+        text-align: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        position: absolute;
+        right: 90%;
+        bottom: auto;
+        top: 20px;
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        
+    }
+
+.primary-nav--tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent transparent rgba(0,0,0,0.6);
+    }
+
+@media (min-width:843px){
+        .primary-nav li {
+            display: block !important;
+            -webkit-box-shadow: 1px 0 0 0 rgba(0,0,0, 0.2);
+                    box-shadow: 1px 0 0 0 rgba(0,0,0, 0.2);
+        }
+
+        .primary-nav li:first-child {
+            display:none !important;
+        }
+
+        .primary-nav li:nth-child(3){
+            -webkit-box-flex:1;
+                -ms-flex:1;
+                    flex:1;
+        }
+
+        .primary-nav li:last-child {
+            -webkit-box-shadow:none;
+                    box-shadow:none;
+        }
+        
+        .primary-nav img {
+            display:block !important;
+        }
+
+
+         a:hover  .primary-nav--highlight, .primary-nav--activemenu {
+
+            color:#36569B !important;
+            visibility: visible !important;
+        }
+
+        .primary-nav a:hover {
+             background-color: rgba(0,0,0,0.1);
+        }
+        a:hover .primary-nav--highlightmenuright {
+            visibility: visible !important;
+        }
+        .primary-nav--activemenu .primary-nav--highlight {
+            visibility: visible !important;
+        }
+
+        .primary-nav--icon-padding {
+            padding-right:0px !important;
+        }
+
+        .primary-nav--tooltip:hover .primary-nav--tooltiptext{
+            visibility: visible;
+        }
+    }
+
+@media (min-width:1200px){
+        .primary-nav--icon-padding {
+            padding-right:18px !important;
+        }
+
+        .primary-nav--tooltip:hover .primary-nav--tooltiptext{
+            visibility: hidden;
+        }
+    }
+
+.primary-nav a {
+        color: rgba(0,0,0, 0.4);
+        font-size:16px;
+        font-weight:600;
+        text-decoration:none;
+        padding:1rem 1rem 0.45rem 1rem;
+        text-transform: uppercase;
+        display:inline-block;
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+    }
+
+.primary-nav a::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.primary-nav a img {
+            float:left;
+            padding-right:18px;
+            display:none;
+        }
+
+.primary-nav a span {
+            padding-top:8px;
+            float:left;
+        }
+
+.primary-nav a::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.primary-nav--highlight {
+        border-top: 4px solid #6087DB;
+        border-radius: 10px;
+        margin-top:19px;
+        padding:0;
+        visibility: hidden;
+    }
+
+.primary-nav--highlightmenuright {
+        margin-top:23px;
+        visibility: hidden;
+    }
+
+.primary-nav--icon-menu-bar{
+        color:#36569B !important;
+        font-size:24px;
+        padding:1.2rem 0.5rem 1.2rem 1.2rem;
+        cursor:pointer;
+    }
+
+.primary-nav--icon-menu-livescore {
+        padding-top:6px;
+    }
+
+.primary-nav--icon-menu-help{
+        padding-top:5px;
+    }
+
+.primary-nav--icon-menu-about {
+        padding-top:2px;
+    }
+
+.primary-nav--icon-menu-login {
+        padding-top:2px;
+    }
+
+.side-bar-menu{
+    position:absolute;
+    top:0;
+    background-color: rgba(0,0,0,.2);
+    width:100%;
+    height:100%;
+    left:0;
+    -webkit-transform:translateX(-100%);
+            transform:translateX(-100%);
+    -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    transition: -webkit-transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+    z-index: 4;
+}
+
+@media (min-width:843px){
+
+.side-bar-menu{
+        display:none !important
+}
+    }
+
+.side-bar-menu--is-visible {
+        -webkit-transform:translateX(0);
+                transform:translateX(0);
+    }
+
+.side-bar-search-content {
+    position:absolute;
+    background-image: url("../../images/bg_mobile_full@1x.png");
+    max-width:360px;
+    min-width:320px;
+    width:100%;
+    height:100%;
+    background-size: cover;
+    background-position: initial;
+}
+
+.side-bar-search-content--logo {
+        background-color:#FFF;
+        padding-top:1rem;
+    }
+
+.side-bar-search-content--btnclosemenu {
+        position:absolute;
+        right:10px;
+        top:0;
+        font-size:35px;
+        font-weight:500;
+        color:#36569B;
+        cursor: pointer !important;
+    }
+
+.side-bar-search-content--input-search {
+        display:block;
+        padding:1rem 0 0 1rem;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+    }
+
+.side-bar-search-content--input-search img {
+            float:left;
+            padding-right:1rem;
+        }
+
+.side-bar-search-content--input-search input {
+            float:left;
+            outline: none;
+            border:none;
+            border-radius:0;
+            background-color:transparent;
+            border-bottom: 2px solid #fff;
+            color:#FFF;
+            height:30px;
+            -webkit-box-flex:1;
+                -ms-flex:1;
+                    flex:1;
+            margin-right:40px;
+        }
+
+.side-bar-search-content--input-search input::-webkit-input-placeholder {
+          color: rgba(255,255,255,0.6);
+        }
+
+.side-bar-search-content--input-search input:-ms-input-placeholder {
+          color: rgba(255,255,255,0.6);
+        }
+
+.side-bar-search-content--input-search input::-ms-input-placeholder {
+          color: rgba(255,255,255,0.6);
+        }
+
+.side-bar-search-content--input-search input::placeholder {
+          color: rgba(255,255,255,0.6);
+        }
+
+.side-bar-search-content--input-search::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.sidebar-list-menu {
+    position:absolute;
+    overflow:auto;
+    right:0;
+    left:0;
+    top:175px;
+    bottom:10px;
+}
+
+.sidebar-list-menu::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.sidebar-list-menu ul {
+        background-color: #FFF;
+        margin:0;
+        padding:0;
+    }
+
+.sidebar-list-menu li {
+        list-style: none;
+        height:64px;
+        -webkit-box-shadow: 0 1px 0 0 rgba(0,0,0, 0.2);
+                box-shadow: 0 1px 0 0 rgba(0,0,0, 0.2);
+        tevertical-align: middle;
+        line-height:4.2;
+        cursor:pointer;
+
+    }
+
+.sidebar-list-menu li a {
+            color:#4D86DA;
+            font-size:16px;
+            text-decoration:none;
+            text-transform: uppercase;
+        }
+
+.sidebar-list-menu li a div {
+                width:7px;
+                height:100%;
+                float:left;
+                background-color:#6087DB;
+                margin-right:9px;
+                visibility: hidden;
+            }
+
+.sidebar-list-menu li img {
+            float:left;
+            margin:1rem 15px 0 0;
+        }
+
+.sidebar-list-menu li::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.sidebar-list-menu--activemenu {
+        //background:linear-gradient(to left, #ffffff 98%, #6087DB 2%);
+        visibility:visible !important;
+    }
+
+.sidebar-list-menu--icon-livescores {
+        margin-top:23px !important;
+    }
+
+.main-container {
+    max-width:1568px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: rgba(0,0,0, 0.1);
+    width:100%;
+    height:calc(100vh - 64px);
+    overflow:hidden;
+    margin-top: 64px
+}
+
+.main-contents--prediction {
+        display:none;
+    }
+
+.main-contents--livescore {
+        display:none;
+    }
+
+.main-contents--is-visible {
+        display:block !important;
+    }
+
+.badge {
+
+    color: #FFF;
+    font-size: 12px ;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.1);
+            box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.1);
+    padding: 5px 8px !important;
+    margin-top:3px;
+    margin-left:5px;
+    text-transform: none;
+    border-radius: 12px !important;
+}
+
+.badge--inplay {
+        background-color:#FF785A;
+        display:none;
+       
+    }
+
+.badge--pregame {
+        background-color:#36CC64;
+        display:none;
+    }
+
+.row {
+    //height:100vh;
+    width:100%;
+}
+
+.row::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+/*&--gutter {
+        margin-right:-16px;
+    }
+
+    &--gutter > div {
+        padding-right:16px;
+        box-sizing: border-box;
+    }*/
+
+.row__6{
+        float:left;
+        width:50%;
+    }
+
+.row__prediction, .row__livescore {
+        float:left;
+        width:100%;
+        background-color:blue;
+        height:100vh;
+        position:relative;
+        /*@mixin atSmaller {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute;
+        }*/
+    }
+
+.row__prediction-detail, .row__livescore-detail {
+        top:0;
+        float:left;
+        width: 100%;
+        background-color: rgba(0,0,0,.5);
+        height:100vh;
+        overflow:hidden;
+        opacity: 1;
+        -webkit-transition: opacity 0.5s linear;
+        transition: opacity 0.5s linear;
+    }
+
+/*&__livescore {
+        float:left;
+        width:100%;
+        background-color:blue;
+        height:100vh;
+        position:relative;
+    }
+
+    &__livescore-detail {
+        top:0;
+        float:left;
+        width: 100%;
+        background-color:rgba($mainBlack,.5);
+        height:100vh;
+        overflow:hidden;
+        opacity: 1;
+        transition: opacity 0.5s linear;
+    }*/
+
+.row__inplay-pregame {
+        width:100%;
+        height:100vh;
+
+        /*@mixin atLarger {
+            width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }*/
+    }
+
+@media (min-width:480px){
+
+.row__inplay-pregame {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute
+    }
+    }
+
+@media (min-width:672px){
+
+.row__inplay-pregame {
+            width:-webkit-min-content;
+            width:-moz-min-content;
+            width:min-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
+    }
+
+@media (min-width:912px){
+
+.row__inplay-pregame {
+            min-width:320px;
+            max-width:480px;
+            width:100%;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
+    }
+
+@media (min-width:1248px){
+
+.row__inplay-pregame {
+            width:-webkit-max-content;
+            width:-moz-max-content;
+            width:max-content;
+            min-width:-webkit-max-content;
+            min-width:-moz-max-content;
+            min-width:max-content;
+            max-width:-webkit-max-content;
+            max-width:-moz-max-content;
+            max-width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
+    }
+
+@media (min-width:672px){
+
+.row {
+
+        /*&__livescore {
+            float:left;
+            width:calc(100vw - 320px);
+            background-color:blue;
+        }*/
+
+        /*&__livescore-detail {
+            position:static !important;
+            float:left;
+            width: 320px;
+            background-color:$mainWhite;
+        }*/
+}
+        .row__prediction, .row__livescore {
+            float:left;
+            width:calc(100vw - 320px);
+            background-color:blue;
+        }
+        
+        .row__prediction-detail, .row__livescore-detail {
+            position:static !important;
+            float:left;
+            width: 320px;
+            background-color:#FFF;
+        }
+    }
+
+@media (min-width:912px){
+
+.row {
+
+        /*&__livescore {
+            float:left;
+            width:calc(100vw - 560px);
+            background-color:yellow;
+        }*/
+
+        /*&__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }*/
+}
+        .row__prediction, .row__livescore {
+            float:left;
+            width:calc(100vw - 560px);
+            background-color:blue;
+        }
+        
+        .row__prediction-detail, .row__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:#FFF;
+        }
+    }
+
+@media (min-width:1568px){
+
+.row {
+
+        /*&__livescore {
+            float:left;
+            width:64.26%;
+        }
+
+        &__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }*/
+}
+        .row__prediction, .row__livescore {
+            float:left;
+            width:64.26%;
+        }
+        
+        .row__prediction-detail, .row__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:#FFF;
+        }
+    }
+
+.fade-out {
+	position:absolute;
+    opacity: 1;
+}
+
+.fade-in {
+    position:static;
+}
+
+@-webkit-keyframes fadeOut {
+    from {
+        opacity :1;
+    }
+
+    to {
+        opacity :0;
+        display:none;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity :1;
+    }
+
+    to {
+        opacity :0;
+        display:none;
+    }
+}
+
+.inplay-pregame {
+    //width:100%;
+    //height:100vh;
+    //padding-top:15px;
+    height:auto;
+    position: absolute;
+}
+
+.inplay-pregame::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+/*div {
+        float:left;
+    }*/
+
+.inplay-pregame--inplay {
+        width:100%;
+        float:left;
+    }
+
+@media (min-width:672px){
+
+.inplay-pregame--inplay {
+            width:320px
+    }
+    }
+
+@media (min-width:912px){
+
+.inplay-pregame--inplay {
+            width:100%;
+            min-width:320px;
+            max-width:480px
+    }
+    }
+
+@media (min-width:1200px){
+
+.inplay-pregame--inplay {
+            width:480px
+    }
+    }
+
+@media (min-width:1248px){
+
+.inplay-pregame--inplay {
+            width:320px;
+            margin-right:16px
+    }
+    }
+
+@media (min-width:1568px){
+
+.inplay-pregame--inplay {
+            width:480px
+    }
+    }
+
+.inplay-pregame--pregame {
+        width:100%;
+        float:left;
+    }
+
+@media (min-width:672px){
+
+.inplay-pregame--pregame {
+            width:320px
+    }
+    }
+
+@media (min-width:912px){
+
+.inplay-pregame--pregame {
+            width:100%;
+            min-width:320px;
+            max-width:480px
+    }
+    }
+
+@media (min-width:1200px){
+
+.inplay-pregame--pregame {
+            width:480px
+    }
+    }
+
+@media (min-width:1248px){
+
+.inplay-pregame--pregame {
+            width:320px
+    }
+    }
+
+@media (min-width:1568px){
+
+.inplay-pregame--pregame {
+            width:480px
+    }
+    }
+
+.prediction-detail {
+    
+    height:-webkit-fill-available;
+    background-color:#FFF;
+    float:right;
+    width:320px;
+    left:0;
+    -webkit-transform:translateX(100%);
+            transform:translateX(100%);
+    -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    transition: -webkit-transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+}
+
+@media (min-width:480px){
+
+.prediction-detail {
+        width:456px
+}
+    }
+
+@media (min-width:672px){
+
+.prediction-detail {
+        width:320px
+}
+    }
+
+@media (min-width:912px){
+
+.prediction-detail {
+        width:560px
+}
+    }
+
+.prediction-detail--is-visible{
+        -webkit-transform:translateX(0);
+                transform:translateX(0);
+    }
+
+.prediction-detail--toolbar {
+        height:50px;
+        width:100%;
+        background-color:#FFF;
+    }
+
+@media (min-width:672px){
+
+.prediction-detail--toolbar {
+            display:none;
+    }
+    }
+
+.prediction-detail--toolbar--back-icon {
+            float:left;
+            height:100%;
+            color:#577DBB;
+            cursor:pointer;
+        }
+
+.prediction-detail--toolbar--back-icon i {
+                
+                font-size:24px;
+                float:left;
+                padding:12px 12px 0 12px;
+            }
+
+.prediction-detail--toolbar--back-icon span {
+                float:left;
+                padding-top:17px;
+                font-size:14px;
+                text-transform:uppercase;
+            }
+
+.prediction-detail--toolbar--opentab-icon {
+            height:100%;
+            float:right;
+            color: #577DBB;
+            padding:0px 20px;
+            cursor:pointer;
+        }
+
+.prediction-detail--toolbar--opentab-icon i {
+                padding-top:13px;
+                font-size:24px;
+            }
+
+.prediction-detail--toolbar::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.livescore-detail {
+    
+    height:-webkit-fill-available;
+    background-color:#FFF;
+    float:right;
+    width:320px;
+    left:0;
+    -webkit-transform:translateX(100%);
+            transform:translateX(100%);
+    -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    transition: -webkit-transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+}
+
+@media (min-width:480px){
+
+.livescore-detail {
+        width:456px
+}
+    }
+
+@media (min-width:672px){
+
+.livescore-detail {
+        width:320px
+}
+    }
+
+@media (min-width:912px){
+
+.livescore-detail {
+        width:560px
+}
+    }
+
+.livescore-detail--is-visible{
+        -webkit-transform:translateX(0);
+                transform:translateX(0);
+    }
+
+.livescore-detail--toolbar {
+        height:50px;
+        width:100%;
+        background-color:#FFF;
+    }
+
+@media (min-width:672px){
+
+.livescore-detail--toolbar {
+            display:none;
+    }
+    }
+
+.livescore-detail--toolbar--back-icon {
+            float:left;
+            height:100%;
+            color:#577DBB;
+            cursor:pointer;
+        }
+
+.livescore-detail--toolbar--back-icon i {
+                
+                font-size:24px;
+                float:left;
+                padding:12px 12px 0 12px;
+            }
+
+.livescore-detail--toolbar--back-icon span {
+                float:left;
+                padding-top:17px;
+                font-size:14px;
+                text-transform:uppercase;
+            }
+
+.livescore-detail--toolbar--opentab-icon {
+            height:100%;
+            float:right;
+            color: #577DBB;
+            padding:0px 20px;
+            cursor:pointer;
+        }
+
+.livescore-detail--toolbar--opentab-icon i {
+                padding-top:13px;
+                font-size:24px;
+            }
+
+.livescore-detail--toolbar::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.prediction-detail-content {
+    float:right;
+    height:100vh;
+    width:100%;
+   
+}
+
+.prediction-detail-content::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.prediction-detail-content--header-team--inplay {
+            background-image: url("../../images/bg_header_match_detail.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
+.prediction-detail-content--header-team--pregame {
+            background-image: url("../../images/bg_header_match_pregame_detail.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
+.prediction-detail-content--header-team--stats-livestream-menu {
+            background-color:#FFF;
+            height:75px;     
+            -webkit-box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);     
+                    box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+            position: relative;
+            width: 100%;
+            z-index:1;    
+        }
+
+.prediction-detail-content--header-team--stats-livestream {
+            text-align:center;
+            text-transform: uppercase;
+            line-height:8.3;
+            color: rgba(54,86,155,0.5);
+            height:75px;
+            font-size:12px;
+            font-weight:700;
+            cursor:pointer;
+        }
+
+.prediction-detail-content--header-team--stats-livestream:hover {
+             background-color: rgba(0,0,0,0.1);
+             color:#36569B;
+        }
+
+.prediction-detail-content--header-team--active {
+            color:#36569B !important;
+        }
+
+.prediction-detail-content--btn {
+        
+        -webkit-box-shadow: 0px 1px 7px 3px rgba(0,0,0, 0.2);
+        
+                box-shadow: 0px 1px 7px 3px rgba(0,0,0, 0.2);
+        border-radius:4px;
+        padding: 9px 10px;
+        top:90px;
+        right:16px;
+        left:16px;
+        position:absolute;
+        z-index:2;
+        color:#FFF;
+    }
+
+.prediction-detail-content--btn::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.prediction-detail-content--btn--inplay{
+            background-image:url("../../images/bg_in_play_item@1x.png");
+        }
+
+.prediction-detail-content--btn--pregame{
+            background-image:url("../../images/bg_pre_game_item@2x.png");
+        }
+
+.prediction-detail-content--btn div:first-child {
+            width: 126px;
+            height:18px;
+            position:relative;
+            float: left;
+            overflow: hidden;
+            white-space: nowrap;
+            
+        }
+
+@media (min-width:480px){
+
+.prediction-detail-content--btn div:first-child {
+                max-width:230px;
+                width: auto
+            
+        }
+    }
+
+@media (min-width:672px){
+
+.prediction-detail-content--btn div:first-child {
+                 width: 126px
+            
+        }
+    }
+
+@media (min-width:912px){
+
+.prediction-detail-content--btn div:first-child {
+                max-width:230px;
+                width: auto
+            
+        }
+    }
+
+.prediction-detail-content--btn div:first-child span {
+                position:absolute;
+                left:0;
+                -webkit-animation: leftmarquee 5s linear infinite;
+                        animation: leftmarquee 5s linear infinite;
+            }
+
+@media (min-width:480px){
+
+.prediction-detail-content--btn div:first-child span {
+                    position:static
+            }
+    }
+
+@media (min-width:672px){
+
+.prediction-detail-content--btn div:first-child span {
+                    position:absolute
+            }
+    }
+
+@media (min-width:912px){
+
+.prediction-detail-content--btn div:first-child span {
+                    position:static
+            }
+    }
+
+.prediction-detail-content--btn span:not(:first-child):nth-last-child(-n+2){
+            float:right;
+        }
+
+.prediction-detail-content--btn span:first-child,.prediction-detail-content--btn span:nth-child(4) {
+            font-weight:bold;
+        }
+
+.prediction-detail-content--btn img {
+           margin-bottom: -4px;
+        }
+
+.prediction-detail-content--btn--scorewatchmarque{
+            //transform:translateX(0) !important;
+            -webkit-animation: leftmarquee 5s linear infinite;
+                    animation: leftmarquee 5s linear infinite;
+        }
+
+@media (min-width:672px){
+
+.prediction-detail-content--btn {
+            top:92px
+    }
+    }
+
+.prediction-detail-content--panel-live {
+        color:#FFF;
+        text-transform:uppercase;
+        text-align:center;
+        font-weight:bold;
+        font-size:12px;
+        padding-top:5px;
+        width:50px;
+        height:35px;
+        background-color: rgba(0,0,0,0.5);
+        position:absolute;
+        top:0;
+        margin-left:auto;
+        margin-right:auto;
+        right:0;
+        left:0;
+    }
+
+.prediction-detail-content--team-score {
+        position:absolute;
+        height:50px;
+        bottom:0;
+        right:16px;
+        left:16px;
+        color:#FFF;
+        font-weight:bold;
+    }
+
+.prediction-detail-content--team-score::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.prediction-detail-content--team-score div {
+            float:left;
+        }
+
+.prediction-detail-content--team-score--comma {
+            width:8%;
+            text-align:center;
+        }
+
+.prediction-detail-content--team-score--home {
+            width:46%;
+        }
+
+.prediction-detail-content--team-score--away {
+            width:46%;
+        }
+
+.prediction-detail-content--team-score--away span {
+                float:right;
+            }
+
+.prediction-detail-content--stats-livestream-content {
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+    }
+
+.prediction-detail-content--is-visible {
+        display:block !important;
+    }
+
+.prediction-detail-content--stats {
+        background-color: white;
+        width: 100%;
+        overflow: auto;
+        bottom: 1px;
+        position: absolute;
+        top: 235px;
+        z-index: 0;
+        display:none;
+    }
+
+@media (min-width:672px){
+
+.prediction-detail-content--stats {
+            top:185px;
+            bottom: 64px
+    }
+    }
+
+.prediction-detail-content--livestream {
+        background-image: url(../../images/Live-streaming-coming-soon.png);
+        background-size: auto 100%;
+        height: 320px;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        display:none;
+    }
+
+@-webkit-keyframes leftmarquee {
+    0%   { -webkit-transform: translateX(100%); transform: translateX(100%); }
+    100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+}
+
+@keyframes leftmarquee {
+    0%   { -webkit-transform: translateX(100%); transform: translateX(100%); }
+    100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+}
+
+.livescore-detail-content {
+    float:right;
+    height:100vh;
+    width:100%;
+}
+
+.livescore-detail-content::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.livescore-detail-content--header {
+        //background-color:rgba(0,0,0,0.2);
+        height:59px;
+        padding-top:9px;
+        -webkit-box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);
+                box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);
+    }
+
+.livescore-detail-content--header--teamname {
+            display: inline-grid;
+            line-height: 1.5;
+            margin-left:10px;
+            float: left;
+            color:#009933;
+        }
+
+.livescore-detail-content--header--score {
+            display: inline-grid;
+            line-height: 1.5;
+            margin-right:10px;
+            float: right;
+            color:#577DBB;
+        }
+
+.livescore-detail-content--header-league {
+        height:67px;
+        padding-top:14px;
+    }
+
+.livescore-detail-content--header-league--league {
+            float:left;
+            display: inline-grid;
+            text-transform: capitalize;
+            color:#C5C5C5;
+            font-size:15px;
+            margin-left:10px;
+            line-height: 1.5;
+        }
+
+.livescore-detail-content--header-league--nameleague {
+            float:right;
+            display: inline-grid;
+            text-align:right;
+            margin-right:10px;
+            line-height: 1.5;
+            color: rgba(0,0,0,0.7);
+        }
+
+.livescore-detail-content--header-stats-timeline {
+
+        background-image: url(../../images/bg_mobile_quarter@2x.png);
+        -webkit-box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+                box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+        height:53px;
+        background-size: cover;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+.livescore-detail-content--header-stats-timeline::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.livescore-detail-content--header-stats-timeline div {
+            float:left;
+            color: #FFF;
+            text-transform:uppercase;
+            text-shadow: rgba(0, 0, 0, 0.54) 1px 1px 4px;
+        }
+
+.livescore-detail-content--header-stats-timeline div:first-child {
+            width:25%;
+            font-size:12px;
+            margin-top:21px;
+        }
+
+.livescore-detail-content--header-stats-timeline div:nth-child(2) {
+            width:50%;
+            text-align:center;
+            font-weight:bold;
+            font-size:16px;
+            margin-top:18px;
+        }
+
+.livescore-detail-content--header-stats-timeline div:last-child {
+            width:25%;
+            text-align:right;
+            font-size:12px;
+            margin-top:21px;
+        }
+
+.livescore-detail-content--stats-timeline {
+        background-color: white;
+        width: 100%;
+        overflow: auto;
+        bottom: 1px;
+        position: absolute;
+        top: 119px;
+        z-index: 0;
+    }
+
+@media (min-width:672px){
+
+.livescore-detail-content--stats-timeline {
+            top:69px;
+            bottom: 64px
+    }
+    }
+
+.livescore-detail-content--stats-detail {
+        //background-color: rgba(0,0,0,0.2);
+    }
+
+.livescore-detail-content--stats-detail ul {
+            margin:0;
+            padding:0;
+        }
+
+.livescore-detail-content--stats-detail li {
+            list-style:none;
+            padding:14px 10px;
+        }
+
+.livescore-detail-content--stats-detail li::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.livescore-detail-content--stats-detail li div {
+                float:left;
+            }
+
+.livescore-detail-content--stats-detail li div:first-child {
+                width:5%;
+            }
+
+.livescore-detail-content--stats-detail li div:nth-child(2) {
+                width:30%;
+            }
+
+.livescore-detail-content--stats-detail li div:nth-child(3) {
+                width:30%;
+                text-align:center;
+                text-transform: capitalize;
+                color:#C5C5C5;
+            }
+
+.livescore-detail-content--stats-detail li div:nth-child(4) {
+                width:30%;
+            }
+
+.livescore-detail-content--stats-detail li div:last-child {
+                width:5%;
+                text-align:right;
+            }
+
+.livescore-detail-content--home-percent-line {
+        float:right;
+        border:none;
+        border-top: 6px solid #FF785A;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width:50%;
+    }
+
+.livescore-detail-content--away-percent-line {
+        float:left;
+        border:none;
+        border-top: 6px solid #36CC64;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width:60%;
+    }
+
+.no-match-prediction {
+    color: rgba(0,0,0,0.3);
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 26%;
+    left:0;
+    height: 253px;
+    position: relative;
+    width:100%;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    display:none;
+}
+
+.no-match-prediction img {
+        background-size: auto 100%;
+        width: 280px;
+    }
+
+@media (min-width:672px){
+
+.no-match-prediction {
+        display:block
+}
+    }
+
+.no-match-prediction span {
+        text-transform: uppercase;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+.no-match-prediction p {
+        margin:0;
+        padding:0;
+        font-size:14px;
+        font-weight:500;
+    }
+
+.no-match-prediction--is-visible{
+        display:none;
+    }
+
+.no-match-livescore {
+    color: rgba(0,0,0,0.3);
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 26%;
+    left:0;
+    height: 253px;
+    position: relative;
+    width:100%;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    display:none;
+}
+
+.no-match-livescore img {
+        background-size: auto 100%;
+        width: 280px;
+    }
+
+@media (min-width:672px){
+
+.no-match-livescore {
+        display:block
+}
+    }
+
+.no-match-livescore span {
+        text-transform: uppercase;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+.no-match-livescore p {
+        margin:0;
+        padding:0;
+        font-size:14px;
+        font-weight:500;
+    }
+
+.no-match-livescore--is-visible{
+        display:none;
+    }
+
+.odds-ou-header {
+
+    background-repeat: round;
+    height:50px;
+    width:100%;
+    background-size: auto 100%;
+    color:#FFF;
+}
+
+.odds-ou-header--inplay {
+        background-image:url("../../images/bg_header_match_detail.png"); 
+    }
+
+.odds-ou-header--pregame {
+        background-image:url("../../images/bg_header_match_pregame_detail.png"); 
+    }
+
+.odds-ou-header div {
+        float:left;
+        text-align:center;
+        padding-top:15px;
+        width:25%;
+    }
+
+.odds-ou-header div:first-child {
+        text-align:left;
+        font-size:14px;
+        font-weight:bold;
+        text-shadow: rgba(0, 0, 0, 0.54) 0px 1px 2px;
+        padding-top:17px;
+    }
+
+.odds-ou-header div:first-child span {
+            padding-left:16px;
+        }
+
+.odds-ou-header div:last-child {
+        text-align:right;
+    }
+
+.odds-ou-header div:last-child span {
+            padding:16px;
+        }
+
+.odds-ou-content--m8 {
+        font-weight:bold;
+    }
+
+.odds-ou-content--m8--inplay {
+        color:#FF785A;
+        }
+
+.odds-ou-content--m8--pregame {
+            color:#009933;
+        }
+
+.odds-ou-content div {
+        float:left;
+        width:25%;
+        text-align:center;
+        padding:14px 0;
+    }
+
+.odds-ou-content div:first-child {
+        text-align:left;
+        font-size:14px;
+        text-transform:uppercase;
+    }
+
+.odds-ou-content div:first-child span {
+            padding-left:16px;
+        }
+
+.odds-ou-content div:nth-child(2) {
+        color: rgba(0,0,0,0.3);
+    }
+
+.odds-ou-content div:last-child {
+        text-align:right;
+    }
+
+.odds-ou-content div:last-child span {
+            padding:16px;
+        }
+
+.odds-ou-content::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.header-title {
+        height:50px;
+        width:100%;
+        text-align:center;
+        color:#FFF;
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
+        background-size: auto 100%;
+        background-repeat: round;
+        text-shadow: 0 1px 3px rgba(0,0,0,.34);
+        line-height:3.5;
+        margin-top:10px;
+}
+
+.header-title--inplay{
+         background-image:url("../../images/In-Play-Title.png"); 
+     }
+
+.header-title--pregame{
+         background-image:url("../../images/Pre-Game-Title.png"); 
+     }
+
+.header-title--livescore{
+        height:50px;
+        width:100%;
+        color:#FFF;
+        background-image:url("../../images/bg_mobile_quarter@1x.png"); 
+        background-size: cover;
+        margin-top: 10px;
+     }
+
+.match-prediction{
+    width:100%;
+    height:110px;
+    position:relative;
+    cursor:pointer;
+    
+}
+
+.match-prediction::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.match-prediction--kickoff-inplay {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#FF9982;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 12px;
+        float:left;
+        margin-top: 7px;
+    }
+
+.match-prediction--kickoff-pregame {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#009933;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 12px;
+        float:left;
+        margin-top: 7px;
+    }
+
+.match-prediction--teamname {
+        display: inline-grid;
+        line-height:1.5;
+        float:left;
+    }
+
+.match-prediction--score {
+        display: inline-grid;
+        float:right !important;
+        padding-right:25px;
+        line-height:1.5;
+    }
+
+.match-prediction--items{
+        border-radius:4px;
+        left:5px;
+        right:5px;
+        top:6px;
+        bottom:6px;
+        position:absolute;
+        margin:auto;
+    }
+
+.match-prediction--pregame:nth-child(2n),.match-prediction--inplay:nth-child(2n){
+        background-color:#FFF;
+    }
+
+.match-prediction--inplay:nth-child(2n+1){
+        background-color:#ffe6e6;
+    }
+
+.match-prediction--pregame:nth-child(2n+1){
+        background-color:#adebc1;
+    }
+
+.match-prediction--inplay:hover {
+        background-color:#EA5E40;
+    }
+
+.match-prediction--pregame:hover .match-prediction--items, .match-prediction--inplay:hover .match-prediction--items {
+        background-color:#FFF;
+    }
+
+.match-prediction--pregame:hover {
+        background-color:#26994B;
+    }
+
+.footer {
+    width:100%;
+    height:64px;
+    background-color:grey;
+}
+
+.btn{
+    
+    height:35px;
+    border-radius:4px;
+    left:15px;
+    right:15px;
+    bottom:9px;
+    margin:auto;
+    position:absolute;
+    background-size: cover;
+}
+
+.btn--inplay {
+        background-image:url("../../images/bg_in_play_item@1x.png"); 
+        color:#FFF;
+        
+    }
+
+.btn--inplay div {
+            float:left;
+            margin-top:10px;
+        }
+
+.btn--inplay div:last-child {
+            float:right;
+            display:-webkit-box;
+            display:-ms-flexbox;
+            display:flex;
+        }
+
+.btn--pregame {
+        background-image:url("../../images/bg_pre_game_item@2x.png"); 
+        color:#FFF;
+    }
+
+.btn--pregame div {
+            float:left;
+            margin-top:10px;
+        }
+
+.btn--pregame div:last-child {
+            float:right;
+            display:-webkit-box;
+            display:-ms-flexbox;
+            display:flex;
+        }
+
+.btn--tickicon {
+        
+       width:20px;
+       height:19px;
+       margin:-2px 12px 0 12px;
+    }
+
+.btn--watchicon {
+        width:15px;
+        margin-right:12px;
+        margin-left:5px;
+    }
+
+.match-livescore {
+    //background-color:#FFF;
+    width:100%;
+}
+
+.match-livescore ul {
+        margin:0;
+        padding:0;
+        background-color:#FFF;
+    }
+
+.match-livescore li {
+        list-style:none;
+        background-color:#FFF;
+        border-bottom: 1px solid #EBEBEB;
+    }
+
+.match-livescore li:last-child {
+        border-bottom: none;
+    }
+
+.match-livescore ul li:hover {
+        background-color:rgba(44, 69, 232, 0.08);
+        cursor:pointer;
+    }
+
+.match-livescore--items {
+        height:63px;
+        padding-top:15px;
+    }
+
+.match-livescore--kickoff {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#C2CFE1;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 14px;
+        float:left;
+        margin-top: 4px;
+    }
+
+.match-livescore--teamname {
+        display: inline-grid;
+        line-height:1.5;
+        float:left;
+    }
+
+.match-livescore--teamname span:first-child {
+            color:#38619E;
+            font-weight:bold;
+        }
+
+.match-livescore--teamname span:nth-child(2) {
+            color:#C2CFE1;
+        }
+
+.match-livescore--score {
+        display: inline-grid;
+        float:right !important;
+        padding-right:18px;
+        line-height:1.5;
+    }
+
+.match-livescore--score span:first-child {
+            color:#38619E;
+            font-weight:bold;
+        }
+
+.match-livescore--score span:nth-child(2) {
+            color:#C2CFE1;
+        }

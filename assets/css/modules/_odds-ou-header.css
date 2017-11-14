@@ -1,0 +1,40 @@
+.odds-ou-header {
+    &--inplay {
+        background-image:url("../../images/bg_header_match_detail.png"); 
+    }
+
+    &--pregame {
+        background-image:url("../../images/bg_header_match_pregame_detail.png"); 
+    }
+
+    background-repeat: round;
+    height:50px;
+    width:100%;
+    background-size: auto 100%;
+    color:$mainWhite;
+    div {
+        float:left;
+        text-align:center;
+        padding-top:15px;
+        width:25%;
+    }
+
+    div:first-child {
+        text-align:left;
+        font-size:14px;
+        font-weight:bold;
+        text-shadow: rgba(0, 0, 0, 0.54) 0px 1px 2px;
+        padding-top:17px;
+
+        span {
+            padding-left:16px;
+        }
+    }
+
+    div:last-child {
+        text-align:right;
+        span {
+            padding:16px;
+        }
+    }
+}

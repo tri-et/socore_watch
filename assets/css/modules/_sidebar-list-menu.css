@@ -1,0 +1,55 @@
+.sidebar-list-menu {
+    position:absolute;
+    overflow:auto;
+    right:0;
+    left:0;
+    top:175px;
+    bottom:10px;
+    @mixin clearfix;
+    ul {
+        background-color: $mainWhite;
+        margin:0;
+        padding:0;
+    }
+
+    li {
+        list-style: none;
+        height:64px;
+        box-shadow: 0 1px 0 0 rgba($mainBlack, 0.2);
+        tevertical-align: middle;
+        line-height:4.2;
+        cursor:pointer;
+        a {
+            color:$subBlue;
+            font-size:16px;
+            text-decoration:none;
+            text-transform: uppercase;
+
+            div {
+                width:7px;
+                height:100%;
+                float:left;
+                background-color:#6087DB;
+                margin-right:9px;
+                visibility: hidden;
+            }
+        }
+
+        img {
+            float:left;
+            margin:1rem 15px 0 0;
+        }
+
+        @mixin clearfix;
+
+    }
+
+    &--activemenu {
+        //background:linear-gradient(to left, #ffffff 98%, #6087DB 2%);
+        visibility:visible !important;
+    }
+    
+    &--icon-livescores {
+        margin-top:23px !important;
+    }
+}

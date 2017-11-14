@@ -1,0 +1,79 @@
+.no-match-prediction {
+    color:rgba($mainBlack,0.3);
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 26%;
+    left:0;
+    height: 253px;
+    position: relative;
+    width:100%;
+    transition: all 1s;
+    display:none;
+
+    img {
+        background-size: auto 100%;
+        width: 280px;
+    }
+
+    @mixin at672 {
+        display:block;
+    }
+
+    span {
+        text-transform: uppercase;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+    p {
+        margin:0;
+        padding:0;
+        font-size:14px;
+        font-weight:500;
+    }
+
+    &--is-visible{
+        display:none;
+    }
+}
+
+.no-match-livescore {
+    color:rgba($mainBlack,0.3);
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    top: 26%;
+    left:0;
+    height: 253px;
+    position: relative;
+    width:100%;
+    transition: all 1s;
+    display:none;
+
+    img {
+        background-size: auto 100%;
+        width: 280px;
+    }
+
+    @mixin at672 {
+        display:block;
+    }
+
+    span {
+        text-transform: uppercase;
+        font-size:20px;
+        font-weight:bold;
+    }
+
+    p {
+        margin:0;
+        padding:0;
+        font-size:14px;
+        font-weight:500;
+    }
+
+    &--is-visible{
+        display:none;
+    }
+}

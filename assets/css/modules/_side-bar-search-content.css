@@ -1,0 +1,54 @@
+.side-bar-search-content {
+    position:absolute;
+    background-image: url("../../images/bg_mobile_full@1x.png");
+    max-width:360px;
+    min-width:320px;
+    width:100%;
+    height:100%;
+    background-size: cover;
+    background-position: initial;
+
+    &--logo {
+        background-color:$mainWhite;
+        padding-top:1rem;
+    }
+
+    &--btnclosemenu {
+        position:absolute;
+        right:10px;
+        top:0;
+        font-size:35px;
+        font-weight:500;
+        color:$mainBlue;
+        cursor: pointer !important;
+    }
+
+    &--input-search {
+        display:block;
+        padding:1rem 0 0 1rem;
+        display:flex;
+        img {
+            float:left;
+            padding-right:1rem;
+        }
+
+        input {
+            float:left;
+            outline: none;
+            border:none;
+            border-radius:0;
+            background-color:$maintransparent;
+            border-bottom: 2px solid #fff;
+            color:$mainWhite;
+            height:30px;
+            flex:1;
+            margin-right:40px;
+        }
+
+        input::placeholder {
+          color:rgba($mainWhite,0.6);
+        }
+
+        @mixin clearfix;
+    }
+}

@@ -1,0 +1,71 @@
+.prediction-detail {
+    
+    height:-webkit-fill-available;
+    background-color:$mainWhite;
+    float:right;
+    width:320px;
+    left:0;
+    transform:translateX(100%);
+    transition: transform 0.5s ease-in-out;
+
+    @mixin atSmaller {
+        width:456px;
+    }
+
+    @mixin at672 {
+        width:320px;
+    }
+
+     @mixin at912 {
+        width:560px;
+    }
+
+    &--is-visible{
+        transform:translateX(0);
+    }
+
+    &--toolbar {
+        height:50px;
+        width:100%;
+        background-color:$mainWhite;
+
+        @mixin at672 {
+            display:none;
+        }
+
+        &--back-icon {
+            float:left;
+            height:100%;
+            color:$mainIcon;
+            cursor:pointer;
+            i {
+                
+                font-size:24px;
+                float:left;
+                padding:12px 12px 0 12px;
+            }
+
+            span {
+                float:left;
+                padding-top:17px;
+                font-size:14px;
+                text-transform:uppercase;
+            }
+        }
+
+        &--opentab-icon {
+            height:100%;
+            float:right;
+            color: $mainIcon;
+            padding:0px 20px;
+            cursor:pointer;
+
+            i {
+                padding-top:13px;
+                font-size:24px;
+            }
+        }
+
+        @mixin clearfix;
+    }
+}

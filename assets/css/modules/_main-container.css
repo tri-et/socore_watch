@@ -1,0 +1,26 @@
+.main-container {
+    max-width:1568px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:rgba($mainBlack, 0.1);
+    width:100%;
+    height:calc(100vh - 64px);
+    overflow:hidden;
+    margin-top: 64px
+}
+
+.main-contents {
+    &--prediction {
+        display:none;
+    }
+
+    &--livescore {
+        display:none;
+    }
+
+    &--is-visible {
+        display:block !important;
+    }
+
+}
+

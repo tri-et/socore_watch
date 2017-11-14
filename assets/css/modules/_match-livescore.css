@@ -1,0 +1,73 @@
+.match-livescore {
+    //background-color:$mainWhite;
+    width:100%;
+
+    ul {
+        margin:0;
+        padding:0;
+        background-color:$mainWhite;
+    }
+
+    li {
+        list-style:none;
+        background-color:$mainWhite;
+        border-bottom: 1px solid #EBEBEB;
+    }
+    
+    li:last-child {
+        border-bottom: none;
+    }
+
+    ul li:hover {
+        background-color:rgba(44, 69, 232, 0.08);
+        cursor:pointer;
+    }
+
+    &--items {
+        height:63px;
+        padding-top:15px;
+    }
+
+    &--kickoff {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#C2CFE1;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 14px;
+        float:left;
+        margin-top: 4px;
+    }
+
+    &--teamname {
+        display: inline-grid;
+        line-height:1.5;
+        float:left;
+
+        span:first-child {
+            color:#38619E;
+            font-weight:bold;
+        }
+
+        span:nth-child(2) {
+            color:#C2CFE1;
+        }
+    }
+
+    &--score {
+        display: inline-grid;
+        float:right !important;
+        padding-right:18px;
+        line-height:1.5;
+
+        span:first-child {
+            color:#38619E;
+            font-weight:bold;
+        }
+
+        span:nth-child(2) {
+            color:#C2CFE1;
+        }
+    }
+}

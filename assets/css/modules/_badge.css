@@ -1,0 +1,22 @@
+.badge {
+
+    color: #FFF;
+    font-size: 12px ;
+    box-shadow: 0 1px 2px 0 rgba($mainBlack, 0.1);
+    padding: 5px 8px !important;
+    margin-top:3px;
+    margin-left:5px;
+    text-transform: none;
+    border-radius: 12px !important;
+    
+    &--inplay {
+        background-color:$mainOrange;
+        display:none;
+       
+    }
+
+    &--pregame {
+        background-color:$mainGreen;
+        display:none;
+    }
+}

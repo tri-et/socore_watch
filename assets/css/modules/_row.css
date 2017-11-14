@@ -1,0 +1,227 @@
+.row {
+    //height:100vh;
+    width:100%;
+    @mixin clearfix;
+
+    /*&--gutter {
+        margin-right:-16px;
+    }
+
+    &--gutter > div {
+        padding-right:16px;
+        box-sizing: border-box;
+    }*/
+
+    &__6{
+        float:left;
+        width:50%;
+    }
+
+   
+    &__prediction , &__livescore {
+        float:left;
+        width:100%;
+        background-color:blue;
+        height:100vh;
+        position:relative;
+        /*@mixin atSmaller {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute;
+        }*/
+    }
+
+    &__prediction-detail , &__livescore-detail {
+        top:0;
+        float:left;
+        width: 100%;
+        background-color:rgba($mainBlack,.5);
+        height:100vh;
+        overflow:hidden;
+        opacity: 1;
+        transition: opacity 0.5s linear;
+    }
+
+    /*&__livescore {
+        float:left;
+        width:100%;
+        background-color:blue;
+        height:100vh;
+        position:relative;
+    }
+
+    &__livescore-detail {
+        top:0;
+        float:left;
+        width: 100%;
+        background-color:rgba($mainBlack,.5);
+        height:100vh;
+        overflow:hidden;
+        opacity: 1;
+        transition: opacity 0.5s linear;
+    }*/
+
+    &__inplay-pregame {
+        width:100%;
+        height:100vh;
+        @mixin atSmaller {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute;
+        }
+
+        @mixin at672 {
+            width:min-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
+
+        @mixin at912 {
+            min-width:320px;
+            max-width:480px;
+            width:100%;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
+
+        @mixin at1248 {
+            width:max-content;
+            min-width:max-content;
+            max-width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
+
+        /*@mixin atLarger {
+            width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }*/
+    }
+
+    @mixin at672 {
+        &__prediction , &__livescore {
+            float:left;
+            width:calc(100vw - 320px);
+            background-color:blue;
+        }
+
+        /*&__livescore {
+            float:left;
+            width:calc(100vw - 320px);
+            background-color:blue;
+        }*/
+        
+        &__prediction-detail , &__livescore-detail {
+            position:static !important;
+            float:left;
+            width: 320px;
+            background-color:$mainWhite;
+        }
+
+        /*&__livescore-detail {
+            position:static !important;
+            float:left;
+            width: 320px;
+            background-color:$mainWhite;
+        }*/
+    }
+
+    @mixin at912 {
+        &__prediction , &__livescore {
+            float:left;
+            width:calc(100vw - 560px);
+            background-color:blue;
+        }
+
+        /*&__livescore {
+            float:left;
+            width:calc(100vw - 560px);
+            background-color:yellow;
+        }*/
+        
+        &__prediction-detail , &__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }
+
+        /*&__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }*/
+    }
+
+    @mixin atLarger {
+        &__prediction , &__livescore {
+            float:left;
+            width:64.26%;
+        }
+        
+        &__prediction-detail , &__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }
+
+        /*&__livescore {
+            float:left;
+            width:64.26%;
+        }
+
+        &__livescore-detail {
+            position:static;
+            float:left;
+            width:560px;
+            background-color:$mainWhite;
+        }*/
+    }
+}
+
+.fade-out {
+	position:absolute;
+    opacity: 1;
+}
+
+.fade-in {
+    position:static;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity :1;
+    }
+
+    to {
+        opacity :0;
+        display:none;
+    }
+}

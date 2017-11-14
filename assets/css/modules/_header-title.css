@@ -1,0 +1,32 @@
+.header-title {
+        height:50px;
+        width:100%;
+        text-align:center;
+        color:$mainWhite;
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
+        background-size: auto 100%;
+        background-repeat: round;
+        text-shadow: 0 1px 3px rgba(0,0,0,.34);
+        line-height:3.5;
+        margin-top:10px;
+    
+
+     &--inplay{
+         background-image:url("../../images/In-Play-Title.png"); 
+     }
+
+     &--pregame{
+         background-image:url("../../images/Pre-Game-Title.png"); 
+     }
+
+     &--livescore{
+        height:50px;
+        width:100%;
+        color:$mainWhite;
+        background-image:url("../../images/bg_mobile_quarter@1x.png"); 
+        background-size: cover;
+        margin-top: 10px;
+     }
+}

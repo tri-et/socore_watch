@@ -1,0 +1,56 @@
+.btn{
+    
+    height:35px;
+    border-radius:4px;
+    left:15px;
+    right:15px;
+    bottom:9px;
+    margin:auto;
+    position:absolute;
+    background-size: cover;
+
+    &--inplay {
+        background-image:url("../../images/bg_in_play_item@1x.png"); 
+        color:$mainWhite;
+
+        div {
+            float:left;
+            margin-top:10px;
+        }
+
+        div:last-child {
+            float:right;
+            display:flex;
+        }
+        
+    }
+
+    &--pregame {
+        background-image:url("../../images/bg_pre_game_item@2x.png"); 
+        color:$mainWhite;
+        
+        div {
+            float:left;
+            margin-top:10px;
+        }
+
+        div:last-child {
+            float:right;
+            display:flex;
+        }
+    }
+
+    &--tickicon {
+        
+       width:20px;
+       height:19px;
+       margin:-2px 12px 0 12px;
+    }
+
+    &--watchicon {
+        width:15px;
+        margin-right:12px;
+        margin-left:5px;
+    }
+}
+

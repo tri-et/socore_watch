@@ -1,0 +1,45 @@
+.odds-ou-content {
+
+    &--m8 {
+        font-weight:bold;
+        &--inplay {
+        color:$mainOrange;
+        }
+
+        &--pregame {
+            color:#009933;
+        }
+    }
+
+    
+    
+    div {
+        float:left;
+        width:25%;
+        text-align:center;
+        padding:14px 0;
+    }
+
+   div:first-child {
+        text-align:left;
+        font-size:14px;
+        text-transform:uppercase;
+
+        span {
+            padding-left:16px;
+        }
+    }
+
+    div:nth-child(2) {
+        color :rgba($mainBlack,0.3);
+    }
+
+    div:last-child {
+        text-align:right;
+        span {
+            padding:16px;
+        }
+    }
+
+    @mixin clearfix;
+}
