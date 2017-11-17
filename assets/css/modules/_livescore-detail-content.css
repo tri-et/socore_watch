@@ -28,8 +28,8 @@
     }
 
     &--header-league {
-        height:67px;
-        padding-top:14px;
+        @mixin clearfix;
+        padding: 11px 0px;
 
         &--league {
             float:left;
@@ -141,6 +141,48 @@
 
             div:nth-child(4) {
                 width:30%;
+            }
+
+            div:last-child {
+                width:5%;
+                text-align:right;
+            }
+        }
+    }
+
+    &--timeline-detail {
+        ul {
+            margin:0;
+            padding:0;
+        }
+
+        li {
+
+            @mixin clearfix;
+            list-style:none;
+            padding:12px 10px;
+            
+            div {
+                float:left;
+            }
+
+            div:first-child {
+                width:5%;
+            }
+
+            div:nth-child(2) {
+                width:40%;
+            }
+
+            div:nth-child(3) {
+                width:10%;
+                text-align:center;
+                color:#C5C5C5;
+            }
+
+            div:nth-child(4) {
+                width:40%;
+                text-align:right;
             }
 
             div:last-child {

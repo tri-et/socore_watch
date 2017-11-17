@@ -8,8 +8,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="<?php echo base_url()?>assets/images/Favicon/favicon-32x32.png"/>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>Score Watch</title>
 	<link href="<?php echo base_url();?>assets/temp/css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -296,7 +297,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="row__inplay-pregame inplay-pregame">
 					<div class="row row__inplay inplay-pregame--inplay">
 						<div class="header-title--livescore">
-							<span>inplay</span>
+							<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
+							<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
 						</div>
 						<div class="match-livescore">
 							<ul>
@@ -331,7 +333,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="row row__pregame inplay-pregame--pregame">
 						<div class="header-title--livescore">
-							<span>pregame</span>
+							<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
+							<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
 						</div>
 						<div class="match-livescore">
 							<ul>
@@ -440,6 +443,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<div><span>home</span></div>
 								<div><span>timeline</span></div>
 								<div><span>away</span></div>
+							</div>
+							<div class="livescore-detail-content--timeline-detail">
+								<ul>
+									<li>
+										<div><img src="<?php echo base_url()?>assets/images/iconl/1.gif" alt=""></div>
+										<div><span>testting</span></div>
+										<div><span>86'</span></div>
+										<div><span>testting1</span></div>
+										<div><img src="<?php echo base_url()?>assets/images/iconl/1.gif" alt=""></div>
+									</li>
+								</ul>
 							</div>
 						</div>
 					</div>

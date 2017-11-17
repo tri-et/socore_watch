@@ -1,5 +1,6 @@
 .match-livescore {
     //background-color:$mainWhite;
+    @mixin clearfix;
     width:100%;
 
     ul {
