@@ -22,11 +22,35 @@
      }
 
      &--livescore{
+         
         height:50px;
         width:100%;
         color:$mainWhite;
         background-image:url("../../images/bg_mobile_quarter@1x.png"); 
         background-size: cover;
         margin-top: 10px;
+        display:flex;
+
+        div {
+            float:left;
+            padding-top:15px;
+        }
+
+        div:first-child {
+            width:82px;
+            text-align:center;
+        }
+
+        div:nth-child(2) {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        
+
+        @mixin clearfix;
      }
 }
