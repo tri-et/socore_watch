@@ -10460,6 +10460,8 @@ var DesktopMenu = function (_openCloseTab) {
         _this.contentPrediction = (0, _jquery2.default)('.main-contents--prediction');
         _this.contentLiveScore = (0, _jquery2.default)('.main-contents--livescore');
         _this.mainContainer = (0, _jquery2.default)('.main-container > div');
+        _this.helpContainer = (0, _jquery2.default)('.help-container');
+        _this.btnCloseHelpContent = (0, _jquery2.default)('.help-content--btnclosemenu');
         _this.events();
         return _this;
     }
@@ -10468,6 +10470,8 @@ var DesktopMenu = function (_openCloseTab) {
         key: 'events',
         value: function events() {
             this.itemMenu.click(this.itemMenuClick.bind(this));
+            this.btnCloseHelpContent.click(this.closeHelpContent.bind(this));
+            this.helpContainer.click(this.closeHelpContent.bind(this));
         }
     }, {
         key: 'itemMenuClick',
@@ -10486,9 +10490,18 @@ var DesktopMenu = function (_openCloseTab) {
                         this.contentPrediction.addClass('main-contents--is-visible');
                     }
                 } else {
-                    console.log((0, _jquery2.default)(item.currentTarget).find('span'));
+                    if (titleMenu.innerHTML == 'help') {
+                        this.helpContainer.toggleClass('help-container--is-visible');
+                    } else {
+                        console.log(titleMenu.innerHTML);
+                    }
                 }
             }
+        }
+    }, {
+        key: 'closeHelpContent',
+        value: function closeHelpContent() {
+            this.helpContainer.toggleClass('help-container--is-visible');
         }
     }]);
 

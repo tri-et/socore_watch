@@ -8,11 +8,15 @@ class DesktopMenu extends openCloseTab {
         this.contentPrediction = $('.main-contents--prediction');
         this.contentLiveScore = $('.main-contents--livescore');
         this.mainContainer = $('.main-container > div');
+        this.helpContainer = $('.help-container');
+        this.btnCloseHelpContent = $('.help-content--btnclosemenu');
         this.events();
     }
 
     events() {
         this.itemMenu.click(this.itemMenuClick.bind(this));
+        this.btnCloseHelpContent.click(this.closeHelpContent.bind(this));
+        this.helpContainer.click(this.closeHelpContent.bind(this));
     }
 
     itemMenuClick(item) {
@@ -31,10 +35,19 @@ class DesktopMenu extends openCloseTab {
                 }
 
             } else {
-                console.log($(item.currentTarget).find('span'));
+                if (titleMenu.innerHTML == 'help') {
+                    this.helpContainer.toggleClass('help-container--is-visible')
+                } else {
+                    console.log(titleMenu.innerHTML);
+                }
+
             }
         }
 
+    }
+
+    closeHelpContent() {
+        this.helpContainer.toggleClass('help-container--is-visible');
     }
 }
 
