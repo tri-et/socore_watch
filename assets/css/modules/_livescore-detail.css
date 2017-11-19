@@ -68,4 +68,8 @@
 
         @mixin clearfix;
     }
+
+     &--shrink {
+        animation:fadeInOutScale 1s;
+    }
 }

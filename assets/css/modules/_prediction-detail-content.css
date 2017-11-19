@@ -215,6 +215,7 @@
             bottom: 64px;
         }
     }
+
     &--livestream {
         background-image: url(../../images/Live-streaming-coming-soon.png);
         background-size: auto 100%;
