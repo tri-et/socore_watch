@@ -1,0 +1,105 @@
+.about-container {
+    visibility:hidden;
+    position:absolute;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    top: 0;
+    opacity: 0;
+    transition: all .5s ;
+
+    &--is-visible {
+        visibility:visible;
+        opacity: 1;
+    }
+}
+
+.about-content {
+    position:absolute;
+    background-color:$mainWhite;
+    max-width: 750px;
+    min-width: 300px;
+    right: 10px;
+    left: 10px;
+    top: 0;
+    height: 100%;
+    margin: auto;
+    bottom: 0;
+    border-radius:4px;
+    min-height: 200px;
+    max-height: 547px;
+
+    &--header {
+
+        height:119px;
+        box-shadow: 0 13px 8px -6px rgba($mainBlack, 0.2);
+        
+        img {
+            margin-top:22px;
+        }
+    }
+
+    &--content {
+        overflow-x:hidden;
+        bottom:0px;
+        margin-right:2px;
+        top:125px;
+        position:absolute;
+        background-image: url(../../images/bg_mobile_full@1x.png);
+        border-bottom-left-radius: 4px;
+        
+        &--items {
+            position: relative;
+            background-color:$mainWhite;
+
+            div:first-child {
+                text-align:center;
+                margin-top: 10px;
+                padding-top:15px;
+                img {
+                    width:300px;
+                }
+
+                span {
+                    font-size: 20px;
+                    color: #464646;
+                    position: absolute;
+                    font-family: Roboto;
+                    text-transform: capitalize;
+                    left: 0;
+                    right: 0;
+                }
+            }
+
+            div:nth-child(2) {
+                text-align: center;
+                padding: 0px 8px 10px 8px;
+            }
+        }
+
+        /*remove margin-top for first div about*/
+        &--items:first-child>div {
+            margin-top:0px;
+        }        
+
+        &--about-syn {
+            top:119px;
+        }
+
+        &--about-ai, &--about-pro {
+            top:135px;
+        }
+    }
+
+    &--btnclosemenu {
+        position:absolute;
+        right:10px;
+        top:0;
+        font-size:35px;
+        font-weight:500;
+        color:$mainBlue;
+        cursor: pointer !important;
+        line-height: 1;
+    }    
+}

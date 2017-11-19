@@ -7,7 +7,6 @@
     z-index: 3;
     top: 0;
     opacity: 0;
-    //animation: fadeout-helpcontainer 5s;
     transition: all .5s ;
 
     &--is-visible {
@@ -32,7 +31,7 @@
     max-height: 547px;
 
     &--header {
-        border-bottom:1px solid rgba($mainBlack,0.2);
+        border-bottom:1.5px solid rgba($mainBlack,0.2);
         display: grid;
         text-align:center;
         line-height:2.1;
