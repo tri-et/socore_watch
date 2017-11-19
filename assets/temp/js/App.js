@@ -10338,21 +10338,27 @@ var _DesktopMenu = __webpack_require__(3);
 
 var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
 
-var _MobilePredictionDetail = __webpack_require__(5);
+var _Prediction = __webpack_require__(5);
 
-var _MobilePredictionDetail2 = _interopRequireDefault(_MobilePredictionDetail);
+var _Prediction2 = _interopRequireDefault(_Prediction);
 
 var _StatsLiveStreamClick = __webpack_require__(6);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
+var _LiveSocre = __webpack_require__(7);
+
+var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var livescore = new _LiveSocre2.default();
 
 var mobileMenu = new _MobileMenu2.default();
 
 var desktopMenu = new _DesktopMenu2.default();
 
-var mobilePredictionDetail = new _MobilePredictionDetail2.default();
+var prediction = new _Prediction2.default();
 
 var statsLiveStreamClick = new _StatsLiveStreamClick2.default();
 
@@ -10573,26 +10579,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var MobilePredictionDetail = function () {
-    function MobilePredictionDetail() {
-        _classCallCheck(this, MobilePredictionDetail);
+var Prediction = function () {
+    function Prediction() {
+        _classCallCheck(this, Prediction);
 
         this.btnBack = (0, _jquery2.default)('.prediction-detail--toolbar--back-icon');
-        this.btnBackLiveScore = (0, _jquery2.default)('.livescore-detail--toolbar--back-icon');
-
         this.btnOpenNewTab = (0, _jquery2.default)('.prediction-detail--toolbar--opentab-icon');
-
         this.predictionDetail = (0, _jquery2.default)('.prediction-detail');
-        this.livescoreDetail = (0, _jquery2.default)('.livescore-detail');
-
         this.predictionContent = (0, _jquery2.default)('.row__prediction-detail');
-        this.livescoreContent = (0, _jquery2.default)('.row__livescore-detail');
-
         this.noMatchPrediction = (0, _jquery2.default)('.no-match-prediction');
-        this.noMatchLiveScore = (0, _jquery2.default)('.no-match-livescore');
-
         this.matchPrediction = (0, _jquery2.default)('.match-prediction');
-        this.matchLiveScore = (0, _jquery2.default)('.match-livescore--items');
         this.predictionDetailBtn = (0, _jquery2.default)('.prediction-detail-content--btn');
         this.predictionHeader = (0, _jquery2.default)('.prediction-detail-content--header-team');
         this.ou_odd_header = (0, _jquery2.default)('.odds-ou-header');
@@ -10600,20 +10596,24 @@ var MobilePredictionDetail = function () {
         this.events();
     }
 
-    _createClass(MobilePredictionDetail, [{
+    _createClass(Prediction, [{
         key: 'events',
         value: function events() {
             this.btnBack.click(this.closePredictionDetail.bind(this));
             this.matchPrediction.click(this.openPredictionDetail.bind(this));
-            this.matchLiveScore.click(this.openLiveScoreDetail.bind(this));
             this.btnOpenNewTab.click(this.openNewTabPrediction.bind(this));
-            this.btnBackLiveScore.click(this.closeLivescoreDetail.bind(this));
         }
     }, {
         key: 'openPredictionDetail',
         value: function openPredictionDetail(item) {
             var that = this;
             var title = (0, _jquery2.default)(item.currentTarget).attr('data-pridiction-type');
+            if (this.predictionDetail.hasClass('prediction-detail--is-visible')) {
+                this.predictionDetail.addClass('prediction-detail--shrink');
+                this.predictionDetail.one('animationend', function () {
+                    that.predictionDetail.removeClass('prediction-detail--shrink');
+                });
+            };
 
             this.predictionContent.addClass('fade-out').removeClass('fade-in');
             this.noMatchPrediction.addClass('no-match-prediction--is-visible');
@@ -10641,13 +10641,6 @@ var MobilePredictionDetail = function () {
             }
         }
     }, {
-        key: 'openLiveScoreDetail',
-        value: function openLiveScoreDetail(item) {
-            this.livescoreContent.addClass('fade-out').removeClass('fade-in');
-            this.noMatchLiveScore.addClass('no-match-livescore--is-visible');
-            this.livescoreDetail.addClass('livescore-detail--is-visible');
-        }
-    }, {
         key: 'closePredictionDetail',
         value: function closePredictionDetail() {
             var that = this;
@@ -10658,26 +10651,16 @@ var MobilePredictionDetail = function () {
             this.predictionDetail.removeClass('prediction-detail--is-visible');
         }
     }, {
-        key: 'closeLivescoreDetail',
-        value: function closeLivescoreDetail() {
-            var that = this;
-            window.setTimeout(function () {
-                that.livescoreContent.addClass('fade-in').removeClass('fade-out');
-                that.noMatchLiveScore.removeClass('no-match-livescore--is-visible');
-            }, 500);
-            this.livescoreDetail.removeClass('livescore-detail--is-visible');
-        }
-    }, {
         key: 'openNewTabPrediction',
         value: function openNewTabPrediction() {
             alert('open');
         }
     }]);
 
-    return MobilePredictionDetail;
+    return Prediction;
 }();
 
-exports.default = MobilePredictionDetail;
+exports.default = Prediction;
 
 /***/ }),
 /* 6 */
@@ -10736,6 +10719,82 @@ var StatsLiveStreamClick = function () {
 }();
 
 exports.default = StatsLiveStreamClick;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(0);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var LiveScore = function () {
+    function LiveScore() {
+        _classCallCheck(this, LiveScore);
+
+        this.btnBackLiveScore = (0, _jquery2.default)('.livescore-detail--toolbar--back-icon');
+        this.livescoreDetail = (0, _jquery2.default)('.livescore-detail');
+        this.livescoreContent = (0, _jquery2.default)('.row__livescore-detail');
+        this.noMatchLiveScore = (0, _jquery2.default)('.no-match-livescore');
+        this.matchLiveScore = (0, _jquery2.default)('.match-livescore--items');
+        this.events();
+    }
+
+    _createClass(LiveScore, [{
+        key: 'events',
+        value: function events() {
+            this.matchLiveScore.click(this.openLiveScoreDetail.bind(this));
+            this.btnBackLiveScore.click(this.closeLivescoreDetail.bind(this));
+        }
+    }, {
+        key: 'openLiveScoreDetail',
+        value: function openLiveScoreDetail(item) {
+            var that = this;
+
+            if (this.livescoreDetail.hasClass('livescore-detail--is-visible')) {
+                this.livescoreDetail.addClass('livescore-detail--shrink');
+                this.livescoreDetail.one('animationend', function () {
+                    that.livescoreDetail.removeClass('livescore-detail--shrink');
+                });
+            };
+            this.livescoreContent.addClass('fade-out').removeClass('fade-in');
+            this.noMatchLiveScore.addClass('no-match-livescore--is-visible');
+            this.livescoreDetail.addClass('livescore-detail--is-visible');
+        }
+    }, {
+        key: 'closeLivescoreDetail',
+        value: function closeLivescoreDetail() {
+            var that = this;
+            window.setTimeout(function () {
+                that.livescoreContent.addClass('fade-in').removeClass('fade-out');
+                that.noMatchLiveScore.removeClass('no-match-livescore--is-visible');
+            }, 500);
+            this.livescoreDetail.removeClass('livescore-detail--is-visible');
+        }
+    }, {
+        key: 'openNewTabPrediction',
+        value: function openNewTabPrediction() {
+            alert('open');
+        }
+    }]);
+
+    return LiveScore;
+}();
+
+exports.default = LiveScore;
 
 /***/ })
 /******/ ]);

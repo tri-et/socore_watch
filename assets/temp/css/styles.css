@@ -473,6 +473,36 @@ body{
     margin-right: 5px;
 }
 
+@-webkit-keyframes fadeInOutScale {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(0.4);
+                transform: scale(0.4);  
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }       
+}
+
+@keyframes fadeInOutScale {
+    0% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(0.4);
+                transform: scale(0.4);  
+    }
+    100% {
+        -webkit-transform: scale(1);
+                transform: scale(1);
+    }       
+}
+
 .wrapper {
     overflow:hidden;
     padding-left:18px;
@@ -1319,10 +1349,10 @@ body{
     left:0;
     -webkit-transform:translateX(100%);
             transform:translateX(100%);
-    -webkit-transition: -webkit-transform 0.5s ease-in-out;
-    transition: -webkit-transform 0.5s ease-in-out;
-    transition: transform 0.5s ease-in-out;
-    transition: transform 0.5s ease-in-out, -webkit-transform 0.5s ease-in-out;
+    -webkit-transition: -webkit-transform 0.5s linear;
+    transition: -webkit-transform 0.5s linear;
+    transition: transform 0.5s linear;
+    transition: transform 0.5s linear, -webkit-transform 0.5s linear;
 }
 
 @media (min-width:480px){
@@ -1402,6 +1432,11 @@ body{
         content:"";
         clear:both;
         display:table;
+    }
+
+.prediction-detail--shrink {
+        -webkit-animation:fadeInOutScale 1s;
+                animation:fadeInOutScale 1s;
     }
 
 .livescore-detail {
@@ -1496,6 +1531,11 @@ body{
         content:"";
         clear:both;
         display:table;
+    }
+
+.livescore-detail--shrink {
+        -webkit-animation:fadeInOutScale 1s;
+                animation:fadeInOutScale 1s;
     }
 
 .prediction-detail-content {

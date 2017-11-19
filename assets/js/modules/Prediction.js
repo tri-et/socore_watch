@@ -1,24 +1,13 @@
 import $ from 'jquery';
 
-class MobilePredictionDetail {
+class Prediction {
     constructor() {
         this.btnBack = $('.prediction-detail--toolbar--back-icon');
-        this.btnBackLiveScore = $('.livescore-detail--toolbar--back-icon');
-
-
         this.btnOpenNewTab = $('.prediction-detail--toolbar--opentab-icon');
-
         this.predictionDetail = $('.prediction-detail');
-        this.livescoreDetail = $('.livescore-detail');
-
         this.predictionContent = $('.row__prediction-detail');
-        this.livescoreContent = $('.row__livescore-detail');
-
         this.noMatchPrediction = $('.no-match-prediction');
-        this.noMatchLiveScore = $('.no-match-livescore');
-
         this.matchPrediction = $('.match-prediction');
-        this.matchLiveScore = $('.match-livescore--items');
         this.predictionDetailBtn = $('.prediction-detail-content--btn');
         this.predictionHeader = $('.prediction-detail-content--header-team');
         this.ou_odd_header = $('.odds-ou-header');
@@ -29,14 +18,19 @@ class MobilePredictionDetail {
     events() {
         this.btnBack.click(this.closePredictionDetail.bind(this));
         this.matchPrediction.click(this.openPredictionDetail.bind(this));
-        this.matchLiveScore.click(this.openLiveScoreDetail.bind(this));
         this.btnOpenNewTab.click(this.openNewTabPrediction.bind(this));
-        this.btnBackLiveScore.click(this.closeLivescoreDetail.bind(this));
     }
 
     openPredictionDetail(item) {
         let that = this;
         let title = $(item.currentTarget).attr('data-pridiction-type');
+        if (this.predictionDetail.hasClass('prediction-detail--is-visible')) {
+            this.predictionDetail.addClass('prediction-detail--shrink');
+            this.predictionDetail.one('animationend', function() {
+                that.predictionDetail.removeClass('prediction-detail--shrink');
+            })
+
+        };
 
         this.predictionContent.addClass('fade-out').removeClass('fade-in');
         this.noMatchPrediction.addClass('no-match-prediction--is-visible');
@@ -65,12 +59,6 @@ class MobilePredictionDetail {
 
     }
 
-    openLiveScoreDetail(item) {
-        this.livescoreContent.addClass('fade-out').removeClass('fade-in');
-        this.noMatchLiveScore.addClass('no-match-livescore--is-visible');
-        this.livescoreDetail.addClass('livescore-detail--is-visible');
-    }
-
     closePredictionDetail() {
         let that = this;
         window.setTimeout(function() {
@@ -80,18 +68,9 @@ class MobilePredictionDetail {
         this.predictionDetail.removeClass('prediction-detail--is-visible');
     }
 
-    closeLivescoreDetail() {
-        let that = this;
-        window.setTimeout(function() {
-            that.livescoreContent.addClass('fade-in').removeClass('fade-out');
-            that.noMatchLiveScore.removeClass('no-match-livescore--is-visible');
-        }, 500);
-        this.livescoreDetail.removeClass('livescore-detail--is-visible');
-    }
-
     openNewTabPrediction() {
         alert('open');
     }
 }
 
-export default MobilePredictionDetail;
+export default Prediction;
