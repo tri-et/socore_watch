@@ -2498,7 +2498,6 @@ body{
     z-index: 3;
     top: 0;
     opacity: 0;
-    //animation: fadeout-helpcontainer 5s;
     -webkit-transition: all .5s ;
     transition: all .5s ;
 }
@@ -2525,7 +2524,7 @@ body{
 }
 
 .help-content--header {
-        border-bottom: 1px solid rgba(0,0,0,0.2);
+        border-bottom: 1.5px solid rgba(0,0,0,0.2);
         display: grid;
         text-align:center;
         line-height:2.1;
@@ -2604,6 +2603,116 @@ body{
         }
 
 .help-content--btnclosemenu {
+        position:absolute;
+        right:10px;
+        top:0;
+        font-size:35px;
+        font-weight:500;
+        color:#36569B;
+        cursor: pointer !important;
+        line-height: 1;
+    }
+
+.about-container {
+    visibility:hidden;
+    position:absolute;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    top: 0;
+    opacity: 0;
+    -webkit-transition: all .5s ;
+    transition: all .5s ;
+}
+
+.about-container--is-visible {
+        visibility:visible;
+        opacity: 1;
+    }
+
+.about-content {
+    position:absolute;
+    background-color:#FFF;
+    max-width: 750px;
+    min-width: 300px;
+    right: 10px;
+    left: 10px;
+    top: 0;
+    height: 100%;
+    margin: auto;
+    bottom: 0;
+    border-radius:4px;
+    min-height: 200px;
+    max-height: 547px;    
+}
+
+.about-content--header {
+
+        height:119px;
+        -webkit-box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+                box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+    }
+
+.about-content--header img {
+            margin-top:22px;
+        }
+
+.about-content--content {
+        overflow-x:hidden;
+        bottom:0px;
+        margin-right:2px;
+        top:125px;
+        position:absolute;
+        background-image: url(../../images/bg_mobile_full@1x.png);
+        border-bottom-left-radius: 4px;
+    }
+
+.about-content--content--items {
+            position: relative;
+            background-color:#FFF;
+        }
+
+.about-content--content--items div:first-child {
+                text-align:center;
+                margin-top: 10px;
+                padding-top:15px;
+            }
+
+.about-content--content--items div:first-child img {
+                    width:300px;
+                }
+
+.about-content--content--items div:first-child span {
+                    font-size: 20px;
+                    color: #464646;
+                    position: absolute;
+                    font-family: Roboto;
+                    text-transform: capitalize;
+                    left: 0;
+                    right: 0;
+                }
+
+.about-content--content--items div:nth-child(2) {
+                text-align: center;
+                padding: 0px 8px 10px 8px;
+            }
+
+/*remove margin-top for first div about*/
+
+.about-content--content--items:first-child>div {
+            margin-top:0px;
+        }
+
+.about-content--content--about-syn {
+            top:119px;
+        }
+
+.about-content--content--about-ai, .about-content--content--about-pro {
+            top:135px;
+        }
+
+.about-content--btnclosemenu {
         position:absolute;
         right:10px;
         top:0;

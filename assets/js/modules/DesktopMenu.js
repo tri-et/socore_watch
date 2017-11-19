@@ -9,7 +9,9 @@ class DesktopMenu extends openCloseTab {
         this.contentLiveScore = $('.main-contents--livescore');
         this.mainContainer = $('.main-container > div');
         this.helpContainer = $('.help-container');
+        this.aboutContainer = $('.about-container');
         this.btnCloseHelpContent = $('.help-content--btnclosemenu');
+        this.btnCloseAboutContent = $('.about-content--btnclosemenu');
         this.events();
     }
 
@@ -17,6 +19,9 @@ class DesktopMenu extends openCloseTab {
         this.itemMenu.click(this.itemMenuClick.bind(this));
         this.btnCloseHelpContent.click(this.closeHelpContent.bind(this));
         this.helpContainer.click(this.closeHelpContent.bind(this));
+
+        this.btnCloseAboutContent.click(this.closeAboutContent.bind(this));
+        this.aboutContainer.click(this.closeAboutContent.bind(this));
     }
 
     itemMenuClick(item) {
@@ -38,7 +43,7 @@ class DesktopMenu extends openCloseTab {
                 if (titleMenu.innerHTML == 'help') {
                     this.helpContainer.toggleClass('help-container--is-visible')
                 } else {
-                    console.log(titleMenu.innerHTML);
+                    this.aboutContainer.toggleClass('about-container--is-visible')
                 }
 
             }
@@ -48,6 +53,10 @@ class DesktopMenu extends openCloseTab {
 
     closeHelpContent() {
         this.helpContainer.toggleClass('help-container--is-visible');
+    }
+
+    closeAboutContent() {
+        this.aboutContainer.toggleClass('about-container--is-visible');
     }
 }
 
