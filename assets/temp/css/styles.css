@@ -645,6 +645,7 @@ body{
 
         .primary-nav a:hover {
              background-color: rgba(0,0,0,0.1);
+             color:#36569B;
         }
         a:hover .primary-nav--highlightmenuright {
             visibility: visible !important;
@@ -2375,8 +2376,20 @@ body{
         background-color:#EA5E40;
     }
 
-.match-prediction--pregame:hover .match-prediction--items, .match-prediction--inplay:hover .match-prediction--items {
+.match-prediction--pregame:nth-child(2n):hover .match-prediction--items {
         background-color:#FFF;
+    }
+
+.match-prediction--pregame:nth-child(2n+1):hover .match-prediction--items {
+        background-color:#adebc1;
+    }
+
+.match-prediction--inplay:nth-child(2n):hover .match-prediction--items {
+        background-color:#FFF;
+    }
+
+.match-prediction--inplay:nth-child(2n+1):hover .match-prediction--items {
+        background-color:#ffe6e6;
     }
 
 .match-prediction--pregame:hover {

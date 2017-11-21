@@ -13,6 +13,10 @@ module.exports = {
             },
             test: /\.(js|png|jpeg)$/,
             exclude: /node_modules/
+        }, {
+            test: /\.vue$/,
+            loader: 'vue-loader'
         }]
-    }
+    },
+    resolve: { alias: { vue: 'vue/dist/vue.js' } }
 }
