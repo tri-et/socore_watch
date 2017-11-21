@@ -139,6 +139,10 @@
             </li>
           </ul>
         </div>
+        <div class="livescore-detail-content--header-livestream">
+          <div><span>livestream</span></div>
+        </div>
+        <div><slot :msg="msg"></slot></div>
       </div>
     </div>
   </div>

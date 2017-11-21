@@ -23,7 +23,7 @@ gulp.task('watch', function() {
     });
 
     watch('./assets/js/**/*.vue', function() {
-        gulp.start('testing');
+        gulp.start('vueComponent');
     });
 });
 

@@ -1,16 +1,7 @@
 .row {
-    //height:100vh;
+    
     width:100%;
     @mixin clearfix;
-
-    /*&--gutter {
-        margin-right:-16px;
-    }
-
-    &--gutter > div {
-        padding-right:16px;
-        box-sizing: border-box;
-    }*/
 
     &__6{
         float:left;
@@ -24,13 +15,6 @@
         background-color:blue;
         height:100vh;
         position:relative;
-        /*@mixin atSmaller {
-            width:480px;
-            margin:auto;
-            left:0;
-            right:0;
-            position:absolute;
-        }*/
     }
 
     &__prediction-detail , &__livescore-detail {
@@ -43,25 +27,6 @@
         opacity: 1;
         transition: opacity 0.5s linear;
     }
-
-    /*&__livescore {
-        float:left;
-        width:100%;
-        background-color:blue;
-        height:100vh;
-        position:relative;
-    }
-
-    &__livescore-detail {
-        top:0;
-        float:left;
-        width: 100%;
-        background-color:rgba($mainBlack,.5);
-        height:100vh;
-        overflow:hidden;
-        opacity: 1;
-        transition: opacity 0.5s linear;
-    }*/
 
     &__inplay-pregame {
         width:100%;
@@ -88,10 +53,10 @@
         @mixin at912 {
             min-width:320px;
             max-width:480px;
-            width:100%;
+            width:auto;
             position:absolute;
-            left:0;
-            right:0;
+            left:16px;
+            right:16px;
             top:0;
             bottom:0;
             padding-left:auto;
@@ -110,17 +75,6 @@
             padding-left:auto;
             padding-right:auto;
         }
-
-        /*@mixin atLarger {
-            width:max-content;
-            position:absolute;
-            left:0;
-            right:0;
-            top:0;
-            bottom:0;
-            padding-left:auto;
-            padding-right:auto;
-        }*/
     }
 
     @mixin at672 {
@@ -129,12 +83,6 @@
             width:calc(100vw - 320px);
             background-color:blue;
         }
-
-        /*&__livescore {
-            float:left;
-            width:calc(100vw - 320px);
-            background-color:blue;
-        }*/
         
         &__prediction-detail , &__livescore-detail {
             position:static !important;
@@ -142,13 +90,6 @@
             width: 320px;
             background-color:$mainWhite;
         }
-
-        /*&__livescore-detail {
-            position:static !important;
-            float:left;
-            width: 320px;
-            background-color:$mainWhite;
-        }*/
     }
 
     @mixin at912 {
@@ -157,12 +98,6 @@
             width:calc(100vw - 560px);
             background-color:blue;
         }
-
-        /*&__livescore {
-            float:left;
-            width:calc(100vw - 560px);
-            background-color:yellow;
-        }*/
         
         &__prediction-detail , &__livescore-detail {
             position:static;
@@ -170,13 +105,6 @@
             width:560px;
             background-color:$mainWhite;
         }
-
-        /*&__livescore-detail {
-            position:static;
-            float:left;
-            width:560px;
-            background-color:$mainWhite;
-        }*/
     }
 
     @mixin atLarger {
@@ -191,18 +119,6 @@
             width:560px;
             background-color:$mainWhite;
         }
-
-        /*&__livescore {
-            float:left;
-            width:64.26%;
-        }
-
-        &__livescore-detail {
-            position:static;
-            float:left;
-            width:560px;
-            background-color:$mainWhite;
-        }*/
     }
 }
 
