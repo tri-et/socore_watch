@@ -69,8 +69,18 @@
         background-color:$mainRed;
     }
     
-    &--pregame:hover &--items, &--inplay:hover &--items {
+    &--pregame:nth-child(2n):hover &--items {
         background-color:$mainWhite;
+    } 
+
+    &--pregame:nth-child(2n+1):hover &--items {
+        background-color:#adebc1;
+    }
+    &--inplay:nth-child(2n):hover &--items {
+        background-color:$mainWhite;
+    }
+    &--inplay:nth-child(2n+1):hover &--items {
+        background-color:#ffe6e6;
     }
 
     &--pregame:hover {

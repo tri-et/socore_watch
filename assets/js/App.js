@@ -1,16 +1,26 @@
-import MobileMenu from './modules/MobileMenu';
-import DesktopMenu from './modules/DesktopMenu';
+ import Vue from 'vue';
+ import PredictionDetailVue from './vuecomponent/predictionDetail.vue';
+ import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue';
+ import MobileMenu from './modules/MobileMenu';
+ import DesktopMenu from './modules/DesktopMenu';
 
-import Prediction from './modules/Prediction';
-import StatsLiveStreamClick from './modules/StatsLiveStreamClick';
-import LiveScore from './modules/LiveSocre';
+ import Prediction from './modules/Prediction';
+ import StatsLiveStreamClick from './modules/StatsLiveStreamClick';
+ import LiveScore from './modules/LiveSocre';
+ new Vue({
+     el: '.main-container',
+     components: {
+         'predictiondetail': PredictionDetailVue,
+         'livescoredetail':LiveScoreDetailVue
+     }
+ })
 
-var livescore = new LiveScore();
+ var livescore = new LiveScore();
 
-var mobileMenu = new MobileMenu();
+ var mobileMenu = new MobileMenu();
 
-var desktopMenu = new DesktopMenu();
+ var desktopMenu = new DesktopMenu();
 
-var prediction = new Prediction();
+ var prediction = new Prediction();
 
-var statsLiveStreamClick = new StatsLiveStreamClick();
+ var statsLiveStreamClick = new StatsLiveStreamClick();

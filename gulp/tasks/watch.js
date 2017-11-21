@@ -21,6 +21,10 @@ gulp.task('watch', function() {
     watch('./assets/js/**/*.js', function() {
         gulp.start('scriptsRefresh');
     });
+
+    watch('./assets/js/**/*.vue', function() {
+        gulp.start('testing');
+    });
 });
 
 gulp.task('cssInject', ['styles'], function() {
@@ -29,5 +33,9 @@ gulp.task('cssInject', ['styles'], function() {
 });
 
 gulp.task('scriptsRefresh', ['scripts'], function() {
+    browserSync.reload();
+});
+
+gulp.task('vueComponent', ['scripts'], function() {
     browserSync.reload();
 });

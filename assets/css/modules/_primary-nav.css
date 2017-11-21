@@ -97,6 +97,7 @@
 
         a:hover {
              background-color:rgba($mainBlack,0.1) !important;
+             color:#36569B;
         }
         a:hover &--highlightmenuright {
             visibility: visible !important;
