@@ -10327,33 +10327,6 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -10460,6 +10433,33 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10478,23 +10478,27 @@ var _livescoreDetail = __webpack_require__(11);
 
 var _livescoreDetail2 = _interopRequireDefault(_livescoreDetail);
 
-var _MobileMenu = __webpack_require__(14);
+var _livecastLiveScore = __webpack_require__(14);
+
+var _livecastLiveScore2 = _interopRequireDefault(_livecastLiveScore);
+
+var _MobileMenu = __webpack_require__(17);
 
 var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
 
-var _DesktopMenu = __webpack_require__(15);
+var _DesktopMenu = __webpack_require__(18);
 
 var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
 
-var _Prediction = __webpack_require__(17);
+var _Prediction = __webpack_require__(20);
 
 var _Prediction2 = _interopRequireDefault(_Prediction);
 
-var _StatsLiveStreamClick = __webpack_require__(18);
+var _StatsLiveStreamClick = __webpack_require__(21);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
-var _LiveSocre = __webpack_require__(19);
+var _LiveSocre = __webpack_require__(22);
 
 var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
 
@@ -10503,8 +10507,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 new _vue2.default({
   el: '.main-container',
   components: {
-    'predictiondetail': _predictionDetail2.default,
-    'livescoredetail': _livescoreDetail2.default
+    livecastlivescore: _livecastLiveScore2.default,
+    predictiondetail: _predictionDetail2.default,
+    livescoredetail: _livescoreDetail2.default
   }
 });
 
@@ -21185,7 +21190,7 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5).setImmediate))
 
 /***/ }),
 /* 5 */
@@ -21437,7 +21442,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(7)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(7)))
 
 /***/ }),
 /* 7 */
@@ -21639,7 +21644,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(10);
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 
 /* template */
@@ -22127,7 +22132,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(13);
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(1)
 /* script */
 
 /* template */
@@ -22319,6 +22324,10 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
 
 module.exports = {
   data() {
@@ -22337,237 +22346,284 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0, false, false)
+  return _c("div", { staticClass: "livescore-detail" }, [
+    _vm._m(0, false, false),
+    _vm._v(" "),
+    _c("div", { staticClass: "livescore-detail-content" }, [
+      _vm._m(1, false, false),
+      _vm._v(" "),
+      _c("div", { staticClass: "livescore-detail-content--stats-timeline" }, [
+        _vm._m(2, false, false),
+        _vm._v(" "),
+        _vm._m(3, false, false),
+        _vm._v(" "),
+        _vm._m(4, false, false),
+        _vm._v(" "),
+        _vm._m(5, false, false),
+        _vm._v(" "),
+        _vm._m(6, false, false),
+        _vm._v(" "),
+        _vm._m(7, false, false),
+        _vm._v(" "),
+        _c("div", [_vm._t("default", null, { msg: _vm.msg })], 2)
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "livescore-detail" }, [
-      _c("div", { staticClass: "livescore-detail--toolbar" }, [
-        _c("div", { staticClass: "livescore-detail--toolbar--back-icon" }, [
-          _c("i", { staticClass: "material-icons" }, [
-            _vm._v("keyboard_backspace")
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("Back")])
+    return _c("div", { staticClass: "livescore-detail--toolbar" }, [
+      _c("div", { staticClass: "livescore-detail--toolbar--back-icon" }, [
+        _c("i", { staticClass: "material-icons" }, [
+          _vm._v("keyboard_backspace")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "livescore-detail--toolbar--opentab-icon" }, [
-          _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
-        ])
+        _c("span", [_vm._v("Back")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "livescore-detail-content" }, [
-        _c("div", { staticClass: "livescore-detail-content--header" }, [
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header--teamname" },
-            [
-              _c("span", [_vm._v("Arsenal")]),
-              _vm._v(" "),
-              _c("span", [_vm._v("Swansea City")])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header--score" },
-            [_c("span", [_vm._v("0")]), _vm._v(" "), _c("span", [_vm._v("1")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "livescore-detail-content--stats-timeline" }, [
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header-league" },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "livescore-detail-content--header-league--league"
-                },
-                [
-                  _c("span", [_vm._v("kickoff")]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("league")])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "livescore-detail-content--header-league--nameleague"
-                },
-                [
-                  _c("span", [_vm._v("10:45")]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("International Club Friendly")])
-                ]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header-stats-timeline" },
-            [
-              _c("div", [_c("span", [_vm._v("home")])]),
-              _vm._v(" "),
-              _c("div", [_c("span", [_vm._v("stats")])]),
-              _vm._v(" "),
-              _c("div", [_c("span", [_vm._v("away")])])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "livescore-detail-content--stats-detail" }, [
-            _c("ul", [
-              _c("li", [
-                _c("div", [_c("span", [_vm._v("1")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("shots")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("2")])])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [_c("span", [_vm._v("1")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("off target")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("20")])])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [_c("span", [_vm._v("1")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("corner kicks")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("20")])])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [_c("span", [_vm._v("1")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("yellow cards")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("20")])])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [_c("span", [_vm._v("1")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("red cards")])]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [_c("span", [_vm._v("20")])])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header-stats-timeline" },
-            [
-              _c("div", [_c("span", [_vm._v("home")])]),
-              _vm._v(" "),
-              _c("div", [_c("span", [_vm._v("timeline")])]),
-              _vm._v(" "),
-              _c("div", [_c("span", [_vm._v("away")])])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--timeline-detail" },
-            [
-              _c("ul", [
-                _c("li", [
-                  _c("div", [
-                    _c("img", {
-                      attrs: { src: "assets/images/iconl/1.gif", alt: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v("testting")])]),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v("86'")])]),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v("testting1")])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("img", {
-                      attrs: { src: "assets/images/iconl/1.gif", alt: "" }
-                    })
-                  ])
-                ])
-              ])
-            ]
-          )
-        ])
+      _c("div", { staticClass: "livescore-detail--toolbar--opentab-icon" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "livescore-detail-content--header" }, [
+      _c("div", { staticClass: "livescore-detail-content--header--teamname" }, [
+        _c("span", [_vm._v("Arsenal")]),
+        _vm._v(" "),
+        _c("span", [_vm._v("Swansea City")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "livescore-detail-content--header--score" }, [
+        _c("span", [_vm._v("0")]),
+        _vm._v(" "),
+        _c("span", [_vm._v("1")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-league" },
+      [
+        _c(
+          "div",
+          { staticClass: "livescore-detail-content--header-league--league" },
+          [
+            _c("span", [_vm._v("kickoff")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("league")])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "livescore-detail-content--header-league--nameleague"
+          },
+          [
+            _c("span", [_vm._v("10:45")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("International Club Friendly")])
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-stats-timeline" },
+      [
+        _c("div", [_c("span", [_vm._v("home")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("stats")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("away")])])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--stats-detail" },
+      [
+        _c("ul", [
+          _c("li", [
+            _c("div", [_c("span", [_vm._v("1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--home-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("shots")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--away-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("2")])])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("div", [_c("span", [_vm._v("1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--home-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("off target")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--away-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("20")])])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("div", [_c("span", [_vm._v("1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--home-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("corner kicks")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--away-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("20")])])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("div", [_c("span", [_vm._v("1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--home-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("yellow cards")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--away-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("20")])])
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("div", [_c("span", [_vm._v("1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--home-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("red cards")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("hr", {
+                staticClass: "livescore-detail-content--away-percent-line"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("20")])])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-stats-timeline" },
+      [
+        _c("div", [_c("span", [_vm._v("home")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("timeline")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("away")])])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--timeline-detail" },
+      [
+        _c("ul", [
+          _c("li", [
+            _c("div", [
+              _c("img", {
+                attrs: { src: "assets/images/iconl/1.gif", alt: "" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("testting")])]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("86'")])]),
+            _vm._v(" "),
+            _c("div", [_c("span", [_vm._v("testting1")])]),
+            _vm._v(" "),
+            _c("div", [
+              _c("img", {
+                attrs: { src: "assets/images/iconl/1.gif", alt: "" }
+              })
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-livestream" },
+      [_c("div", [_c("span", [_vm._v("livestream")])])]
+    )
   }
 ]
 render._withStripped = true
@@ -22582,6 +22638,1943 @@ if (false) {
 
 /***/ }),
 /* 14 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(16);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\livecastLiveScore.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-929415c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-929415c4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  data() {
+    return {
+      msg: '456568989'
+    };
+  }
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: _vm.msg[3] != 0,
+          expression: "msg[3]!=0"
+        }
+      ],
+      staticClass: "ip-RHSMediaView ipe-RHSMediaView",
+      staticStyle: {
+        height: "auto",
+        margin: "0 auto",
+        "background-color": "#545454"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "ipe-RHSMediaView_MediaWrapper ",
+          staticStyle: { width: "320px", margin: "auto" }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "ip-MatchLiveContainer",
+              staticStyle: { width: "320px", "background-color": "#404040" }
+            },
+            [
+              _vm._m(0, false, false),
+              _vm._v(" "),
+              _c("div", [
+                _c("div", { staticClass: "ml1-MatchLiveSoccerModule " }, [
+                  _c("div"),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ml1-ScoreHeader",
+                      staticStyle: { width: "320px" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ml1-ScoreHeader_Team ml1-ScoreHeader_Team1",
+                          staticStyle: { width: "157px" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "ml1-ScoreHeader_Contents ml1-ScoreHeader_Contents1 "
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ml1-ScoreHeader_TeamName ml1-ScoreHeader_Team1Name "
+                                },
+                                [
+                                  _c("div", {
+                                    staticClass: "ml1-ScoreHeader_ColorBar ",
+                                    staticStyle: { color: "rgb(0, 175, 240)" }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "ml1-ScoreHeader_TruncateName ",
+                                      staticStyle: { "font-size": "12px" },
+                                      attrs: { id: "team1Name" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.msg[8]))]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ml1-ScoreHeader_ScoreWrapper ml1-ScoreHeader_Team1ScoreWrapper "
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "ml1-ScoreHeader_Score ml1-ScoreHeader_Team1Score ",
+                                      attrs: { id: "team1score" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.msg[12]))]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ml1-ScoreHeader_Team ml1-ScoreHeader_Team2 ",
+                          staticStyle: { width: "142px" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "ml1-ScoreHeader_Contents ml1-ScoreHeader_Contents2 "
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ml1-ScoreHeader_ScoreWrapper ml1-ScoreHeader_Team2ScoreWrapper "
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "ml1-ScoreHeader_Score ml1-ScoreHeader_Team2Score ",
+                                      attrs: { id: "team2score" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.msg[13]))]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ml1-ScoreHeader_TeamName ml1-ScoreHeader_Team2Name "
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "ml1-ScoreHeader_TruncateName ",
+                                      staticStyle: { "font-size": "12px" },
+                                      attrs: { id: "team2Name" }
+                                    },
+                                    [_vm._v(_vm._s(_vm.msg[9]))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", {
+                                    staticClass: "ml1-ScoreHeader_ColorBar ",
+                                    staticStyle: { color: "rgb(255, 255, 255)" }
+                                  })
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._m(1, false, false)
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ml1-MatchliveSoccerModule_Wrapper",
+                      staticStyle: { width: "320px" }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ml1-MatchLiveSoccerModule_Constrainer ml1-SwipeContainer_Child ml1-SwipeContainer_ViewIndex-0 "
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "ml1-MatchLiveSoccerModule_MatchLiveWrapper "
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ml1-MatchLiveSoccerModule_PitchContainer",
+                                  staticStyle: { width: "303px" }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "ml1-MatchLiveSoccerModule_SVGPitchContainer "
+                                    },
+                                    [
+                                      _c(
+                                        "svg",
+                                        {
+                                          staticClass: "ml1-SoccerPitch_SVG",
+                                          attrs: {
+                                            xmlns: "http://www.w3.org/2000/svg",
+                                            width: "400",
+                                            height: "180",
+                                            viewBox: "0 0 400 180",
+                                            version: "1.1",
+                                            "xmlns:xlink":
+                                              "http://www.w3.org/1999/xlink"
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "defs",
+                                            [
+                                              _c(
+                                                "linearGradient",
+                                                {
+                                                  attrs: { id: "ml1-Gradient1" }
+                                                },
+                                                [
+                                                  _c("stop", {
+                                                    staticClass: "gradStart",
+                                                    staticStyle: {
+                                                      "stop-opacity": "0.54",
+                                                      "stop-color":
+                                                        "rgb(24, 84, 53)"
+                                                    },
+                                                    attrs: { offset: "60%" }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("stop", {
+                                                    staticClass: "gradEnd",
+                                                    staticStyle: {
+                                                      "stop-opacity": "0.54",
+                                                      "stop-color":
+                                                        "rgb(24, 84, 53)"
+                                                    },
+                                                    attrs: { offset: "100%" }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "linearGradient",
+                                                {
+                                                  attrs: { id: "ml1-Gradient2" }
+                                                },
+                                                [
+                                                  _c("stop", {
+                                                    staticClass: "gradStart",
+                                                    staticStyle: {
+                                                      "stop-opacity": "0.54",
+                                                      "stop-color":
+                                                        "rgb(24, 57, 36)"
+                                                    },
+                                                    attrs: { offset: "0%" }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("stop", {
+                                                    staticClass: "gradEnd",
+                                                    staticStyle: {
+                                                      "stop-opacity": "0.54",
+                                                      "stop-color":
+                                                        "rgb(24, 84, 53)"
+                                                    },
+                                                    attrs: { offset: "73.2%" }
+                                                  })
+                                                ],
+                                                1
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "linearGradient",
+                                                {
+                                                  attrs: {
+                                                    id: "ml1-SolidTeamColour"
+                                                  }
+                                                },
+                                                [
+                                                  _c("stop", {
+                                                    attrs: {
+                                                      id: "ml1-SolidTeam1",
+                                                      offset: "0%",
+                                                      "stop-color": "#FFDF1B"
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c("stop", {
+                                                    attrs: {
+                                                      id: "ml1-SolidTeam2",
+                                                      offset: "100%",
+                                                      "stop-color": "#FFDF1B"
+                                                    }
+                                                  })
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "g",
+                                            {
+                                              attrs: {
+                                                id: "pitch",
+                                                stroke: "none",
+                                                "stroke-width": "1",
+                                                fill: "none",
+                                                "fill-rule": "evenodd"
+                                              }
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  fill: "#222",
+                                                  d: "M0 0h400v180h-400z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "pitch-BG",
+                                                  fill: "#2C7836",
+                                                  x: "0",
+                                                  y: "0",
+                                                  width: "400",
+                                                  height: "180"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "18-yard-away",
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  x: "348",
+                                                  y: "44",
+                                                  width: "51",
+                                                  height: "93"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "18-yard-home",
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  x: "1",
+                                                  y: "44",
+                                                  width: "51",
+                                                  height: "93"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M199,3 L199,178 L199,179 L201,179 L201,178 L201,3 L201,2 L199,2 L199,3 L199,3 Z",
+                                                  id: "Shape",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M200,118 L200,118 C215.463973,118 228,105.463973 228,90 C228,74.536027 215.463973,62 200,62 C184.536027,62 172,74.536027 172,90 C172,105.463973 184.536027,118 200,118 L200,118 Z M200,120 L200,120 C183.431458,120 170,106.568542 170,90 C170,73.4314575 183.431458,60 200,60 C216.568542,60 230,73.4314575 230,90 C230,106.568542 216.568542,120 200,120 L200,120 Z",
+                                                  id: "Shape-Copy",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("circle", {
+                                                attrs: {
+                                                  id: "Oval-344",
+                                                  fill: "#3A8943",
+                                                  cx: "200",
+                                                  cy: "90",
+                                                  r: "6"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M74,63 C65.5522257,68.9666814 60,79.0570309 60,90.5 C60,101.942969 65.5522257,112.033319 74,118",
+                                                  id: "d-left",
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  transform:
+                                                    "translate(67.000000, 90.500000) scale(-1, 1) translate(-59.000000, -90.500000) "
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("circle", {
+                                                attrs: {
+                                                  id: "Oval-70",
+                                                  fill: "#3A8943",
+                                                  cx: "34",
+                                                  cy: "90",
+                                                  r: "3"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M1,11 C6.5228475,11 11,6.5228475 11,1 L9.046875,1 C9.046875,5.44416635 5.44416635,9.046875 1,9.046875 L1,11 L1,11 Z",
+                                                  id: "Shape",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M1,171 C5.418278,171 9,174.581722 9,179 L11,179 C11,173.477153 6.5228475,169 1,169 L1,171 L1,171 Z",
+                                                  id: "Shape",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M337.884236,62 C328.64831,68.2472191 323,78.6467666 323,90 C323,101.353233 328.64831,111.752781 337.884236,118 L339,116.354082 C330.305144,110.472845 324.989964,100.686649 324.989964,90 C324.989964,79.3133507 330.305144,69.5271551 339,63.645918 L337.884236,62 L337.884236,62 Z",
+                                                  transform: "translate(9,0)",
+                                                  id: "Shape-Copy-2",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("rect", {
+                                                attrs: {
+                                                  id: "6-yard-home",
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  x: "1",
+                                                  y: "69",
+                                                  width: "16",
+                                                  height: "41"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M399,69 L383,69 L383,110 L399,110 L399,69 L399,69 Z",
+                                                  id: "6-yard-away",
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  "sketch:type": "MSShapeGroup"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("circle", {
+                                                attrs: {
+                                                  id: "Oval-70",
+                                                  fill: "#3A8943",
+                                                  cx: "365",
+                                                  cy: "90",
+                                                  r: "3"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M399,9.046875 C394.555834,9.046875 390.953125,5.44416635 390.953125,1 L389,1 C389,6.5228475 393.477153,11 399,11 L399,9.046875 L399,9.046875 Z",
+                                                  id: "Shape",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  d:
+                                                    "M399,169 C393.477153,169 389,173.477153 389,179 L391,179 C391,174.581722 394.581722,171 399,171 L399,169 L399,169 Z",
+                                                  id: "Shape",
+                                                  fill: "#3A8943"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("rect", {
+                                                attrs: {
+                                                  stroke: "#3A8943",
+                                                  "stroke-width": "2",
+                                                  x: "1",
+                                                  y: "1",
+                                                  width: "398",
+                                                  height: "178"
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("path", {
+                                            staticStyle: { opacity: "0" },
+                                            attrs: {
+                                              id: "ml1-Possession1",
+                                              d:
+                                                "M2,2 199.1,2 199.1,2 C199.1,1.4 199.1,28 199.1,28 C199.1,29 199.1,30 199.1,31 L199.1,61 L199.1,88 C199.1,89 199.1,90 199.1,91 L199.1,121 L199.1,146 C199.1,147 199.1,150 199.1,151 L199.1,178 C199.1,178 2.0,178 2.0,178 L2,2 Z",
+                                              fill: "url(#ml1-Gradient1)"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c("path", {
+                                            staticStyle: { opacity: "0" },
+                                            attrs: {
+                                              id: "ml1-Possession2",
+                                              d:
+                                                "M398,2 114.3585950413223,2 113.64628099173552,2 C113.64628099173552,1 100.11231404958677,28 100.11231404958677,28 C99.39999999999999,29 99.39999999999999,30 100.11231404958677,31 L113.64628099173552,61 L100.11231404958677,88 C99.39999999999999,89 99.39999999999999,90 100.11231404958677,91 L113.64628099173552,121 L100.11231404958677,146 C99.39999999999999,147 99.39999999999999,150 99.39999999999999,151 L113.64628099173552,178 C113.64628099173552,178 398.0,178 398.0,178 L398,2 Z",
+                                              fill: "url(#ml1-Gradient2)",
+                                              opacity: "1"
+                                            }
+                                          }),
+                                          _vm._v(" "),
+                                          _c(
+                                            "g",
+                                            {
+                                              attrs: {
+                                                id: "ml1-WideKickRadial",
+                                                opacity: "0"
+                                              }
+                                            },
+                                            [
+                                              _c("path", {
+                                                attrs: {
+                                                  id: "ml1-WideKickRadialOuter",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M94.703,73.698C110.554,53.359,120,27.784,120,0c0-27.764-9.433-53.321-25.262-73.653L0,0.036L94.703,73.698z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  id:
+                                                    "ml1-WideKickRadialCentre",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M62.325,48.514C72.765,35.123,79,18.294,79,0c0-18.274-6.222-35.085-16.639-48.469L0,0.036L62.325,48.514z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                attrs: {
+                                                  id: "ml1-WideKickRadialInner",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M30.759,23.961C35.918,17.349,39,9.037,39,0c0-9.017-3.068-17.311-8.205-23.917L0,0.036L30.759,23.961z"
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "g",
+                                            {
+                                              attrs: {
+                                                id: "ml1-NarrowKickRadial",
+                                                opacity: "0",
+                                                transform:
+                                                  "translate(92, 129.6) rotate(-155.44657691657048)"
+                                              }
+                                            },
+                                            [
+                                              _c("path", {
+                                                staticStyle: {
+                                                  opacity: "0",
+                                                  transform:
+                                                    "scaleX(0) scaleY(0)"
+                                                },
+                                                attrs: {
+                                                  id:
+                                                    "ml1-NarrowKickRadialOuter",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M0.031,0.013l117.647,45.045C123.041,31.064,126,15.881,126,0s-2.959-31.065-8.322-45.059L0.093-0.036L0.031,0.013z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                staticStyle: {
+                                                  opacity: "0",
+                                                  transform:
+                                                    "scaleX(0) scaleY(0)"
+                                                },
+                                                attrs: {
+                                                  id:
+                                                    "ml1-NarrowKickRadialCentre",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M0.031,0.013l77.43,29.647c3.536-9.21,5.488-19.204,5.488-29.66s-1.952-20.45-5.487-29.66L0.093-0.036L0.031,0.013z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                staticStyle: {
+                                                  opacity: "0",
+                                                  transform:
+                                                    "scaleX(0) scaleY(0)"
+                                                },
+                                                attrs: {
+                                                  id:
+                                                    "ml1-NarrowKickRadialInner",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M0.031,0.013l38.208,14.629c1.746-4.546,2.71-9.48,2.71-14.642s-0.964-10.096-2.709-14.642L0.093-0.036L0.031,0.013z"
+                                                }
+                                              })
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "g",
+                                            {
+                                              attrs: {
+                                                id: "ml1-ThrowRadial",
+                                                opacity: "0",
+                                                transform:
+                                                  "translate(92, 180) rotate(-19.230672375661285)"
+                                              }
+                                            },
+                                            [
+                                              _c("path", {
+                                                staticStyle: {
+                                                  opacity: "0",
+                                                  transform:
+                                                    "scaleX(0) scaleY(0)"
+                                                },
+                                                attrs: {
+                                                  id: "ml1-ThrowRadialOuter",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M53.033,53.068c29.289-29.289,29.289-76.777,0-106.066L0,0.035L53.033,53.068z"
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c("path", {
+                                                staticStyle: {
+                                                  opacity: "0",
+                                                  transform:
+                                                    "scaleX(0) scaleY(0)"
+                                                },
+                                                attrs: {
+                                                  id: "ml1-ThrowRadialInner",
+                                                  fill: "#165031",
+                                                  d:
+                                                    "M26.517,26.552c14.646-14.645,14.644-38.39,0-53.033L0,0.035L26.517,26.552z"
+                                                }
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._m(2, false, false)
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "ml1-SwipeContainer_Child ml1-SwipeContainer_ViewIndex-0 ml1-TabController "
+                        },
+                        [
+                          _c("div", [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "ml1-AllStats",
+                                staticStyle: { "margin-left": "-10px" }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "ml1-StatsUpper ",
+                                    staticStyle: {
+                                      "margin-top": "0px",
+                                      "margin-left": "12px"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "ml1-StatsWheel ",
+                                        attrs: { id: "stat3" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "ml1-StatsWheel_Text title"
+                                          },
+                                          [_vm._v("ATTACKS")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "ml1-StatsWheelContainer "
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheel_Team1Text team1Amt"
+                                              },
+                                              [_vm._v("0")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheelSvg_Container "
+                                              },
+                                              [
+                                                _c(
+                                                  "svg",
+                                                  {
+                                                    staticClass:
+                                                      "ml1-StatsWheelSvg",
+                                                    attrs: {
+                                                      width: "32",
+                                                      height: "32",
+                                                      viewBox: "0 0 32 32",
+                                                      version: "1.1",
+                                                      xmlns:
+                                                        "http://www.w3.org/2000/svg",
+                                                      "xmlns:xlink":
+                                                        "http://www.w3.org/1999/xlink"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "g",
+                                                      {
+                                                        attrs: {
+                                                          stroke: "none",
+                                                          "stroke-width": "1",
+                                                          fill: "none",
+                                                          "fill-rule": "evenodd"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_TeamOnePath",
+                                                          staticStyle: {
+                                                            stroke:
+                                                              "rgb(0, 175, 240)"
+                                                          },
+                                                          attrs: {
+                                                            id:
+                                                              "wheelPathTeam1",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#8B572A"
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_WheelShadow",
+                                                          staticStyle: {
+                                                            "stroke-dasharray":
+                                                              "78.5508px, 78.5508px",
+                                                            "stroke-dashoffset":
+                                                              "38.2754px"
+                                                          },
+                                                          attrs: {
+                                                            id: "wheelShadow",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#404040",
+                                                            transform:
+                                                              "rotate(2.291510716631791 16 16)"
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_TeamTwoPath",
+                                                          staticStyle: {
+                                                            stroke:
+                                                              "rgb(255, 255, 255)",
+                                                            "stroke-dasharray":
+                                                              "78.5508px, 78.5508px",
+                                                            "stroke-dashoffset":
+                                                              "40.2754px"
+                                                          },
+                                                          attrs: {
+                                                            id:
+                                                              "wheelPathTeam2",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#F8E81C",
+                                                            transform:
+                                                              "rotate(-2.291510716631791 16 16)"
+                                                          }
+                                                        })
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheel_Team2Text team2Amt"
+                                              },
+                                              [_vm._v("0")]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "ml1-StatsWheel ",
+                                        attrs: { id: "stat4" }
+                                      },
+                                      [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "ml1-StatsWheel_Text title"
+                                          },
+                                          [_vm._v("DANGEROUS ATTACKS")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "ml1-StatsWheelContainer "
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheel_Team1Text team1Amt"
+                                              },
+                                              [_vm._v("0")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheelSvg_Container "
+                                              },
+                                              [
+                                                _c(
+                                                  "svg",
+                                                  {
+                                                    staticClass:
+                                                      "ml1-StatsWheelSvg",
+                                                    attrs: {
+                                                      width: "32",
+                                                      height: "32",
+                                                      viewBox: "0 0 32 32",
+                                                      version: "1.1",
+                                                      xmlns:
+                                                        "http://www.w3.org/2000/svg",
+                                                      "xmlns:xlink":
+                                                        "http://www.w3.org/1999/xlink"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "g",
+                                                      {
+                                                        attrs: {
+                                                          stroke: "none",
+                                                          "stroke-width": "1",
+                                                          fill: "none",
+                                                          "fill-rule": "evenodd"
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_TeamOnePath",
+                                                          staticStyle: {
+                                                            stroke:
+                                                              "rgb(0, 175, 240)"
+                                                          },
+                                                          attrs: {
+                                                            id:
+                                                              "wheelPathTeam1",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#8B572A"
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_WheelShadow",
+                                                          staticStyle: {
+                                                            "stroke-dasharray":
+                                                              "78.5508px, 78.5508px",
+                                                            "stroke-dashoffset":
+                                                              "38.2754px"
+                                                          },
+                                                          attrs: {
+                                                            id: "wheelShadow",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#404040",
+                                                            transform:
+                                                              "rotate(2.291510716631791 16 16)"
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c("path", {
+                                                          staticClass:
+                                                            "ml1-StatsWheelSvg_TeamTwoPath",
+                                                          staticStyle: {
+                                                            stroke:
+                                                              "rgb(255, 255, 255)",
+                                                            "stroke-dasharray":
+                                                              "78.5508px, 78.5508px",
+                                                            "stroke-dashoffset":
+                                                              "40.2754px"
+                                                          },
+                                                          attrs: {
+                                                            id:
+                                                              "wheelPathTeam2",
+                                                            "stroke-width": "5",
+                                                            d:
+                                                              "M16,28.5c6.904,0,12.5-5.597,12.5-12.5c0-6.904-5.596-12.5-12.5-12.5C9.098,3.5,3.5,9.096,3.5,16C3.5,22.903,9.098,28.5,16,28.5z",
+                                                            stroke: "#F8E81C",
+                                                            transform:
+                                                              "rotate(-2.291510716631791 16 16)"
+                                                          }
+                                                        })
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "ml1-StatsWheel_Team2Text team2Amt"
+                                              },
+                                              [_vm._v("0")]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(3, false, false),
+                                _vm._v(" "),
+                                _c("div", {
+                                  staticClass: "ml1-AllStats_Divider "
+                                })
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(4, false, false)
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(5, false, false),
+      _vm._v(" "),
+      _vm._m(6, false, false),
+      _vm._v(" "),
+      _vm._m(7, false, false),
+      _vm._v(" "),
+      _vm._m(8, false, false)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "EventViewTitle", staticStyle: { display: "none" } },
+      [_c("span", { staticClass: "Text" }, [_vm._v("Home v Away")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml1-ScoreHeader_Timer " }, [
+      _c("span", {
+        staticClass:
+          "ml1-ScoreHeader_AdditionalText ml1-ScoreHeader_TextFadeOut "
+      }),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          staticClass: "ml1-ScoreHeader_Clock ",
+          staticStyle: { color: "#fff" },
+          attrs: { id: "ml1-ScoreHeader_Clock" }
+        },
+        [_vm._v("00:00")]
+      ),
+      _vm._v(" "),
+      _c("span", {
+        staticClass:
+          "ml1-ScoreHeader_InjuryTime ml1-ScoreHeader_InjuryTimeFadeOut "
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-MatchLiveSoccerModule_AnimWrapper " }, [
+      _c("div", { staticClass: "ml1-AnimatedTextBar " }, [
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H1TextWrapper",
+            staticStyle: {
+              opacity: "0",
+              display: "block",
+              "text-align": "left",
+              left: "148px",
+              top: "70.5px",
+              width: "180px"
+            }
+          },
+          [
+            _c("span", { staticClass: "ml1-Anims_H1Text " }, [
+              _vm._v("Aswan FC")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H1TextBackupWrapper",
+            staticStyle: {
+              opacity: "0",
+              display: "block",
+              top: "120.5px",
+              width: "180px",
+              "text-align": "right",
+              left: "6px"
+            }
+          },
+          [
+            _c("span", { staticClass: "ml1-Anims_H1TextBackup " }, [
+              _vm._v("Al Ittihad Al Sakandary")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H1TextGhostWrapper ",
+            staticStyle: {
+              display: "none",
+              width: "180px",
+              "text-align": "left"
+            }
+          },
+          [
+            _c("span", { staticClass: "ml1-Anims_H1TextGhost " }, [
+              _vm._v("Aswan FC")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H2TextWrapper",
+            staticStyle: {
+              opacity: "0",
+              display: "block",
+              "text-align": "left",
+              left: "148px",
+              top: "89px",
+              width: "180px"
+            }
+          },
+          [_c("span", { staticClass: "ml1-Anims_H2Text " }, [_vm._v("Attack")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H2TextBackupWrapper",
+            staticStyle: {
+              opacity: "0",
+              display: "block",
+              top: "89px",
+              width: "180px",
+              "text-align": "left",
+              left: "80px"
+            }
+          },
+          [
+            _c("span", { staticClass: "ml1-Anims_H2TextBackup " }, [
+              _vm._v("Dangerous Attack")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H2TextGhostWrapper ",
+            staticStyle: {
+              display: "none",
+              width: "180px",
+              "text-align": "left"
+            }
+          },
+          [
+            _c("span", { staticClass: "ml1-Anims_H2TextGhost " }, [
+              _vm._v("Attack")
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H3TextWrapper",
+            staticStyle: { display: "none", opacity: "0" }
+          },
+          [_c("span", { staticClass: "ml1-Anims_H3Text " })]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H3TextBackupWrapper ",
+            staticStyle: { display: "none" }
+          },
+          [_c("span", { staticClass: "ml1-Anims_H3TextBackup " })]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "ml1-Anims_Asset ml1-Anims_H3TextGhostWrapper ",
+            staticStyle: { display: "none" }
+          },
+          [_c("span", { staticClass: "ml1-Anims_H3TextGhost " })]
+        ),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "ml1-Anims_Line",
+          staticStyle: {
+            opacity: "0",
+            left: "140px",
+            top: "72px",
+            height: "36px",
+            transform: "rotateZ(180deg)",
+            "background-color": "rgb(0, 70, 168)"
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "ml1-Blob ",
+          staticStyle: {
+            opacity: "0",
+            color: "rgb(252, 126, 0)",
+            top: "2%",
+            left: "99%"
+          }
+        },
+        [
+          _c("div", { staticClass: "ml1-Blob_Inner1 " }),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml1-Blob_Inner2 " }),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml1-Blob_Inner3 " })
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "ml1-Anims-Extra" } }, [
+        _c("div", {
+          staticClass: "ml1-Anims_Asset ml1-Anims_Icon ml1-Anims_Offside "
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "ml1-StatsLower ",
+        staticStyle: { width: "320px", "margin-left": "-11px" }
+      },
+      [
+        _c("div", { staticClass: "ml1-StatsLower_MiniHomeWrapper " }, [
+          _c(
+            "div",
+            { staticClass: "ml1-StatsLower_Home ml1-StatsLower_StatsWrapper " },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "ml1-StatsLower_AllCards ",
+                  attrs: { id: "team1IconStats" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ml1-StatsColumn_MiniCornerWrapper ",
+                      staticStyle: { color: "rgb(0, 175, 240)" }
+                    },
+                    [
+                      _c("div", { staticClass: "ml1-StatsColumn_MiniCorner" }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "ml1-StatsColumn_MiniValue corners" },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "ml1-StatsColumn_MiniCardWrapper " },
+                    [
+                      _c("div", {
+                        staticClass: "ml1-StatsColumn_MiniRedCard "
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "ml1-StatsColumn_MiniValue card red" },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "ml1-StatsColumn_MiniCardWrapper " },
+                    [
+                      _c("div", {
+                        staticClass: "ml1-StatsColumn_MiniYellowCard "
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "ml1-StatsColumn_MiniValue card yellow"
+                        },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml1-StatsLower_MiniBarsCollection " }, [
+          _c("div", { staticClass: "ml1-StatsLower_MiniBarWrapper " }, [
+            _c("div", { attrs: { id: "stat1" } }, [
+              _c(
+                "h4",
+                {
+                  staticClass: "ml1-StatsBar_MiniHeader title",
+                  staticStyle: { "font-size": "12px" }
+                },
+                [_vm._v("SHOTS ON TARGET")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ml1-StatsBar_MiniBar " }, [
+                _c(
+                  "b",
+                  {
+                    staticClass:
+                      "ml1-StatsBar_MiniBarValue ml1-StatsBar_MiniBarValue-1 team1Amt"
+                  },
+                  [_vm._v("0")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ml1-StatsBar_MiniBarSurround ",
+                    staticStyle: { color: "rgb(255, 255, 255)" }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "ml1-StatsBar_MiniBarFill ",
+                      staticStyle: {
+                        "border-top-right-radius": "0px",
+                        "border-bottom-right-radius": "0px",
+                        color: "rgb(0, 175, 240)"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "b",
+                  {
+                    staticClass:
+                      "ml1-StatsBar_MiniBarValue ml1-StatsBar_MiniBarValue-2 team2Amt"
+                  },
+                  [_vm._v("0")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "ml1-StatsLower_MiniBarWrapper " }, [
+            _c("div", { attrs: { id: "stat2" } }, [
+              _c(
+                "h4",
+                {
+                  staticClass: "ml1-StatsBar_MiniHeader title",
+                  staticStyle: { "font-size": "12px" }
+                },
+                [_vm._v("SHOTS OFF TARGET")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "ml1-StatsBar_MiniBar " }, [
+                _c(
+                  "b",
+                  {
+                    staticClass:
+                      "ml1-StatsBar_MiniBarValue ml1-StatsBar_MiniBarValue-1 team1Amt"
+                  },
+                  [_vm._v("0")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "ml1-StatsBar_MiniBarSurround ",
+                    staticStyle: { color: "rgb(255, 255, 255)" }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "ml1-StatsBar_MiniBarFill ",
+                      staticStyle: {
+                        "border-top-right-radius": "0px",
+                        "border-bottom-right-radius": "0px",
+                        color: "rgb(0, 175, 240)"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "b",
+                  {
+                    staticClass:
+                      "ml1-StatsBar_MiniBarValue ml1-StatsBar_MiniBarValue-2 team2Amt"
+                  },
+                  [_vm._v("0")]
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "ml1-StatsLower_MiniAwayWrapper " }, [
+          _c(
+            "div",
+            { staticClass: "ml1-StatsLower_StatsWrapper ml1-StatsLower_Away " },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "ml1-StatsLower_AllCards ",
+                  attrs: { id: "team2IconStats" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ml1-StatsColumn_MiniCornerWrapper ",
+                      staticStyle: { color: "rgb(255, 255, 255)" }
+                    },
+                    [
+                      _c("div", { staticClass: "ml1-StatsColumn_MiniCorner" }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "ml1-StatsColumn_MiniValue corners" },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "ml1-StatsColumn_MiniCardWrapper " },
+                    [
+                      _c("div", {
+                        staticClass: "ml1-StatsColumn_MiniRedCard "
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "ml1-StatsColumn_MiniValue card red" },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "ml1-StatsColumn_MiniCardWrapper " },
+                    [
+                      _c("div", {
+                        staticClass: "ml1-StatsColumn_MiniYellowCard "
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "ml1-StatsColumn_MiniValue card yellow"
+                        },
+                        [_vm._v("0")]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ipe-RHSMediaView_MLSpiner " }, [
+      _c("div", { staticClass: "ipe-RHSMediaView_Img " })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "LineUpContainer match-live " }, [
+      _c("span", {
+        staticStyle: { display: "block" },
+        attrs: { id: "cpLineupIconT1" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "LineUpContainer match-live " }, [
+      _c("span", {
+        staticStyle: { display: "block" },
+        attrs: { id: "cpLineupIconT2" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "MatchStatsPopUpBox" } }, [
+      _c("div", { staticClass: "StatsSelectIcon StatsContainerButton Hidden " })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "noStats", staticStyle: { display: "none" } },
+      [
+        _c("div", [
+          _c("span", { staticStyle: { "font-weight": "bold" } }, [
+            _vm._v("Disclaimer: ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              attrs: {
+                "data-balloon-length": "large",
+                "data-balloon":
+                  "Note: Minimum requirement Chrome 4.0, IE 9.0, Firefox/Mozilla 2.0, Safari 3.1, Opera 9.0. And all HTML5 supported browser including smart phone browser.",
+                "data-balloon-pos": "right"
+              }
+            },
+            [_vm._v("⚠")]
+          ),
+          _c("br"),
+          _vm._v(
+            "The information shown on this page is for reference only. We will not be held responsible for accuracy, error or mistake found on this page."
+          )
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-929415c4", esExports)
+  }
+}
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22643,7 +24636,7 @@ var MobileMenu = function () {
 exports.default = MobileMenu;
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22659,7 +24652,7 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Open_Close_Tab = __webpack_require__(16);
+var _Open_Close_Tab = __webpack_require__(19);
 
 var _Open_Close_Tab2 = _interopRequireDefault(_Open_Close_Tab);
 
@@ -22744,7 +24737,7 @@ var DesktopMenu = function (_openCloseTab) {
 exports.default = DesktopMenu;
 
 /***/ }),
-/* 16 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22776,7 +24769,7 @@ var OpenCloseTab = function () {
 exports.default = OpenCloseTab;
 
 /***/ }),
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22880,7 +24873,7 @@ var Prediction = function () {
 exports.default = Prediction;
 
 /***/ }),
-/* 18 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22938,7 +24931,7 @@ var StatsLiveStreamClick = function () {
 exports.default = StatsLiveStreamClick;
 
 /***/ }),
-/* 19 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

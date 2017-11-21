@@ -222,7 +222,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<img src="assets/images/livescore_empty.png"><br>
 					<p>Select a match from the left to see it's detail here!</p>
 				</div>
-				<livescoredetail></livescoredetail>
+				<livescoredetail>
+					<template scope="{msg}">
+						<livecastlivescore :msg="msg"></livecastlivescore>
+					</template>
+				</livescoredetail>
 			</div>
 		</div>
 	</div>

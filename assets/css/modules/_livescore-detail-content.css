@@ -88,6 +88,25 @@
             font-size:12px;
             margin-top:21px;
         }
+
+    }
+
+    &--header-livestream {
+        @mixin clearfix;
+
+        background-image: url(../../images/bg_mobile_quarter@2x.png);
+        box-shadow: 0 13px 8px -6px rgba(0,0,0, 0.2);
+        height:53px;
+        background-size: cover;
+        text-align:center;
+        font-weight:bold;
+        color:$mainWhite;
+        text-transform:uppercase;
+        text-shadow: rgba(0, 0, 0, 0.54) 1px 1px 4px;
+
+        div {
+            padding-top:18px;
+        }
     }
 
     &--stats-timeline {
@@ -151,7 +170,10 @@
     }
 
     &--timeline-detail {
+
+        
         ul {
+            
             margin:0;
             padding:0;
         }
