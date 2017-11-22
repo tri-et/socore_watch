@@ -48,12 +48,14 @@ class Prediction {
                 this.predictionHeader.addClass('prediction-detail-content--header-team--inplay');
                 this.ou_odd_header.addClass('odds-ou-header--inplay');
                 this.odds_ou_content_m8.addClass('odds-ou-content--m8--inplay');
+                this.predictionDetail.attr('title','inplay');
                 break;
             case 'pregame':
                 this.predictionDetailBtn.addClass('prediction-detail-content--btn--pregame');
                 this.predictionHeader.addClass('prediction-detail-content--header-team--pregame');
                 this.ou_odd_header.addClass('odds-ou-header--pregame');
                 this.odds_ou_content_m8.addClass('odds-ou-content--m8--pregame');
+                this.predictionDetail.attr('title','pregame');
                 break;
         }
 

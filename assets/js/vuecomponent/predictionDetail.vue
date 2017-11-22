@@ -1,5 +1,5 @@
 <template>
-  <div class="prediction-detail">
+  <div class="prediction-detail" title="inplay">
     <div class="prediction-detail--toolbar">
       <div class="prediction-detail--toolbar--back-icon">
         <i class="material-icons">keyboard_backspace</i>
@@ -169,7 +169,11 @@
           </div>
           <!-- end OU-->
         </div>
-        <div class="prediction-detail-content--livestream"></div>
+        <div class="prediction-detail-content--livestream">
+          <div class="livestream-container">
+                <slot :msg="msg"></slot>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -182,7 +186,7 @@ module.exports = {
     return {
       msg: '456568989',
     }
-  }
+  },
 }
 </script>
 
