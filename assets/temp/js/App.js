@@ -26911,9 +26911,6 @@ var Prediction = function () {
             }, 500);
             this.predictionDetail.removeClass('prediction-detail--is-visible');
         }
-    }, {
-        key: 'openNewTabPrediction',
-        value: function openNewTabPrediction() {}
     }]);
 
     return Prediction;

@@ -74,9 +74,6 @@ class Prediction  {
         }, 500);
         this.predictionDetail.removeClass('prediction-detail--is-visible');
     }
-
-    openNewTabPrediction() {
-    }
 }
 
 export default Prediction;
