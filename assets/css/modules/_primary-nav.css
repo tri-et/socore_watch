@@ -135,6 +135,7 @@
         text-transform: uppercase;
         display:inline-block;
         width: max-content;
+        transition: background-color 0.2s linear;
 
         img {
             float:left;

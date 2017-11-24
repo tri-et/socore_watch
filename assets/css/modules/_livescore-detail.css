@@ -17,7 +17,7 @@
     }
 
      @mixin at912 {
-        width:560px;
+        width:480px;
     }
 
     &--is-visible{

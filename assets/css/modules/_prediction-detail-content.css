@@ -225,7 +225,14 @@
         background-position: center;
         display:none;
     }
+
+    
    
+}
+.livestream-container {
+    &--is-visible {
+        display:none;
+    }
 }
 
 @keyframes leftmarquee {

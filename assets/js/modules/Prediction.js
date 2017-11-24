@@ -1,6 +1,7 @@
+'use strict'
 import $ from 'jquery';
-
-class Prediction {
+import statsLive from './StatsLiveStreamClick';
+class Prediction  {
     constructor() {
         this.btnBack = $('.prediction-detail--toolbar--back-icon');
         this.btnOpenNewTab = $('.prediction-detail--toolbar--opentab-icon');
@@ -12,6 +13,8 @@ class Prediction {
         this.predictionHeader = $('.prediction-detail-content--header-team');
         this.ou_odd_header = $('.odds-ou-header');
         this.odds_ou_content_m8 = $('.odds-ou-content--m8');
+        this.statsContent = $('.prediction-detail-content--stats')
+        this.statsLiveStreamClick =new statsLive();
         this.events();
     }
 
@@ -41,6 +44,8 @@ class Prediction {
         this.predictionHeader.attr('class', 'prediction-detail-content--header-team');
         this.ou_odd_header.attr('class', 'odds-ou-header');
         this.odds_ou_content_m8.attr('class', 'odds-ou-content--m8');
+        this.statsLiveStreamClick.refreshStatLiveStream();
+        
 
         switch (title) {
             case 'inplay':
@@ -48,12 +53,14 @@ class Prediction {
                 this.predictionHeader.addClass('prediction-detail-content--header-team--inplay');
                 this.ou_odd_header.addClass('odds-ou-header--inplay');
                 this.odds_ou_content_m8.addClass('odds-ou-content--m8--inplay');
+                this.predictionDetail.attr('title','inplay');
                 break;
             case 'pregame':
                 this.predictionDetailBtn.addClass('prediction-detail-content--btn--pregame');
                 this.predictionHeader.addClass('prediction-detail-content--header-team--pregame');
                 this.ou_odd_header.addClass('odds-ou-header--pregame');
                 this.odds_ou_content_m8.addClass('odds-ou-content--m8--pregame');
+                this.predictionDetail.attr('title','pregame');
                 break;
         }
 
@@ -69,7 +76,6 @@ class Prediction {
     }
 
     openNewTabPrediction() {
-        alert('open');
     }
 }
 
