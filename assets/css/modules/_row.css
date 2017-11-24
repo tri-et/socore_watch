@@ -95,14 +95,14 @@
     @mixin at912 {
         &__prediction , &__livescore {
             float:left;
-            width:calc(100vw - 560px);
+            width:calc(100vw - 480px);
             background-color:blue;
         }
         
         &__prediction-detail , &__livescore-detail {
             position:static;
             float:left;
-            width:560px;
+            width:480px;
             background-color:$mainWhite;
         }
     }
@@ -110,13 +110,13 @@
     @mixin atLarger {
         &__prediction , &__livescore {
             float:left;
-            width:64.26%;
+            width:69.38%
         }
         
         &__prediction-detail , &__livescore-detail {
             position:static;
             float:left;
-            width:560px;
+            width:480px;
             background-color:$mainWhite;
         }
     }

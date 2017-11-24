@@ -148,7 +148,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<img src="assets/images/livescore_empty.png"><br>
 					<p>Select a match from the left to see it's detail here!</p>
 				</div>
-				<predictiondetail></predictiondetail>
+				<predictiondetail>
+					<template slot-scope="{msg}">
+						<livecastprediction :msg="msg"></livecastprediction>
+					</template>
+				</predictiondetail>
 			</div>
 		</div>
 		<div class="row main-contents--livescore">
@@ -223,7 +227,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<p>Select a match from the left to see it's detail here!</p>
 				</div>
 				<livescoredetail>
-					<template scope="{msg}">
+					<template slot-scope="{msg}">
 						<livecastlivescore :msg="msg"></livecastlivescore>
 					</template>
 				</livescoredetail>

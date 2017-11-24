@@ -684,6 +684,8 @@ body{
         width: -webkit-max-content;
         width: -moz-max-content;
         width: max-content;
+        -webkit-transition: background-color 0.2s linear;
+        transition: background-color 0.2s linear;
     }
 
 .primary-nav a::after{
@@ -1088,14 +1090,14 @@ body{
 @media (min-width:912px){
         .row__prediction, .row__livescore {
             float:left;
-            width:calc(100vw - 560px);
+            width:calc(100vw - 480px);
             background-color:blue;
         }
         
         .row__prediction-detail, .row__livescore-detail {
             position:static;
             float:left;
-            width:560px;
+            width:480px;
             background-color:#FFF;
         }
     }
@@ -1103,13 +1105,13 @@ body{
 @media (min-width:1568px){
         .row__prediction, .row__livescore {
             float:left;
-            width:64.26%;
+            width:69.38%
         }
         
         .row__prediction-detail, .row__livescore-detail {
             position:static;
             float:left;
-            width:560px;
+            width:480px;
             background-color:#FFF;
         }
     }
@@ -1280,7 +1282,7 @@ body{
 @media (min-width:912px){
 
 .prediction-detail {
-        width:560px
+        width:480px
 }
     }
 
@@ -1379,7 +1381,7 @@ body{
 @media (min-width:912px){
 
 .livescore-detail {
-        width:560px
+        width:480px
 }
     }
 
@@ -1450,6 +1452,8 @@ body{
     float:right;
     height:100vh;
     width:100%;
+
+    
    
 }
 
@@ -1714,6 +1718,10 @@ body{
         width: 100%;
         background-repeat: no-repeat;
         background-position: center;
+        display:none;
+    }
+
+.livestream-container--is-visible {
         display:none;
     }
 
