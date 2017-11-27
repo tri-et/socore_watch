@@ -41,105 +41,241 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="row main-contents--prediction main-contents--is-visible">
 			<div class="row__prediction">
 				<div class="row__inplay-pregame inplay-pregame">
-					<div class="row row__inplay inplay-pregame--inplay">
-						<div class="header-title header-title--inplay">
-							<span>inplay</span>
-						</div>
-						<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
-							<div class="match-prediction--items">
-								<div class="match-prediction--kickoff-inplay">
-									<span>18:15</span> <span>kickoff</span>
-								</div>
-								<div class="match-prediction--teamname">
-									<span>Gil Vicente</span> <span>Benfica B</span>
-								</div>
-								<div class="match-prediction--score">
-									<span>1</span> <span>0</span>
-								</div><br>
-								<div class="btn btn--inplay">
-									<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
-									<div>
-										<span>Gil Vicente</span>
+					<div class="inplay-pregame--content">
+						<div class="row row__inplay inplay-pregame--inplay">
+							<div class="header-title header-title--inplay">
+								<span>inplay</span>
+							</div>
+							<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-inplay">
+										<span>18:15</span> <span>kickoff</span>
 									</div>
-									<div>
-										<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--inplay">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-inplay">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--inplay">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
-							<div class="match-prediction--items">
-								<div class="match-prediction--kickoff-inplay">
-									<span>18:15</span> <span>kickoff</span>
-								</div>
-								<div class="match-prediction--teamname">
-									<span>Gil Vicente</span> <span>Benfica B</span>
-								</div>
-								<div class="match-prediction--score">
-									<span>1</span> <span>0</span>
-								</div><br>
-								<div class="btn btn--inplay">
-									<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
-									<div>
-										<span>Gil Vicente</span>
+						<div class="row row__pregame inplay-pregame--pregame">
+							<div class="header-title header-title--pregame">
+								<span>pregame</span>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
 									</div>
-									<div>
-										<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
+								<div class="match-prediction--items">
+									<div class="match-prediction--kickoff-pregame">
+										<span>18:15</span> <span>kickoff</span>
+									</div>
+									<div class="match-prediction--teamname">
+										<span>Gil Vicente</span> <span>Benfica B</span>
+									</div>
+									<div class="match-prediction--score">
+										<span>1</span> <span>0</span>
+									</div><br>
+									<div class="btn btn--pregame">
+										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
+										<div>
+											<span>Gil Vicente</span>
+										</div>
+										<div>
+											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="row row__pregame inplay-pregame--pregame">
-						<div class="header-title header-title--pregame">
-							<span>pregame</span>
-						</div>
-						<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
-							<div class="match-prediction--items">
-								<div class="match-prediction--kickoff-pregame">
-									<span>18:15</span> <span>kickoff</span>
-								</div>
-								<div class="match-prediction--teamname">
-									<span>Gil Vicente</span> <span>Benfica B</span>
-								</div>
-								<div class="match-prediction--score">
-									<span>1</span> <span>0</span>
-								</div><br>
-								<div class="btn btn--pregame">
-									<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
-									<div>
-										<span>Gil Vicente</span>
-									</div>
-									<div>
-										<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
-							<div class="match-prediction--items">
-								<div class="match-prediction--kickoff-pregame">
-									<span>18:15</span> <span>kickoff</span>
-								</div>
-								<div class="match-prediction--teamname">
-									<span>Gil Vicente</span> <span>Benfica B</span>
-								</div>
-								<div class="match-prediction--score">
-									<span>1</span> <span>0</span>
-								</div><br>
-								<div class="btn btn--pregame">
-									<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
-									<div>
-										<span>Gil Vicente</span>
-									</div>
-									<div>
-										<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div><br>
-					<!--<div class="footer">footer</div>-->
+					<div class="footer">
+						<span>All Right Reserved. © 2017. Powered by In-Play</span>
+					</div>
 				</div>
 			</div>
 			<div class="row__prediction-detail fade-in">
@@ -158,66 +294,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<div class="row main-contents--livescore">
 			<div class="row__livescore">
 				<div class="row__inplay-pregame inplay-pregame">
-					<div class="row row__inplay inplay-pregame--inplay">
-						<div class="header-title--livescore">
-							<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
-							<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
+					<div class="inplay-pregame--content">
+						<div class="row row__inplay inplay-pregame--inplay">
+							<div class="header-title--livescore">
+								<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
+								<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
+							</div>
+							<div class="match-livescore">
+								<ul>
+									<li>
+										<div class="match-livescore match-livescore--items" title="test1">
+											<div class="match-livescore--kickoff">
+												<span>17:00</span> <span>kickoff</span>
+											</div>
+											<div class="match-livescore--teamname">
+												<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
+											</div>
+											<div class="match-livescore--score">
+												<span>1</span> <span>0</span>
+											</div>
+										</div>
+									</li>
+									<li>
+										<div class="match-livescore match-livescore--items">
+											<div class="match-livescore--kickoff">
+												<span>17:00</span> <span>kickoff</span>
+											</div>
+											<div class="match-livescore--teamname">
+												<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
+											</div>
+											<div class="match-livescore--score">
+												<span>1</span> <span>0</span>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
 						</div>
-						<div class="match-livescore">
-							<ul>
-								<li>
-									<div class="match-livescore match-livescore--items" title="test1">
-										<div class="match-livescore--kickoff">
-											<span>17:00</span> <span>kickoff</span>
+						<div class="row row__pregame inplay-pregame--pregame">
+							<div class="header-title--livescore">
+								<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
+								<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
+							</div>
+							<div class="match-livescore">
+								<ul>
+									<li>
+										<div class="match-livescore match-livescore--items">
+											<div class="match-livescore--kickoff">
+												<span>17:00</span> <span>kickoff</span>
+											</div>
+											<div class="match-livescore--teamname">
+												<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
+											</div>
+											<div class="match-livescore--score">
+												<span>1</span> <span>0</span>
+											</div>
 										</div>
-										<div class="match-livescore--teamname">
-											<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
-										</div>
-										<div class="match-livescore--score">
-											<span>1</span> <span>0</span>
-										</div>
-									</div>
-								</li>
-								<li>
-									<div class="match-livescore match-livescore--items">
-										<div class="match-livescore--kickoff">
-											<span>17:00</span> <span>kickoff</span>
-										</div>
-										<div class="match-livescore--teamname">
-											<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
-										</div>
-										<div class="match-livescore--score">
-											<span>1</span> <span>0</span>
-										</div>
-									</div>
-								</li>
-							</ul>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
-					<div class="row row__pregame inplay-pregame--pregame">
-						<div class="header-title--livescore">
-							<div><img src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"/></div>
-							<div><span>Germany Oberliga Bade-Wurttemberg</span></div>
-						</div>
-						<div class="match-livescore">
-							<ul>
-								<li>
-									<div class="match-livescore match-livescore--items">
-										<div class="match-livescore--kickoff">
-											<span>17:00</span> <span>kickoff</span>
-										</div>
-										<div class="match-livescore--teamname">
-											<span>SC Ostbahn XI</span> <span>SC Mannsworth</span>
-										</div>
-										<div class="match-livescore--score">
-											<span>1</span> <span>0</span>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div><br>
-					<!--<div class="footer">footer</div>-->
+					<div class="footer">
+						<span>All Right Reserved. © 2017. Powered by In-Play</span>
+					</div>	
 				</div>
 			</div>
 			<div class="row__livescore-detail fade-in">
@@ -244,28 +384,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<img height="30" src="<?php echo base_url()?>assets/images/search.png" width="30"> <input placeholder="Search for a match" type="text">
 			</div>
 			<div class="sidebar-list-menu">
-				<nav>
-					<ul>
-						<li>
-							<a>
-							<div class="sidebar-list-menu--activemenu"></div><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png"><span>predictions</span></a>
-						</li>
-						<li>
-							<a>
-							<div></div><img class="sidebar-list-menu--icon-livescores" src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"><span>live scores</span></a>
-						</li>
-						<li>
-							<a>
-							<div></div><img src="<?php echo base_url()?>assets/images/menu_aboutus@1x.png"><span>about us</span></a>
-						</li>
-						<li>
-							<a>
-							<div></div><img src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
-						</li>
-					</ul>
-				</nav>
-				<div>
-					footer
+				<div class="sidebar-list-menu--items">
+					<nav>
+						<ul>
+							<li>
+								<a>
+								<div class="sidebar-list-menu--activemenu"></div><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png"><span>predictions</span></a>
+							</li>
+							<li>
+								<a>
+								<div></div><img class="sidebar-list-menu--icon-livescores" src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"><span>live scores</span></a>
+							</li>
+							<li>
+								<a>
+								<div></div><img src="<?php echo base_url()?>assets/images/menu_aboutus@1x.png"><span>about us</span></a>
+							</li>
+							<li>
+								<a>
+								<div></div><img src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+				<div class="footerSidebar">
+					<span>Made by AMSB. All Right Reserved. © 2017</span>
 				</div>
 			</div>
 		</div>

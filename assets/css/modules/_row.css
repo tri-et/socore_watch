@@ -12,9 +12,10 @@
     &__prediction , &__livescore {
         float:left;
         width:100%;
-        background-color:blue;
         height:100vh;
         position:relative;
+        overflow: auto;
+        bottom: 64px;
     }
 
     &__prediction-detail , &__livescore-detail {
@@ -31,6 +32,7 @@
     &__inplay-pregame {
         width:100%;
         height:100vh;
+        position: absolute;
         @mixin atSmaller {
             width:480px;
             margin:auto;
@@ -81,7 +83,6 @@
         &__prediction , &__livescore {
             float:left;
             width:calc(100vw - 320px);
-            background-color:blue;
         }
         
         &__prediction-detail , &__livescore-detail {
@@ -96,7 +97,6 @@
         &__prediction , &__livescore {
             float:left;
             width:calc(100vw - 480px);
-            background-color:blue;
         }
         
         &__prediction-detail , &__livescore-detail {
