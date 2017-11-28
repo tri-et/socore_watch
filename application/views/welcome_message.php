@@ -19,7 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<ul>
 				<li><i class="fa fa-bars primary-nav--icon-menu-bar"></i></li>
 				<li>
-					<a class="primary-nav--activemenu" href="#"><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png"><span>predictions</span><span class="badge badge--inplay">1+ New</span><br>
+					<a class="primary-nav--activemenu" href="#"><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png">
+					<span>predictions</span>
+					<span class="badge badge--inplay">1+ New</span><br>
 					<div class="primary-nav--highlight"></div></a>
 				</li>
 				<li>
@@ -387,21 +389,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="sidebar-list-menu--items">
 					<nav>
 						<ul>
-							<li>
-								<a>
-								<div class="sidebar-list-menu--activemenu"></div><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png"><span>predictions</span></a>
+							<li data-menu-type="predictions">
+								<a><div class="sidebar-list-menu--activemenu"></div><img src="<?php echo base_url()?>assets/images/menu_predictions@1x.png"><span>predictions</span></a>
 							</li>
-							<li>
-								<a>
-								<div></div><img class="sidebar-list-menu--icon-livescores" src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"><span>live scores</span></a>
+							<li data-menu-type="livescore">
+								<a><div></div><img class="sidebar-list-menu--icon-livescores" src="<?php echo base_url()?>assets/images/menu_livescores@1x.png"><span>live scores</span></a>
 							</li>
-							<li>
-								<a>
-								<div></div><img src="<?php echo base_url()?>assets/images/menu_aboutus@1x.png"><span>about us</span></a>
+							<li data-menu-type="help">
+								<a><div></div><img class="sidebar-list-menu--icon-help" src="<?php echo base_url()?>assets/images/icon_help@1x.png"><span>help</span></a>
 							</li>
-							<li>
-								<a>
-								<div></div><img src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
+							<li data-menu-type="aboutus">
+								<a><div></div><img src="<?php echo base_url()?>assets/images/menu_aboutus@1x.png"><span>about us</span></a>
+							</li>
+							<li data-menu-type="login">
+								<a><div></div><img class="sidebar-list-menu--icon-login" src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
 							</li>
 						</ul>
 					</nav>

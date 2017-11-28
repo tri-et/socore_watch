@@ -74,6 +74,10 @@ class Prediction  {
         }, 500);
         this.predictionDetail.removeClass('prediction-detail--is-visible');
     }
+
+    openNewTabPrediction(){
+        alert();
+    }
 }
 
 export default Prediction;

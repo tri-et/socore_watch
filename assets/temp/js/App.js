@@ -10570,11 +10570,11 @@ var _StatsLiveStreamClick = __webpack_require__(3);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
-var _Prediction = __webpack_require__(24);
+var _Prediction = __webpack_require__(23);
 
 var _Prediction2 = _interopRequireDefault(_Prediction);
 
-var _LiveSocre = __webpack_require__(25);
+var _LiveSocre = __webpack_require__(24);
 
 var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
 
@@ -26636,6 +26636,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+//import deskTopMenu from './DesktopMenu'
 var MobileMenu = function () {
     function MobileMenu() {
         _classCallCheck(this, MobileMenu);
@@ -26645,6 +26646,12 @@ var MobileMenu = function () {
         this.btnClose = (0, _jquery2.default)(".side-bar-search-content--btnclosemenu");
         this.itemMenu = (0, _jquery2.default)(".sidebar-list-menu ul li");
         this.predictions = (0, _jquery2.default)('.primary-nav ul li:nth-child(2)');
+        this.helpContainer = (0, _jquery2.default)('.help-container');
+        this.aboutContainer = (0, _jquery2.default)('.about-container');
+        this.contentPrediction = (0, _jquery2.default)('.main-contents--prediction');
+        this.contentLiveScore = (0, _jquery2.default)('.main-contents--livescore');
+        this.mainContainer = (0, _jquery2.default)('.main-container > div');
+        this.itemMainMenu = (0, _jquery2.default)('.primary-nav ul li a');
         this.events();
     }
 
@@ -26669,6 +26676,28 @@ var MobileMenu = function () {
         value: function itemClick(item) {
             this.itemMenu.find('div').removeClass('sidebar-list-menu--activemenu');
             (0, _jquery2.default)((0, _jquery2.default)(item.currentTarget).find('div')).addClass('sidebar-list-menu--activemenu');
+            this.toggleTheMenu();
+            switch (item.currentTarget.dataset.menuType) {
+                case 'predictions':case 'livescore':
+                    this.mainContainer.removeClass('main-contents--is-visible');
+                    this.itemMainMenu.removeClass('primary-nav--activemenu');
+                    if (item.currentTarget.dataset.menuType == 'predictions') {
+                        this.contentPrediction.addClass('main-contents--is-visible');
+                        (0, _jquery2.default)(this.itemMainMenu[0]).addClass('primary-nav--activemenu');
+                    } else {
+                        this.contentLiveScore.addClass('main-contents--is-visible');
+                        (0, _jquery2.default)(this.itemMainMenu[1]).addClass('primary-nav--activemenu');
+                    }
+                    break;
+                case 'help':
+                    this.helpContainer.toggleClass('help-container--is-visible');
+                    break;
+                case 'aboutus':
+                    this.aboutContainer.toggleClass('about-container--is-visible');
+                    break;
+                case 'test':
+                    break;
+            }
         }
     }]);
 
@@ -26694,37 +26723,24 @@ var _jquery = __webpack_require__(0);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _Open_Close_Tab = __webpack_require__(23);
-
-var _Open_Close_Tab2 = _interopRequireDefault(_Open_Close_Tab);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DesktopMenu = function (_openCloseTab) {
-  _inherits(DesktopMenu, _openCloseTab);
-
+var DesktopMenu = function () {
   function DesktopMenu() {
     _classCallCheck(this, DesktopMenu);
 
-    var _this = _possibleConstructorReturn(this, (DesktopMenu.__proto__ || Object.getPrototypeOf(DesktopMenu)).call(this));
-
-    _this.menuIcon = (0, _jquery2.default)('.primary-nav--icon-menu-bar');
-    _this.itemMenu = (0, _jquery2.default)('.primary-nav ul li a');
-    _this.contentPrediction = (0, _jquery2.default)('.main-contents--prediction');
-    _this.contentLiveScore = (0, _jquery2.default)('.main-contents--livescore');
-    _this.mainContainer = (0, _jquery2.default)('.main-container > div');
-    _this.helpContainer = (0, _jquery2.default)('.help-container');
-    _this.aboutContainer = (0, _jquery2.default)('.about-container');
-    _this.btnCloseHelpContent = (0, _jquery2.default)('.help-content--btnclosemenu');
-    _this.btnCloseAboutContent = (0, _jquery2.default)('.about-content--btnclosemenu');
-    _this.events();
-    return _this;
+    this.menuIcon = (0, _jquery2.default)('.primary-nav--icon-menu-bar');
+    this.itemMenu = (0, _jquery2.default)('.primary-nav ul li a');
+    this.contentPrediction = (0, _jquery2.default)('.main-contents--prediction');
+    this.contentLiveScore = (0, _jquery2.default)('.main-contents--livescore');
+    this.mainContainer = (0, _jquery2.default)('.main-container > div');
+    this.helpContainer = (0, _jquery2.default)('.help-container');
+    this.aboutContainer = (0, _jquery2.default)('.about-container');
+    this.btnCloseHelpContent = (0, _jquery2.default)('.help-content--btnclosemenu');
+    this.btnCloseAboutContent = (0, _jquery2.default)('.about-content--btnclosemenu');
+    this.events();
   }
 
   _createClass(DesktopMenu, [{
@@ -26774,44 +26790,12 @@ var DesktopMenu = function (_openCloseTab) {
   }]);
 
   return DesktopMenu;
-}(_Open_Close_Tab2.default);
+}();
 
 exports.default = DesktopMenu;
 
 /***/ }),
 /* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var OpenCloseTab = function () {
-    function OpenCloseTab() {
-        _classCallCheck(this, OpenCloseTab);
-    }
-
-    _createClass(OpenCloseTab, [{
-        key: 'test',
-        value: function test() {
-            alert('this.divid');
-        }
-    }]);
-
-    return OpenCloseTab;
-}();
-
-exports.default = OpenCloseTab;
-
-/***/ }),
-/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26911,6 +26895,11 @@ var Prediction = function () {
             }, 500);
             this.predictionDetail.removeClass('prediction-detail--is-visible');
         }
+    }, {
+        key: 'openNewTabPrediction',
+        value: function openNewTabPrediction() {
+            alert();
+        }
     }]);
 
     return Prediction;
@@ -26919,7 +26908,7 @@ var Prediction = function () {
 exports.default = Prediction;
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -31,7 +31,8 @@
     max-height: 547px;
 
     &--header {
-
+        display: flex;
+        align-items: center;
         height:119px;
         box-shadow: 0 13px 8px -6px rgba($mainBlack, 0.2);
         
@@ -95,11 +96,9 @@
     &--btnclosemenu {
         position:absolute;
         right:10px;
-        top:0;
         font-size:35px;
         font-weight:500;
         color:$mainBlue;
         cursor: pointer !important;
-        line-height: 1;
     }    
 }

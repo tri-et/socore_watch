@@ -174,16 +174,16 @@
         }
 
         &--comma {
-            width:8%;
+            width:12%;
             text-align:center;
         }
 
         &--home {
-            width:46%;
+            width:44%;
         }
 
         &--away {
-            width:46%;
+            width:44%;
             span {
                 float:right;
             }

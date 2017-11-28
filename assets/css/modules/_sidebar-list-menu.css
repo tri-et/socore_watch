@@ -4,7 +4,7 @@
     right:0;
     left:0;
     top:175px;
-    bottom:10px;
+    bottom:0px;
     @mixin clearfix;
     ul {
         background-color: $mainWhite;
@@ -51,6 +51,15 @@
     
     &--icon-livescores {
         margin-top:23px !important;
+    }
+
+    &--icon-help{
+        margin-top: 20px !important;
+        margin-right: 24px !important;
+    }
+
+    &--icon-login{
+        margin-right: 21px !important;
     }
 
     &--items {
