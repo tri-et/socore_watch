@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div class="match-prediction--score">
 										<span>1</span> <span>0</span>
 									</div><br>
-									<div class="btn btn--inplay">
+									<!--<div class="btn btn--inplay">
 										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
 										<div>
 											<span>Gil Vicente</span>
@@ -67,7 +67,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<div>
 											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
 										</div>
-									</div>
+									</div>-->
+									<buttonprediction></buttonprediction>
 								</div>
 							</div>
 							<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
@@ -460,54 +461,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<div class="about-container">
-	<div class="about-content"  onclick="event.cancelBubble=true;">
-			<div class="about-content--header">
-				<img src="<?php echo base_url()?>assets/images/logo@1x.png" alt="">
-				<span class="about-content--btnclosemenu">&times;</span>
-			</div>
-			<div class="about-content--content">
-				<div class="about-content--content--items">
-					<div>
-						<img src="<?php echo base_url()?>assets/images/about_syndication@1x.png" alt="">
-						<span class="about-content--content--about-syn">syndication</span>
-					</div>
-					<div>
-						<span>Leveraging the many networks and existing connections that already exist 
-						in the world of football-related live scores, news & predictions! Built upon 
-						reliable networks that are totally immersed in the scene from the underground 
-						tips to the backroom insights, all collected and refined through a reliable 
-						mechanism that has been the cornerstone of competitive odds</span>
-					</div>
+		<div class="about-content"  onclick="event.cancelBubble=true;">
+				<div class="about-content--header">
+					<img src="<?php echo base_url()?>assets/images/logo@1x.png" alt="">
+					<span class="about-content--btnclosemenu">&times;</span>
 				</div>
-				<div class="about-content--content--items">
-					<div>
-						<img src="<?php echo base_url()?>assets/images/about_ai@1x.png" alt="">
-						<span class="about-content--content--about-ai">Advanced A.I</span>
+				<div class="about-content--content">
+					<div class="about-content--content--items">
+						<div>
+							<img src="<?php echo base_url()?>assets/images/about_syndication@1x.png" alt="">
+							<span class="about-content--content--about-syn">syndication</span>
+						</div>
+						<div>
+							<span>Leveraging the many networks and existing connections that already exist 
+							in the world of football-related live scores, news & predictions! Built upon 
+							reliable networks that are totally immersed in the scene from the underground 
+							tips to the backroom insights, all collected and refined through a reliable 
+							mechanism that has been the cornerstone of competitive odds</span>
+						</div>
 					</div>
-					<div>
-						<span>Building the systems of tomorrow, that make use of the many advances in 
-						Artificial Intelligence, for faster, more accurate information! We make use of 
-						the latest, most powerful and accurate AI systems that have ever been put to use 
-						with sports information. This gives us the ability to send a large amount of 
-						data to the servers, and compute with great accuracy the likely results!</span>
+					<div class="about-content--content--items">
+						<div>
+							<img src="<?php echo base_url()?>assets/images/about_ai@1x.png" alt="">
+							<span class="about-content--content--about-ai">Advanced A.I</span>
+						</div>
+						<div>
+							<span>Building the systems of tomorrow, that make use of the many advances in 
+							Artificial Intelligence, for faster, more accurate information! We make use of 
+							the latest, most powerful and accurate AI systems that have ever been put to use 
+							with sports information. This gives us the ability to send a large amount of 
+							data to the servers, and compute with great accuracy the likely results!</span>
+						</div>
 					</div>
-				</div>
-				<div class="about-content--content--items">
-					<div>
-						<img src="<?php echo base_url()?>assets/images/about_professionals@1x.png" alt="">
-						<span class="about-content--content--about-pro">Independent Professionals</span>
-					</div>
-					<div>
-						<span>Stay ahead of the game with collected insights, information and knowledge 
-						from our network of independent professionals! With the flexibility of automation, 
-						it is possible for us to gather data from a large selection of individual tipsters, 
-						which gives access to the bigger picture, the reasoning and the likelihoods behind 
-						different odds available on the market at any time!</span>
+					<div class="about-content--content--items">
+						<div>
+							<img src="<?php echo base_url()?>assets/images/about_professionals@1x.png" alt="">
+							<span class="about-content--content--about-pro">Independent Professionals</span>
+						</div>
+						<div>
+							<span>Stay ahead of the game with collected insights, information and knowledge 
+							from our network of independent professionals! With the flexibility of automation, 
+							it is possible for us to gather data from a large selection of individual tipsters, 
+							which gives access to the bigger picture, the reasoning and the likelihoods behind 
+							different odds available on the market at any time!</span>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 	<script src="<?php echo base_url()?>assets/temp/js/App.js">
 	</script>
 </body>

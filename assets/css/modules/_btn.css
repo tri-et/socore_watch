@@ -18,6 +18,34 @@
             margin-top:10px;
         }
 
+        div:nth-child(2) {
+            width: 26%;
+            overflow: hidden;
+            white-space: nowrap;
+
+            @mixin atSmaller {
+                width:auto;    
+                max-width: 190px;
+            }
+            @mixin at672 {
+               width: 26%; 
+            }
+
+            @mixin at912{
+                width:auto;    
+                max-width: 190px;
+            }
+
+            @mixin at1248{
+                width: 26%; 
+            }
+
+            @mixin atLarger {
+                width:auto;    
+                max-width: 190px;
+            }
+        }
+
         div:last-child {
             float:right;
             display:flex;

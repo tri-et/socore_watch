@@ -4,6 +4,7 @@ import PredictionDetailVue from './vuecomponent/predictionDetail.vue'
 import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
 import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
 import LiveCastPrediction from './vuecomponent/livecastPrediction.vue'
+import ButtonPrediction from './vuecomponent/buttonPrediction.vue'
 import MobileMenu from './modules/MobileMenu'
 import DesktopMenu from './modules/DesktopMenu'
 import StatsLiveStreamClick from './modules/StatsLiveStreamClick'
@@ -17,6 +18,7 @@ new Vue({
     livescoredetail: LiveScoreDetailVue,
     livecastprediction:LiveCastPrediction,
     livecastlivescore: LiveCastLiveScoreVue,
+    buttonprediction:ButtonPrediction
   },
 })
 
