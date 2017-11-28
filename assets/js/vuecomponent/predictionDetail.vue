@@ -186,7 +186,7 @@ module.exports = {
     return {
       msg: '456568989',
     }
-  },
+  }
 }
 </script>
 

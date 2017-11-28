@@ -63,7 +63,31 @@
         border-color:transparent transparent transparent rgba($mainBlack,0.6);
     }
 
-    
+    a {
+        @mixin clearfix;
+        color:#36569B;
+        font-size:16px;
+        font-weight:600;
+        text-decoration:none;
+        padding:1rem 1rem 0.45rem 1rem;
+        text-transform: uppercase;
+        display:inline-block;
+        width: max-content;
+        transition: background-color 0.2s linear;
+
+        img {
+            float:left;
+            padding-right:18px;
+            display:none;
+        }
+
+        span {
+            padding-top:8px;
+            float:left;
+        }
+
+        @mixin clearfix;
+    }
 
        
     @mixin atMedium {
@@ -113,6 +137,10 @@
         &--tooltip:hover &--tooltiptext{
             visibility: visible;
         }
+
+        a {
+            color:rgba($mainBlack, 0.4) !important;
+        }
     }
 
     @mixin atLarge {
@@ -123,34 +151,11 @@
         &--tooltip:hover &--tooltiptext{
             visibility: hidden;
         }
-    }
 
-    a {
-        @mixin clearfix;
-        color:rgba($mainBlack, 0.4);
-        font-size:16px;
-        font-weight:600;
-        text-decoration:none;
-        padding:1rem 1rem 0.45rem 1rem;
-        text-transform: uppercase;
-        display:inline-block;
-        width: max-content;
-        transition: background-color 0.2s linear;
-
-        img {
-            float:left;
-            padding-right:18px;
-            display:none;
+        a {
+            color:rgba($mainBlack, 0.4) !important;
         }
-
-        span {
-            padding-top:8px;
-            float:left;
-        }
-
-        @mixin clearfix;
     }
-
 
     &--highlight {
         border-top: 4px solid #6087DB;

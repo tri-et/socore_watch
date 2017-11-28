@@ -52,5 +52,14 @@
         margin-right:12px;
         margin-left:5px;
     }
+
+    &--btn-selected {
+        border: 3px solid transparent !important;
+        box-shadow: inset 0px 0px 0px 2px #fff;
+        box-sizing: border-box;
+        div{
+            margin-top:6px !important;
+        }
+    }
 }
 

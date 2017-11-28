@@ -1,8 +1,6 @@
 import $ from 'jquery'
-import openCloseTab from './Open_Close_Tab'
-class DesktopMenu extends openCloseTab {
+class DesktopMenu  {
   constructor() {
-    super()
     this.menuIcon = $('.primary-nav--icon-menu-bar')
     this.itemMenu = $('.primary-nav ul li a')
     this.contentPrediction = $('.main-contents--prediction')
@@ -27,10 +25,7 @@ class DesktopMenu extends openCloseTab {
   itemMenuClick(item) {
     if (this.menuIcon.is(':hidden')) {
       let titleMenu = $(item.currentTarget).find('span')[0]
-      if (
-        titleMenu.innerHTML == 'live scores' ||
-        titleMenu.innerHTML == 'predictions'
-      ) {
+      if (titleMenu.innerHTML == 'live scores' ||titleMenu.innerHTML == 'predictions') {
         this.itemMenu.removeClass('primary-nav--activemenu')
         $(item.currentTarget).addClass('primary-nav--activemenu')
         this.mainContainer.removeClass('main-contents--is-visible')

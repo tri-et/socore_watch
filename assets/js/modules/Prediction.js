@@ -34,7 +34,8 @@ class Prediction  {
             })
 
         };
-
+        $(this.matchPrediction.find('div.btn')).removeClass('btn--btn-selected')
+        $($(item.currentTarget).find('div.btn')).addClass('btn--btn-selected')
         this.predictionContent.addClass('fade-out').removeClass('fade-in');
         this.noMatchPrediction.addClass('no-match-prediction--is-visible');
         this.predictionDetail.addClass('prediction-detail--is-visible');
@@ -73,6 +74,10 @@ class Prediction  {
             that.noMatchPrediction.removeClass('no-match-prediction--is-visible');
         }, 500);
         this.predictionDetail.removeClass('prediction-detail--is-visible');
+    }
+
+    openNewTabPrediction(){
+        alert();
     }
 }
 
