@@ -26856,7 +26856,8 @@ var Prediction = function () {
                     that.predictionDetail.removeClass('prediction-detail--shrink');
                 });
             };
-
+            (0, _jquery2.default)(this.matchPrediction.find('div.btn')).removeClass('btn--btn-selected');
+            (0, _jquery2.default)((0, _jquery2.default)(item.currentTarget).find('div.btn')).addClass('btn--btn-selected');
             this.predictionContent.addClass('fade-out').removeClass('fade-in');
             this.noMatchPrediction.addClass('no-match-prediction--is-visible');
             this.predictionDetail.addClass('prediction-detail--is-visible');

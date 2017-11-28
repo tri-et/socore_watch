@@ -2472,6 +2472,18 @@ body{
         margin-left:5px;
     }
 
+.btn--btn-selected {
+        border: 3px solid transparent !important;
+        -webkit-box-shadow: inset 0px 0px 0px 2px #fff;
+                box-shadow: inset 0px 0px 0px 2px #fff;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+
+.btn--btn-selected div{
+            margin-top:6px !important;
+        }
+
 .match-livescore {
     //background-color:#FFF;
     width:100%;

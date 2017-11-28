@@ -401,9 +401,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<li data-menu-type="aboutus">
 								<a><div></div><img src="<?php echo base_url()?>assets/images/menu_aboutus@1x.png"><span>about us</span></a>
 							</li>
-							<li data-menu-type="login">
+							<!--<li data-menu-type="login">
 								<a><div></div><img class="sidebar-list-menu--icon-login" src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
-							</li>
+							</li>-->
 						</ul>
 					</nav>
 				</div>
