@@ -27,3 +27,4 @@
 @import "modules/_help-container";
 @import "modules/_about-container";
 @import "modules/_livecast";
+@import "vue-resize/dist/vue-resize.css"

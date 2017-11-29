@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
 										</div>
 									</div>-->
-									<buttonprediction></buttonprediction>
+									<buttonprediction inplaypregame="inplay"></buttonprediction>
 								</div>
 							</div>
 							<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
@@ -109,7 +109,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									<div class="match-prediction--score">
 										<span>1</span> <span>0</span>
 									</div><br>
-									<div class="btn btn--pregame">
+									<!--<div class="btn btn--pregame">
 										<div><img class="btn--tickicon" src="<?php echo base_url()?>assets/images/icon_tick@2x.png"></div>
 										<div>
 											<span>Gil Vicente</span>
@@ -117,7 +117,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<div>
 											<span>90'</span> <span><img class="btn--watchicon" src="<?php echo base_url()?>assets/images/stopwatch_@1x.png"></span>
 										</div>
-									</div>
+									</div>-->
+									<buttonprediction inplaypregame="pregame"></buttonprediction>
 								</div>
 							</div>
 							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">

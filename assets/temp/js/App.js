@@ -26759,7 +26759,6 @@ if (false) {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(24);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
@@ -26776,7 +26775,7 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
   __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
@@ -26807,8 +26806,9 @@ if (false) {(function () {
 
 /***/ }),
 /* 23 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 //
 //
 //
@@ -26828,13 +26828,27 @@ if (false) {(function () {
 //
 //
 
-module.exports = {
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: {
+    "inplaypregame": {
+      type: String
+
+    }
+  },
   methods: {
     setMarquee() {
-      console.log('123');
+      let divContain = this.$el.querySelector('div:nth-child(2)');
+      let textWidth = divContain.children[0].offsetWidth;
+      let divWidth = divContain.offsetWidth;
+
+      if (divWidth < textWidth) {
+        divContain.children[0].classList.add('marquee');
+      } else {
+        divContain.children[0].classList.remove('marquee');
+      }
     }
   }
-};
+});
 
 /***/ }),
 /* 24 */
@@ -26845,25 +26859,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "btn btn--inplay" }, [
-    _vm._m(0, false, false),
-    _vm._v(" "),
-    _vm._m(1, false, false),
-    _vm._v(" "),
-    _vm._m(2, false, false),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
-        _c("span", [_vm._v("90'")]),
-        _vm._v(" "),
-        _vm._m(3, false, false),
-        _vm._v(" "),
-        _c("resize-observer", { on: { notify: _vm.setMarquee } })
-      ],
-      1
-    )
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "btn",
+      class: {
+        "btn--inplay": _vm.inplaypregame == "inplay",
+        "btn--pregame": _vm.inplaypregame == "pregame"
+      }
+    },
+    [
+      _vm._m(0, false, false),
+      _vm._v(" "),
+      _vm._m(1, false, false),
+      _vm._v(" "),
+      _vm._m(2, false, false),
+      _vm._v(" "),
+      _c(
+        "div",
+        [
+          _c("span", [_vm._v("90'")]),
+          _vm._v(" "),
+          _vm._m(3, false, false),
+          _vm._v(" "),
+          _c("resize-observer", { on: { notify: _vm.setMarquee } })
+        ],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {

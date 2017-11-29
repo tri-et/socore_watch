@@ -1,5 +1,5 @@
 <template>
-  <div class="btn btn--inplay">
+  <div class="btn" :class="{'btn--inplay':inplaypregame=='inplay','btn--pregame':inplaypregame=='pregame'}">
     <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
     <div>
         <span>Gil Vicente Gil Vicente</span>
@@ -17,10 +17,23 @@
   </div>
 </template>
 <script>
-module.exports = {
+export default {
+  props: {
+    "inplaypregame":{
+      type:String
+    }
+  },
   methods: {
     setMarquee() {
-      console.log('123')
+      let divContain = this.$el.querySelector('div:nth-child(2)')
+      let textWidth = divContain.children[0].offsetWidth
+      let divWidth = divContain.offsetWidth
+
+      if (divWidth < textWidth) {
+        divContain.children[0].classList.add('marquee');
+      } else {
+        divContain.children[0].classList.remove('marquee')
+      }
     },
   },
 }

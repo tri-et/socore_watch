@@ -16,7 +16,9 @@
         width:100%;
         float:left;
         @mixin at672 {
-            width:320px;
+            width:100%;
+            max-width:480px;
+            min-width:320px;
         }
 
         @mixin at912 {
@@ -45,7 +47,9 @@
         float:left;
 
         @mixin at672 {
-            width:320px;
+            width:100%;
+            max-width:480px;
+            min-width:320px;
         }
 
         @mixin at912 {
