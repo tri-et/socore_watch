@@ -11,11 +11,12 @@ module.exports = {
             query: {
                 presets: ['es2015']
             },
-            test: /\.(js|png|jpeg)$/,
-            exclude: /node_modules/
+            test: /\.js$/,
+            exclude: /node_modules|vue/
         }, {
             test: /\.vue$/,
-            loader: 'vue-loader'
+            loader: 'vue-loader',
+            exclude: /node_modules/
         }]
     },
     resolve: { alias: { vue: 'vue/dist/vue.js' } }

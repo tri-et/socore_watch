@@ -16,14 +16,17 @@ gulp.task('watch', function() {
 
     watch('./assets/css/**/*.css', function() {
         gulp.start('cssInject');
+        console.log('cssInject');
     });
 
     watch('./assets/js/**/*.js', function() {
         gulp.start('scriptsRefresh');
+        console.log('scriptsRefresh');
     });
 
     watch('./assets/js/**/*.vue', function() {
         gulp.start('vueComponent');
+        console.log('vueComponent');
     });
 });
 
@@ -32,10 +35,10 @@ gulp.task('cssInject', ['styles'], function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('scriptsRefresh', ['scripts'], function() {
+gulp.task('scriptsRefresh', function() {
     browserSync.reload();
 });
 
-gulp.task('vueComponent', ['scripts'], function() {
+gulp.task('vueComponent',['scripts'], function() {
     browserSync.reload();
 });
