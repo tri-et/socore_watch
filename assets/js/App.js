@@ -19,7 +19,7 @@ new Vue({
     livecastprediction:LiveCastPrediction,
     livecastlivescore: LiveCastLiveScoreVue,
     buttonprediction:ButtonPrediction
-  },
+  }
 })
 
 var livescore = new LiveScore()

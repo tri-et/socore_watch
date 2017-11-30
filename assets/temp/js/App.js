@@ -26827,16 +26827,17 @@ if (false) {(function () {
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
-    "inplaypregame": {
+    inplaypregame: {
       type: String
-
     }
   },
   methods: {
     setMarquee() {
+      console.log(1);
       let divContain = this.$el.querySelector('div:nth-child(2)');
       let textWidth = divContain.children[0].offsetWidth;
       let divWidth = divContain.offsetWidth;
@@ -26847,7 +26848,13 @@ if (false) {(function () {
         divContain.children[0].classList.remove('marquee');
       }
     }
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.setMarquee;
+    });
   }
+
 });
 
 /***/ }),
