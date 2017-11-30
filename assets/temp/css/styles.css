@@ -473,6 +473,12 @@ body{
     margin-right: 5px;
 }
 
+.marquee {
+    position:absolute;
+    -webkit-animation: leftmarquee 5s linear infinite;
+            animation: leftmarquee 5s linear infinite;
+}
+
 @-webkit-keyframes fadeInOutScale {
     0% {
         -webkit-transform: scale(1);
@@ -1044,9 +1050,8 @@ body{
 @media (min-width:672px){
 
 .row__inplay-pregame {
-            width:-webkit-min-content;
-            width:-moz-min-content;
-            width:min-content;
+            width:100%;
+            max-width: 480px;
             position:absolute;
             left:0;
             right:0;
@@ -1201,7 +1206,9 @@ body{
 @media (min-width:672px){
 
 .inplay-pregame--inplay {
-            width:320px
+            width:100%;
+            max-width:480px;
+            min-width:320px
     }
     }
 
@@ -1250,7 +1257,9 @@ body{
 @media (min-width:672px){
 
 .inplay-pregame--pregame {
-            width:320px
+            width:100%;
+            max-width:480px;
+            min-width:320px
     }
     }
 
@@ -2221,24 +2230,35 @@ body{
 .header-title {
         height:50px;
         width:100%;
-        text-align:center;
         color:#FFF;
-        font-size: 14px;
-        font-weight:bold;
-        text-transform:uppercase;
+        
         background-size: auto 100%;
         background-repeat: round;
         text-shadow: 0 1px 3px rgba(0,0,0,.34);
-        line-height:3.5;
         margin-top:10px;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;    
+        -webkit-box-align: center;    
+            -ms-flex-align: center;    
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
 }
 
 .header-title--inplay{
-         background-image:url("../../images/In-Play-Title.png"); 
+        background-image:url("../../images/In-Play-Title.png"); 
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
      }
 
 .header-title--pregame{
-         background-image:url("../../images/Pre-Game-Title.png"); 
+        background-image:url("../../images/Pre-Game-Title.png"); 
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
      }
 
 .header-title--livescore{
@@ -2248,20 +2268,31 @@ body{
         color:#FFF;
         background-image:url("../../images/bg_mobile_quarter@1x.png"); 
         background-size: cover;
-        margin-top: 10px;
-        display:-webkit-box;
-        display:-ms-flexbox;
-        display:flex;
      }
 
 .header-title--livescore div {
             float:left;
-            padding-top:15px;
         }
 
 .header-title--livescore div:first-child {
-            width:82px;
-            text-align:center;
+            width: 66px;
+            background-color: rgb(51, 204, 153);
+            border-radius: 4px;
+            min-height: 24px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-left: 8px;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            text-align:center;height: auto;
+            padding:2px 0px 2px 0px;
         }
 
 .header-title--livescore div:nth-child(2) {
@@ -2435,6 +2466,40 @@ body{
             margin-top:10px;
         }
 
+.btn--inplay div:nth-child(2) {
+            width: 27%;
+            max-width: 190px;
+            min-width:75px;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: inherit;
+        }
+
+@media (min-width:480px){
+
+.btn--inplay div:nth-child(2) {
+                width:35%;    
+                max-width: 190px
+        }
+    }
+
+@media (min-width:1248px){
+
+.btn--inplay div:nth-child(2) {
+                width: 26%;
+                max-width: 75px
+        }
+    }
+
+@media (min-width:1568px){
+
+.btn--inplay div:nth-child(2) {
+                width:35%;    
+                max-width: 190px
+        }
+    }
+
 .btn--inplay div:last-child {
             float:right;
             display:-webkit-box;
@@ -2451,6 +2516,40 @@ body{
             float:left;
             margin-top:10px;
         }
+
+.btn--pregame div:nth-child(2) {
+            width: 27%;
+            max-width: 190px;
+            min-width:75px;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: inherit;
+        }
+
+@media (min-width:480px){
+
+.btn--pregame div:nth-child(2) {
+                width:35%;    
+                max-width: 190px
+        }
+    }
+
+@media (min-width:1248px){
+
+.btn--pregame div:nth-child(2) {
+                width: 26%;
+                max-width: 75px
+        }
+    }
+
+@media (min-width:1568px){
+
+.btn--pregame div:nth-child(2) {
+                width:35%;    
+                max-width: 190px
+        }
+    }
 
 .btn--pregame div:last-child {
             float:right;
@@ -3822,3 +3921,5 @@ body{
 @-webkit-keyframes collapsePoint2 { 0% { -webkit-transform: scale(0); transform: scale(0); } 0%,to { opacity: .1; } to { -webkit-transform: scale(.8); transform: scale(.8); } }
 
 @keyframes collapsePoint2 { 0% { -webkit-transform: scale(0); transform: scale(0); } 0%,to { opacity: .1; } to { -webkit-transform: scale(.8); transform: scale(.8); } }
+
+.resize-observer[data-v-b329ee4c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}

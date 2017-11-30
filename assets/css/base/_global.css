@@ -20,6 +20,10 @@ body{
     border-radius: 10px;
     margin-right: 5px;
 }
+.marquee {
+    position:absolute;
+    animation: leftmarquee 5s linear infinite;
+}
 
 @keyframes fadeInOutScale {
     0% {
