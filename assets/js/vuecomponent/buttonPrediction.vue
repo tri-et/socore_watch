@@ -58,6 +58,7 @@ export default {
     },
     openPredictionDetail(ob){
       this.$store.state.predictionSelected=ob.match_code
+      this.$store.state.isOpenPredictionDetail=true
     },
     getId(){
       return this.items.item.match_code;

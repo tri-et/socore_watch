@@ -1,5 +1,5 @@
 <template>
-  <div class="prediction-detail" title="inplay">
+  <div class="prediction-detail" :class="{'prediction-detail--is-visible':$store.state.isOpenPredictionDetail==true}" title="inplay">
     <div class="prediction-detail--toolbar">
       <div class="prediction-detail--toolbar--back-icon">
         <i class="material-icons">keyboard_backspace</i>

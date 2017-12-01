@@ -66,20 +66,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
-            <div class="row__prediction-detail fade-in">
-                <div class="no-match-prediction">
-                    <span>no match selected</span>
-                    <br>
-                    <img src="assets/images/livescore_empty.png">
-                    <br>
-                    <p>Select a match from the left to see it's detail here!</p>
-                </div>
-                <predictiondetail>
-                    <template slot-scope="{msg}">
-                        <livecastprediction :msg="msg"></livecastprediction>
-                    </template>
-                </predictiondetail>
-            </div>
+            <predictiondetailpanel></predictiondetailpanel>
+            
         </div>
         <div class="row main-contents--livescore">
             <div class="row__livescore">

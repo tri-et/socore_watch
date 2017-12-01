@@ -65,6 +65,115 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10321,115 +10430,6 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),
@@ -21331,7 +21331,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -21407,31 +21407,27 @@ var _vueResize = __webpack_require__(11);
 
 var _vueResize2 = _interopRequireDefault(_vueResize);
 
-var _predictionDetail = __webpack_require__(12);
-
-var _predictionDetail2 = _interopRequireDefault(_predictionDetail);
-
-var _livescoreDetail = __webpack_require__(15);
+var _livescoreDetail = __webpack_require__(12);
 
 var _livescoreDetail2 = _interopRequireDefault(_livescoreDetail);
 
-var _livecastLiveScore = __webpack_require__(18);
+var _livecastLiveScore = __webpack_require__(15);
 
 var _livecastLiveScore2 = _interopRequireDefault(_livecastLiveScore);
 
-var _livecastPrediction = __webpack_require__(21);
-
-var _livecastPrediction2 = _interopRequireDefault(_livecastPrediction);
-
-var _buttonPrediction = __webpack_require__(24);
+var _buttonPrediction = __webpack_require__(18);
 
 var _buttonPrediction2 = _interopRequireDefault(_buttonPrediction);
 
-var _MobileMenu = __webpack_require__(27);
+var _predictionDetailPanel = __webpack_require__(21);
+
+var _predictionDetailPanel2 = _interopRequireDefault(_predictionDetailPanel);
+
+var _MobileMenu = __webpack_require__(30);
 
 var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
 
-var _DesktopMenu = __webpack_require__(28);
+var _DesktopMenu = __webpack_require__(31);
 
 var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
 
@@ -21439,15 +21435,15 @@ var _StatsLiveStreamClick = __webpack_require__(5);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
-var _Prediction = __webpack_require__(29);
+var _Prediction = __webpack_require__(32);
 
 var _Prediction2 = _interopRequireDefault(_Prediction);
 
-var _LiveSocre = __webpack_require__(30);
+var _LiveSocre = __webpack_require__(33);
 
 var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
 
-var _Get_Data = __webpack_require__(31);
+var _Get_Data = __webpack_require__(34);
 
 var _Get_Data2 = _interopRequireDefault(_Get_Data);
 
@@ -21474,9 +21470,8 @@ new _vue2.default({
 		inplay: []
 	},
 	components: {
-		predictiondetail: _predictionDetail2.default,
+		predictiondetailpanel: _predictionDetailPanel2.default,
 		livescoredetail: _livescoreDetail2.default,
-		livecastprediction: _livecastPrediction2.default,
 		livecastlivescore: _livecastLiveScore2.default,
 		buttonprediction: _buttonPrediction2.default
 	},
@@ -21764,7 +21759,8 @@ _vue2.default.use(_vuex2.default);
 
 var store = exports.store = new _vuex2.default.Store({
     state: {
-        predictionSelected: ''
+        predictionSelected: '',
+        isOpenPredictionDetail: false
     }
 });
 
@@ -22848,11 +22844,11 @@ if (GlobalVue) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(14);
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(0)
 /* script */
 
 /* template */
@@ -22866,14 +22862,14 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "assets\\js\\vuecomponent\\predictionDetail.vue"
+Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -22883,9 +22879,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-27617be6", Component.options)
+    hotAPI.createRecord("data-v-2732684c", Component.options)
   } else {
-    hotAPI.reload("data-v-27617be6", Component.options)
+    hotAPI.reload("data-v-2732684c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -23048,39 +23044,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 module.exports = {
   data() {
@@ -23092,488 +23055,6 @@ module.exports = {
 
 /***/ }),
 /* 14 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "prediction-detail", attrs: { title: "inplay" } },
-    [
-      _vm._m(0, false, false),
-      _vm._v(" "),
-      _c("div", { staticClass: "prediction-detail-content" }, [
-        _vm._m(1, false, false),
-        _vm._v(" "),
-        _vm._m(2, false, false),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail-content--stats-livestream-content"
-          },
-          [
-            _vm._m(3, false, false),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--livestream" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "livestream-container" },
-                  [_vm._t("default", null, { msg: _vm.msg })],
-                  2
-                )
-              ]
-            )
-          ]
-        )
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "prediction-detail--toolbar" }, [
-      _c("div", { staticClass: "prediction-detail--toolbar--back-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [
-          _vm._v("keyboard_backspace")
-        ]),
-        _vm._v(" "),
-        _c("span", [_vm._v("Back")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "prediction-detail--toolbar--opentab-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "prediction-detail-content--header-team" },
-      [
-        _c("div", { staticClass: "prediction-detail-content--btn" }, [
-          _c("div", [_c("span", [_vm._v("Gil Vicente Gil Vicente")])]),
-          _vm._v(" "),
-          _c("span", [_vm._v("[0.5]")]),
-          _vm._v(" "),
-          _c("span", [_vm._v(" @ ")]),
-          _vm._v(" "),
-          _c("span", [_vm._v("0.91")]),
-          _vm._v(" "),
-          _c("span", [
-            _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("- ")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "prediction-detail-content--header-team" }, [
-          _c("div", { staticClass: "prediction-detail-content--panel-live" }, [
-            _c("span", [_vm._v("live")]),
-            _c("br"),
-            _vm._v(" "),
-            _c("span", [_vm._v("86'")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "prediction-detail-content--team-score" }, [
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--home" },
-              [_c("span", [_vm._v("home")])]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--comma" },
-              [
-                _c("span", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(":")]),
-                _vm._v(" "),
-                _c("span", [_vm._v("0")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--away" },
-              [_c("span", [_vm._v("away")])]
-            )
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "prediction-detail-content--header-team--stats-livestream-menu"
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "row__6 prediction-detail-content--header-team--stats-livestream prediction-detail-content--header-team--active"
-            },
-            [_c("span", [_vm._v("stats")])]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "row__6 prediction-detail-content--header-team--stats-livestream"
-            },
-            [_c("span", [_vm._v("live stream")])]
-          )
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "prediction-detail-content--stats prediction-detail-content--is-visible"
-      },
-      [
-        _c("div", { staticClass: "odds-ou-header" }, [
-          _c("div", [_c("span", [_vm._v("ODDS")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Handicap")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Home")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Away")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", { staticClass: "odds-ou-content--m8" }, [
-            _c("span", [_vm._v("M8")])
-          ]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("sbo")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.50")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("ibc")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-header" }, [
-          _c("div", [_c("span", [_vm._v("OU")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Total Goals")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Over")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Under")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", { staticClass: "odds-ou-content--m8" }, [
-            _c("span", [_vm._v("M8")])
-          ]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("sbo")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.50")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("ibc")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-27617be6", esExports)
-  }
-}
-
-/***/ }),
-/* 15 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(17);
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2732684c", Component.options)
-  } else {
-    hotAPI.reload("data-v-2732684c", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-  data() {
-    return {
-      msg: '456568989'
-    };
-  }
-};
-
-/***/ }),
-/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23872,16 +23353,16 @@ if (false) {
 }
 
 /***/ }),
-/* 18 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(17);
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(0)
 /* script */
 
 /* template */
@@ -23925,7 +23406,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 19 */
+/* 16 */
 /***/ (function(module, exports) {
 
 //
@@ -24210,7 +23691,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 20 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25809,16 +25290,883 @@ if (false) {
 }
 
 /***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(20);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\buttonPrediction.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8ebacda4", Component.options)
+  } else {
+    hotAPI.reload("data-v-8ebacda4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: {
+    inplaypregame: {
+      type: String
+    },
+    items: {
+      type: Object
+    }
+  },
+  methods: {
+    setMarquee() {
+      let divContain = this.$el.querySelector('div:nth-child(2)');
+      let textWidth = divContain.children[0].offsetWidth;
+      let divWidth = divContain.offsetWidth;
+
+      if (divWidth < textWidth) {
+        divContain.children[0].classList.add('marquee');
+      } else {
+        divContain.children[0].classList.remove('marquee');
+      }
+    },
+    openPredictionDetail(ob) {
+      this.$store.state.predictionSelected = ob.match_code;
+      this.$store.state.isOpenPredictionDetail = true;
+    },
+    getId() {
+      return this.items.item.match_code;
+    }
+
+  },
+  mounted() {
+    this.setMarquee();
+  }
+});
+
+/***/ }),
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "match-prediction",
+      class: {
+        "match-prediction--inplay": _vm.inplaypregame == "inplay",
+        "match-prediction--pregame": _vm.inplaypregame == "pregame"
+      },
+      attrs: { "data-pridiction-type": "inplay" },
+      on: {
+        click: function($event) {
+          _vm.openPredictionDetail(_vm.items.item)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "match-prediction--items" }, [
+        _c(
+          "div",
+          {
+            class: {
+              "match-prediction--kickoff-inplay": _vm.inplaypregame == "inplay",
+              "match-prediction--kickoff-pregame":
+                _vm.inplaypregame == "pregame"
+            }
+          },
+          [
+            _c("span", [_vm._v("18:15")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("kickoff")])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "match-prediction--teamname" }, [
+          _c("span", [_vm._v(_vm._s(_vm.items.item.team_home))]),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.items.item.team_away))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "match-prediction--score" }, [
+          _c("span", [_vm._v(_vm._s(_vm.items.item.score_home))]),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.items.item.score_away))])
+        ])
+      ]),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "btn",
+          class: {
+            "btn--inplay": _vm.inplaypregame == "inplay",
+            "btn--pregame": _vm.inplaypregame == "pregame",
+            "btn--btn-selected":
+              _vm.getId() == _vm.$store.state.predictionSelected
+          },
+          attrs: { id: _vm.items.item.match_code }
+        },
+        [
+          _vm._m(0, false, false),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.item.team_home))])]),
+          _vm._v(" "),
+          _c("div", [
+            _c("span", [_vm._v("-")]),
+            _vm._v(" "),
+            _c("span", [_vm._v("[" + _vm._s(_vm.items.item.sys.hdp) + "]")]),
+            _vm._v(" "),
+            _c("span", [_vm._v(" @ ")]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.items.item.sys.odds_home))])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c("span", [_vm._v(_vm._s(_vm.items.item.match_minute) + "'")]),
+              _vm._v(" "),
+              _vm._m(1, false, false),
+              _vm._v(" "),
+              _c("resize-observer", { on: { notify: _vm.setMarquee } })
+            ],
+            1
+          )
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("img", {
+        staticClass: "btn--tickicon",
+        attrs: { src: "assets/images/icon_tick@2x.png" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("img", {
+        staticClass: "btn--watchicon",
+        attrs: { src: "assets/images/stopwatch_@1x.png" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8ebacda4", esExports)
+  }
+}
+
+/***/ }),
 /* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3b17e7b2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(29);
 var disposed = false
-var normalizeComponent = __webpack_require__(1)
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3b17e7b2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetailPanel_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\predictionDetailPanel.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3b17e7b2", Component.options)
+  } else {
+    hotAPI.reload("data-v-3b17e7b2", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__ = __webpack_require__(26);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  components: {
+    predictiondetail: __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__["a" /* default */],
+    livecastprediction: __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__["a" /* default */]
+  }
+});
+
+/***/ }),
+/* 23 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(25);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\predictionDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-27617be6", Component.options)
+  } else {
+    hotAPI.reload("data-v-27617be6", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  data() {
+    return {
+      msg: '456568989'
+    };
+  }
+};
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "prediction-detail",
+      class: {
+        "prediction-detail--is-visible":
+          _vm.$store.state.isOpenPredictionDetail == true
+      },
+      attrs: { title: "inplay" }
+    },
+    [
+      _vm._m(0, false, false),
+      _vm._v(" "),
+      _c("div", { staticClass: "prediction-detail-content" }, [
+        _vm._m(1, false, false),
+        _vm._v(" "),
+        _vm._m(2, false, false),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail-content--stats-livestream-content"
+          },
+          [
+            _vm._m(3, false, false),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--livestream" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "livestream-container" },
+                  [_vm._t("default", null, { msg: _vm.msg })],
+                  2
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "prediction-detail--toolbar" }, [
+      _c("div", { staticClass: "prediction-detail--toolbar--back-icon" }, [
+        _c("i", { staticClass: "material-icons" }, [
+          _vm._v("keyboard_backspace")
+        ]),
+        _vm._v(" "),
+        _c("span", [_vm._v("Back")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "prediction-detail--toolbar--opentab-icon" }, [
+        _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "prediction-detail-content--header-team" },
+      [
+        _c("div", { staticClass: "prediction-detail-content--btn" }, [
+          _c("div", [_c("span", [_vm._v("Gil Vicente Gil Vicente")])]),
+          _vm._v(" "),
+          _c("span", [_vm._v("[0.5]")]),
+          _vm._v(" "),
+          _c("span", [_vm._v(" @ ")]),
+          _vm._v(" "),
+          _c("span", [_vm._v("0.91")]),
+          _vm._v(" "),
+          _c("span", [
+            _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
+          ]),
+          _vm._v(" "),
+          _c("span", [_vm._v("- ")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "prediction-detail-content--header-team" }, [
+          _c("div", { staticClass: "prediction-detail-content--panel-live" }, [
+            _c("span", [_vm._v("live")]),
+            _c("br"),
+            _vm._v(" "),
+            _c("span", [_vm._v("86'")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "prediction-detail-content--team-score" }, [
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--team-score--home" },
+              [_c("span", [_vm._v("home")])]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--team-score--comma" },
+              [
+                _c("span", [_vm._v("3")]),
+                _vm._v(" "),
+                _c("span", [_vm._v(":")]),
+                _vm._v(" "),
+                _c("span", [_vm._v("0")])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--team-score--away" },
+              [_c("span", [_vm._v("away")])]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "prediction-detail-content--header-team--stats-livestream-menu"
+      },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "row__6 prediction-detail-content--header-team--stats-livestream prediction-detail-content--header-team--active"
+            },
+            [_c("span", [_vm._v("stats")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "row__6 prediction-detail-content--header-team--stats-livestream"
+            },
+            [_c("span", [_vm._v("live stream")])]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "prediction-detail-content--stats prediction-detail-content--is-visible"
+      },
+      [
+        _c("div", { staticClass: "odds-ou-header" }, [
+          _c("div", [_c("span", [_vm._v("ODDS")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Handicap")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Home")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Away")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", { staticClass: "odds-ou-content--m8" }, [
+            _c("span", [_vm._v("M8")])
+          ]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.00")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", [_c("span", [_vm._v("sbo")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.50")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", [_c("span", [_vm._v("ibc")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.00")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-header" }, [
+          _c("div", [_c("span", [_vm._v("OU")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Total Goals")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Over")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("Under")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", { staticClass: "odds-ou-content--m8" }, [
+            _c("span", [_vm._v("M8")])
+          ]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.00")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", [_c("span", [_vm._v("sbo")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.50")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "odds-ou-content" }, [
+          _c("div", [_c("span", [_vm._v("ibc")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("-2.00")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.99")])]),
+          _vm._v(" "),
+          _c("div", [_c("span", [_vm._v("0.96")])])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27617be6", esExports)
+  }
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(28);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
 /* script */
 
 /* template */
@@ -25858,11 +26206,11 @@ if (false) {(function () {
   })
 })()}
 
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
 
 
 /***/ }),
-/* 22 */
+/* 27 */
 /***/ (function(module, exports) {
 
 //
@@ -26148,7 +26496,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 23 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27747,135 +28095,7 @@ if (false) {
 }
 
 /***/ }),
-/* 24 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(26);
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\buttonPrediction.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8ebacda4", Component.options)
-  } else {
-    hotAPI.reload("data-v-8ebacda4", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-/* 25 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  props: {
-    inplaypregame: {
-      type: String
-    },
-    items: {
-      type: Object
-    }
-  },
-  methods: {
-    setMarquee() {
-      let divContain = this.$el.querySelector('div:nth-child(2)');
-      let textWidth = divContain.children[0].offsetWidth;
-      let divWidth = divContain.offsetWidth;
-
-      if (divWidth < textWidth) {
-        divContain.children[0].classList.add('marquee');
-      } else {
-        divContain.children[0].classList.remove('marquee');
-      }
-    },
-    openPredictionDetail(ob) {
-      this.$store.state.predictionSelected = ob.match_code;
-    },
-    getId() {
-      return this.items.item.match_code;
-    }
-
-  },
-  mounted() {
-    this.setMarquee();
-  }
-});
-
-/***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27886,129 +28106,65 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "match-prediction",
+      staticClass: "row__prediction-detail",
       class: {
-        "match-prediction--inplay": _vm.inplaypregame == "inplay",
-        "match-prediction--pregame": _vm.inplaypregame == "pregame"
-      },
-      attrs: { "data-pridiction-type": "inplay" },
-      on: {
-        click: function($event) {
-          _vm.openPredictionDetail(_vm.items.item)
-        }
+        "fade-in": _vm.$store.state.isOpenPredictionDetail == false,
+        "fade-out": _vm.$store.state.isOpenPredictionDetail == true
       }
     },
     [
-      _c("div", { staticClass: "match-prediction--items" }, [
-        _c(
-          "div",
-          {
-            class: {
-              "match-prediction--kickoff-inplay": _vm.inplaypregame == "inplay",
-              "match-prediction--kickoff-pregame":
-                _vm.inplaypregame == "pregame"
-            }
-          },
-          [
-            _c("span", [_vm._v("18:15")]),
-            _vm._v(" "),
-            _c("span", [_vm._v("kickoff")])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-prediction--teamname" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items.item.team_home))]),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items.item.team_away))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-prediction--score" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items.item.score_home))]),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items.item.score_away))])
-        ])
-      ]),
-      _c("br"),
-      _vm._v(" "),
       _c(
         "div",
         {
-          staticClass: "btn",
+          staticClass: "no-match-prediction",
           class: {
-            "btn--inplay": _vm.inplaypregame == "inplay",
-            "btn--pregame": _vm.inplaypregame == "pregame",
-            "btn--btn-selected":
-              _vm.getId() == _vm.$store.state.predictionSelected
-          },
-          attrs: { id: _vm.items.item.match_code }
+            "no-match-prediction--is-visible":
+              _vm.$store.state.isOpenPredictionDetail == true
+          }
         },
         [
-          _vm._m(0, false, false),
+          _c("span", [_vm._v("no match selected")]),
           _vm._v(" "),
-          _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.item.team_home))])]),
+          _c("br"),
           _vm._v(" "),
-          _c("div", [
-            _c("span", [_vm._v("-")]),
-            _vm._v(" "),
-            _c("span", [_vm._v("[" + _vm._s(_vm.items.item.sys.hdp) + "]")]),
-            _vm._v(" "),
-            _c("span", [_vm._v(" @ ")]),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.items.item.sys.odds_home))])
-          ]),
+          _c("img", { attrs: { src: "assets/images/livescore_empty.png" } }),
           _vm._v(" "),
-          _c(
-            "div",
-            [
-              _c("span", [_vm._v(_vm._s(_vm.items.item.match_minute) + "'")]),
-              _vm._v(" "),
-              _vm._m(1, false, false),
-              _vm._v(" "),
-              _c("resize-observer", { on: { notify: _vm.setMarquee } })
-            ],
-            1
-          )
+          _c("br"),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("Select a match from the left to see it's detail here!")
+          ])
         ]
-      )
-    ]
+      ),
+      _vm._v(" "),
+      _c("predictiondetail", {
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var msg = ref.msg
+              return [_c("livecastprediction", { attrs: { msg: msg } })]
+            }
+          }
+        ])
+      })
+    ],
+    1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", {
-        staticClass: "btn--tickicon",
-        attrs: { src: "assets/images/icon_tick@2x.png" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("img", {
-        staticClass: "btn--watchicon",
-        attrs: { src: "assets/images/stopwatch_@1x.png" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-8ebacda4", esExports)
+    require("vue-hot-reload-api")      .rerender("data-v-3b17e7b2", esExports)
   }
 }
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28020,7 +28176,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -28099,7 +28255,7 @@ var MobileMenu = function () {
 exports.default = MobileMenu;
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28111,7 +28267,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -28187,7 +28343,7 @@ var DesktopMenu = function () {
 exports.default = DesktopMenu;
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28199,7 +28355,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -28301,7 +28457,7 @@ var Prediction = function () {
 exports.default = Prediction;
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28313,7 +28469,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -28377,7 +28533,7 @@ var LiveScore = function () {
 exports.default = LiveScore;
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28389,7 +28545,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(0);
+var _jquery = __webpack_require__(1);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
