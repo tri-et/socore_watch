@@ -1,19 +1,36 @@
 <template>
-  <div class="btn" :class="{'btn--inplay':inplaypregame=='inplay','btn--pregame':inplaypregame=='pregame'}">
-    <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
-    <div>
-      <span>Gil Vicente Gil Vicente</span>
-    </div>
-    <div>
-      <span>-</span>
-      <span>[0.25]</span>
-      <span> @ </span>
-      <span>0.79</span>
-    </div>
-    <div>
-      <span>90'</span>
-      <span><img class="btn--watchicon" src="assets/images/stopwatch_@1x.png"></span>
-      <resize-observer @notify="setMarquee" />
+  <div class="match-prediction" :class="{'match-prediction--inplay':inplaypregame=='inplay',
+  'match-prediction--pregame':inplaypregame=='pregame'}" data-pridiction-type="inplay" @click="openPredictionDetail(items.item)">
+    <div class="match-prediction--items">
+      <div :class="{'match-prediction--kickoff-inplay':inplaypregame=='inplay','match-prediction--kickoff-pregame':inplaypregame=='pregame'}">
+        <span>18:15</span>
+        <span>kickoff</span>
+      </div>
+      <div class="match-prediction--teamname">
+        <span>{{items.item.team_home}}</span>
+        <span>{{items.item.team_away}}</span>
+      </div>
+      <div class="match-prediction--score">
+        <span>{{items.item.score_home}}</span>
+        <span>{{items.item.score_away}}</span>
+      </div>
+    </div><br>
+    <div :id="items.item.match_code" class="btn" :class="{'btn--inplay':inplaypregame=='inplay','btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected}">
+      <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
+      <div>
+        <span>{{items.item.team_home}}</span>
+      </div>
+      <div>
+        <span>-</span>
+        <span>[{{items.item.sys.hdp}}]</span>
+        <span> @ </span>
+        <span>{{items.item.sys.odds_home}}</span>
+      </div>
+      <div>
+        <span>{{items.item.match_minute }}'</span>
+        <span><img class="btn--watchicon" src="assets/images/stopwatch_@1x.png"></span>
+        <resize-observer @notify="setMarquee" />
+      </div>
     </div>
   </div>
 </template>
@@ -23,10 +40,12 @@ export default {
     inplaypregame: {
       type: String,
     },
+    items: {
+      type: Object,
+    },
   },
   methods: {
     setMarquee() {
-      console.log(1);
       let divContain = this.$el.querySelector('div:nth-child(2)')
       let textWidth = divContain.children[0].offsetWidth
       let divWidth = divContain.offsetWidth
@@ -37,12 +56,16 @@ export default {
         divContain.children[0].classList.remove('marquee')
       }
     },
+    openPredictionDetail(ob){
+      this.$store.state.predictionSelected=ob.match_code
+    },
+    getId(){
+      return this.items.item.match_code;
+    }
+
   },
   mounted() {
-    this.$nextTick(function() {
-      this.setMarquee
-    })
+    this.setMarquee()
   },
-  
 }
 </script>

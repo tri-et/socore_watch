@@ -52,87 +52,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="header-title header-title--inplay">
                                 <span>inplay</span>
                             </div>
-                            <div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
-                                <div class="match-prediction--items">
-                                    <div class="match-prediction--kickoff-inplay">
-                                        <span>18:15</span> <span>kickoff</span>
-                                    </div>
-                                    <div class="match-prediction--teamname">
-                                        <span>Gil Vicente</span> <span>Benfica B</span>
-                                    </div>
-                                    <div class="match-prediction--score">
-                                        <span>1</span> <span>0</span>
-                                    </div>
-                                    <br>
-                                    <buttonprediction inplaypregame="inplay"></buttonprediction>
-                                </div>
-                            </div>
-							<div class="match-prediction match-prediction--inplay" data-pridiction-type="inplay">
-                                <div class="match-prediction--items">
-                                    <div class="match-prediction--kickoff-inplay">
-                                        <span>18:15</span> <span>kickoff</span>
-                                    </div>
-                                    <div class="match-prediction--teamname">
-                                        <span>Gil Vicente</span> <span>Benfica B</span>
-                                    </div>
-                                    <div class="match-prediction--score">
-                                        <span>1</span> <span>0</span>
-                                    </div>
-                                    <br>
-                                    <buttonprediction inplaypregame="inplay"></buttonprediction>
-                                </div>
-                            </div>
-							
+                            <buttonprediction v-for="item in inplay" inplaypregame="inplay" :items='{item}' key="inplay"></buttonprediction>
                         </div>
                         <div class="row row__inplay inplay-pregame--pregame">
                             <div class="header-title header-title--pregame">
                                 <span>pregame</span>
                             </div>
-                            <div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
-                                <div class="match-prediction--items">
-                                    <div class="match-prediction--kickoff-pregame">
-                                        <span>18:15</span> <span>kickoff</span>
-                                    </div>
-                                    <div class="match-prediction--teamname">
-                                        <span>Gil Vicente</span> <span>Benfica B</span>
-                                    </div>
-                                    <div class="match-prediction--score">
-                                        <span>1</span> <span>0</span>
-                                    </div>
-                                    <br>
-                                    <buttonprediction inplaypregame="pregame"></buttonprediction>
-                                </div>
-                            </div>
-                            <div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
-                                <div class="match-prediction--items">
-                                    <div class="match-prediction--kickoff-pregame">
-                                        <span>18:15</span> <span>kickoff</span>
-                                    </div>
-                                    <div class="match-prediction--teamname">
-                                        <span>Gil Vicente</span> <span>Benfica B</span>
-                                    </div>
-                                    <div class="match-prediction--score">
-                                        <span>1</span> <span>0</span>
-                                    </div>
-                                    <br>
-                                    <buttonprediction inplaypregame="pregame"></buttonprediction>
-                                </div>
-                            </div>
-							<div class="match-prediction match-prediction--pregame" data-pridiction-type="pregame">
-                                <div class="match-prediction--items">
-                                    <div class="match-prediction--kickoff-pregame">
-                                        <span>18:15</span> <span>kickoff</span>
-                                    </div>
-                                    <div class="match-prediction--teamname">
-                                        <span>Gil Vicente</span> <span>Benfica B</span>
-                                    </div>
-                                    <div class="match-prediction--score">
-                                        <span>1</span> <span>0</span>
-                                    </div>
-                                    <br>
-                                    <buttonprediction inplaypregame="pregame"></buttonprediction>
-                                </div>
-                            </div>
+                            <buttonprediction v-for="item in pregame" inplaypregame="pregame" :items='{item}' key="pregame"></buttonprediction>
                         </div>
                     </div>
                     <div class="footer">
