@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {store} from './modules/store'
 import VueResize from 'vue-resize'
 import PredictionDetailVue from './vuecomponent/predictionDetail.vue'
 import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
@@ -19,14 +20,14 @@ let mobileMenu = new MobileMenu()
 
 let desktopMenu = new DesktopMenu()
 
-
+let prediction = new Prediction()
 
 let statsLiveStreamClick = new StatsLiveStreamClick()
 
 let getdata = new GetData()
-
 new Vue({
 	el: '.main-container',
+	store,
 	data: {
 		pregame: [],
 		inplay:[]
@@ -44,4 +45,4 @@ new Vue({
 	}
 })
 
-let prediction = new Prediction()
+
