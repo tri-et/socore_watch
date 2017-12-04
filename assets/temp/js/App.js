@@ -28513,7 +28513,7 @@ var DesktopMenu = function () {
         if (titleMenu.innerHTML == 'live scores' || titleMenu.innerHTML == 'predictions') {
           this.itemMenu.removeClass('primary-nav--activemenu');
           (0, _jquery2.default)(item.currentTarget).addClass('primary-nav--activemenu');
-          this.mainContainer.removeClass('main-contents--is-visible');
+          (0, _jquery2.default)(this.mainContainer[0]).removeClass('main-contents--is-visible');
 
           if (titleMenu.innerHTML == 'live scores') {
             this.contentLiveScore.addClass('main-contents--is-visible');
