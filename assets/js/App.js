@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import {store} from './modules/store'
 import VueResize from 'vue-resize'
-import PredictionDetailVue from './vuecomponent/predictionDetail.vue'
+
 import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
 import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
-import LiveCastPrediction from './vuecomponent/livecastPrediction.vue'
 import ButtonPrediction from './vuecomponent/buttonPrediction.vue'
+import predictionDetailPanel from './vuecomponent/predictionDetailPanel.vue'
 import MobileMenu from './modules/MobileMenu'
 import DesktopMenu from './modules/DesktopMenu'
 import StatsLiveStreamClick from './modules/StatsLiveStreamClick'
@@ -33,9 +33,8 @@ new Vue({
 		inplay:[]
 	},
 	components: {
-		predictiondetail: PredictionDetailVue,
+		predictiondetailpanel:predictionDetailPanel,
 		livescoredetail: LiveScoreDetailVue,
-		livecastprediction: LiveCastPrediction,
 		livecastlivescore: LiveCastLiveScoreVue,
 		buttonprediction: ButtonPrediction
 	},

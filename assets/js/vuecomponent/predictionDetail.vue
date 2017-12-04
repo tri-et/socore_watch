@@ -1,5 +1,5 @@
 <template>
-  <div class="prediction-detail" title="inplay">
+  <div class="prediction-detail" :class="{'prediction-detail--is-visible':$store.state.isOpenPredictionDetail==true}" title="inplay">
     <div class="prediction-detail--toolbar">
       <div class="prediction-detail--toolbar--back-icon">
         <i class="material-icons">keyboard_backspace</i>
@@ -10,8 +10,10 @@
       </div>
     </div>
     <div class="prediction-detail-content">
-      <div class="prediction-detail-content--header-team">
-        <div class="prediction-detail-content--btn">
+      <div class="prediction-detail-content--header-team" :class="{'prediction-detail-content--header-team--inplay':$store.state.predictionSelected.type=='inplay',
+      'prediction-detail-content--header-team--pregame':$store.state.predictionSelected.type=='pregame'}">
+        <div class="prediction-detail-content--btn" :class="{'prediction-detail-content--btn--pregame':$store.state.predictionSelected.type=='pregame',
+        'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay'}">
           <div>
             <span>Gil Vicente Gil Vicente</span>
           </div>
@@ -53,7 +55,8 @@
       </div>
       <div class="prediction-detail-content--stats-livestream-content">
         <div class="prediction-detail-content--stats prediction-detail-content--is-visible">
-          <div class="odds-ou-header">
+          <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
+          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
             <div>
               <span>ODDS</span>
             </div>
@@ -68,7 +71,8 @@
             </div>
           </div>
           <div class="odds-ou-content">
-            <div class="odds-ou-content--m8">
+            <div class="odds-ou-content--m8" :class="{'odds-ou-content--m8--pregame':$store.state.predictionSelected.type=='pregame',
+            'odds-ou-content--m8--inplay':$store.state.predictionSelected.type=='inplay'}">
               <span>M8</span>
             </div>
             <div>
@@ -111,7 +115,8 @@
           </div>
           <!-- end Odds-->
           <!--start OD-->
-          <div class="odds-ou-header">
+          <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
+          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
             <div>
               <span>OU</span>
             </div>
@@ -126,7 +131,8 @@
             </div>
           </div>
           <div class="odds-ou-content">
-            <div class="odds-ou-content--m8">
+            <div class="odds-ou-content--m8" :class="{'odds-ou-content--m8--pregame':$store.state.predictionSelected.type=='pregame',
+            'odds-ou-content--m8--inplay':$store.state.predictionSelected.type=='inplay'}">
               <span>M8</span>
             </div>
             <div>
@@ -171,12 +177,11 @@
         </div>
         <div class="prediction-detail-content--livestream">
           <div class="livestream-container">
-                <slot :msg="msg"></slot>
+            <slot :msg="msg"></slot>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -186,7 +191,7 @@ module.exports = {
     return {
       msg: '456568989',
     }
-  }
+  },
 }
 </script>
 

@@ -66,20 +66,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                 </div>
             </div>
-            <div class="row__prediction-detail fade-in">
-                <div class="no-match-prediction">
-                    <span>no match selected</span>
-                    <br>
-                    <img src="assets/images/livescore_empty.png">
-                    <br>
-                    <p>Select a match from the left to see it's detail here!</p>
-                </div>
-                <predictiondetail>
-                    <template slot-scope="{msg}">
-                        <livecastprediction :msg="msg"></livecastprediction>
-                    </template>
-                </predictiondetail>
-            </div>
+            <predictiondetailpanel></predictiondetailpanel>
+            
         </div>
         <div class="row main-contents--livescore">
             <div class="row__livescore">
@@ -233,7 +221,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div>
                             <span>Keep an eye on Predictions</span>
-                            <span>Using our deep information network, our algorithms calculate and deduce the most likely outcome of the match. Each prediction is valid for a set amount of time, so be sure to keep an eye out for its validity!</span>
+                            <span>Using our deep information network, our algorithms calculate and deduce 
+                                the most likely outcome of the match. Each prediction is valid for a set 
+                                amount of time, so be sure to keep an eye out for its validity!</span>
                         </div>
                     </li>
                     <li>
@@ -241,7 +231,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div>
                             <span>Pre-Game & In-Play Predictionss</span>
-                            <span>For matches that are live, the In-Play Predictions are updated constantly, taking into account changes to the match as it plays out. All In-Play matches are colored orange. Matches that are yet to be played, or are ‘Pre-game’, are colored green.</span>
+                            <span>For matches that are live, the In-Play Predictions are updated constantly, 
+                                taking into account changes to the match as it plays out. All In-Play matches 
+                                are colored orange. Matches that are yet to be played, or are ‘Pre-game’, are colored green.</span>
                         </div>
                     </li>
                     <li>
@@ -249,7 +241,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div>
                             <span>Handicaps, Odds & OUs</span>
-                            <span>In a Match’s details screen, Odds for the match outcome, and if available, the Over-Under [a fixed amount of goals - OU] are shown. Handicaps under the Odds represent the amount by which the home team’s score is adjusted at the end of the match</span>
+                            <span>In a Match’s details screen, Odds for the match outcome, and if available, 
+                                the Over-Under [a fixed amount of goals - OU] are shown. Handicaps under 
+                                the Odds represent the amount by which the home team’s score is adjusted 
+                                at the end of the match</span>
                         </div>
                     </li>
                     <li>
