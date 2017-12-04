@@ -7,7 +7,7 @@
             <br>
             <p>Select a match from the left to see it's detail here!</p>
         </div>
-        <predictiondetail>
+        <predictiondetail :class="{'prediction-detail--shrink':$store.state.predictionSelected.isopening==true}">
             <template slot-scope="{msg}">
                 <livecastprediction :msg="msg"></livecastprediction>
             </template>

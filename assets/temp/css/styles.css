@@ -2463,7 +2463,7 @@ body{
 
 .btn--inplay div {
             float:left;
-            margin-top:10px;
+            margin-top:9px;
         }
 
 .btn--inplay div:nth-child(2) {
@@ -2514,7 +2514,7 @@ body{
 
 .btn--pregame div {
             float:left;
-            margin-top:10px;
+            margin-top:9px;
         }
 
 .btn--pregame div:nth-child(2) {

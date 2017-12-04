@@ -15,7 +15,8 @@
         <span>{{items.item.score_away}}</span>
       </div>
     </div><br>
-    <div :id="items.item.match_code" class="btn" :class="{'btn--inplay':inplaypregame=='inplay','btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected}">
+    <div :id="items.item.match_code" class="btn" :class="{'btn--inplay':inplaypregame=='inplay',
+    'btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected.match_code}">
       <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
       <div>
         <span>{{items.item.team_home}}</span>
@@ -56,14 +57,21 @@ export default {
         divContain.children[0].classList.remove('marquee')
       }
     },
-    openPredictionDetail(ob){
-      this.$store.state.predictionSelected=ob.match_code
-      this.$store.state.isOpenPredictionDetail=true
+    openPredictionDetail(ob) {
+      let that=this;
+      this.$store.state.predictionSelected = {
+        match_code: ob.match_code,
+        type:this.inplaypregame,
+        isopening:this.$store.state.isOpenPredictionDetail==false?false:true
+      }
+      this.$store.state.isOpenPredictionDetail = true
+      setTimeout(function(){
+        that.$store.state.predictionSelected.isopening=false
+      },600)
     },
-    getId(){
-      return this.items.item.match_code;
-    }
-
+    getId() {
+      return this.items.item.match_code
+    },
   },
   mounted() {
     this.setMarquee()

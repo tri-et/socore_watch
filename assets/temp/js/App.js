@@ -21759,7 +21759,12 @@ _vue2.default.use(_vuex2.default);
 
 var store = exports.store = new _vuex2.default.Store({
     state: {
-        predictionSelected: '',
+        predictionSelected: {
+            match_code: '',
+            type: '',
+            isopening: false,
+            transitionName: ''
+        },
         isOpenPredictionDetail: false
     }
 });
@@ -25382,6 +25387,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
@@ -25405,13 +25411,20 @@ if (false) {(function () {
       }
     },
     openPredictionDetail(ob) {
-      this.$store.state.predictionSelected = ob.match_code;
+      let that = this;
+      this.$store.state.predictionSelected = {
+        match_code: ob.match_code,
+        type: this.inplaypregame,
+        isopening: this.$store.state.isOpenPredictionDetail == false ? false : true
+      };
       this.$store.state.isOpenPredictionDetail = true;
+      setTimeout(function () {
+        that.$store.state.predictionSelected.isopening = false;
+      }, 600);
     },
     getId() {
       return this.items.item.match_code;
     }
-
   },
   mounted() {
     this.setMarquee();
@@ -25482,7 +25495,7 @@ var render = function() {
             "btn--inplay": _vm.inplaypregame == "inplay",
             "btn--pregame": _vm.inplaypregame == "pregame",
             "btn--btn-selected":
-              _vm.getId() == _vm.$store.state.predictionSelected
+              _vm.getId() == _vm.$store.state.predictionSelected.match_code
           },
           attrs: { id: _vm.items.item.match_code }
         },
@@ -25874,6 +25887,11 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
 
 module.exports = {
   data() {
@@ -25906,9 +25924,49 @@ var render = function() {
       _vm._m(0, false, false),
       _vm._v(" "),
       _c("div", { staticClass: "prediction-detail-content" }, [
-        _vm._m(1, false, false),
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail-content--header-team",
+            class: {
+              "prediction-detail-content--header-team--inplay":
+                _vm.$store.state.predictionSelected.type == "inplay",
+              "prediction-detail-content--header-team--pregame":
+                _vm.$store.state.predictionSelected.type == "pregame"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "prediction-detail-content--btn",
+                class: {
+                  "prediction-detail-content--btn--pregame":
+                    _vm.$store.state.predictionSelected.type == "pregame",
+                  "prediction-detail-content--btn--inplay":
+                    _vm.$store.state.predictionSelected.type == "inplay"
+                }
+              },
+              [
+                _vm._m(1, false, false),
+                _vm._v(" "),
+                _c("span", [_vm._v("[0.5]")]),
+                _vm._v(" "),
+                _c("span", [_vm._v(" @ ")]),
+                _vm._v(" "),
+                _c("span", [_vm._v("0.91")]),
+                _vm._v(" "),
+                _vm._m(2, false, false),
+                _vm._v(" "),
+                _c("span", [_vm._v("- ")])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(3, false, false)
+          ]
+        ),
         _vm._v(" "),
-        _vm._m(2, false, false),
+        _vm._m(4, false, false),
         _vm._v(" "),
         _c(
           "div",
@@ -25916,7 +25974,110 @@ var render = function() {
             staticClass: "prediction-detail-content--stats-livestream-content"
           },
           [
-            _vm._m(3, false, false),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "prediction-detail-content--stats prediction-detail-content--is-visible"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "odds-ou-header",
+                    class: {
+                      "odds-ou-header--inplay":
+                        _vm.$store.state.predictionSelected.type == "inplay",
+                      "odds-ou-header--pregame":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [
+                    _vm._m(5, false, false),
+                    _vm._v(" "),
+                    _vm._m(6, false, false),
+                    _vm._v(" "),
+                    _vm._m(7, false, false),
+                    _vm._v(" "),
+                    _vm._m(8, false, false)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "odds-ou-content--m8",
+                      class: {
+                        "odds-ou-content--m8--pregame":
+                          _vm.$store.state.predictionSelected.type == "pregame",
+                        "odds-ou-content--m8--inplay":
+                          _vm.$store.state.predictionSelected.type == "inplay"
+                      }
+                    },
+                    [_c("span", [_vm._v("M8")])]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(9, false, false),
+                  _vm._v(" "),
+                  _vm._m(10, false, false),
+                  _vm._v(" "),
+                  _vm._m(11, false, false)
+                ]),
+                _vm._v(" "),
+                _vm._m(12, false, false),
+                _vm._v(" "),
+                _vm._m(13, false, false),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "odds-ou-header",
+                    class: {
+                      "odds-ou-header--inplay":
+                        _vm.$store.state.predictionSelected.type == "inplay",
+                      "odds-ou-header--pregame":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [
+                    _vm._m(14, false, false),
+                    _vm._v(" "),
+                    _vm._m(15, false, false),
+                    _vm._v(" "),
+                    _vm._m(16, false, false),
+                    _vm._v(" "),
+                    _vm._m(17, false, false)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "odds-ou-content--m8",
+                      class: {
+                        "odds-ou-content--m8--pregame":
+                          _vm.$store.state.predictionSelected.type == "pregame",
+                        "odds-ou-content--m8--inplay":
+                          _vm.$store.state.predictionSelected.type == "inplay"
+                      }
+                    },
+                    [_c("span", [_vm._v("M8")])]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(18, false, false),
+                  _vm._v(" "),
+                  _vm._m(19, false, false),
+                  _vm._v(" "),
+                  _vm._m(20, false, false)
+                ]),
+                _vm._v(" "),
+                _vm._m(21, false, false),
+                _vm._v(" "),
+                _vm._m(22, false, false)
+              ]
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -25959,59 +26120,55 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Gil Vicente Gil Vicente")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "div",
       { staticClass: "prediction-detail-content--header-team" },
       [
-        _c("div", { staticClass: "prediction-detail-content--btn" }, [
-          _c("div", [_c("span", [_vm._v("Gil Vicente Gil Vicente")])]),
+        _c("div", { staticClass: "prediction-detail-content--panel-live" }, [
+          _c("span", [_vm._v("live")]),
+          _c("br"),
           _vm._v(" "),
-          _c("span", [_vm._v("[0.5]")]),
-          _vm._v(" "),
-          _c("span", [_vm._v(" @ ")]),
-          _vm._v(" "),
-          _c("span", [_vm._v("0.91")]),
-          _vm._v(" "),
-          _c("span", [
-            _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
-          ]),
-          _vm._v(" "),
-          _c("span", [_vm._v("- ")])
+          _c("span", [_vm._v("86'")])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "prediction-detail-content--header-team" }, [
-          _c("div", { staticClass: "prediction-detail-content--panel-live" }, [
-            _c("span", [_vm._v("live")]),
-            _c("br"),
-            _vm._v(" "),
-            _c("span", [_vm._v("86'")])
-          ]),
+        _c("div", { staticClass: "prediction-detail-content--team-score" }, [
+          _c(
+            "div",
+            { staticClass: "prediction-detail-content--team-score--home" },
+            [_c("span", [_vm._v("home")])]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "prediction-detail-content--team-score" }, [
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--home" },
-              [_c("span", [_vm._v("home")])]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--comma" },
-              [
-                _c("span", [_vm._v("3")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(":")]),
-                _vm._v(" "),
-                _c("span", [_vm._v("0")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--team-score--away" },
-              [_c("span", [_vm._v("away")])]
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "prediction-detail-content--team-score--comma" },
+            [
+              _c("span", [_vm._v("3")]),
+              _vm._v(" "),
+              _c("span", [_vm._v(":")]),
+              _vm._v(" "),
+              _c("span", [_vm._v("0")])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "prediction-detail-content--team-score--away" },
+            [_c("span", [_vm._v("away")])]
+          )
         ])
       ]
     )
@@ -26053,98 +26210,141 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "prediction-detail-content--stats prediction-detail-content--is-visible"
-      },
-      [
-        _c("div", { staticClass: "odds-ou-header" }, [
-          _c("div", [_c("span", [_vm._v("ODDS")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Handicap")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Home")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Away")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", { staticClass: "odds-ou-content--m8" }, [
-            _c("span", [_vm._v("M8")])
-          ]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("sbo")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.50")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("ibc")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-header" }, [
-          _c("div", [_c("span", [_vm._v("OU")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Total Goals")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Over")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("Under")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", { staticClass: "odds-ou-content--m8" }, [
-            _c("span", [_vm._v("M8")])
-          ]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("sbo")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.50")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "odds-ou-content" }, [
-          _c("div", [_c("span", [_vm._v("ibc")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("-2.00")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.99")])]),
-          _vm._v(" "),
-          _c("div", [_c("span", [_vm._v("0.96")])])
-        ])
-      ]
-    )
+    return _c("div", [_c("span", [_vm._v("ODDS")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Handicap")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Home")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Away")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("-2.00")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("0.99")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("0.96")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "odds-ou-content" }, [
+      _c("div", [_c("span", [_vm._v("sbo")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("-2.50")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.99")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.96")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "odds-ou-content" }, [
+      _c("div", [_c("span", [_vm._v("ibc")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("-2.00")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.99")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.96")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("OU")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Total Goals")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Over")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Under")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("-2.00")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("0.99")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("0.96")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "odds-ou-content" }, [
+      _c("div", [_c("span", [_vm._v("sbo")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("-2.50")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.99")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.96")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "odds-ou-content" }, [
+      _c("div", [_c("span", [_vm._v("ibc")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("-2.00")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.99")])]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("0.96")])])
+    ])
   }
 ]
 render._withStripped = true
@@ -28138,6 +28338,10 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("predictiondetail", {
+        class: {
+          "prediction-detail--shrink":
+            _vm.$store.state.predictionSelected.isopening == true
+        },
         scopedSlots: _vm._u([
           {
             key: "default",

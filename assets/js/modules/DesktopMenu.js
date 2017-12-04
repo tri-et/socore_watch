@@ -26,9 +26,9 @@ class DesktopMenu  {
     if (this.menuIcon.is(':hidden')) {
       let titleMenu = $(item.currentTarget).find('span')[0]
       if (titleMenu.innerHTML == 'live scores' ||titleMenu.innerHTML == 'predictions') {
-        this.itemMenu.removeClass('primary-nav--activemenu')
-        $(item.currentTarget).addClass('primary-nav--activemenu')
-        this.mainContainer.removeClass('main-contents--is-visible')
+        this.itemMenu.removeClass('primary-nav--activemenu');
+        $(item.currentTarget).addClass('primary-nav--activemenu');
+        this.mainContainer.removeClass('main-contents--is-visible');
 
         if (titleMenu.innerHTML == 'live scores') {
           this.contentLiveScore.addClass('main-contents--is-visible')
