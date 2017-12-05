@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import {store} from './modules/store'
 import VueResize from 'vue-resize'
+import App from './vuecomponent/App.vue'
+//import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
+//import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
 
-import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
-import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
-import ButtonPrediction from './vuecomponent/buttonPrediction.vue'
-import predictionDetailPanel from './vuecomponent/predictionDetailPanel.vue'
+//import predictionDetailPanel from './vuecomponent/predictionDetailPanel.vue'
+
 import MobileMenu from './modules/MobileMenu'
 import DesktopMenu from './modules/DesktopMenu'
 import StatsLiveStreamClick from './modules/StatsLiveStreamClick'
@@ -26,17 +27,12 @@ let statsLiveStreamClick = new StatsLiveStreamClick()
 
 let getdata = new GetData()
 new Vue({
-	el: '.main-container',
+	el: '#main',
 	store,
+	render:h=>h(App),
 	data: {
 		pregame: [],
 		inplay:[]
-	},
-	components: {
-		predictiondetailpanel:predictionDetailPanel,
-		livescoredetail: LiveScoreDetailVue,
-		livecastlivescore: LiveCastLiveScoreVue,
-		buttonprediction: ButtonPrediction
 	},
 	mounted() {
 		getdata.getDataInPlay(this)

@@ -23,7 +23,7 @@ class DesktopMenu  {
   }
 
   itemMenuClick(item) {
-    if (this.menuIcon.is(':hidden')) {
+    if (this.menuIcon.is(':hidden')) { 
       let titleMenu = $(item.currentTarget).find('span')[0]
       if (titleMenu.innerHTML == 'live scores' ||titleMenu.innerHTML == 'predictions') {
         this.itemMenu.removeClass('primary-nav--activemenu');
