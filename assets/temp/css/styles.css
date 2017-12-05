@@ -2877,6 +2877,10 @@ body{
                 padding: 0px 8px 10px 8px;
             }
 
+.about-content--content--items div:nth-child(2) span {
+                    color:#AFAFAF;
+                }
+
 /*remove margin-top for first div about*/
 
 .about-content--content--items:first-child>div {

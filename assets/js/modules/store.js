@@ -11,6 +11,16 @@ export const store = new Vuex.Store({
             isopening:false,
             transitionName:''
         },
-        isOpenPredictionDetail:false
+        headermenu:{
+            type:'prediction',
+            help_about_active:false
+        },
+        isOpenPredictionDetail:false,
+
+        helpOpen:false,
+        aboutOpen:false,
+        menu_side_bar_open:false,
+        iconMenuShow:true
+
     }
 });
