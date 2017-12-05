@@ -6,14 +6,19 @@
                     <i @click="itemMenuClick($event)" data-type-menu="menusidebar" class="fa fa-bars primary-nav--icon-menu-bar"></i>
                 </li>
                 <li>
-                    <a @click="$store.state.iconMenuShow==false?openSidebar():itemMenuClick($event)" data-type-menu="prediction" :class="{'primary-nav--activemenu':$store.state.headermenu.type=='prediction'}" href="#"><img src="assets/images/menu_predictions@1x.png">
-                        <span>predictions</span>
+                    <a @click="$store.state.iconMenuShow==false?openSidebar():itemMenuClick($event)" data-type-menu="prediction" 
+                    :class="{'primary-nav--activemenu':$store.state.headermenu.type=='prediction'}" href="#">
+                    <img src="assets/images/menu_predictions@1x.png">
+                        <span v-show="$store.state.headermenu.type=='prediction'">predictions</span>
+                        <span v-show="$store.state.headermenu.type=='livescore'">live scores</span>
                         <span class="badge badge--inplay">1+ New</span><br>
                         <div class="primary-nav--highlight"></div>
                     </a>
                 </li>
                 <li>
-                    <a @click="itemMenuClick($event)" data-type-menu="livescore" :class="{'primary-nav--activemenu':$store.state.headermenu.type=='livescore'}" href="#"><img class="primary-nav--icon-menu-livescore" src="assets/images/menu_livescores@1x.png">
+                    <a @click="itemMenuClick($event)" data-type-menu="livescore" 
+                    :class="{'primary-nav--activemenu':$store.state.headermenu.type=='livescore'}" href="#">
+                    <img class="primary-nav--icon-menu-livescore" src="assets/images/menu_livescores@1x.png">
                         <span>live scores</span>
                         <span class="badge badge--pregame">1+ New</span><br>
                         <div class="primary-nav--highlight"></div>
@@ -68,6 +73,7 @@ export default {
       let isHidden = $('.primary-nav--icon-menu-bar').is(':hidden')
       if (isHidden) {
         this.$store.state.iconMenuShow = true
+        this.$store.state.headermenu.type = 'prediction'
       } else {
         this.$store.state.iconMenuShow = false
       }
@@ -76,6 +82,9 @@ export default {
     openSidebar() {
       this.$store.state.menu_side_bar_open = true
     },
+  },
+  mounted() {
+    this.checkIconMenu()
   },
 }
 </script>

@@ -23170,6 +23170,11 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -23197,6 +23202,7 @@ if (false) {(function () {
       let isHidden = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.primary-nav--icon-menu-bar').is(':hidden');
       if (isHidden) {
         this.$store.state.iconMenuShow = true;
+        this.$store.state.headermenu.type = 'prediction';
       } else {
         this.$store.state.iconMenuShow = false;
       }
@@ -23205,6 +23211,9 @@ if (false) {(function () {
     openSidebar() {
       this.$store.state.menu_side_bar_open = true;
     }
+  },
+  mounted() {
+    this.checkIconMenu();
   }
 });
 
@@ -23256,7 +23265,35 @@ var render = function() {
                   attrs: { src: "assets/images/menu_predictions@1x.png" }
                 }),
                 _vm._v(" "),
-                _c("span", [_vm._v("predictions")]),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.headermenu.type == "prediction",
+                        expression: "$store.state.headermenu.type=='prediction'"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.headermenu.type == "livescore",
+                        expression: "$store.state.headermenu.type=='livescore'"
+                      }
+                    ]
+                  },
+                  [_vm._v("live scores")]
+                ),
                 _vm._v(" "),
                 _c("span", { staticClass: "badge badge--inplay" }, [
                   _vm._v("1+ New")
@@ -29526,13 +29563,32 @@ if (false) {(function () {
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    methods: {
-        closeSidebar() {
-            this.$store.state.menu_side_bar_open = false;
-        }
+  methods: {
+    closeSidebar() {
+      this.$store.state.menu_side_bar_open = false;
+    },
+
+    itemClick(ob) {
+      let typeMenu = ob.currentTarget.dataset.menuType;
+      this.closeSidebar();
+      switch (typeMenu) {
+        case 'prediction':
+        case 'livescore':
+          this.$store.state.headermenu.type = typeMenu;
+          break;
+        case 'help':
+          this.$store.state.helpOpen = true;
+          break;
+        case 'about':
+          this.$store.state.aboutOpen = true;
+          break;
+      }
     }
+  }
 });
 
 /***/ }),
@@ -29590,7 +29646,100 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0, false, false),
           _vm._v(" "),
-          _vm._m(1, false, false)
+          _c("div", { staticClass: "sidebar-list-menu" }, [
+            _c("div", { staticClass: "sidebar-list-menu--items" }, [
+              _c("nav", [
+                _c("ul", [
+                  _c(
+                    "li",
+                    {
+                      attrs: { "data-menu-type": "prediction" },
+                      on: {
+                        click: function($event) {
+                          _vm.itemClick($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("div", {
+                          class: {
+                            "sidebar-list-menu--activemenu":
+                              _vm.$store.state.headermenu.type == "prediction"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("img", {
+                          attrs: {
+                            src: "assets/images/menu_predictions@1x.png"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("predictions")])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      attrs: { "data-menu-type": "livescore" },
+                      on: {
+                        click: function($event) {
+                          _vm.itemClick($event)
+                        }
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("div", {
+                          class: {
+                            "sidebar-list-menu--activemenu":
+                              _vm.$store.state.headermenu.type == "livescore"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "sidebar-list-menu--icon-livescores",
+                          attrs: { src: "assets/images/menu_livescores@1x.png" }
+                        }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("live scores")])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      attrs: { "data-menu-type": "help" },
+                      on: {
+                        click: function($event) {
+                          _vm.itemClick($event)
+                        }
+                      }
+                    },
+                    [_vm._m(1, false, false)]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      attrs: { "data-menu-type": "about" },
+                      on: {
+                        click: function($event) {
+                          _vm.itemClick($event)
+                        }
+                      }
+                    },
+                    [_vm._m(2, false, false)]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(3, false, false)
+          ])
         ]
       )
     ]
@@ -29615,62 +29764,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "sidebar-list-menu" }, [
-      _c("div", { staticClass: "sidebar-list-menu--items" }, [
-        _c("nav", [
-          _c("ul", [
-            _c("li", { attrs: { "data-menu-type": "predictions" } }, [
-              _c("a", [
-                _c("div", { staticClass: "sidebar-list-menu--activemenu" }),
-                _c("img", {
-                  attrs: { src: "assets/images/menu_predictions@1x.png" }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("predictions")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { attrs: { "data-menu-type": "livescore" } }, [
-              _c("a", [
-                _c("div"),
-                _c("img", {
-                  staticClass: "sidebar-list-menu--icon-livescores",
-                  attrs: { src: "assets/images/menu_livescores@1x.png" }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("live scores")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { attrs: { "data-menu-type": "help" } }, [
-              _c("a", [
-                _c("div"),
-                _c("img", {
-                  staticClass: "sidebar-list-menu--icon-help",
-                  attrs: { src: "assets/images/icon_help@1x.png" }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("help")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { attrs: { "data-menu-type": "aboutus" } }, [
-              _c("a", [
-                _c("div"),
-                _c("img", {
-                  attrs: { src: "assets/images/menu_aboutus@1x.png" }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("about us")])
-              ])
-            ])
-          ])
-        ])
-      ]),
+    return _c("a", [
+      _c("div"),
+      _c("img", {
+        staticClass: "sidebar-list-menu--icon-help",
+        attrs: { src: "assets/images/icon_help@1x.png" }
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "footerSidebar" }, [
-        _c("span", [_vm._v("Made by AMSB. All Right Reserved. © 2017")])
-      ])
+      _c("span", [_vm._v("help")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("div"),
+      _c("img", { attrs: { src: "assets/images/menu_aboutus@1x.png" } }),
+      _vm._v(" "),
+      _c("span", [_vm._v("about us")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "footerSidebar" }, [
+      _c("span", [_vm._v("Made by AMSB. All Right Reserved. © 2017")])
     ])
   }
 ]
