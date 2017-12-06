@@ -15,6 +15,10 @@
         height:100%;
     }
 
+    li:last-child {
+        box-shadow:none
+    }
+
     li:not(:first-child):not(:nth-child(2)){
         display:none;
     }
@@ -102,10 +106,6 @@
 
         li:nth-child(3){
             flex:1;
-        }
-
-        li:last-child {
-            box-shadow:none;
         }
         
         img {

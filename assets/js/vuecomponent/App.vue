@@ -138,24 +138,24 @@
     </div>
 </template>
 <script>
-import menuHeader from './menuHeader.vue'
-import ButtonPrediction from './buttonPrediction.vue'
-import predictionDetailPanel from './predictionDetailPanel.vue'
-import LiveScoreDetailVue from './livescoreDetail.vue'
-import LiveCastLiveScoreVue from './livecastLiveScore.vue'
-import Help from './help.vue'
-import About from './about.vue'
-import MenuSideBar from './menuSidebar.vue'
+import menuheader from './menuHeader.vue'
+import buttonprediction from './buttonPrediction.vue'
+import predictiondetailpanel from './predictionDetailPanel.vue'
+import livescoredetail from './livescoreDetail.vue'
+import livecastlivescore from './livecastLiveScore.vue'
+import help from './help.vue'
+import about from './about.vue'
+import menusidebar from './menuSidebar.vue'
 export default {
   components: {
-    menuheader: menuHeader,
-    buttonprediction: ButtonPrediction,
-    predictiondetailpanel: predictionDetailPanel,
-    livescoredetail: LiveScoreDetailVue,
-    livecastlivescore: LiveCastLiveScoreVue,
-    help:Help,
-    about:About,
-    menusidebar:MenuSideBar
+    menuheader,
+    buttonprediction,
+    predictiondetailpanel,
+    livescoredetail,
+    livecastlivescore,
+    help,
+    about,
+    menusidebar
   },
 }
 </script>

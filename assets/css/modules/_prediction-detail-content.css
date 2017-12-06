@@ -96,11 +96,11 @@
             }
 
             span {
-                position:absolute;
+                //position:absolute;
                 left:0;
-                animation: leftmarquee 5s linear infinite;
+                //animation: leftmarquee 5s linear infinite;
                 
-                @mixin atSmaller {
+                /*@mixin atSmaller {
                     position:static;
                 }
 
@@ -110,7 +110,7 @@
 
                 @mixin at912 {
                     position:static;
-                }
+                }*/
             }
             
         }
@@ -142,7 +142,6 @@
 
     &--panel-live {
         color:$mainWhite;
-        text-transform:uppercase;
         text-align:center;
         font-weight:bold;
         font-size:12px;
@@ -156,6 +155,7 @@
         margin-right:auto;
         right:0;
         left:0;
+        display: grid;
     }
 
     &--team-score {
@@ -163,7 +163,7 @@
         @mixin clearfix;
         position:absolute;
         height:50px;
-        bottom:0;
+        bottom:4px;
         right:16px;
         left:16px;
         color:$mainWhite;
@@ -180,10 +180,12 @@
 
         &--home {
             width:44%;
+            font-size:12px;
         }
 
         &--away {
             width:44%;
+            font-size:12px;
             span {
                 float:right;
             }

@@ -21731,7 +21731,7 @@ exports.clearImmediate = clearImmediate;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
 exports.store = undefined;
 
@@ -21748,25 +21748,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _vue2.default.use(_vuex2.default);
 
 var store = exports.store = new _vuex2.default.Store({
-    state: {
-        predictionSelected: {
-            match_code: '',
-            type: '',
-            isopening: false,
-            transitionName: ''
-        },
-        headermenu: {
-            type: 'prediction',
-            help_about_active: false
-        },
-        isOpenPredictionDetail: false,
+	state: {
+		predictionSelected: {
+			match_code: '',
+			type: '',
+			isopening: false,
+			transitionName: ''
+		},
+		headermenu: {
+			type: 'prediction',
+			help_about_active: false
+		},
+		isOpenPredictionDetail: false,
 
-        helpOpen: false,
-        aboutOpen: false,
-        menu_side_bar_open: false,
-        iconMenuShow: true
+		helpOpen: false,
+		aboutOpen: false,
+		menu_side_bar_open: false,
+		iconMenuShow: true,
 
-    }
+		dataPredictionDetail: {
+			sys: {
+				hdp: "",
+				odds_away: "",
+				odds_home: "",
+				odds_over: "",
+				odds_under: "",
+				ou: ""
+			},
+			sbo: {
+				hdp: "",
+				odds_away: "",
+				odds_home: "",
+				odds_over: "",
+				odds_under: "",
+				ou: ""
+			},
+			ibc: {
+				hdp: "",
+				odds_away: "",
+				odds_home: "",
+				odds_over: "",
+				odds_under: "",
+				ou: ""
+			}
+		},
+
+		statLiveActive: "stats"
+
+	}
 });
 
 /***/ }),
@@ -23175,6 +23204,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -23227,10 +23257,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("header", { staticClass: "header-menu" }, [
-    _c("nav", { staticClass: "primary-nav" }, [
-      _c(
-        "ul",
-        [
+    _c(
+      "nav",
+      { staticClass: "primary-nav" },
+      [
+        _c("ul", [
           _c("li", [
             _c("i", {
               staticClass: "fa fa-bars primary-nav--icon-menu-bar",
@@ -23272,8 +23303,8 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.headermenu.type == "prediction",
-                        expression: "$store.state.headermenu.type=='prediction'"
+                        value: _vm.$store.state.iconMenuShow == true,
+                        expression: "$store.state.iconMenuShow==true"
                       }
                     ]
                   },
@@ -23287,8 +23318,29 @@ var render = function() {
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.$store.state.headermenu.type == "livescore",
-                        expression: "$store.state.headermenu.type=='livescore'"
+                        value:
+                          _vm.$store.state.headermenu.type == "prediction" &&
+                          _vm.$store.state.iconMenuShow == false,
+                        expression:
+                          "($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          _vm.$store.state.headermenu.type == "livescore" &&
+                          _vm.$store.state.iconMenuShow == false,
+                        expression:
+                          "($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)"
                       }
                     ]
                   },
@@ -23400,19 +23452,19 @@ var render = function() {
             _c("span", { staticClass: "primary-nav--tooltiptext" }, [
               _vm._v("About Us")
             ])
-          ]),
-          _vm._v(" "),
-          _c("resize-observer", {
-            on: {
-              notify: function($event) {
-                _vm.checkIconMenu()
-              }
+          ])
+        ]),
+        _vm._v(" "),
+        _c("resize-observer", {
+          on: {
+            notify: function($event) {
+              _vm.checkIconMenu()
             }
-          })
-        ],
-        1
-      )
-    ])
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -23534,6 +23586,12 @@ if (false) {(function () {
       activeMarquee: false
     };
   },
+  filters: {
+    matchDate(value) {
+      var date = new Date(value);
+      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
+    }
+  },
   methods: {
     setMarquee() {
       var divContain = this.$el.querySelector('.btn div:nth-child(2)');
@@ -23548,6 +23606,8 @@ if (false) {(function () {
     },
     openPredictionDetail(ob) {
       let that = this;
+      this.$store.state.dataPredictionDetail = ob;
+      this.$store.state.statLiveActive = 'stats';
       this.$store.state.predictionSelected = {
         match_code: ob.match_code,
         type: this.inplaypregame,
@@ -23603,7 +23663,9 @@ var render = function() {
             }
           },
           [
-            _c("span", [_vm._v("18:15")]),
+            _c("span", [
+              _vm._v(_vm._s(_vm._f("matchDate")(_vm.items.match_dt)))
+            ]),
             _vm._v(" "),
             _c("span", [_vm._v("kickoff")])
           ]
@@ -23797,7 +23859,6 @@ if (false) {(function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(24);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
@@ -23814,7 +23875,7 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__["a" /* default */],
   __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
@@ -23845,8 +23906,11 @@ if (false) {(function () {
 
 /***/ }),
 /* 23 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+//
+//
 //
 //
 //
@@ -24035,13 +24099,44 @@ if (false) {(function () {
 //
 //
 
-module.exports = {
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: {
+    items: {
+      type: Object
+    }
+  },
+  filters: {
+    setStatus(value) {
+      return value == '' ? 'Kickoff' : value;
+    },
+
+    setTimeMatch(val, time, minute) {
+      return val == '' ? time : minute + "'";
+    }
+  },
+  methods: {
+    matchDate(value) {
+      var date = new Date(value);
+      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
+    },
+    statLiveClick(ob) {
+      let type = ob.currentTarget.dataset.type;
+      this.$store.state.statLiveActive = type;
+      switch (type) {
+        case 'stats':
+
+          break;
+        case 'livestream':
+          break;
+      }
+    }
+  },
   data() {
     return {
       msg: '456568989'
     };
   }
-};
+});
 
 /***/ }),
 /* 24 */
@@ -24090,25 +24185,139 @@ var render = function() {
                 }
               },
               [
-                _vm._m(1, false, false),
+                _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]),
                 _vm._v(" "),
-                _c("span", [_vm._v("[0.5]")]),
+                _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
                 _vm._v(" "),
                 _c("span", [_vm._v(" @ ")]),
                 _vm._v(" "),
-                _c("span", [_vm._v("0.91")]),
+                _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))]),
                 _vm._v(" "),
-                _vm._m(2, false, false),
+                _vm._m(1, false, false),
                 _vm._v(" "),
                 _c("span", [_vm._v("- ")])
               ]
             ),
             _vm._v(" "),
-            _vm._m(3, false, false)
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--header-team" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "prediction-detail-content--panel-live" },
+                  [
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm._f("setStatus")(_vm.items.match_period))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("setTimeMatch")(
+                            _vm.items.match_period,
+                            _vm.matchDate(_vm.items.match_dt),
+                            _vm.items.match_minute
+                          )
+                        )
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "prediction-detail-content--team-score" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--home"
+                      },
+                      [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--comma"
+                      },
+                      [
+                        _c("span", [_vm._v(_vm._s(_vm.items.score_home))]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(":")]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(_vm.items.score_away))])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--away"
+                      },
+                      [_c("span", [_vm._v(_vm._s(_vm.items.team_away))])]
+                    )
+                  ]
+                )
+              ]
+            )
           ]
         ),
         _vm._v(" "),
-        _vm._m(4, false, false),
+        _c(
+          "div",
+          {
+            staticClass:
+              "prediction-detail-content--header-team--stats-livestream-menu"
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "row__6 prediction-detail-content--header-team--stats-livestream",
+                  class: {
+                    "prediction-detail-content--header-team--active":
+                      _vm.$store.state.statLiveActive == "stats"
+                  },
+                  attrs: { "data-type": "stats" },
+                  on: {
+                    click: function($event) {
+                      _vm.statLiveClick($event)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("stats")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "row__6 prediction-detail-content--header-team--stats-livestream",
+                  class: {
+                    "prediction-detail-content--header-team--active":
+                      _vm.$store.state.statLiveActive == "livestream"
+                  },
+                  attrs: { "data-type": "livestream" },
+                  on: {
+                    click: function($event) {
+                      _vm.statLiveClick($event)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("live stream")])]
+              )
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -24119,8 +24328,11 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass:
-                  "prediction-detail-content--stats prediction-detail-content--is-visible"
+                staticClass: "prediction-detail-content--stats",
+                class: {
+                  "prediction-detail-content--is-visible":
+                    _vm.$store.state.statLiveActive == "stats"
+                }
               },
               [
                 _c(
@@ -24135,13 +24347,13 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(5, false, false),
+                    _vm._m(2, false, false),
                     _vm._v(" "),
-                    _vm._m(6, false, false),
+                    _vm._m(3, false, false),
                     _vm._v(" "),
-                    _vm._m(7, false, false),
+                    _vm._m(4, false, false),
                     _vm._v(" "),
-                    _vm._m(8, false, false)
+                    _vm._m(5, false, false)
                   ]
                 ),
                 _vm._v(" "),
@@ -24160,16 +24372,44 @@ var render = function() {
                     [_c("span", [_vm._v("M8")])]
                   ),
                   _vm._v(" "),
-                  _vm._m(9, false, false),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))])]),
                   _vm._v(" "),
-                  _vm._m(10, false, false),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))])
+                  ]),
                   _vm._v(" "),
-                  _vm._m(11, false, false)
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_away))])
+                  ])
                 ]),
                 _vm._v(" "),
-                _vm._m(12, false, false),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(6, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.hdp))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_home))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_away))])
+                  ])
+                ]),
                 _vm._v(" "),
-                _vm._m(13, false, false),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(7, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.hdp))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_home))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_away))])
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -24183,13 +24423,13 @@ var render = function() {
                     }
                   },
                   [
-                    _vm._m(14, false, false),
+                    _vm._m(8, false, false),
                     _vm._v(" "),
-                    _vm._m(15, false, false),
+                    _vm._m(9, false, false),
                     _vm._v(" "),
-                    _vm._m(16, false, false),
+                    _vm._m(10, false, false),
                     _vm._v(" "),
-                    _vm._m(17, false, false)
+                    _vm._m(11, false, false)
                   ]
                 ),
                 _vm._v(" "),
@@ -24208,27 +24448,67 @@ var render = function() {
                     [_c("span", [_vm._v("M8")])]
                   ),
                   _vm._v(" "),
-                  _vm._m(18, false, false),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.ou))])]),
                   _vm._v(" "),
-                  _vm._m(19, false, false),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_over))])
+                  ]),
                   _vm._v(" "),
-                  _vm._m(20, false, false)
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_under))])
+                  ])
                 ]),
                 _vm._v(" "),
-                _vm._m(21, false, false),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(12, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.ou))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_over))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_under))])
+                  ])
+                ]),
                 _vm._v(" "),
-                _vm._m(22, false, false)
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(13, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.ou))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_over))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_under))])
+                  ])
+                ])
               ]
             ),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "prediction-detail-content--livestream" },
+              {
+                staticClass: "prediction-detail-content--livestream",
+                class: {
+                  "prediction-detail-content--is-visible":
+                    _vm.$store.state.statLiveActive == "livestream"
+                }
+              },
               [
                 _c(
                   "div",
-                  { staticClass: "livestream-container" },
-                  [_vm._t("default", null, { msg: _vm.msg })],
+                  {
+                    staticClass: "livestream-container",
+                    class: {
+                      "livestream-container--is-visible":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [_vm._t("default", null, { items: _vm.items })],
                   2
                 )
               ]
@@ -24262,91 +24542,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Gil Vicente Gil Vicente")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("span", [
       _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "prediction-detail-content--header-team" },
-      [
-        _c("div", { staticClass: "prediction-detail-content--panel-live" }, [
-          _c("span", [_vm._v("live")]),
-          _c("br"),
-          _vm._v(" "),
-          _c("span", [_vm._v("86'")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "prediction-detail-content--team-score" }, [
-          _c(
-            "div",
-            { staticClass: "prediction-detail-content--team-score--home" },
-            [_c("span", [_vm._v("home")])]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "prediction-detail-content--team-score--comma" },
-            [
-              _c("span", [_vm._v("3")]),
-              _vm._v(" "),
-              _c("span", [_vm._v(":")]),
-              _vm._v(" "),
-              _c("span", [_vm._v("0")])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "prediction-detail-content--team-score--away" },
-            [_c("span", [_vm._v("away")])]
-          )
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "prediction-detail-content--header-team--stats-livestream-menu"
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "row__6 prediction-detail-content--header-team--stats-livestream prediction-detail-content--header-team--active"
-            },
-            [_c("span", [_vm._v("stats")])]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "row__6 prediction-detail-content--header-team--stats-livestream"
-            },
-            [_c("span", [_vm._v("live stream")])]
-          )
-        ])
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -24376,47 +24574,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("-2.00")])])
+    return _c("div", [_c("span", [_vm._v("sbo")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("0.99")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("0.96")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "odds-ou-content" }, [
-      _c("div", [_c("span", [_vm._v("sbo")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("-2.50")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.99")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.96")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "odds-ou-content" }, [
-      _c("div", [_c("span", [_vm._v("ibc")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("-2.00")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.99")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.96")])])
-    ])
+    return _c("div", [_c("span", [_vm._v("ibc")])])
   },
   function() {
     var _vm = this
@@ -24446,47 +24610,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("-2.00")])])
+    return _c("div", [_c("span", [_vm._v("sbo")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("0.99")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("0.96")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "odds-ou-content" }, [
-      _c("div", [_c("span", [_vm._v("sbo")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("-2.50")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.99")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.96")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "odds-ou-content" }, [
-      _c("div", [_c("span", [_vm._v("ibc")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("-2.00")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.99")])]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("0.96")])])
-    ])
+    return _c("div", [_c("span", [_vm._v("ibc")])])
   }
 ]
 render._withStripped = true
@@ -24505,7 +24635,6 @@ if (false) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(27);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
@@ -24522,7 +24651,7 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__["a" /* default */],
   __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
@@ -24553,8 +24682,9 @@ if (false) {(function () {
 
 /***/ }),
 /* 26 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 //
 //
 //
@@ -24829,13 +24959,13 @@ if (false) {(function () {
 //
 //
 
-module.exports = {
-  data() {
-    return {
-      msg: '456568989'
-    };
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: {
+    items: {
+      type: Object
+    }
   }
-};
+});
 
 /***/ }),
 /* 27 */
@@ -24849,14 +24979,6 @@ var render = function() {
   return _c(
     "div",
     {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.msg[3] != 0,
-          expression: "msg[3]!=0"
-        }
-      ],
       staticClass: "ip-RHSMediaView ipe-RHSMediaView",
       staticStyle: {
         height: "auto",
@@ -24927,7 +25049,7 @@ var render = function() {
                                       staticStyle: { "font-size": "12px" },
                                       attrs: { id: "team1Name" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[8]))]
+                                    [_vm._v(_vm._s(_vm.items.team_home))]
                                   )
                                 ]
                               ),
@@ -24946,7 +25068,7 @@ var render = function() {
                                         "ml1-ScoreHeader_Score ml1-ScoreHeader_Team1Score ",
                                       attrs: { id: "team1score" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[12]))]
+                                    [_vm._v(_vm._s(_vm.items.score_home))]
                                   )
                                 ]
                               )
@@ -24984,7 +25106,7 @@ var render = function() {
                                         "ml1-ScoreHeader_Score ml1-ScoreHeader_Team2Score ",
                                       attrs: { id: "team2score" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[13]))]
+                                    [_vm._v(_vm._s(_vm.items.score_away))]
                                   )
                                 ]
                               ),
@@ -25004,7 +25126,7 @@ var render = function() {
                                       staticStyle: { "font-size": "12px" },
                                       attrs: { id: "team2Name" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[9]))]
+                                    [_vm._v(_vm._s(_vm.items.team_away))]
                                   ),
                                   _vm._v(" "),
                                   _c("div", {
@@ -26484,12 +26606,13 @@ var render = function() {
           "prediction-detail--shrink":
             _vm.$store.state.predictionSelected.isopening == true
         },
+        attrs: { items: _vm.$store.state.dataPredictionDetail },
         scopedSlots: _vm._u([
           {
             key: "default",
             fn: function(ref) {
-              var msg = ref.msg
-              return [_c("livecastprediction", { attrs: { msg: msg } })]
+              var items = ref.items
+              return [_c("livecastprediction", { attrs: { items: items } })]
             }
           }
         ])

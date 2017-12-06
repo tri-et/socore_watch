@@ -7,9 +7,9 @@
             <br>
             <p>Select a match from the left to see it's detail here!</p>
         </div>
-        <predictiondetail :class="{'prediction-detail--shrink':$store.state.predictionSelected.isopening==true}">
-            <template slot-scope="{msg}">
-                <livecastprediction :msg="msg"></livecastprediction>
+        <predictiondetail :items="$store.state.dataPredictionDetail" :class="{'prediction-detail--shrink':$store.state.predictionSelected.isopening==true}">
+            <template slot-scope="{items}">
+                <livecastprediction :items="items"></livecastprediction>
             </template>
         </predictiondetail>
     </div>

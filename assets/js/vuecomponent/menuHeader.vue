@@ -9,8 +9,9 @@
                     <a @click="$store.state.iconMenuShow==false?openSidebar():itemMenuClick($event)" data-type-menu="prediction" 
                     :class="{'primary-nav--activemenu':$store.state.headermenu.type=='prediction'}" href="#">
                     <img src="assets/images/menu_predictions@1x.png">
-                        <span v-show="$store.state.headermenu.type=='prediction'">predictions</span>
-                        <span v-show="$store.state.headermenu.type=='livescore'">live scores</span>
+                        <span v-show="$store.state.iconMenuShow==true">predictions</span>
+                        <span v-show="($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)">predictions</span>
+                        <span v-show="($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)">live scores</span>
                         <span class="badge badge--inplay">1+ New</span><br>
                         <div class="primary-nav--highlight"></div>
                     </a>
@@ -41,8 +42,8 @@
                     <span class="primary-nav--tooltiptext">About Us</span>
                 </li>
                 <!--<li><a href="#"><img class="primary-nav==icon-menu-login primary-nav==icon-padding"src="<?php echo base_url()?>assets/images/menu_login@1x.png"/><span class="primary-nav==is-hide-text-menu">login</span><br><div class="primary-nav==highlightmenuright"></div></a></li>-->
-                <resize-observer @notify="checkIconMenu()" />
-            </ul>
+         </ul>
+            <resize-observer @notify="checkIconMenu()" />
         </nav>
     </header>
 </template>
