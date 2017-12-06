@@ -560,6 +560,11 @@ body{
         height:100%;
     }
 
+.primary-nav li:last-child {
+        -webkit-box-shadow:none;
+                box-shadow:none
+    }
+
 .primary-nav li:not(:first-child):not(:nth-child(2)){
         display:none;
     }
@@ -669,11 +674,6 @@ body{
             -webkit-box-flex:1;
                 -ms-flex:1;
                     flex:1;
-        }
-
-        .primary-nav li:last-child {
-            -webkit-box-shadow:none;
-                    box-shadow:none;
         }
         
         .primary-nav img {
@@ -1622,32 +1622,22 @@ body{
     }
 
 .prediction-detail-content--btn div:first-child span {
-                position:absolute;
+                //position:absolute;
                 left:0;
-                -webkit-animation: leftmarquee 5s linear infinite;
-                        animation: leftmarquee 5s linear infinite;
+                //animation: leftmarquee 5s linear infinite;
+                
+                /*@mixin atSmaller {
+                    position:static;
+                }
+
+                @mixin at672 {
+                    position:absolute;
+                }
+
+                @mixin at912 {
+                    position:static;
+                }*/
             }
-
-@media (min-width:480px){
-
-.prediction-detail-content--btn div:first-child span {
-                    position:static
-            }
-    }
-
-@media (min-width:672px){
-
-.prediction-detail-content--btn div:first-child span {
-                    position:absolute
-            }
-    }
-
-@media (min-width:912px){
-
-.prediction-detail-content--btn div:first-child span {
-                    position:static
-            }
-    }
 
 .prediction-detail-content--btn span:not(:first-child):nth-last-child(-n+2){
             float:right;
@@ -1676,7 +1666,6 @@ body{
 
 .prediction-detail-content--panel-live {
         color:#FFF;
-        text-transform:uppercase;
         text-align:center;
         font-weight:bold;
         font-size:12px;
@@ -1690,12 +1679,13 @@ body{
         margin-right:auto;
         right:0;
         left:0;
+        display: grid;
     }
 
 .prediction-detail-content--team-score {
         position:absolute;
         height:50px;
-        bottom:0;
+        bottom:4px;
         right:16px;
         left:16px;
         color:#FFF;
@@ -1719,10 +1709,12 @@ body{
 
 .prediction-detail-content--team-score--home {
             width:44%;
+            font-size:12px;
         }
 
 .prediction-detail-content--team-score--away {
             width:44%;
+            font-size:12px;
         }
 
 .prediction-detail-content--team-score--away span {

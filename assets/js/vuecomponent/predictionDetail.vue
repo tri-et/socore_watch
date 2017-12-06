@@ -15,46 +15,48 @@
         <div class="prediction-detail-content--btn" :class="{'prediction-detail-content--btn--pregame':$store.state.predictionSelected.type=='pregame',
         'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay'}">
           <div>
-            <span>Gil Vicente Gil Vicente</span>
+            <span>{{items.team_home}}</span>
           </div>
-          <span>[0.5]</span>
+          <span>&nbsp;[{{items.sys.hdp}}]</span>
           <span>&nbsp;@&nbsp;</span>
-          <span>0.91</span>
+          <span>{{items.sys.odds_home}}</span>
           <span><img src="assets/images/stopwatch_@1x.png"></span>
           <span>-&nbsp;</span>
         </div>
         <div class="prediction-detail-content--header-team">
           <div class="prediction-detail-content--panel-live">
-            <span>live</span><br>
-            <span>86'</span>
+            <span>{{items.match_period|setStatus}}</span>
+            <span>{{items.match_period|setTimeMatch(matchDate(items.match_dt),items.match_minute)}}</span>
           </div>
           <div class="prediction-detail-content--team-score">
             <div class="prediction-detail-content--team-score--home">
-              <span>home</span>
+              <span>{{items.team_home}}</span>
             </div>
             <div class="prediction-detail-content--team-score--comma">
-              <span>3</span>
+              <span>{{items.score_home}}</span>
               <span>:</span>
-              <span>0</span>
+              <span>{{items.score_away}}</span>
             </div>
             <div class="prediction-detail-content--team-score--away">
-              <span>away</span>
+              <span>{{items.team_away}}</span>
             </div>
           </div>
         </div>
       </div>
       <div class="prediction-detail-content--header-team--stats-livestream-menu">
         <div class="row">
-          <div class="row__6 prediction-detail-content--header-team--stats-livestream prediction-detail-content--header-team--active">
+          <div data-type="stats" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream"
+          :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='stats'}">
             <span>stats</span>
           </div>
-          <div class="row__6 prediction-detail-content--header-team--stats-livestream">
+          <div data-type="livestream" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream"
+          :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='livestream'}">
             <span>live stream</span>
           </div>
         </div>
       </div>
       <div class="prediction-detail-content--stats-livestream-content">
-        <div class="prediction-detail-content--stats prediction-detail-content--is-visible">
+        <div class="prediction-detail-content--stats" :class="{'prediction-detail-content--is-visible':$store.state.statLiveActive=='stats'}">
           <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
           'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
             <div>
@@ -76,13 +78,13 @@
               <span>M8</span>
             </div>
             <div>
-              <span>-2.00</span>
+              <span>{{items.sys.hdp}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.sys.odds_home}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.sys.odds_away}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -90,13 +92,13 @@
               <span>sbo</span>
             </div>
             <div>
-              <span>-2.50</span>
+              <span>{{items.sbo.hdp}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.sbo.odds_home}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.sbo.odds_away}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -104,13 +106,13 @@
               <span>ibc</span>
             </div>
             <div>
-              <span>-2.00</span>
+              <span>{{items.ibc.hdp}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.ibc.odds_home}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.ibc.odds_away}}</span>
             </div>
           </div>
           <!-- end Odds-->
@@ -136,13 +138,13 @@
               <span>M8</span>
             </div>
             <div>
-              <span>-2.00</span>
+              <span>{{items.sys.ou}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.sys.odds_over}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.sys.odds_under}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -150,13 +152,13 @@
               <span>sbo</span>
             </div>
             <div>
-              <span>-2.50</span>
+              <span>{{items.sbo.ou}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.sbo.odds_over}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.sbo.odds_under}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -164,20 +166,20 @@
               <span>ibc</span>
             </div>
             <div>
-              <span>-2.00</span>
+              <span>{{items.ibc.ou}}</span>
             </div>
             <div>
-              <span>0.99</span>
+              <span>{{items.ibc.odds_over}}</span>
             </div>
             <div>
-              <span>0.96</span>
+              <span>{{items.ibc.odds_under}}</span>
             </div>
           </div>
           <!-- end OU-->
         </div>
-        <div class="prediction-detail-content--livestream">
-          <div class="livestream-container">
-            <slot :msg="msg"></slot>
+        <div class="prediction-detail-content--livestream" :class="{'prediction-detail-content--is-visible':$store.state.statLiveActive=='livestream'}">
+          <div class="livestream-container" :class="{'livestream-container--is-visible':$store.state.predictionSelected.type=='pregame'}">
+            <slot :items="items"></slot>
           </div>
         </div>
       </div>
@@ -186,7 +188,43 @@
 </template>
 
 <script>
-module.exports = {
+export default {
+  props: {
+    items: {
+      type: Object,
+    },
+  },
+  filters: {
+    setStatus(value) {
+      return value == '' ? 'Kickoff' : value
+    },
+
+    setTimeMatch(val, time, minute) {
+      return val == '' ? time : minute + "'"
+    },
+  },
+  methods: {
+    matchDate(value) {
+      var date = new Date(value)
+      return (
+        date.getHours() +
+        ':' +
+        (date.getMinutes() == 0 ? '00' : date.getMinutes())
+      )
+    },
+    statLiveClick(ob) {
+      let type = ob.currentTarget.dataset.type
+      this.$store.state.statLiveActive=type
+      switch(type){
+        case 'stats':
+        
+        break
+        case 'livestream':
+        break
+      }
+
+    },
+  },
   data() {
     return {
       msg: '456568989',

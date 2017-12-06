@@ -3,7 +3,7 @@
   'match-prediction--pregame':inplaypregame=='pregame'}" data-pridiction-type="inplay" @click="openPredictionDetail(items)">
     <div class="match-prediction--items">
       <div :class="{'match-prediction--kickoff-inplay':inplaypregame=='inplay','match-prediction--kickoff-pregame':inplaypregame=='pregame'}">
-        <span>18:15</span>
+        <span>{{items.match_dt|matchDate}}</span>
         <span>kickoff</span>
       </div>
       <div class="match-prediction--teamname">
@@ -32,7 +32,7 @@
         <span><img class="btn--watchicon" src="assets/images/stopwatch_@1x.png"></span>
       </div>
     </div>
-        <resize-observer @notify="setMarquee()"/>
+    <resize-observer @notify="setMarquee()" />
   </div>
 </template>
 <script>
@@ -47,8 +47,16 @@ export default {
   },
   data() {
     return {
-      activeMarquee: false
+      activeMarquee: false,
     }
+  },
+  filters: {
+    matchDate(value) {
+      var date = new Date(value)
+      return (
+        date.getHours() +':' +(date.getMinutes() == 0 ? '00' : date.getMinutes())
+      )
+    },
   },
   methods: {
     setMarquee() {
@@ -57,13 +65,15 @@ export default {
       var divWidth = divContain.offsetWidth
 
       if (divWidth < textWidth) {
-        this.activeMarquee=true
+        this.activeMarquee = true
       } else {
-        this.activeMarquee=false
+        this.activeMarquee = false
       }
     },
     openPredictionDetail(ob) {
       let that = this
+      this.$store.state.dataPredictionDetail = ob
+      this.$store.state.statLiveActive='stats'
       this.$store.state.predictionSelected = {
         match_code: ob.match_code,
         type: this.inplaypregame,
