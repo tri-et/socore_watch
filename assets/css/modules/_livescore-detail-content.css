@@ -15,7 +15,7 @@
             line-height: 1.5;
             margin-left:10px;
             float: left;
-            color:#009933;
+            //color:rgb(56, 97, 158);
         }
 
         &--score {
@@ -24,6 +24,27 @@
             margin-right:10px;
             float: right;
             color:#577DBB;
+        }
+        &--status {
+            
+            line-height: 1.5;
+            margin-left:10px;
+            float: left;
+            color:#009933;
+            float: left;width: 38px;
+            text-align: center;
+
+            div{
+                display: inline-grid;
+            }
+
+            div:nth-child(2){
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 51px;
+                color:#C5C5C5
+            }
         }
     }
 
@@ -220,7 +241,6 @@
         border-top: 6px solid #FF785A;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-        width:50%;
     }
 
     &--away-percent-line {
@@ -229,6 +249,5 @@
         border-top: 6px solid #36CC64;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        width:60%;
     }
 }

@@ -77,8 +77,7 @@ export default {
       this.$store.state.predictionSelected = {
         match_code: ob.match_code,
         type: this.inplaypregame,
-        isopening:
-          this.$store.state.isOpenPredictionDetail == false ? false : true,
+        isopening:this.$store.state.isOpenPredictionDetail == false ? false : true
       }
       this.$store.state.isOpenPredictionDetail = true
       setTimeout(function() {

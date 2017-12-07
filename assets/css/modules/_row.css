@@ -15,7 +15,8 @@
         height:100vh;
         position:relative;
         overflow: auto;
-        bottom: 64px;
+        bottom: 0;
+        height: -webkit-fill-available;
     }
 
     &__prediction-detail , &__livescore-detail {

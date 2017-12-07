@@ -10,16 +10,14 @@
                                 <div class="header-title header-title--inplay">
                                     <span>inplay</span>
                                 </div>
-                                <buttonprediction :items="item" v-for="(item,index) in $root.$data.inplay" 
-                                :key="item.match_code" inplaypregame="inplay"></buttonprediction>
+                                <buttonprediction :items="item" v-for="(item,index) in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
 
                             </div>
                             <div class="row row__inplay inplay-pregame--pregame">
                                 <div class="header-title header-title--pregame">
                                     <span>pregame</span>
                                 </div>
-                                <buttonprediction :items="item" v-for="(item,index) in $root.$data.pregame" 
-                                :key="item.match_code" inplaypregame="pregame"></buttonprediction>
+                                <buttonprediction :items="item" v-for="(item,index) in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame"></buttonprediction>
                             </div>
                         </div>
                         <div class="footer">
@@ -35,80 +33,40 @@
                     <div class="row__inplay-pregame inplay-pregame">
                         <div class="inplay-pregame--content">
                             <div class="row row__inplay inplay-pregame--inplay">
-                                <div class="header-title header-title--livescore">
-                                    <div>
-                                        <span>MEX D1off taf</span>
+                                <template v-for="league in $root.$data.leagueLiveScoreLeft">
+                                    <div class="header-title header-title--livescore" :key="league.leagueShortName">
+                                        <div :style="{'background-color':league.leagueColorCode}">
+                                            <span>{{league.leagueShortName}}</span>
+                                        </div>
+                                        <div>
+                                            <span>{{league.league}}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span>Germany Oberliga Bade-Wurttemberg</span>
+                                    <div class="match-livescore" :key="league.leagueShortName">
+                                        <ul>
+                                            <matchlivescore :items="item" v-for="item in $root.$data.livescore" v-if="item[5]==league.league" :key="item[0]"></matchlivescore>
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="match-livescore">
-                                    <ul>
-                                        <li>
-                                            <div class="match-livescore match-livescore--items" title="test1">
-                                                <div class="match-livescore--kickoff">
-                                                    <span>17:00</span>
-                                                    <span>kickoff</span>
-                                                </div>
-                                                <div class="match-livescore--teamname">
-                                                    <span>SC Ostbahn XI</span>
-                                                    <span>SC Mannsworth</span>
-                                                </div>
-                                                <div class="match-livescore--score">
-                                                    <span>1</span>
-                                                    <span>0</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="match-livescore match-livescore--items">
-                                                <div class="match-livescore--kickoff">
-                                                    <span>17:00</span>
-                                                    <span>kickoff</span>
-                                                </div>
-                                                <div class="match-livescore--teamname">
-                                                    <span>SC Ostbahn XI</span>
-                                                    <span>SC Mannsworth</span>
-                                                </div>
-                                                <div class="match-livescore--score">
-                                                    <span>1</span>
-                                                    <span>0</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                                </template>
                             </div>
                             <div class="row row__pregame inplay-pregame--pregame">
-                                <div class="header-title header-title--livescore">
-                                    <div>
-                                        <span>KSA PR</span>
+                                <template v-for="league in $root.$data.leagueLiveScoreRight">
+                                    <div class="header-title header-title--livescore" :key="league.leagueShortName">
+                                        <div :style="{'background-color':league.leagueColorCode}">
+                                            <span>{{league.leagueShortName}}</span>
+                                        </div>
+                                        <div>
+                                            <span>{{league.league}}</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span>Germany Oberliga Bade-Wurttemberg</span>
+                                    <div class="match-livescore" :key="league.leagueShortName">
+                                        <ul>
+                                            <matchlivescore :items="item" v-for="item in $root.$data.livescore" v-if="item[5]==league.league" :key="item[0]"></matchlivescore>
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="match-livescore">
-                                    <ul>
-                                        <li>
-                                            <div class="match-livescore match-livescore--items">
-                                                <div class="match-livescore--kickoff">
-                                                    <span>17:00</span>
-                                                    <span>kickoff</span>
-                                                </div>
-                                                <div class="match-livescore--teamname">
-                                                    <span>SC Ostbahn XI</span>
-                                                    <span>SC Mannsworth</span>
-                                                </div>
-                                                <div class="match-livescore--score">
-                                                    <span>1</span>
-                                                    <span>0</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                                </template>
                             </div>
                         </div>
                         <div class="footer">
@@ -116,20 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row__livescore-detail fade-in">
-                    <div class="no-match-livescore">
-                        <span>no match selected</span>
-                        <br>
-                        <img src="assets/images/livescore_empty.png">
-                        <br>
-                        <p>Select a match from the left to see it's detail here!</p>
-                    </div>
-                    <livescoredetail>
-                        <template slot-scope="{msg}">
-                            <livecastlivescore :msg="msg"></livecastlivescore>
-                        </template>
-                    </livescoredetail>
-                </div>
+                <livescoredetailpanel></livescoredetailpanel>
             </div>
         </div>
         <help></help>
@@ -146,6 +91,8 @@ import livecastlivescore from './livecastLiveScore.vue'
 import help from './help.vue'
 import about from './about.vue'
 import menusidebar from './menuSidebar.vue'
+import matchlivescore from './matchLiveScore.vue'
+import livescoredetailpanel from './livescoreDetailPanel.vue'
 export default {
   components: {
     menuheader,
@@ -155,7 +102,9 @@ export default {
     livecastlivescore,
     help,
     about,
-    menusidebar
+    menusidebar,
+    matchlivescore,
+    livescoredetailpanel,
   },
 }
 </script>

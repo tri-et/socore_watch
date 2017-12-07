@@ -11,11 +11,19 @@ export const store = new Vuex.Store({
 			isopening: false,
 			transitionName: ''
 		},
+
+		livescoreSelected: {
+			match_code: '',
+			type: '',
+			isopening: false,
+		},
+
 		headermenu: {
 			type: 'prediction',
 			help_about_active: false
 		},
 		isOpenPredictionDetail: false,
+		isOpenLiveScoreDetail:false,
 
 		helpOpen: false,
 		aboutOpen: false,
@@ -47,6 +55,12 @@ export const store = new Vuex.Store({
 				odds_under: "",
 				ou: ""
 			}
+		},
+
+		dataLivescoreDetail:{
+			match:[],
+			timeline:[],
+			stats:[]
 		},
 
 		statLiveActive:"stats"

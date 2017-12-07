@@ -32,11 +32,17 @@ new Vue({
 	render:h=>h(App),
 	data: {
 		pregame: [],
-		inplay:[]
+		inplay:[],
+		leagueLiveScoreLeft:[],
+		leagueLiveScoreRight:[],
+		livescore:[],
+		livescoreStats:[],
+		livescoreTimeLine:[]
 	},
 	mounted() {
 		getdata.getDataInPlay(this)
 		getdata.getDataPregame(this)
+		getdata.getDataLiveScore(this)
 	}
 })
 

@@ -1015,7 +1015,8 @@ body{
         height:100vh;
         position:relative;
         overflow: auto;
-        bottom: 64px;
+        bottom: 0;
+        height: -webkit-fill-available;
     }
 
 .row__prediction-detail, .row__livescore-detail {
@@ -1178,7 +1179,6 @@ body{
     //height:100vh;
     //padding-top:15px;
     height:auto;
-    top:64px;
     //position: relative;
 }
 
@@ -1799,7 +1799,7 @@ body{
             line-height: 1.5;
             margin-left:10px;
             float: left;
-            color:#009933;
+            //color:rgb(56, 97, 158);
         }
 
 .livescore-detail-content--header--score {
@@ -1809,6 +1809,34 @@ body{
             float: right;
             color:#577DBB;
         }
+
+.livescore-detail-content--header--status {
+            
+            line-height: 1.5;
+            margin-left:10px;
+            float: left;
+            color:#009933;
+            float: left;width: 38px;
+            text-align: center;
+        }
+
+.livescore-detail-content--header--status div{
+                display: inline-grid;
+            }
+
+.livescore-detail-content--header--status div:nth-child(2){
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                        justify-content: center;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+                height: 51px;
+                color:#C5C5C5
+            }
 
 .livescore-detail-content--header-league {
         padding: 11px 0px;
@@ -2026,7 +2054,6 @@ body{
         border-top: 6px solid #FF785A;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
-        width:50%;
     }
 
 .livescore-detail-content--away-percent-line {
@@ -2035,7 +2062,6 @@ body{
         border-top: 6px solid #36CC64;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        width:60%;
     }
 
 .no-match-prediction {
@@ -2268,7 +2294,6 @@ body{
 
 .header-title--livescore div:first-child {
             width: 66px;
-            background-color: rgb(51, 204, 153);
             border-radius: 4px;
             min-height: 24px;
             font-size: 12px;
@@ -2615,7 +2640,6 @@ body{
 .match-livescore--kickoff {
         width:82px;
         text-align:center;
-        display: inline-grid;
         color:#C2CFE1;
         text-transform: capitalize;
         line-height:1.5;
@@ -2623,6 +2647,14 @@ body{
         float:left;
         margin-top: 4px;
     }
+
+.match-livescore--kickoff div:first-child{
+            display: inline-grid;
+        }
+
+.match-livescore--kickoff div:nth-child(2){
+            line-height: 3;
+        }
 
 .match-livescore--teamname {
         display: inline-grid;

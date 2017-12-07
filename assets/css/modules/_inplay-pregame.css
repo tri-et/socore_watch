@@ -3,7 +3,6 @@
     //height:100vh;
     //padding-top:15px;
     height:auto;
-    top:64px;
     //position: relative;
     @mixin clearfix;
 
