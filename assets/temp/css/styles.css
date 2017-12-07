@@ -2030,6 +2030,7 @@ body{
 
 .livescore-detail-content--timeline-detail li div:nth-child(2) {
                 width:40%;
+                padding: 1px 0px;
             }
 
 .livescore-detail-content--timeline-detail li div:nth-child(3) {
@@ -2041,6 +2042,7 @@ body{
 .livescore-detail-content--timeline-detail li div:nth-child(4) {
                 width:40%;
                 text-align:right;
+                padding: 1px 0px;
             }
 
 .livescore-detail-content--timeline-detail li div:last-child {
@@ -2063,6 +2065,18 @@ body{
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
     }
+
+.livescore-detail-content--timeline-empty,.livescore-detail-content--stats-empty {
+        text-align:center;
+        margin-top:15px;
+        margin-bottom:15px;
+        font-size: 14px;
+        color:rgb(166, 166, 166);
+    }
+
+.livescore-detail-content--timeline-empty div:first-child, .livescore-detail-content--stats-empty div:first-child {
+            margin-bottom:10px;
+        }
 
 .no-match-prediction {
     color: rgba(0,0,0,0.3);

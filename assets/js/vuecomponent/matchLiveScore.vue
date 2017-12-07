@@ -63,8 +63,8 @@ export default {
       let id = event.currentTarget.id
       this.$store.state.dataLivescoreDetail = {
         match: ob,
-        stats: this.$root.livescoreStats.r.find(x => x[2] == id),
-        timeline: this.$root.livescoreTimeLine.r.find(x => x[2] == id),
+        stats: this.$root.livescoreStats.r.find(x => x[2] == id)==undefined?[]:this.$root.livescoreStats.r.find(x => x[2] == id),
+        timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
       }
       this.$store.state.livescoreSelected = {
         isopening:

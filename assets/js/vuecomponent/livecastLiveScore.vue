@@ -1,5 +1,5 @@
 <template>
-  <div class="ip-RHSMediaView ipe-RHSMediaView" v-show="msg[3]!=0" style="height: auto;margin:0 auto;background-color: #545454;">
+  <div class="ip-RHSMediaView ipe-RHSMediaView" style="height: auto;margin:0 auto;background-color: #545454;">
     <div class="ipe-RHSMediaView_MediaWrapper " style="width:320px;margin:auto">
       <div class="ip-MatchLiveContainer" style="width:320px;background-color:#404040">
         <div class="EventViewTitle" style="display: none;">
@@ -13,20 +13,20 @@
                 <div class="ml1-ScoreHeader_Contents ml1-ScoreHeader_Contents1 ">
                   <div class="ml1-ScoreHeader_TeamName ml1-ScoreHeader_Team1Name ">
                     <div class="ml1-ScoreHeader_ColorBar " style="color: rgb(0, 175, 240);"></div>
-                    <div class="ml1-ScoreHeader_TruncateName " id="team1Name" style="font-size:12px">{{msg[8]}}</div>
+                    <div class="ml1-ScoreHeader_TruncateName " id="team1Name" style="font-size:12px">{{items.match[8]}}</div>
                   </div>
                   <div class="ml1-ScoreHeader_ScoreWrapper ml1-ScoreHeader_Team1ScoreWrapper ">
-                    <div class="ml1-ScoreHeader_Score ml1-ScoreHeader_Team1Score " id="team1score">{{msg[12]}}</div>
+                    <div class="ml1-ScoreHeader_Score ml1-ScoreHeader_Team1Score " id="team1score">{{items.match[12]}}</div>
                   </div>
                 </div>
               </div>
               <div class="ml1-ScoreHeader_Team ml1-ScoreHeader_Team2 " style="width:142px">
                 <div class="ml1-ScoreHeader_Contents ml1-ScoreHeader_Contents2 ">
                   <div class="ml1-ScoreHeader_ScoreWrapper ml1-ScoreHeader_Team2ScoreWrapper ">
-                    <div class="ml1-ScoreHeader_Score ml1-ScoreHeader_Team2Score " id="team2score">{{msg[13]}}</div>
+                    <div class="ml1-ScoreHeader_Score ml1-ScoreHeader_Team2Score " id="team2score">{{items.match[13]}}</div>
                   </div>
                   <div class="ml1-ScoreHeader_TeamName ml1-ScoreHeader_Team2Name ">
-                    <div class="ml1-ScoreHeader_TruncateName " id="team2Name" style="font-size:12px">{{msg[9]}}</div>
+                    <div class="ml1-ScoreHeader_TruncateName " id="team2Name" style="font-size:12px">{{items.match[9]}}</div>
                     <div class="ml1-ScoreHeader_ColorBar " style="color: rgb(255, 255, 255);"></div>
                   </div>
                 </div>
@@ -271,12 +271,8 @@
 </template>
 
 <script>
-module.exports = {
-  data() {
-    return {
-      msg: '456568989',
-    }
-  }
+export default {
+  props:['items']
 }
 </script>
 

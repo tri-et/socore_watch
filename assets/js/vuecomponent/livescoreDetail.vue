@@ -36,7 +36,7 @@
             <span>league</span>
           </div>
           <div class="livescore-detail-content--header-league--nameleague">
-            <span>10:45</span>
+            <span>{{items.match[4]|setTimeLive(items.match[10])}}</span>
             <span>{{items.match[5]}}</span>
           </div>
         </div>
@@ -51,7 +51,14 @@
             <span>away</span>
           </div>
         </div>
-        <div class="livescore-detail-content--stats-detail">
+        <div v-show="items.stats.length==0 || items.match[3]==0" class="livescore-detail-content--stats-empty">
+          <div><img src="assets/images/nodata.png" alt=""></div>
+          <div>
+            <span v-show="items.match[3]!=0">Don't have any Stats at the moment!</span>
+            <span v-show="items.match[3]==0">Stats will be shown here when the match starts, at {{items.match[4]|setTimeLive(items.match[10])}}</span>
+          </div>
+        </div>
+        <div class="livescore-detail-content--stats-detail" v-show="items.stats.length!=0">
           <ul>
             <li>
               <div>
@@ -131,29 +138,36 @@
             <span>away</span>
           </div>
         </div>
+        <div v-show="items.timeline.length==0 || items.match[3]==0" class="livescore-detail-content--timeline-empty">
+          <div><img src="assets/images/nodata.png" alt=""></div>
+          <div>
+            <span v-show="items.match[3]!=0">Don't have any TimeLine at the moment!</span>
+            <span v-show="items.match[3]==0">TimeLine will be shown here when the match starts, at {{items.match[4]|setTimeLive(items.match[10])}}</span>
+          </div>
+        </div>
         <div class="livescore-detail-content--timeline-detail">
           <ul>
-            <li>
-              <div><img src="assets/images/iconl/1.gif" alt=""></div>
+            <li v-for="item in items.timeline" :key="item[2]">
+              <div><img :src="setIconTimeLine(item[4],'home',item[3])" alt=""></div>
               <div>
-                <span>testting</span>
+                <span>{{showHidePlayer(item[6],'home',item[3])}}</span>
               </div>
               <div>
-                <span>86'</span>
+                <span>{{item[5]+"'"}}</span>
               </div>
               <div>
-                <span>testting1</span>
+                <span>{{showHidePlayer(item[6],'away',item[3])}}</span>
               </div>
-              <div><img src="assets/images/iconl/1.gif" alt=""></div>
+              <div><img :src="setIconTimeLine(item[4],'away',item[3])" alt=""></div>
             </li>
           </ul>
         </div>
-        <div class="livescore-detail-content--header-livestream">
+        <div class="livescore-detail-content--header-livestream" v-show="items.match[3]!=0">
           <div>
             <span>livestream</span>
           </div>
         </div>
-        <div>
+        <div v-show="items.match[3]!=0">
           <slot :items="items"></slot>
         </div>
       </div>
@@ -163,6 +177,21 @@
 <script>
 export default {
   props: ['items'],
+  filters: {
+      setTimeLive(val, time) {
+        let times = val
+        switch (val) {
+          case '':
+            let date = new Date(time)
+            times =
+              date.getHours() +
+              ':' +
+              (date.getMinutes() == '0' ? '00' : date.getMinutes())
+            break
+        }
+        return times
+      },
+    },
   methods: {
     setTeamWin(val, homeAwayScore) {
       return val > homeAwayScore ? 'bold' : ''
@@ -172,23 +201,49 @@ export default {
       let stat = ''
       let homeoraway = []
       if (val != undefined) {
-        homeoraway = (val==''?'0,0'.split(','):val.split(','))
+        homeoraway = val == '' ? '0,0'.split(',') : val.split(',')
         switch (homeAway) {
           case 'home':
-            stat = homeoraway[0]=='0'?'-':homeoraway[0]
+            stat = homeoraway[0] == '0' ? '-' : homeoraway[0]
             break
           case 'away':
-            stat = homeoraway[1]=='0'?'-':homeoraway[1]
+            stat = homeoraway[1] == '0' ? '-' : homeoraway[1]
             break
         }
       }
       return stat
     },
 
-    setWidthStats(val){
-      return val=='-'?'0%':((parseInt(val) * 100 / 30) + '%')
-    }
+    setWidthStats(val) {
+      return val == '-' ? '0%' : parseInt(val) * 100 / 30 + '%'
+    },
 
+    showHidePlayer(val, homeaway, number) {
+      let player = ''
+      switch (homeaway) {
+        case 'home':
+          player = number == 1 ? val : ''
+          break
+        case 'away':
+          player = number == 0 ? val : ''
+          break
+      }
+      return player
+    },
+
+    setIconTimeLine(val, homeaway, number) {
+      let iconl = ''
+      switch (homeaway) {
+        case 'home':
+          iconl = number == 1 ? 'assets/images/iconl/' + val + '.gif' : ''
+          break
+        case 'away':
+          iconl = number == 0 ? 'assets/images/iconl/' + val + '.gif' : ''
+          break
+      }
+      return iconl
+    }
+    
   },
 }
 </script>

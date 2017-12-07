@@ -21785,7 +21785,6 @@ if (false) {(function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(41);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
@@ -21802,7 +21801,7 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
   __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
@@ -27539,9 +27538,35 @@ if (false) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: ['items'],
+  filters: {
+    setTimeLive(val, time) {
+      let times = val;
+      switch (val) {
+        case '':
+          let date = new Date(time);
+          times = date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+          break;
+      }
+      return times;
+    }
+  },
   methods: {
     setTeamWin(val, homeAwayScore) {
       return val > homeAwayScore ? 'bold' : '';
@@ -27566,6 +27591,32 @@ if (false) {
 
     setWidthStats(val) {
       return val == '-' ? '0%' : parseInt(val) * 100 / 30 + '%';
+    },
+
+    showHidePlayer(val, homeaway, number) {
+      let player = '';
+      switch (homeaway) {
+        case 'home':
+          player = number == 1 ? val : '';
+          break;
+        case 'away':
+          player = number == 0 ? val : '';
+          break;
+      }
+      return player;
+    },
+
+    setIconTimeLine(val, homeaway, number) {
+      let iconl = '';
+      switch (homeaway) {
+        case 'home':
+          iconl = number == 1 ? 'assets/images/iconl/' + val + '.gif' : '';
+          break;
+        case 'away':
+          iconl = number == 0 ? 'assets/images/iconl/' + val + '.gif' : '';
+          break;
+      }
+      return iconl;
     }
 
   }
@@ -27731,7 +27782,16 @@ var render = function() {
                     "livescore-detail-content--header-league--nameleague"
                 },
                 [
-                  _c("span", [_vm._v("10:45")]),
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("setTimeLive")(
+                          _vm.items.match[4],
+                          _vm.items.match[10]
+                        )
+                      )
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("span", [_vm._v(_vm._s(_vm.items.match[5]))])
                 ]
@@ -27741,207 +27801,427 @@ var render = function() {
           _vm._v(" "),
           _vm._m(2, false, false),
           _vm._v(" "),
-          _c("div", { staticClass: "livescore-detail-content--stats-detail" }, [
-            _c("ul", [
-              _c("li", [
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "home")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[6], "home")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(3, false, false),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[6], "away")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "away")))
-                  ])
-                ])
-              ]),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.stats.length == 0 || _vm.items.match[3] == 0,
+                  expression: "items.stats.length==0 || items.match[3]==0"
+                }
+              ],
+              staticClass: "livescore-detail-content--stats-empty"
+            },
+            [
+              _vm._m(3, false, false),
               _vm._v(" "),
-              _c("li", [
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "home")))
+              _c("div", [
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.items.match[3] != 0,
+                        expression: "items.match[3]!=0"
+                      }
+                    ]
+                  },
+                  [_vm._v("Don't have any Stats at the moment!")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.items.match[3] == 0,
+                        expression: "items.match[3]==0"
+                      }
+                    ]
+                  },
+                  [
+                    _vm._v(
+                      "Stats will be shown here when the match starts, at " +
+                        _vm._s(
+                          _vm._f("setTimeLive")(
+                            _vm.items.match[4],
+                            _vm.items.match[10]
+                          )
+                        )
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.stats.length != 0,
+                  expression: "items.stats.length!=0"
+                }
+              ],
+              staticClass: "livescore-detail-content--stats-detail"
+            },
+            [
+              _c("ul", [
+                _c("li", [
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "home")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--home-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[6], "home")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(4, false, false),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--away-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[6], "away")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "away")))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[37], "home")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(4, false, false),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[37], "away")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "away")))
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "home")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[9], "home")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(5, false, false),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[9], "away")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "away")))
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "home")))
+                _c("li", [
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "home")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--home-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[37], "home")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5, false, false),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--away-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[37], "away")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "away")))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[14], "home")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(6, false, false),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[14], "away")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "away")))
+                _c("li", [
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "home")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--home-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[9], "home")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(6, false, false),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--away-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[9], "away")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "away")))
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "home")))
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "home")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--home-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[14], "home")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(7, false, false),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--away-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[14], "away")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "away")))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--home-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[16], "home")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(7, false, false),
-                _vm._v(" "),
-                _c("div", [
-                  _c("hr", {
-                    staticClass: "livescore-detail-content--away-percent-line",
-                    style: {
-                      width: _vm.setWidthStats(
-                        _vm.setStats(_vm.items.stats[16], "away")
-                      )
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "away")))
+                _c("li", [
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "home")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--home-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[16], "home")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(8, false, false),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("hr", {
+                      staticClass:
+                        "livescore-detail-content--away-percent-line",
+                      style: {
+                        width: _vm.setWidthStats(
+                          _vm.setStats(_vm.items.stats[16], "away")
+                        )
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "away")))
+                    ])
                   ])
                 ])
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(8, false, false),
+            ]
+          ),
           _vm._v(" "),
           _vm._m(9, false, false),
           _vm._v(" "),
-          _vm._m(10, false, false),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value:
+                    _vm.items.timeline.length == 0 || _vm.items.match[3] == 0,
+                  expression: "items.timeline.length==0 || items.match[3]==0"
+                }
+              ],
+              staticClass: "livescore-detail-content--timeline-empty"
+            },
+            [
+              _vm._m(10, false, false),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.items.match[3] != 0,
+                        expression: "items.match[3]!=0"
+                      }
+                    ]
+                  },
+                  [_vm._v("Don't have any TimeLine at the moment!")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.items.match[3] == 0,
+                        expression: "items.match[3]==0"
+                      }
+                    ]
+                  },
+                  [
+                    _vm._v(
+                      "TimeLine will be shown here when the match starts, at " +
+                        _vm._s(
+                          _vm._f("setTimeLive")(
+                            _vm.items.match[4],
+                            _vm.items.match[10]
+                          )
+                        )
+                    )
+                  ]
+                )
+              ])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", [_vm._t("default", null, { items: _vm.items })], 2)
+          _c(
+            "div",
+            { staticClass: "livescore-detail-content--timeline-detail" },
+            [
+              _c(
+                "ul",
+                _vm._l(_vm.items.timeline, function(item) {
+                  return _c("li", { key: item[2] }, [
+                    _c("div", [
+                      _c("img", {
+                        attrs: {
+                          src: _vm.setIconTimeLine(item[4], "home", item[3]),
+                          alt: ""
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.showHidePlayer(item[6], "home", item[3]))
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [_c("span", [_vm._v(_vm._s(item[5] + "'"))])]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.showHidePlayer(item[6], "away", item[3]))
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("img", {
+                        attrs: {
+                          src: _vm.setIconTimeLine(item[4], "away", item[3]),
+                          alt: ""
+                        }
+                      })
+                    ])
+                  ])
+                })
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.match[3] != 0,
+                  expression: "items.match[3]!=0"
+                }
+              ],
+              staticClass: "livescore-detail-content--header-livestream"
+            },
+            [_vm._m(11, false, false)]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.match[3] != 0,
+                  expression: "items.match[3]!=0"
+                }
+              ]
+            },
+            [_vm._t("default", null, { items: _vm.items })],
+            2
+          )
         ])
       ])
     ]
@@ -28000,6 +28280,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", [_c("span", [_vm._v("shots")])])
   },
   function() {
@@ -28046,43 +28334,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail-content--timeline-detail" },
-      [
-        _c("ul", [
-          _c("li", [
-            _c("div", [
-              _c("img", {
-                attrs: { src: "assets/images/iconl/1.gif", alt: "" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", [_c("span", [_vm._v("testting")])]),
-            _vm._v(" "),
-            _c("div", [_c("span", [_vm._v("86'")])]),
-            _vm._v(" "),
-            _c("div", [_c("span", [_vm._v("testting1")])]),
-            _vm._v(" "),
-            _c("div", [
-              _c("img", {
-                attrs: { src: "assets/images/iconl/1.gif", alt: "" }
-              })
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", [
+      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail-content--header-livestream" },
-      [_c("div", [_c("span", [_vm._v("livestream")])])]
-    )
+    return _c("div", [_c("span", [_vm._v("livestream")])])
   }
 ]
 render._withStripped = true
@@ -28097,8 +28357,9 @@ if (false) {
 
 /***/ }),
 /* 40 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 //
 //
 //
@@ -28372,13 +28633,9 @@ if (false) {
 //
 //
 
-module.exports = {
-  data() {
-    return {
-      msg: '456568989'
-    };
-  }
-};
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: ['items']
+});
 
 /***/ }),
 /* 41 */
@@ -28392,14 +28649,6 @@ var render = function() {
   return _c(
     "div",
     {
-      directives: [
-        {
-          name: "show",
-          rawName: "v-show",
-          value: _vm.msg[3] != 0,
-          expression: "msg[3]!=0"
-        }
-      ],
       staticClass: "ip-RHSMediaView ipe-RHSMediaView",
       staticStyle: {
         height: "auto",
@@ -28470,7 +28719,7 @@ var render = function() {
                                       staticStyle: { "font-size": "12px" },
                                       attrs: { id: "team1Name" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[8]))]
+                                    [_vm._v(_vm._s(_vm.items.match[8]))]
                                   )
                                 ]
                               ),
@@ -28489,7 +28738,7 @@ var render = function() {
                                         "ml1-ScoreHeader_Score ml1-ScoreHeader_Team1Score ",
                                       attrs: { id: "team1score" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[12]))]
+                                    [_vm._v(_vm._s(_vm.items.match[12]))]
                                   )
                                 ]
                               )
@@ -28527,7 +28776,7 @@ var render = function() {
                                         "ml1-ScoreHeader_Score ml1-ScoreHeader_Team2Score ",
                                       attrs: { id: "team2score" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[13]))]
+                                    [_vm._v(_vm._s(_vm.items.match[13]))]
                                   )
                                 ]
                               ),
@@ -28547,7 +28796,7 @@ var render = function() {
                                       staticStyle: { "font-size": "12px" },
                                       attrs: { id: "team2Name" }
                                     },
-                                    [_vm._v(_vm._s(_vm.msg[9]))]
+                                    [_vm._v(_vm._s(_vm.items.match[9]))]
                                   ),
                                   _vm._v(" "),
                                   _c("div", {
@@ -30943,8 +31192,8 @@ if (false) {(function () {
       let id = event.currentTarget.id;
       this.$store.state.dataLivescoreDetail = {
         match: ob,
-        stats: this.$root.livescoreStats.r.find(x => x[2] == id),
-        timeline: this.$root.livescoreTimeLine.r.find(x => x[2] == id)
+        stats: this.$root.livescoreStats.r.find(x => x[2] == id) == undefined ? [] : this.$root.livescoreStats.r.find(x => x[2] == id),
+        timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
       };
       this.$store.state.livescoreSelected = {
         isopening: this.$store.state.isOpenLiveScoreDetail == false ? false : true
