@@ -37,6 +37,7 @@
 </template>
 <script>
 export default {
+  name:"buttonPrediction",
   props: {
     inplaypregame: {
       type: String,

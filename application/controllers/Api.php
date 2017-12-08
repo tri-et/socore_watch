@@ -9,24 +9,32 @@ class Api extends CI_Controller {
     }
 	public function get_pregame(){
 		$prediction=null;
+		$callback="";
 		if($this->cache->file->is_supported() && $this->cache->file->get('pregame')) {
 			$prediction=$this->cache->file->get('pregame') ;
 		}else{
 			$prediction=$this->get_pregame_cron();
 		};
-			echo $_GET['callback'] . '(' . json_encode($prediction) . ');';
+
+		if (array_key_exists('callback', $_GET) == TRUE) {
+			$callback = $_GET['callback'];
+		}
+			echo $callback . '(' . json_encode($prediction) . ');';
 
 	}
 	
 	public function get_running(){
 		$prediction=null;
+		$callback="";
 		if($this->cache->file->is_supported() && $this->cache->file->get('running')) {
 			$prediction=$this->cache->file->get('running') ;
 		}else{
 			$prediction=$this->get_running_cron();
 		};
-		//return $soap_client->Prediction_Pregame()->Prediction_PregameResult;
-		echo $_GET['callback'] . '(' . json_encode($prediction) . ');';
+		if (array_key_exists('callback', $_GET) == TRUE) {
+			$callback = $_GET['callback'];
+		}
+		echo $callback . '(' . json_encode($prediction) . ');';
 	}
 
 	public function get_running_cron(){

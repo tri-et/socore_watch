@@ -22225,15 +22225,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueResize2.default);
 
-var livescore = new _LiveSocre2.default();
+/*let livescore = new LiveScore()
 
-var mobileMenu = new _MobileMenu2.default();
+let mobileMenu = new MobileMenu()
 
-var desktopMenu = new _DesktopMenu2.default();
+let desktopMenu = new DesktopMenu()
 
-var prediction = new _Prediction2.default();
+let prediction = new Prediction()
 
-var statsLiveStreamClick = new _StatsLiveStreamClick2.default();
+let statsLiveStreamClick = new StatsLiveStreamClick()*/
 
 var getdata = new _Get_Data2.default();
 new _vue2.default({
@@ -22252,9 +22252,8 @@ new _vue2.default({
 		livescoreTimeLine: []
 	},
 	mounted: function mounted() {
-		getdata.getDataInPlay(this);
-		getdata.getDataPregame(this);
 		getdata.getDataLiveScore(this);
+		getdata.getDataPreInplay(this);
 	}
 });
 
@@ -24312,6 +24311,7 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+  name: "buttonPrediction",
   props: {
     inplaypregame: {
       type: String
@@ -32132,6 +32132,7 @@ var GetData = function () {
 	}, {
 		key: 'getDataInPlay',
 		value: function getDataInPlay(app) {
+			var that = this;
 			_jquery2.default.ajax({
 				url: 'index.php/api/get_running',
 				jsonp: 'callback',
@@ -32139,6 +32140,9 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.inplay = data.Running;
+					setTimeout(function () {
+						that.getDataInPlay(app);
+					}, 3000);
 				}
 			});
 		}
@@ -32152,6 +32156,10 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.pregame = data.Pregame;
+
+					setTimeout(function () {
+						that.getDataPregame(app);
+					}, 600000);
 				}
 			});
 		}
@@ -32159,6 +32167,49 @@ var GetData = function () {
 		key: 'getMatchLiveScore',
 		value: function getMatchLiveScore() {
 			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf');
+		}
+	}, {
+		key: 'getDataPreInplay',
+		value: function getDataPreInplay(app) {
+			var that = this;
+			var urlInplay = 'index.php/api/get_running';
+			var urlPregame = 'index.php/api/get_pregame';
+			_jquery2.default.when(_jquery2.default.ajax({
+				url: urlInplay,
+				dataType: 'jsonp'
+			}), _jquery2.default.ajax({
+				url: urlPregame,
+				dataType: 'jsonp'
+			})).done(function (inplay, pregame) {
+				var inplayData = JSON.parse(inplay[0]).Running;
+				var pregameData = JSON.parse(pregame[0]).Pregame;
+				var data = [];
+				var type = '';
+				app.pregame = pregameData;
+				app.inplay = inplayData;
+
+				if (inplayData.length > 0) {
+					data = inplayData[0];
+					type = 'inplay';
+				} else {
+					data = pregameData[0];
+					type = 'pregame';
+				}
+				app.$store.state.dataPredictionDetail = data;
+				app.$store.state.predictionSelected = {
+					match_code: data.match_code,
+					type: type,
+					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
+				};
+				app.$store.state.isOpenPredictionDetail = true;
+				setTimeout(function () {
+					that.getDataInPlay(app);
+				}, 3000);
+
+				setTimeout(function () {
+					that.getDataPregame(app);
+				}, 600000);
+			});
 		}
 	}, {
 		key: 'getDataLiveScore',
