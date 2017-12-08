@@ -22225,15 +22225,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueResize2.default);
 
-var livescore = new _LiveSocre2.default();
+/*let livescore = new LiveScore()
 
-var mobileMenu = new _MobileMenu2.default();
+let mobileMenu = new MobileMenu()
 
-var desktopMenu = new _DesktopMenu2.default();
+let desktopMenu = new DesktopMenu()
 
-var prediction = new _Prediction2.default();
+let prediction = new Prediction()
 
-var statsLiveStreamClick = new _StatsLiveStreamClick2.default();
+let statsLiveStreamClick = new StatsLiveStreamClick()*/
 
 var getdata = new _Get_Data2.default();
 new _vue2.default({
@@ -22252,9 +22252,8 @@ new _vue2.default({
 		livescoreTimeLine: []
 	},
 	mounted: function mounted() {
-		getdata.getDataInPlay(this);
-		getdata.getDataPregame(this);
 		getdata.getDataLiveScore(this);
+		getdata.getDataPreInplay(this);
 	}
 });
 
@@ -22539,8 +22538,7 @@ var store = exports.store = new _vuex2.default.Store({
 		predictionSelected: {
 			match_code: '',
 			type: '',
-			isopening: false,
-			transitionName: ''
+			isopening: false
 		},
 
 		livescoreSelected: {
@@ -24009,201 +24007,214 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("header", { staticClass: "header-menu" }, [
-    _c("nav", { staticClass: "primary-nav" }, [
-      _c("ul", [
-        _c("li", [
-          _c("i", {
-            staticClass: "fa fa-bars primary-nav--icon-menu-bar",
-            attrs: { "data-type-menu": "menusidebar" },
-            on: {
-              click: function($event) {
-                _vm.itemMenuClick($event)
+    _c(
+      "nav",
+      { staticClass: "primary-nav" },
+      [
+        _c("ul", [
+          _c("li", [
+            _c("i", {
+              staticClass: "fa fa-bars primary-nav--icon-menu-bar",
+              attrs: { "data-type-menu": "menusidebar" },
+              on: {
+                click: function($event) {
+                  _vm.itemMenuClick($event)
+                }
               }
+            })
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "primary-nav--activemenu":
+                    _vm.$store.state.headermenu.type == "prediction"
+                },
+                attrs: { "data-type-menu": "prediction", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.$store.state.iconMenuShow == false
+                      ? _vm.openSidebar()
+                      : _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  attrs: { src: "assets/images/menu_predictions@1x.png" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.iconMenuShow == true,
+                        expression: "$store.state.iconMenuShow==true"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          _vm.$store.state.headermenu.type == "prediction" &&
+                          _vm.$store.state.iconMenuShow == false,
+                        expression:
+                          "($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          _vm.$store.state.headermenu.type == "livescore" &&
+                          _vm.$store.state.iconMenuShow == false,
+                        expression:
+                          "($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)"
+                      }
+                    ]
+                  },
+                  [_vm._v("live scores")]
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge--inplay" }, [
+                  _vm._v("1+ New")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlight" })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "primary-nav--activemenu":
+                    _vm.$store.state.headermenu.type == "livescore"
+                },
+                attrs: { "data-type-menu": "livescore", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "primary-nav--icon-menu-livescore",
+                  attrs: { src: "assets/images/menu_livescores@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", [_vm._v("live scores")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge--pregame" }, [
+                  _vm._v("1+ New")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlight" })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "primary-nav--tooltip" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-type-menu": "help", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass:
+                    "primary-nav--icon-menu-help primary-nav--icon-padding",
+                  attrs: { src: "assets/images/icon_help@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
+                  _vm._v("help")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlightmenuright" })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "primary-nav--tooltiptext" }, [
+              _vm._v("Help")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "primary-nav--tooltip" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-type-menu": "about", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass:
+                    "primary-nav--icon-menu-about primary-nav--icon-padding",
+                  attrs: { src: "assets/images/menu_aboutus@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
+                  _vm._v("about")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlightmenuright" })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "primary-nav--tooltiptext" }, [
+              _vm._v("About Us")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("resize-observer", {
+          on: {
+            notify: function($event) {
+              _vm.checkIconMenu()
             }
-          })
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "primary-nav--activemenu":
-                  _vm.$store.state.headermenu.type == "prediction"
-              },
-              attrs: { "data-type-menu": "prediction", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.$store.state.iconMenuShow == false
-                    ? _vm.openSidebar()
-                    : _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                attrs: { src: "assets/images/menu_predictions@1x.png" }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.$store.state.iconMenuShow == true,
-                      expression: "$store.state.iconMenuShow==true"
-                    }
-                  ]
-                },
-                [_vm._v("predictions")]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.$store.state.headermenu.type == "prediction" &&
-                        _vm.$store.state.iconMenuShow == false,
-                      expression:
-                        "($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)"
-                    }
-                  ]
-                },
-                [_vm._v("predictions")]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.$store.state.headermenu.type == "livescore" &&
-                        _vm.$store.state.iconMenuShow == false,
-                      expression:
-                        "($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)"
-                    }
-                  ]
-                },
-                [_vm._v("live scores")]
-              ),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge--inplay" }, [
-                _vm._v("1+ New")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlight" })
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "primary-nav--activemenu":
-                  _vm.$store.state.headermenu.type == "livescore"
-              },
-              attrs: { "data-type-menu": "livescore", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass: "primary-nav--icon-menu-livescore",
-                attrs: { src: "assets/images/menu_livescores@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", [_vm._v("live scores")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge--pregame" }, [
-                _vm._v("1+ New")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlight" })
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "primary-nav--tooltip" }, [
-          _c(
-            "a",
-            {
-              attrs: { "data-type-menu": "help", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass:
-                  "primary-nav--icon-menu-help primary-nav--icon-padding",
-                attrs: { src: "assets/images/icon_help@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
-                _vm._v("help")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlightmenuright" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "primary-nav--tooltiptext" }, [
-            _vm._v("Help")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "primary-nav--tooltip" }, [
-          _c(
-            "a",
-            {
-              attrs: { "data-type-menu": "about", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass:
-                  "primary-nav--icon-menu-about primary-nav--icon-padding",
-                attrs: { src: "assets/images/menu_aboutus@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
-                _vm._v("about")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlightmenuright" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "primary-nav--tooltiptext" }, [
-            _vm._v("About Us")
-          ])
-        ])
-      ])
-    ])
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -24312,6 +24323,7 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+  name: "buttonPrediction",
   props: {
     inplaypregame: {
       type: String
@@ -24835,8 +24847,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
@@ -24861,19 +24871,19 @@ if (false) {(function () {
     statLiveClick(ob) {
       let type = ob.currentTarget.dataset.type;
       this.$store.state.statLiveActive = type;
-      switch (type) {
-        case 'stats':
+    },
 
-          break;
-        case 'livestream':
-          break;
-      }
+    closePredictionDetail() {
+      this.$store.state.isOpenPredictionDetail = false;
+
+      setTimeout(() => {
+        this.$store.state.predictionSelected = {
+          match_code: '',
+          type: '',
+          isopening: false
+        };
+      }, 500);
     }
-  },
-  data() {
-    return {
-      msg: '456568989'
-    };
   }
 });
 
@@ -24897,7 +24907,28 @@ var render = function() {
       attrs: { title: "inplay" }
     },
     [
-      _vm._m(0, false, false),
+      _c("div", { staticClass: "prediction-detail--toolbar" }, [
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail--toolbar--back-icon",
+            on: {
+              click: function($event) {
+                _vm.closePredictionDetail()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("keyboard_backspace")
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("Back")])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0, false, false)
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "prediction-detail-content" }, [
         _c(
@@ -25263,19 +25294,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "prediction-detail--toolbar" }, [
-      _c("div", { staticClass: "prediction-detail--toolbar--back-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [
-          _vm._v("keyboard_backspace")
-        ]),
-        _vm._v(" "),
-        _c("span", [_vm._v("Back")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "prediction-detail--toolbar--opentab-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "prediction-detail--toolbar--opentab-icon" },
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
+    )
   },
   function() {
     var _vm = this
@@ -27310,10 +27333,7 @@ var render = function() {
     "div",
     {
       staticClass: "row__prediction-detail",
-      class: {
-        "fade-in": _vm.$store.state.isOpenPredictionDetail == false,
-        "fade-out": _vm.$store.state.isOpenPredictionDetail == true
-      }
+      class: { "fade-in": _vm.$store.state.predictionSelected.match_code == "" }
     },
     [
       _c(
@@ -27556,20 +27576,14 @@ if (false) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: ['items'],
   filters: {
-    setTimeLive(val, time) {
-      let times = val;
-      switch (val) {
-        case '':
-          let date = new Date(time);
-          times = date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
-          break;
-      }
-      return times;
+    setTimeLive(val) {
+      let date = new Date(val);
+      return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
     }
   },
   methods: {
     setTeamWin(val, homeAwayScore) {
-      return val > homeAwayScore ? 'bold' : '';
+      return parseInt(val) > parseInt(homeAwayScore) ? 'bold' : '';
     },
 
     setStats(val, homeAway) {
@@ -27617,8 +27631,19 @@ if (false) {
           break;
       }
       return iconl;
-    }
+    },
 
+    closeLiveScoreDetail() {
+      this.$store.state.isOpenLiveScoreDetail = false;
+
+      setTimeout(() => {
+        this.$store.state.livescoreSelected = {
+          match_code: '',
+          type: '',
+          isopening: false
+        };
+      }, 500);
+    }
   }
 });
 
@@ -27641,7 +27666,28 @@ var render = function() {
       }
     },
     [
-      _vm._m(0, false, false),
+      _c("div", { staticClass: "livescore-detail--toolbar" }, [
+        _c(
+          "div",
+          {
+            staticClass: "livescore-detail--toolbar--back-icon",
+            on: {
+              click: function($event) {
+                _vm.closeLiveScoreDetail()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("keyboard_backspace")
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("Back")])
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0, false, false)
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "livescore-detail-content" }, [
         _c("div", { staticClass: "livescore-detail-content--header" }, [
@@ -27758,7 +27804,7 @@ var render = function() {
                   style: {
                     "font-weight": _vm.setTeamWin(
                       _vm.items.match[13],
-                      _vm.items[12]
+                      _vm.items.match[12]
                     )
                   }
                 },
@@ -27783,14 +27829,7 @@ var render = function() {
                 },
                 [
                   _c("span", [
-                    _vm._v(
-                      _vm._s(
-                        _vm._f("setTimeLive")(
-                          _vm.items.match[4],
-                          _vm.items.match[10]
-                        )
-                      )
-                    )
+                    _vm._v(_vm._s(_vm._f("setTimeLive")(_vm.items.match[10])))
                   ]),
                   _vm._v(" "),
                   _c("span", [_vm._v(_vm._s(_vm.items.match[5]))])
@@ -27848,12 +27887,7 @@ var render = function() {
                   [
                     _vm._v(
                       "Stats will be shown here when the match starts, at " +
-                        _vm._s(
-                          _vm._f("setTimeLive")(
-                            _vm.items.match[4],
-                            _vm.items.match[10]
-                          )
-                        )
+                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
                     )
                   ]
                 )
@@ -28129,12 +28163,7 @@ var render = function() {
                   [
                     _vm._v(
                       "TimeLine will be shown here when the match starts, at " +
-                        _vm._s(
-                          _vm._f("setTimeLive")(
-                            _vm.items.match[4],
-                            _vm.items.match[10]
-                          )
-                        )
+                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
                     )
                   ]
                 )
@@ -28232,19 +28261,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "livescore-detail--toolbar" }, [
-      _c("div", { staticClass: "livescore-detail--toolbar--back-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [
-          _vm._v("keyboard_backspace")
-        ]),
-        _vm._v(" "),
-        _c("span", [_vm._v("Back")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "livescore-detail--toolbar--opentab-icon" }, [
-        _c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "livescore-detail--toolbar--opentab-icon" },
+      [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
+    )
   },
   function() {
     var _vm = this
@@ -31196,12 +31217,16 @@ if (false) {(function () {
         timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
       };
       this.$store.state.livescoreSelected = {
+        match_code: id,
         isopening: this.$store.state.isOpenLiveScoreDetail == false ? false : true
       };
       this.$store.state.isOpenLiveScoreDetail = true;
       setTimeout(function () {
         that.$store.state.livescoreSelected.isopening = false;
       }, 900);
+    },
+    getId() {
+      return this.items[0];
     }
   }
 });
@@ -31215,71 +31240,80 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", [
-    _c(
-      "div",
-      {
-        staticClass: "match-livescore match-livescore--items",
-        attrs: { id: _vm.items[0] },
-        on: {
-          click: function($event) {
-            _vm.livescoreClick(_vm.items, $event)
+  return _c(
+    "li",
+    {
+      class: {
+        "match-livescore--actived":
+          _vm.getId() == _vm.$store.state.livescoreSelected.match_code
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "match-livescore match-livescore--items",
+          attrs: { id: _vm.items[0] },
+          on: {
+            click: function($event) {
+              _vm.livescoreClick(_vm.items, $event)
+            }
           }
-        }
-      },
-      [
-        _c("div", { staticClass: "match-livescore--kickoff" }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items[4] != "FT",
-                  expression: "items[4]!='FT'"
-                }
+        },
+        [
+          _c("div", { staticClass: "match-livescore--kickoff" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items[4] != "FT",
+                    expression: "items[4]!='FT'"
+                  }
+                ]
+              },
+              [
+                _c("span", [
+                  _vm._v(_vm._s(_vm._f("setTime")(_vm.items[4], _vm.items[10])))
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(_vm._f("setStatus")(_vm.items[3])))])
               ]
-            },
-            [
-              _c("span", [
-                _vm._v(_vm._s(_vm._f("setTime")(_vm.items[4], _vm.items[10])))
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v(_vm._s(_vm._f("setStatus")(_vm.items[3])))])
-            ]
-          ),
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items[4] == "FT",
+                    expression: "items[4]=='FT'"
+                  }
+                ]
+              },
+              [_c("span", [_vm._v("FT")])]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items[4] == "FT",
-                  expression: "items[4]=='FT'"
-                }
-              ]
-            },
-            [_c("span", [_vm._v("FT")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-livescore--teamname" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items[8]))]),
+          _c("div", { staticClass: "match-livescore--teamname" }, [
+            _c("span", [_vm._v(_vm._s(_vm.items[8]))]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.items[9]))])
+          ]),
           _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items[9]))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-livescore--score" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items[12]))]),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items[13]))])
-        ])
-      ]
-    )
-  ])
+          _c("div", { staticClass: "match-livescore--score" }, [
+            _c("span", [_vm._v(_vm._s(_vm.items[12]))]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.items[13]))])
+          ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -31387,7 +31421,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row__livescore-detail fade-in" },
+    {
+      staticClass: "row__livescore-detail",
+      class: { "fade-in": _vm.$store.state.livescoreSelected.match_code == "" }
+    },
     [
       _c(
         "div",
@@ -32132,6 +32169,7 @@ var GetData = function () {
 	}, {
 		key: 'getDataInPlay',
 		value: function getDataInPlay(app) {
+			var that = this;
 			_jquery2.default.ajax({
 				url: 'index.php/api/get_running',
 				jsonp: 'callback',
@@ -32139,6 +32177,9 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.inplay = data.Running;
+					setTimeout(function () {
+						that.getDataInPlay(app);
+					}, 3000);
 				}
 			});
 		}
@@ -32152,6 +32193,10 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.pregame = data.Pregame;
+
+					setTimeout(function () {
+						that.getDataPregame(app);
+					}, 600000);
 				}
 			});
 		}
@@ -32159,6 +32204,49 @@ var GetData = function () {
 		key: 'getMatchLiveScore',
 		value: function getMatchLiveScore() {
 			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf');
+		}
+	}, {
+		key: 'getDataPreInplay',
+		value: function getDataPreInplay(app) {
+			var that = this;
+			var urlInplay = 'index.php/api/get_running';
+			var urlPregame = 'index.php/api/get_pregame';
+			_jquery2.default.when(_jquery2.default.ajax({
+				url: urlInplay,
+				dataType: 'jsonp'
+			}), _jquery2.default.ajax({
+				url: urlPregame,
+				dataType: 'jsonp'
+			})).done(function (inplay, pregame) {
+				var inplayData = JSON.parse(inplay[0]).Running;
+				var pregameData = JSON.parse(pregame[0]).Pregame;
+				var data = [];
+				var type = '';
+				app.pregame = pregameData;
+				app.inplay = inplayData;
+
+				if (inplayData.length > 0) {
+					data = inplayData[0];
+					type = 'inplay';
+				} else {
+					data = pregameData[0];
+					type = 'pregame';
+				}
+				app.$store.state.dataPredictionDetail = data;
+				app.$store.state.predictionSelected = {
+					match_code: data.match_code,
+					type: type,
+					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
+				};
+				app.$store.state.isOpenPredictionDetail = true;
+				setTimeout(function () {
+					that.getDataInPlay(app);
+				}, 3000);
+
+				setTimeout(function () {
+					that.getDataPregame(app);
+				}, 600000);
+			});
 		}
 	}, {
 		key: 'getDataLiveScore',
@@ -32180,6 +32268,24 @@ var GetData = function () {
 				app.leagueLiveScoreRight = leaguename;
 				app.livescoreStats = that.formatJson(stats.data);
 				app.livescoreTimeLine = that.formatJson(timeline.data);
+
+				var id = app.livescore[0][0];
+				app.$store.state.dataLivescoreDetail = {
+					match: app.livescore[0],
+					stats: app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}),
+					timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
+						return x[2] == id;
+					})
+				};
+				app.$store.state.livescoreSelected = {
+					match_code: id,
+					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
+				};
+				app.$store.state.isOpenLiveScoreDetail = true;
 			});
 		}
 	}, {

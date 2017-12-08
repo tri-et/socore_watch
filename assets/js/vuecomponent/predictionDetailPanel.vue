@@ -1,5 +1,5 @@
 <template>
-    <div class="row__prediction-detail" :class="{'fade-in':$store.state.isOpenPredictionDetail==false,'fade-out':$store.state.isOpenPredictionDetail==true}">
+    <div class="row__prediction-detail" :class="{'fade-in':$store.state.predictionSelected.match_code==''}">
         <div class="no-match-prediction" :class="{'no-match-prediction--is-visible':$store.state.isOpenPredictionDetail==true}">
             <span>no match selected</span>
             <br>

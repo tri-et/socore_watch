@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li :class="{'match-livescore--actived':getId()==$store.state.livescoreSelected.match_code}">
     <div class="match-livescore match-livescore--items" @click="livescoreClick(items,$event)" :id="items[0]">
       <div class="match-livescore--kickoff">
         <div v-show="items[4]!='FT'">
@@ -48,10 +48,7 @@ export default {
       switch (val) {
         case '':
           let date = new Date(time)
-          times =
-            date.getHours() +
-            ':' +
-            (date.getMinutes() == '0' ? '00' : date.getMinutes())
+          times =date.getHours() +':' +(date.getMinutes() == '0' ? '00' : date.getMinutes())
           break
       }
       return times
@@ -67,14 +64,17 @@ export default {
         timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
       }
       this.$store.state.livescoreSelected = {
-        isopening:
-          this.$store.state.isOpenLiveScoreDetail == false ? false : true,
+        match_code:id,
+        isopening:this.$store.state.isOpenLiveScoreDetail == false ? false : true
       }
       this.$store.state.isOpenLiveScoreDetail = true
       setTimeout(function() {
         that.$store.state.livescoreSelected.isopening = false
       }, 900)
     },
+    getId() {
+      return this.items[0]
+    }
   },
 }
 </script>

@@ -9,7 +9,6 @@ export const store = new Vuex.Store({
 			match_code: '',
 			type: '',
 			isopening: false,
-			transitionName: ''
 		},
 
 		livescoreSelected: {

@@ -1,7 +1,7 @@
 <template>
   <div class="prediction-detail" :class="{'prediction-detail--is-visible':$store.state.isOpenPredictionDetail==true}" title="inplay">
     <div class="prediction-detail--toolbar">
-      <div class="prediction-detail--toolbar--back-icon">
+      <div class="prediction-detail--toolbar--back-icon" @click="closePredictionDetail()">
         <i class="material-icons">keyboard_backspace</i>
         <span>Back</span>
       </div>
@@ -45,12 +45,10 @@
       </div>
       <div class="prediction-detail-content--header-team--stats-livestream-menu">
         <div class="row">
-          <div data-type="stats" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream"
-          :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='stats'}">
+          <div data-type="stats" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream" :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='stats'}">
             <span>stats</span>
           </div>
-          <div data-type="livestream" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream"
-          :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='livestream'}">
+          <div data-type="livestream" @click="statLiveClick($event)" class="row__6 prediction-detail-content--header-team--stats-livestream" :class="{'prediction-detail-content--header-team--active':$store.state.statLiveActive=='livestream'}">
             <span>live stream</span>
           </div>
         </div>
@@ -214,20 +212,19 @@ export default {
     },
     statLiveClick(ob) {
       let type = ob.currentTarget.dataset.type
-      this.$store.state.statLiveActive=type
-      switch(type){
-        case 'stats':
-        
-        break
-        case 'livestream':
-        break
-      }
-
+      this.$store.state.statLiveActive = type
     },
-  },
-  data() {
-    return {
-      msg: '456568989',
+
+    closePredictionDetail() {
+      this.$store.state.isOpenPredictionDetail = false
+
+      setTimeout(() => {
+        this.$store.state.predictionSelected = {
+          match_code: '',
+          type: '',
+          isopening: false,
+        }
+      }, 500)
     }
   },
 }

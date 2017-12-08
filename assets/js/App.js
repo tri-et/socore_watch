@@ -15,7 +15,7 @@ import LiveScore from './modules/LiveSocre'
 import GetData from './modules/Get_Data'
 Vue.use(VueResize)
 
-let livescore = new LiveScore()
+/*let livescore = new LiveScore()
 
 let mobileMenu = new MobileMenu()
 
@@ -23,7 +23,7 @@ let desktopMenu = new DesktopMenu()
 
 let prediction = new Prediction()
 
-let statsLiveStreamClick = new StatsLiveStreamClick()
+let statsLiveStreamClick = new StatsLiveStreamClick()*/
 
 let getdata = new GetData()
 new Vue({
@@ -40,9 +40,8 @@ new Vue({
 		livescoreTimeLine:[]
 	},
 	mounted() {
-		getdata.getDataInPlay(this)
-		getdata.getDataPregame(this)
 		getdata.getDataLiveScore(this)
+		getdata.getDataPreInplay(this)
 	}
 })
 
