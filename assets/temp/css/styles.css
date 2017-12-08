@@ -1029,6 +1029,7 @@ body{
         opacity: 1;
         -webkit-transition: opacity 0.5s linear;
         transition: opacity 0.5s linear;
+        position: absolute;
     }
 
 .row__inplay-pregame {
@@ -1805,7 +1806,7 @@ body{
 .livescore-detail-content--header--score {
             display: inline-grid;
             line-height: 1.5;
-            margin-right:10px;
+            margin-right:23px;
             float: right;
             color:#577DBB;
         }

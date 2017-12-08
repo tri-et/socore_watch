@@ -1,5 +1,5 @@
 <template>
-    <div class="row__livescore-detail fade-in">
+    <div class="row__livescore-detail" :class="{'fade-in':$store.state.livescoreSelected.match_code==''}">
         <div class="no-match-livescore" :class="{'no-match-livescore--is-visible':$store.state.isOpenLiveScoreDetail==true}">
             <span>no match selected</span>
             <br>

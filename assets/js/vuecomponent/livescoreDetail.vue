@@ -1,7 +1,7 @@
 <template>
   <div class="livescore-detail" :class="{'livescore-detail--is-visible':$store.state.isOpenLiveScoreDetail==true}">
     <div class="livescore-detail--toolbar">
-      <div class="livescore-detail--toolbar--back-icon">
+      <div class="livescore-detail--toolbar--back-icon" @click="closeLiveScoreDetail()">
         <i class="material-icons">keyboard_backspace</i>
         <span>Back</span>
       </div>
@@ -236,6 +236,18 @@ export default {
       }
       return iconl
     },
+
+    closeLiveScoreDetail() {
+      this.$store.state.isOpenLiveScoreDetail = false
+
+      setTimeout(() => {
+        this.$store.state.livescoreSelected = {
+          match_code: '',
+          type: '',
+          isopening: false,
+        }
+      }, 500)
+    }
   },
 }
 </script>
