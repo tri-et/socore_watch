@@ -11,7 +11,7 @@
 
     li {
         list-style:none;
-        background-color:$mainWhite;
+        //background-color:$mainWhite;
         border-bottom: 1px solid #EBEBEB;
     }
     
@@ -77,5 +77,9 @@
         span:nth-child(2) {
             color:#C2CFE1;
         }
+    }
+
+    &--actived {
+        background-color:rgba(44, 69, 232, 0.08);
     }
 }

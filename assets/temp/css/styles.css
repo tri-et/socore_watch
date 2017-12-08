@@ -2633,7 +2633,7 @@ body{
 
 .match-livescore li {
         list-style:none;
-        background-color:#FFF;
+        //background-color:#FFF;
         border-bottom: 1px solid #EBEBEB;
     }
 
@@ -2700,6 +2700,10 @@ body{
 .match-livescore--score span:nth-child(2) {
             color:#C2CFE1;
         }
+
+.match-livescore--actived {
+        background-color:rgba(44, 69, 232, 0.08);
+    }
 
 .help-container {
     visibility:hidden;

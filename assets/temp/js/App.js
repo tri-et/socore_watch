@@ -27556,20 +27556,14 @@ if (false) {
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: ['items'],
   filters: {
-    setTimeLive(val, time) {
-      let times = val;
-      switch (val) {
-        case '':
-          let date = new Date(time);
-          times = date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
-          break;
-      }
-      return times;
+    setTimeLive(val) {
+      let date = new Date(val);
+      return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
     }
   },
   methods: {
     setTeamWin(val, homeAwayScore) {
-      return val > homeAwayScore ? 'bold' : '';
+      return parseInt(val) > parseInt(homeAwayScore) ? 'bold' : '';
     },
 
     setStats(val, homeAway) {
@@ -27618,7 +27612,6 @@ if (false) {
       }
       return iconl;
     }
-
   }
 });
 
@@ -27758,7 +27751,7 @@ var render = function() {
                   style: {
                     "font-weight": _vm.setTeamWin(
                       _vm.items.match[13],
-                      _vm.items[12]
+                      _vm.items.match[12]
                     )
                   }
                 },
@@ -27783,14 +27776,7 @@ var render = function() {
                 },
                 [
                   _c("span", [
-                    _vm._v(
-                      _vm._s(
-                        _vm._f("setTimeLive")(
-                          _vm.items.match[4],
-                          _vm.items.match[10]
-                        )
-                      )
-                    )
+                    _vm._v(_vm._s(_vm._f("setTimeLive")(_vm.items.match[10])))
                   ]),
                   _vm._v(" "),
                   _c("span", [_vm._v(_vm._s(_vm.items.match[5]))])
@@ -27848,12 +27834,7 @@ var render = function() {
                   [
                     _vm._v(
                       "Stats will be shown here when the match starts, at " +
-                        _vm._s(
-                          _vm._f("setTimeLive")(
-                            _vm.items.match[4],
-                            _vm.items.match[10]
-                          )
-                        )
+                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
                     )
                   ]
                 )
@@ -28129,12 +28110,7 @@ var render = function() {
                   [
                     _vm._v(
                       "TimeLine will be shown here when the match starts, at " +
-                        _vm._s(
-                          _vm._f("setTimeLive")(
-                            _vm.items.match[4],
-                            _vm.items.match[10]
-                          )
-                        )
+                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
                     )
                   ]
                 )
@@ -31196,12 +31172,16 @@ if (false) {(function () {
         timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
       };
       this.$store.state.livescoreSelected = {
+        match_code: id,
         isopening: this.$store.state.isOpenLiveScoreDetail == false ? false : true
       };
       this.$store.state.isOpenLiveScoreDetail = true;
       setTimeout(function () {
         that.$store.state.livescoreSelected.isopening = false;
       }, 900);
+    },
+    getId() {
+      return this.items[0];
     }
   }
 });
@@ -31215,71 +31195,80 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", [
-    _c(
-      "div",
-      {
-        staticClass: "match-livescore match-livescore--items",
-        attrs: { id: _vm.items[0] },
-        on: {
-          click: function($event) {
-            _vm.livescoreClick(_vm.items, $event)
+  return _c(
+    "li",
+    {
+      class: {
+        "match-livescore--actived":
+          _vm.getId() == _vm.$store.state.livescoreSelected.match_code
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "match-livescore match-livescore--items",
+          attrs: { id: _vm.items[0] },
+          on: {
+            click: function($event) {
+              _vm.livescoreClick(_vm.items, $event)
+            }
           }
-        }
-      },
-      [
-        _c("div", { staticClass: "match-livescore--kickoff" }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items[4] != "FT",
-                  expression: "items[4]!='FT'"
-                }
+        },
+        [
+          _c("div", { staticClass: "match-livescore--kickoff" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items[4] != "FT",
+                    expression: "items[4]!='FT'"
+                  }
+                ]
+              },
+              [
+                _c("span", [
+                  _vm._v(_vm._s(_vm._f("setTime")(_vm.items[4], _vm.items[10])))
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(_vm._f("setStatus")(_vm.items[3])))])
               ]
-            },
-            [
-              _c("span", [
-                _vm._v(_vm._s(_vm._f("setTime")(_vm.items[4], _vm.items[10])))
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v(_vm._s(_vm._f("setStatus")(_vm.items[3])))])
-            ]
-          ),
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items[4] == "FT",
+                    expression: "items[4]=='FT'"
+                  }
+                ]
+              },
+              [_c("span", [_vm._v("FT")])]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items[4] == "FT",
-                  expression: "items[4]=='FT'"
-                }
-              ]
-            },
-            [_c("span", [_vm._v("FT")])]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-livescore--teamname" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items[8]))]),
+          _c("div", { staticClass: "match-livescore--teamname" }, [
+            _c("span", [_vm._v(_vm._s(_vm.items[8]))]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.items[9]))])
+          ]),
           _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items[9]))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "match-livescore--score" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items[12]))]),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items[13]))])
-        ])
-      ]
-    )
-  ])
+          _c("div", { staticClass: "match-livescore--score" }, [
+            _c("span", [_vm._v(_vm._s(_vm.items[12]))]),
+            _vm._v(" "),
+            _c("span", [_vm._v(_vm._s(_vm.items[13]))])
+          ])
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32231,6 +32220,24 @@ var GetData = function () {
 				app.leagueLiveScoreRight = leaguename;
 				app.livescoreStats = that.formatJson(stats.data);
 				app.livescoreTimeLine = that.formatJson(timeline.data);
+
+				var id = app.livescore[0][0];
+				app.$store.state.dataLivescoreDetail = {
+					match: app.livescore[0],
+					stats: app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}),
+					timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
+						return x[2] == id;
+					})
+				};
+				app.$store.state.livescoreSelected = {
+					match_code: id,
+					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
+				};
+				app.$store.state.isOpenLiveScoreDetail = true;
 			});
 		}
 	}, {

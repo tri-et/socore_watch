@@ -26,7 +26,7 @@
         </div>
         <div class="livescore-detail-content--header--score">
           <span :style="{'font-weight':setTeamWin(items.match[12],items.match[13])}">{{items.match[12]}}</span>
-          <span :style="{'font-weight':setTeamWin(items.match[13],items[12])}">{{items.match[13]}}</span>
+          <span :style="{'font-weight':setTeamWin(items.match[13],items.match[12])}">{{items.match[13]}}</span>
         </div>
       </div>
       <div class="livescore-detail-content--stats-timeline">
@@ -36,7 +36,7 @@
             <span>league</span>
           </div>
           <div class="livescore-detail-content--header-league--nameleague">
-            <span>{{items.match[4]|setTimeLive(items.match[10])}}</span>
+            <span>{{items.match[10]|setTimeLive}}</span>
             <span>{{items.match[5]}}</span>
           </div>
         </div>
@@ -55,7 +55,7 @@
           <div><img src="assets/images/nodata.png" alt=""></div>
           <div>
             <span v-show="items.match[3]!=0">Don't have any Stats at the moment!</span>
-            <span v-show="items.match[3]==0">Stats will be shown here when the match starts, at {{items.match[4]|setTimeLive(items.match[10])}}</span>
+            <span v-show="items.match[3]==0">Stats will be shown here when the match starts, at {{items.match[10]|setTimeLive}}</span>
           </div>
         </div>
         <div class="livescore-detail-content--stats-detail" v-show="items.stats.length!=0">
@@ -142,7 +142,7 @@
           <div><img src="assets/images/nodata.png" alt=""></div>
           <div>
             <span v-show="items.match[3]!=0">Don't have any TimeLine at the moment!</span>
-            <span v-show="items.match[3]==0">TimeLine will be shown here when the match starts, at {{items.match[4]|setTimeLive(items.match[10])}}</span>
+            <span v-show="items.match[3]==0">TimeLine will be shown here when the match starts, at {{items.match[10]|setTimeLive}}</span>
           </div>
         </div>
         <div class="livescore-detail-content--timeline-detail">
@@ -178,23 +178,16 @@
 export default {
   props: ['items'],
   filters: {
-      setTimeLive(val, time) {
-        let times = val
-        switch (val) {
-          case '':
-            let date = new Date(time)
-            times =
-              date.getHours() +
-              ':' +
-              (date.getMinutes() == '0' ? '00' : date.getMinutes())
-            break
-        }
-        return times
-      },
+    setTimeLive(val) {
+      let date = new Date(val)
+      return date.getHours() +
+        ':' +
+        (date.getMinutes() == '0' ? '00' : date.getMinutes())
     },
+  },
   methods: {
     setTeamWin(val, homeAwayScore) {
-      return val > homeAwayScore ? 'bold' : ''
+      return parseInt(val) > parseInt(homeAwayScore) ? 'bold' : ''
     },
 
     setStats(val, homeAway) {
@@ -242,8 +235,7 @@ export default {
           break
       }
       return iconl
-    }
-    
+    },
   },
 }
 </script>
