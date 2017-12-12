@@ -79,3 +79,39 @@
         display:none;
     }
 }
+
+.no-match {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    height: max-content;
+    text-align: center;
+    color: rgb(166, 166, 166);
+}
+
+.loading {
+    position: absolute;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    z-index: 5;
+    height: inherit;
+    display:none;
+    img {
+        top: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+.loading-is-visible {
+    display:block
+}

@@ -3,6 +3,7 @@
     //height:100vh;
     //padding-top:15px;
     height:auto;
+    overflow:auto;
     //position: relative;
     @mixin clearfix;
 
@@ -71,6 +72,6 @@
     }
 
     &--content {
-        min-height:calc(100vh - 138px)
+        min-height:calc(100vh - 202px)
     }
 }

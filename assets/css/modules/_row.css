@@ -3,18 +3,61 @@
     width:100%;
     @mixin clearfix;
 
+    &__calendar {
+        @mixin clearfix;
+        width:100%;
+        height:60px;
+        display:flex;
+        div {
+            float:left
+        }
+
+        div:first-child {
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            color: #577DBB;
+            cursor: pointer;
+        }
+
+        div:nth-child(2) {
+            flex:1;
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+
+        div:last-child {
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            color: #577DBB;
+            cursor: pointer;
+        }
+    }
+
     &__6{
         float:left;
         width:50%;
     }
 
    
-    &__prediction , &__livescore {
+    &__prediction {
         float:left;
         width:100%;
         height:100vh;
         position:relative;
         overflow: auto;
+        bottom: 0;
+        height: -webkit-fill-available;
+        margin-top: 10px;
+    }
+
+    &__livescore {
+        float:left;
+        width:100%;
+        height:100vh;
+        position:relative;
         bottom: 0;
         height: -webkit-fill-available;
     }
@@ -29,6 +72,59 @@
         opacity: 1;
         transition: opacity 0.5s linear;
         position: absolute;
+    }
+
+    &__livescorecontent {
+        width:100%;
+        height:100vh;
+        position: absolute;
+        @mixin atSmaller {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute; 
+            top: 63px; 
+            bottom: 0;
+        }
+
+        @mixin at672 {
+            width:100%;
+            max-width: 480px;
+            position:absolute;
+            left:0;
+            right:0;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
+
+        @mixin at912 {
+            min-width:320px;
+            max-width:480px;
+            width:auto;
+            position:absolute;
+            left:16px;
+            right:16px;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
+
+        @mixin at1248 {
+            width:max-content;
+            min-width:max-content;
+            max-width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto;
+        }
     }
 
     &__inplay-pregame {

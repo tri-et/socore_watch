@@ -29,12 +29,18 @@
 
             </div>
             <div class="row main-contents--livescore" :class="{'main-contents--is-visible':$store.state.headermenu.type=='livescore'}">
+                
                 <div class="row__livescore">
-                    <div class="row__inplay-pregame inplay-pregame">
+                    <div class="loading">
+                        <img src="assets/images/loading_spinner.gif" alt="" width="40">
+                    </div>
+                    <calender></calender>
+                    <div class="row__livescorecontent inplay-pregame">
+                        <div v-show="$root.$data.livescore.length==0" class="no-match">no match</div>
                         <div class="inplay-pregame--content">
                             <div class="row row__inplay inplay-pregame--inplay">
-                                <template v-for="league in $root.$data.leagueLiveScoreLeft">
-                                    <div class="header-title header-title--livescore" :key="league.leagueShortName">
+                                <template v-for="(league,index) in $root.$data.leagueLiveScoreLeft">
+                                    <div class="header-title header-title--livescore" :key="index">
                                         <div :style="{'background-color':league.leagueColorCode}">
                                             <span>{{league.leagueShortName}}</span>
                                         </div>
@@ -51,8 +57,8 @@
                                 </template>
                             </div>
                             <div class="row row__pregame inplay-pregame--pregame">
-                                <template v-for="league in $root.$data.leagueLiveScoreRight">
-                                    <div class="header-title header-title--livescore" :key="league.leagueShortName">
+                                <template v-for="(league,index) in $root.$data.leagueLiveScoreRight">
+                                    <div class="header-title header-title--livescore" :key="index">
                                         <div :style="{'background-color':league.leagueColorCode}">
                                             <span>{{league.leagueShortName}}</span>
                                         </div>
@@ -93,6 +99,7 @@ import about from './about.vue'
 import menusidebar from './menuSidebar.vue'
 import matchlivescore from './matchLiveScore.vue'
 import livescoredetailpanel from './livescoreDetailPanel.vue'
+import calender from './calender.vue'
 export default {
   components: {
     menuheader,
@@ -105,6 +112,7 @@ export default {
     menusidebar,
     matchlivescore,
     livescoredetailpanel,
+    calender
   },
 }
 </script>

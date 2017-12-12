@@ -1,5 +1,10 @@
 var path = require('path');
+var webpack = require('webpack');
 module.exports = {
+    plugins:[
+        new webpack.ProgressPlugin({
+        })
+    ],
     entry: "./assets/js/App.js",
     output: {
         path: path.resolve(__dirname, "./assets/temp/js"),

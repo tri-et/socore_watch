@@ -950,7 +950,7 @@ body{
     max-width:1568px;
     margin-left:auto;
     margin-right:auto;
-    background-color: rgba(0,0,0, 0.1);
+    background-color:#f2f2f2;
     width:100%;
     height:calc(100vh - 64px);
     overflow:hidden;
@@ -1004,17 +1004,78 @@ body{
         display:table;
     }
 
+.row__calendar {
+        width:100%;
+        height:60px;
+        display:-webkit-box;
+        display:-ms-flexbox;
+        display:flex;
+    }
+
+.row__calendar::after{
+        content:"";
+        clear:both;
+        display:table;
+    }
+
+.row__calendar div {
+            float:left
+        }
+
+.row__calendar div:first-child {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            font-size: 30px;
+            color: #577DBB;
+            cursor: pointer;
+        }
+
+.row__calendar div:nth-child(2) {
+            -webkit-box-flex:1;
+                -ms-flex:1;
+                    flex:1;
+            position: relative;
+            overflow-y: hidden;
+            overflow-x: hidden;
+        }
+
+.row__calendar div:last-child {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            font-size: 30px;
+            color: #577DBB;
+            cursor: pointer;
+        }
+
 .row__6{
         float:left;
         width:50%;
     }
 
-.row__prediction, .row__livescore {
+.row__prediction {
         float:left;
         width:100%;
         height:100vh;
         position:relative;
         overflow: auto;
+        bottom: 0;
+        height: -webkit-fill-available;
+        margin-top: 10px;
+    }
+
+.row__livescore {
+        float:left;
+        width:100%;
+        height:100vh;
+        position:relative;
         bottom: 0;
         height: -webkit-fill-available;
     }
@@ -1030,6 +1091,78 @@ body{
         -webkit-transition: opacity 0.5s linear;
         transition: opacity 0.5s linear;
         position: absolute;
+    }
+
+.row__livescorecontent {
+        width:100%;
+        height:100vh;
+        position: absolute;
+    }
+
+@media (min-width:480px){
+
+.row__livescorecontent {
+            width:480px;
+            margin:auto;
+            left:0;
+            right:0;
+            position:absolute; 
+            top: 63px; 
+            bottom: 0
+    }
+    }
+
+@media (min-width:672px){
+
+.row__livescorecontent {
+            width:100%;
+            max-width: 480px;
+            position:absolute;
+            left:0;
+            right:0;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
+    }
+
+@media (min-width:912px){
+
+.row__livescorecontent {
+            min-width:320px;
+            max-width:480px;
+            width:auto;
+            position:absolute;
+            left:16px;
+            right:16px;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
+    }
+
+@media (min-width:1248px){
+
+.row__livescorecontent {
+            width:-webkit-max-content;
+            width:-moz-max-content;
+            width:max-content;
+            min-width:-webkit-max-content;
+            min-width:-moz-max-content;
+            min-width:max-content;
+            max-width:-webkit-max-content;
+            max-width:-moz-max-content;
+            max-width:max-content;
+            position:absolute;
+            left:0;
+            right:0;
+            top:63px;
+            bottom:0;
+            padding-left:auto;
+            padding-right:auto
+    }
     }
 
 .row__inplay-pregame {
@@ -1180,6 +1313,7 @@ body{
     //height:100vh;
     //padding-top:15px;
     height:auto;
+    overflow:auto;
     //position: relative;
 }
 
@@ -1295,7 +1429,7 @@ body{
     }
 
 .inplay-pregame--content {
-        min-height:calc(100vh - 138px)
+        min-height:calc(100vh - 202px)
     }
 
 .prediction-detail {
@@ -2169,6 +2303,45 @@ body{
         display:none;
     }
 
+.no-match {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    height: -webkit-max-content;
+    height: -moz-max-content;
+    height: max-content;
+    text-align: center;
+    color: rgb(166, 166, 166);
+}
+
+.loading {
+    position: absolute;
+    background-color: rgba(0,0,0,0.2);
+    width: 100%;
+    z-index: 5;
+    height: inherit;
+    display:none;
+}
+
+.loading img {
+        top: 0;
+        right: 0;
+        left: 0;
+        margin: auto;
+        position: absolute;
+        bottom: 0;
+    }
+
+.loading-is-visible {
+    display:block
+}
+
 .odds-ou-header {
 
     background-repeat: round;
@@ -2268,7 +2441,7 @@ body{
         background-size: auto 100%;
         background-repeat: round;
         text-shadow: 0 1px 3px rgba(0,0,0,.34);
-        margin-top:10px;
+        //margin-top:10px;
         display:-webkit-box;
         display:-ms-flexbox;
         display:flex;    
@@ -3968,5 +4141,49 @@ body{
 @-webkit-keyframes collapsePoint2 { 0% { -webkit-transform: scale(0); transform: scale(0); } 0%,to { opacity: .1; } to { -webkit-transform: scale(.8); transform: scale(.8); } }
 
 @keyframes collapsePoint2 { 0% { -webkit-transform: scale(0); transform: scale(0); } 0%,to { opacity: .1; } to { -webkit-transform: scale(.8); transform: scale(.8); } }
+
+.calenders ul {
+        margin:0;
+        white-space: nowrap;
+        position: absolute;
+        width: 100%;
+        height: 60px;
+        padding: 0;
+    }
+
+.calenders li {
+        list-style:none;
+        height: 30px;
+        display:inline-block;
+        padding:10px;
+    }
+
+.calenders li div {
+            display:grid !important;
+            text-align:center;
+            color: rgb(194, 207, 225) !important;
+            line-height: 1.4;
+        }
+
+.calenders li div span:first-child{
+                font-size: 16px;
+            }
+
+.calenders li div span:nth-child(2){
+                font-size: 12px;
+            }
+
+.calenders--active {
+        background-color: rgba(0,0,0,0.1);
+    }
+
+.calenders--active span:first-child{
+            font-weight: bold;
+            color: rgb(56, 97, 158);
+        }
+
+.calenders--active span:nth-child(2){
+            color: rgb(194, 207, 225);
+        }
 
 .resize-observer[data-v-b329ee4c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}
