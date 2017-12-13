@@ -24051,6 +24051,17 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -24186,6 +24197,13 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -24212,10 +24230,10 @@ if (false) {(function () {
     checkIconMenu() {
       let isHidden = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('.primary-nav--icon-menu-bar').is(':hidden');
       if (isHidden) {
-        this.$store.state.iconMenuShow = true;
-        this.$store.state.headermenu.type = 'prediction';
-      } else {
         this.$store.state.iconMenuShow = false;
+        //this.$store.state.headermenu.type = 'prediction'
+      } else {
+        this.$store.state.iconMenuShow = true;
       }
     },
 
@@ -24238,201 +24256,242 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("header", { staticClass: "header-menu" }, [
-    _c("nav", { staticClass: "primary-nav" }, [
-      _c("ul", [
-        _c("li", [
-          _c("i", {
-            staticClass: "fa fa-bars primary-nav--icon-menu-bar",
-            attrs: { "data-type-menu": "menusidebar" },
-            on: {
-              click: function($event) {
-                _vm.itemMenuClick($event)
+    _c(
+      "nav",
+      { staticClass: "primary-nav" },
+      [
+        _c("ul", [
+          _c("li", [
+            _c("i", {
+              staticClass: "fa fa-bars primary-nav--icon-menu-bar",
+              attrs: { "data-type-menu": "menusidebar" },
+              on: {
+                click: function($event) {
+                  _vm.itemMenuClick($event)
+                }
               }
+            })
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "primary-nav--activemenu":
+                    _vm.$store.state.headermenu.type == "prediction"
+                },
+                attrs: { "data-type-menu": "prediction", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.$store.state.iconMenuShow == false
+                      ? _vm.itemMenuClick($event)
+                      : _vm.openSidebar()
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  attrs: { src: "assets/images/menu_predictions@1x.png" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.$store.state.iconMenuShow == false,
+                        expression: "$store.state.iconMenuShow==false"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          _vm.$store.state.headermenu.type == "prediction" &&
+                          _vm.$store.state.iconMenuShow == true,
+                        expression:
+                          "($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==true)"
+                      }
+                    ]
+                  },
+                  [_vm._v("predictions")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value:
+                          _vm.$store.state.headermenu.type == "livescore" &&
+                          _vm.$store.state.iconMenuShow == true,
+                        expression:
+                          "($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==true)"
+                      }
+                    ]
+                  },
+                  [_vm._v("live scores")]
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge--inplay" }, [
+                  _vm._v("1+ New")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlight" })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                class: {
+                  "primary-nav--activemenu":
+                    _vm.$store.state.headermenu.type == "livescore"
+                },
+                attrs: { "data-type-menu": "livescore", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "primary-nav--icon-menu-livescore",
+                  attrs: { src: "assets/images/menu_livescores@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", [_vm._v("live scores")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "badge badge--pregame" }, [
+                  _vm._v("1+ New")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlight" })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c(
+              "a",
+              {
+                attrs: { "data-type-menu": "help", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "primary-nav--icon-menu-notification",
+                  attrs: {
+                    width: "24",
+                    src:
+                      "assets/images/notification/notification_icon_disabled.png"
+                  }
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlightmenuright" })
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "primary-nav--tooltip" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-type-menu": "help", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass:
+                    "primary-nav--icon-menu-help primary-nav--icon-padding",
+                  attrs: { src: "assets/images/icon_help@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
+                  _vm._v("help")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlightmenuright" })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "primary-nav--tooltiptext" }, [
+              _vm._v("Help")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "primary-nav--tooltip" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-type-menu": "about", href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.itemMenuClick($event)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass:
+                    "primary-nav--icon-menu-about primary-nav--icon-padding",
+                  attrs: { src: "assets/images/menu_aboutus@1x.png" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
+                  _vm._v("about")
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("div", { staticClass: "primary-nav--highlightmenuright" })
+              ]
+            ),
+            _vm._v(" "),
+            _c("span", { staticClass: "primary-nav--tooltiptext" }, [
+              _vm._v("About Us")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("resize-observer", {
+          on: {
+            notify: function($event) {
+              _vm.checkIconMenu()
             }
-          })
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "primary-nav--activemenu":
-                  _vm.$store.state.headermenu.type == "prediction"
-              },
-              attrs: { "data-type-menu": "prediction", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.$store.state.iconMenuShow == false
-                    ? _vm.openSidebar()
-                    : _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                attrs: { src: "assets/images/menu_predictions@1x.png" }
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.$store.state.iconMenuShow == true,
-                      expression: "$store.state.iconMenuShow==true"
-                    }
-                  ]
-                },
-                [_vm._v("predictions")]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.$store.state.headermenu.type == "prediction" &&
-                        _vm.$store.state.iconMenuShow == false,
-                      expression:
-                        "($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)"
-                    }
-                  ]
-                },
-                [_vm._v("predictions")]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value:
-                        _vm.$store.state.headermenu.type == "livescore" &&
-                        _vm.$store.state.iconMenuShow == false,
-                      expression:
-                        "($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)"
-                    }
-                  ]
-                },
-                [_vm._v("live scores")]
-              ),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge--inplay" }, [
-                _vm._v("1+ New")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlight" })
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c(
-            "a",
-            {
-              class: {
-                "primary-nav--activemenu":
-                  _vm.$store.state.headermenu.type == "livescore"
-              },
-              attrs: { "data-type-menu": "livescore", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass: "primary-nav--icon-menu-livescore",
-                attrs: { src: "assets/images/menu_livescores@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", [_vm._v("live scores")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "badge badge--pregame" }, [
-                _vm._v("1+ New")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlight" })
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "primary-nav--tooltip" }, [
-          _c(
-            "a",
-            {
-              attrs: { "data-type-menu": "help", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass:
-                  "primary-nav--icon-menu-help primary-nav--icon-padding",
-                attrs: { src: "assets/images/icon_help@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
-                _vm._v("help")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlightmenuright" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "primary-nav--tooltiptext" }, [
-            _vm._v("Help")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "primary-nav--tooltip" }, [
-          _c(
-            "a",
-            {
-              attrs: { "data-type-menu": "about", href: "#" },
-              on: {
-                click: function($event) {
-                  _vm.itemMenuClick($event)
-                }
-              }
-            },
-            [
-              _c("img", {
-                staticClass:
-                  "primary-nav--icon-menu-about primary-nav--icon-padding",
-                attrs: { src: "assets/images/menu_aboutus@1x.png" }
-              }),
-              _vm._v(" "),
-              _c("span", { staticClass: "primary-nav--is-hide-text-menu" }, [
-                _vm._v("about")
-              ]),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "primary-nav--highlightmenuright" })
-            ]
-          ),
-          _vm._v(" "),
-          _c("span", { staticClass: "primary-nav--tooltiptext" }, [
-            _vm._v("About Us")
-          ])
-        ])
-      ])
-    ])
+          }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -31074,6 +31133,12 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   methods: {
@@ -31221,7 +31286,7 @@ var render = function() {
                   _c(
                     "li",
                     {
-                      attrs: { "data-menu-type": "help" },
+                      attrs: { "data-menu-type": "notification" },
                       on: {
                         click: function($event) {
                           _vm.itemClick($event)
@@ -31234,7 +31299,7 @@ var render = function() {
                   _c(
                     "li",
                     {
-                      attrs: { "data-menu-type": "about" },
+                      attrs: { "data-menu-type": "help" },
                       on: {
                         click: function($event) {
                           _vm.itemClick($event)
@@ -31242,12 +31307,25 @@ var render = function() {
                       }
                     },
                     [_vm._m(2, false, false)]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      attrs: { "data-menu-type": "about" },
+                      on: {
+                        click: function($event) {
+                          _vm.itemClick($event)
+                        }
+                      }
+                    },
+                    [_vm._m(3, false, false)]
                   )
                 ])
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3, false, false)
+            _vm._m(4, false, false)
           ])
         ]
       )
@@ -31267,6 +31345,23 @@ var staticRenderFns = [
       _c("input", {
         attrs: { placeholder: "Search for a match", type: "text" }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("div"),
+      _c("img", {
+        staticClass: "sidebar-list-menu--icon-notification",
+        attrs: {
+          width: "24",
+          src: "assets/images/notification/notification_icon_disabled.png"
+        }
+      }),
+      _vm._v(" "),
+      _c("span", [_vm._v("notification")])
     ])
   },
   function() {
@@ -32894,7 +32989,11 @@ var render = function() {
                           key: item.match_code,
                           attrs: { items: item, inplaypregame: "inplay" }
                         })
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm._m(1, false, false),
+                      _vm._v(" "),
+                      _vm._m(2, false, false)
                     ],
                     2
                   ),
@@ -32903,20 +33002,24 @@ var render = function() {
                     "div",
                     { staticClass: "row row__inplay inplay-pregame--pregame" },
                     [
-                      _vm._m(1, false, false),
+                      _vm._m(3, false, false),
                       _vm._v(" "),
                       _vm._l(_vm.$root.$data.pregame, function(item, index) {
                         return _c("buttonprediction", {
                           key: item.match_code,
                           attrs: { items: item, inplaypregame: "pregame" }
                         })
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm._m(4, false, false),
+                      _vm._v(" "),
+                      _vm._m(5, false, false)
                     ],
                     2
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(2, false, false)
+                _vm._m(6, false, false)
               ])
             ]),
             _vm._v(" "),
@@ -32939,7 +33042,7 @@ var render = function() {
               "div",
               { staticClass: "row__livescore" },
               [
-                _vm._m(3, false, false),
+                _vm._m(7, false, false),
                 _vm._v(" "),
                 _c("calender"),
                 _vm._v(" "),
@@ -33102,7 +33205,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(4, false, false)
+                    _vm._m(8, false, false)
                   ]
                 )
               ],
@@ -33137,8 +33240,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-title header-title--expired" }, [
+      _c("span", [_vm._v("EXPIRED inplay")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "prediction-detail-content--expired" }, [
+      _c("span", [_vm._v("No In-Play Predictions for today")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-title header-title--pregame" }, [
       _c("span", [_vm._v("pregame")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-title header-title--expired" }, [
+      _c("span", [_vm._v("EXPIRED Pregame")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "prediction-detail-content--expired" }, [
+      _c("span", [_vm._v("No Pregame Predictions for today")])
     ])
   },
   function() {

@@ -761,6 +761,11 @@ body{
         padding-top:2px;
     }
 
+.primary-nav--icon-menu-notification{
+        padding-right:0px !important;
+        padding-top:5px;
+    }
+
 .side-bar-menu{
     position:absolute;
     top:0;
@@ -944,6 +949,11 @@ body{
 
 .sidebar-list-menu--items {
         min-height: calc(100vh - 259px);
+    }
+
+.sidebar-list-menu--icon-notification{
+        padding-top: 5px;
+        padding-right: 7px;
     }
 
 .main-container {
@@ -1895,6 +1905,21 @@ body{
         display:none;
     }
 
+.prediction-detail-content--expired {
+        height: 110px;
+        background-color: white;
+        color: rgb(144, 144, 144);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+    }
+
 .livestream-container--is-visible {
         display:none;
     }
@@ -2462,6 +2487,13 @@ body{
 
 .header-title--pregame{
         background-image:url("../../images/Pre-Game-Title.png"); 
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
+     }
+
+.header-title--expired{
+        background-image:url("../../images/bg_expired_row.png"); 
         font-size: 14px;
         font-weight:bold;
         text-transform:uppercase;

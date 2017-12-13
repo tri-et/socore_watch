@@ -25,6 +25,13 @@
         text-transform:uppercase;
      }
 
+     &--expired{
+        background-image:url("../../images/bg_expired_row.png"); 
+        font-size: 14px;
+        font-weight:bold;
+        text-transform:uppercase;
+     }
+
      &--livescore{
          
         height:50px;

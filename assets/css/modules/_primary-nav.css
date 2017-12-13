@@ -192,4 +192,9 @@
     &--icon-menu-login {
         padding-top:2px;
     }
+
+    &--icon-menu-notification{
+        padding-right:0px !important;
+        padding-top:5px;
+    }
 }
