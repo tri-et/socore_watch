@@ -26,7 +26,7 @@
                     </a>
                 </li>
                 <li>
-                    <a @click="itemMenuClick($event)" data-type-menu="help" href="#">
+                    <a @click="itemMenuClick($event)" data-type-menu="notification" href="#">
                         <img width="24" class="primary-nav--icon-menu-notification" src="assets/images/notification/notification_icon_disabled.png">
                         <br>
                         <div class="primary-nav--highlightmenuright"></div>

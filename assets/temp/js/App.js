@@ -24393,7 +24393,7 @@ var render = function() {
             _c(
               "a",
               {
-                attrs: { "data-type-menu": "help", href: "#" },
+                attrs: { "data-type-menu": "notification", href: "#" },
                 on: {
                   click: function($event) {
                     _vm.itemMenuClick($event)
@@ -24615,12 +24615,18 @@ if (false) {(function () {
     };
   },
   filters: {
-    matchDate(value) {
-      var date = new Date(value);
-      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
+    setStatus(value) {
+      return value == '' ? 'Kickoff' : value;
+    },
+    setTimeMatch(val, time, minute) {
+      return val == '' ? time : minute + "'";
     }
   },
   methods: {
+    matchDate(value) {
+      var date = new Date(value);
+      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
+    },
     setMarquee() {
       var divContain = this.$el.querySelector('.btn div:nth-child(2)');
       var textWidth = divContain.children[0].offsetWidth;
@@ -24692,10 +24698,20 @@ var render = function() {
           },
           [
             _c("span", [
-              _vm._v(_vm._s(_vm._f("matchDate")(_vm.items.match_dt)))
+              _vm._v(
+                _vm._s(
+                  _vm._f("setTimeMatch")(
+                    _vm.items.match_period,
+                    _vm.matchDate(_vm.items.match_dt),
+                    _vm.items.match_minute
+                  )
+                )
+              )
             ]),
             _vm._v(" "),
-            _c("span", [_vm._v("kickoff")])
+            _c("span", [
+              _vm._v(_vm._s(_vm._f("setStatus")(_vm.items.match_period)))
+            ])
           ]
         ),
         _vm._v(" "),
