@@ -3,8 +3,8 @@
   'match-prediction--pregame':inplaypregame=='pregame'}" data-pridiction-type="inplay" @click="openPredictionDetail(items)">
     <div class="match-prediction--items">
       <div :class="{'match-prediction--kickoff-inplay':inplaypregame=='inplay','match-prediction--kickoff-pregame':inplaypregame=='pregame'}">
-        <span>{{items.match_dt|matchDate}}</span>
-        <span>kickoff</span>
+        <span>{{items.match_period|setTimeMatch(matchDate(items.match_dt),items.match_minute)}}</span>
+        <span>{{items.match_period|setStatus}}</span>
       </div>
       <div class="match-prediction--teamname">
         <span>{{items.team_home}}</span>
@@ -52,14 +52,20 @@ export default {
     }
   },
   filters: {
+    setStatus(value) {
+      return value == '' ? 'Kickoff' : value
+    },
+    setTimeMatch(val, time, minute) {
+      return val == '' ? time : minute + "'"
+    }
+  },
+  methods: {
     matchDate(value) {
       var date = new Date(value)
       return (
         date.getHours() +':' +(date.getMinutes() == 0 ? '00' : date.getMinutes())
       )
     },
-  },
-  methods: {
     setMarquee() {
       var divContain = this.$el.querySelector('.btn div:nth-child(2)')
       var textWidth = divContain.children[0].offsetWidth

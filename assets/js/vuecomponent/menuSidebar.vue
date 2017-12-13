@@ -27,6 +27,12 @@
                                     <span>live scores</span>
                                 </a>
                             </li>
+                            <li data-menu-type="notification" @click="itemClick($event)">
+                                <a>
+                                    <div></div><img width="24" class="sidebar-list-menu--icon-notification" src="assets/images/notification/notification_icon_disabled.png">
+                                    <span>notification</span>
+                                </a>
+                            </li>
                             <li data-menu-type="help" @click="itemClick($event)">
                                 <a>
                                     <div></div><img class="sidebar-list-menu--icon-help" src="assets/images/icon_help@1x.png">

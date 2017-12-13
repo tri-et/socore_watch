@@ -6,12 +6,12 @@
                     <i @click="itemMenuClick($event)" data-type-menu="menusidebar" class="fa fa-bars primary-nav--icon-menu-bar"></i>
                 </li>
                 <li>
-                    <a @click="$store.state.iconMenuShow==false?openSidebar():itemMenuClick($event)" data-type-menu="prediction" 
+                    <a @click="$store.state.iconMenuShow==false?itemMenuClick($event):openSidebar()" data-type-menu="prediction" 
                     :class="{'primary-nav--activemenu':$store.state.headermenu.type=='prediction'}" href="#">
                     <img src="assets/images/menu_predictions@1x.png">
-                        <span v-show="$store.state.iconMenuShow==true">predictions</span>
-                        <span v-show="($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==false)">predictions</span>
-                        <span v-show="($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==false)">live scores</span>
+                        <span v-show="$store.state.iconMenuShow==false">predictions</span>
+                        <span v-show="($store.state.headermenu.type=='prediction') && ($store.state.iconMenuShow==true)">predictions</span>
+                        <span v-show="($store.state.headermenu.type=='livescore') && ($store.state.iconMenuShow==true)">live scores</span>
                         <span class="badge badge--inplay">1+ New</span><br>
                         <div class="primary-nav--highlight"></div>
                     </a>
@@ -23,6 +23,13 @@
                         <span>live scores</span>
                         <span class="badge badge--pregame">1+ New</span><br>
                         <div class="primary-nav--highlight"></div>
+                    </a>
+                </li>
+                <li>
+                    <a @click="itemMenuClick($event)" data-type-menu="notification" href="#">
+                        <img width="24" class="primary-nav--icon-menu-notification" src="assets/images/notification/notification_icon_disabled.png">
+                        <br>
+                        <div class="primary-nav--highlightmenuright"></div>
                     </a>
                 </li>
                 <li class="primary-nav--tooltip">
@@ -43,7 +50,7 @@
                 </li>
                 <!--<li><a href="#"><img class="primary-nav==icon-menu-login primary-nav==icon-padding"src="<?php echo base_url()?>assets/images/menu_login@1x.png"/><span class="primary-nav==is-hide-text-menu">login</span><br><div class="primary-nav==highlightmenuright"></div></a></li>-->
          </ul>
-            <!--<resize-observer @notify="checkIconMenu()" />-->
+            <resize-observer @notify="checkIconMenu()" />
         </nav>
     </header>
 </template>
@@ -73,10 +80,10 @@ export default {
     checkIconMenu() {
       let isHidden = $('.primary-nav--icon-menu-bar').is(':hidden')
       if (isHidden) {
-        this.$store.state.iconMenuShow = true
-        this.$store.state.headermenu.type = 'prediction'
-      } else {
         this.$store.state.iconMenuShow = false
+        //this.$store.state.headermenu.type = 'prediction'
+      } else {
+        this.$store.state.iconMenuShow = true
       }
     },
 

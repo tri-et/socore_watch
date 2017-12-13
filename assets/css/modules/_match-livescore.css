@@ -82,4 +82,8 @@
     &--actived {
         background-color:rgba(44, 69, 232, 0.08);
     }
+
+    &--live {
+        color:#009933
+    }
 }
