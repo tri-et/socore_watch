@@ -29,6 +29,7 @@ class GetData {
 	}
 
 	getDataPregame(app) {
+		let that=this
 		$.ajax({
 			url: 'index.php/api/get_pregame',
 			jsonp: 'callback',
@@ -120,6 +121,37 @@ class GetData {
 			  isopening:app.$store.state.isOpenLiveScoreDetail == false ? false : true
 			}
 			app.$store.state.isOpenLiveScoreDetail = true
+		})
+	}
+
+	getDataLiveScoreByDate(date,app){
+		let that = this
+		$('.loading').addClass('loading-is-visible')
+		$.ajax({
+			url:'http://www.hasilskor.com/API/JSON.aspx?date=' + date + '&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
+			success:function(res){
+				var leaguename = []
+				for (var i = 0; i < res.r.length; i++) {
+					if (!that.checkLeague(res.r[i][5], leaguename)) {
+						leaguename.push({
+							league: res.r[i][5],
+							leagueShortName: res.r[i][6],
+							leagueColorCode: res.r[i][7]
+						});
+					}
+				}
+				app.livescore = res.r
+				app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2))
+				app.leagueLiveScoreRight = leaguename
+				$('.loading').removeClass('loading-is-visible')
+			},
+			error: function(error) {
+				app.league = []
+				app.livescore=[]
+				app.leagueLiveScoreLeft = []
+				app.leagueLiveScoreRight = []
+				$('.loading').removeClass('loading-is-visible')
+			}
 		})
 	}
 

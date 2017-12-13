@@ -43,7 +43,7 @@
                 </li>
                 <!--<li><a href="#"><img class="primary-nav==icon-menu-login primary-nav==icon-padding"src="<?php echo base_url()?>assets/images/menu_login@1x.png"/><span class="primary-nav==is-hide-text-menu">login</span><br><div class="primary-nav==highlightmenuright"></div></a></li>-->
          </ul>
-            <resize-observer @notify="checkIconMenu()" />
+            <!--<resize-observer @notify="checkIconMenu()" />-->
         </nav>
     </header>
 </template>
@@ -85,7 +85,7 @@ export default {
     },
   },
   mounted() {
-    this.checkIconMenu()
+    //this.checkIconMenu()
   },
 }
 </script>

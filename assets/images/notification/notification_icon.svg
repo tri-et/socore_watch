@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="51px" height="54px" viewBox="0 0 51 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>notification_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-2.0%" y="-18.0%" width="103.9%" height="139.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="8" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Notifications" transform="translate(-564.000000, -240.000000)">
+            <g id="1280px-copy" transform="translate(-531.000000, 233.000000)">
+                <g id="sample" filter="url(#filter-1)">
+                    <g id="header">
+                        <g id="about-copy" transform="translate(1088.000000, 0.000000)">
+                            <g id="notification_icon" transform="translate(16.000000, 16.000000)">
+                                <circle id="Oval-2" cx="16" cy="16" r="16"></circle>
+                                <path d="M15.8512974,28 C14.4960877,28 13.3669401,26.9833387 13.1695585,25.6854617 L18.5330364,25.6854617 C18.3356604,26.9833104 17.2065071,28 15.8512974,28 Z M26.8605415,12.0507105 C26.8605415,14.4667032 24.9010654,16.4261793 22.4850727,16.4261793 C20.06908,16.4261793 18.1096039,14.4667032 18.1096039,12.0507105 C18.1096039,9.6347178 20.06908,7.67524173 22.4850727,7.67524173 C24.9010654,7.67524173 26.8605415,9.6347178 26.8605415,12.0507105 Z M6,24.6125403 L6,22.0719455 L25.7028771,22.0719455 L25.7028771,24.6125403 L6,24.6125403 Z M8.82288309,14.0555221 L8.82283793,14.0551212 C8.82283793,9.79222903 11.3060717,7.95735502 13.2556112,7.16672192 C13.6790381,6.99802643 13.9326572,6.57459397 13.8764197,6.12248101 L13.8764197,5.92509938 C13.8764197,4.73971431 14.9493411,3.80794271 16.190958,4.03399354 C16.9529106,4.17513769 17.5737191,4.82462663 17.7148632,5.58657924 C17.7435324,5.78395522 17.7722016,5.95266201 17.7435324,6.12247536 C17.7148519,6.57345917 17.9409084,6.99690292 18.3643409,7.16671628 C18.6741805,7.27917994 18.9564688,7.42033539 19.2674376,7.59014874 C17.8835474,8.57815783 16.9804507,10.2157123 16.9804507,12.0505863 C16.9804507,15.0995259 19.4360767,17.5552083 22.4850727,17.5552083 C22.6824487,17.5552083 22.8798303,17.5552083 23.1058811,17.5265391 C23.3319376,19.1928306 23.7553701,20.265752 24.2350344,20.9427923 L7.46767338,20.9427923 C8.20207464,19.8712258 8.82288309,17.8664143 8.82288309,14.0555221 Z" id="Combined-Shape" fill="#ABABAB" fill-rule="nonzero"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

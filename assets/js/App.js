@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import {store} from './modules/store'
 import VueResize from 'vue-resize'

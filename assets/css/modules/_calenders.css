@@ -1,0 +1,44 @@
+.calenders {
+    ul {
+        margin:0;
+        white-space: nowrap;
+        position: absolute;
+        width: 100%;
+        height: 60px;
+        padding: 0;
+    }
+
+    li {
+        list-style:none;
+        height: 30px;
+        display:inline-block;
+        padding:10px;
+
+        div {
+            display:grid !important;
+            text-align:center;
+            color: rgb(194, 207, 225) !important;
+            line-height: 1.4;
+
+            span:first-child{
+                font-size: 16px;
+            }
+
+            span:nth-child(2){
+                font-size: 12px;
+            }
+        }
+    }
+
+    &--active {
+        background-color: rgba(0,0,0,0.1);
+
+        span:first-child{
+            font-weight: bold;
+            color: rgb(56, 97, 158);
+        }
+        span:nth-child(2){
+            color: rgb(194, 207, 225);
+        }
+    }
+}
