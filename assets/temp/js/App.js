@@ -22812,7 +22812,7 @@ var store = exports.store = new _vuex2.default.Store({
 		statLiveActive: "stats",
 
 		activecalender: {
-			id: null,
+			id: "14",
 			active: false
 		}
 
@@ -31775,6 +31775,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 
 
@@ -31792,6 +31793,10 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
     },
     day(val) {
       var day_names_short = ['Sun', 'Mon', 'Tue', 'Web', 'Thu', 'Fri', 'Sat'];
+      let today = new Date();
+      if (val.getFullYear() == today.getFullYear() && val.getMonth() == today.getMonth() && val.getDate() == today.getDate()) {
+        return 'Today';
+      }
       return day_names_short[val.getDay()];
     }
   },
@@ -31825,8 +31830,6 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
       var today = new Date();
       if (today.getDate() == val.getDate() && today.getMonth() == val.getMonth()) {
         this.$store.state.activecalender.id = index.toString();
-      } else {
-        this.$store.state.activecalender.active = false;
       }
     },
 
@@ -31835,6 +31838,7 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
     },
 
     selectedDay(ob, event) {
+      this.setDateSelectedCenter(event.currentTarget.offsetLeft);
       this.$store.state.activecalender.id = event.currentTarget.id;
       let today = new Date();
       let date = ob.getFullYear() + '-' + (ob.getMonth() + 1) + '-' + ob.getDate();
@@ -31843,9 +31847,27 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
       } else {
         getdata.getDataLiveScoreByDate(date, this.$root);
       }
+    },
+
+    setDateSelectedCenter(currentPositionclick) {
+      let outer = this.$el.querySelector('.calenders ul').clientWidth;
+      let inner = this.$el.querySelector('.calenders').scrollWidth;
+      let centerposition = outer / 2;
+
+      let position = currentPositionclick - centerposition;
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).animate({
+        scrollLeft: currentPositionclick - outer / 2 + 40
+      });
+    },
+
+    setDateCenter() {
+      let outer = this.$el.querySelector('.calenders ul').clientWidth;
+      let inner = this.$el.querySelector('.calenders').scrollWidth;
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).scrollLeft((inner - outer) / 2 - 60);
     }
   },
   created() {
+    let that = this;
     this.renderDays();
   }
 });
@@ -32749,63 +32771,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row__calendar" }, [
-    _c(
-      "div",
-      {
-        staticClass: "material-icons",
-        on: {
-          click: function($event) {
-            _vm.nextday($event)
-          }
-        }
-      },
-      [_vm._v("keyboard_arrow_left")]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "calenders" }, [
+  return _c(
+    "div",
+    { staticClass: "row__calendar" },
+    [
       _c(
-        "ul",
-        _vm._l(_vm.days, function(item, index) {
-          return _c(
-            "li",
-            {
-              key: index,
-              class: {
-                "calenders--active": index == _vm.$store.state.activecalender.id
-              },
-              attrs: { id: index },
-              on: {
-                click: function($event) {
-                  _vm.selectedDay(item, $event)
+        "div",
+        {
+          staticClass: "material-icons",
+          on: {
+            click: function($event) {
+              _vm.nextday($event)
+            }
+          }
+        },
+        [_vm._v("keyboard_arrow_left")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "calenders" }, [
+        _c(
+          "ul",
+          _vm._l(_vm.days, function(item, index) {
+            return _c(
+              "li",
+              {
+                key: index,
+                class: {
+                  "calenders--active":
+                    index == _vm.$store.state.activecalender.id
+                },
+                attrs: { id: index },
+                on: {
+                  click: function($event) {
+                    _vm.selectedDay(item, $event)
+                  }
                 }
-              }
-            },
-            [
-              _c("div", [
-                _c("span", [_vm._v(_vm._s(_vm._f("date")(item)))]),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(_vm._f("day")(item)))])
-              ])
-            ]
-          )
-        })
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "material-icons",
+              },
+              [
+                _c("div", [
+                  _c("span", [_vm._v(_vm._s(_vm._f("date")(item)))]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm._f("day")(item)))])
+                ])
+              ]
+            )
+          })
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "material-icons",
+          on: {
+            click: function($event) {
+              _vm.preday($event)
+            }
+          }
+        },
+        [_vm._v("keyboard_arrow_right")]
+      ),
+      _vm._v(" "),
+      _c("resize-observer", {
         on: {
-          click: function($event) {
-            _vm.preday($event)
+          notify: function($event) {
+            _vm.setDateCenter()
           }
         }
-      },
-      [_vm._v("keyboard_arrow_right")]
-    )
-  ])
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

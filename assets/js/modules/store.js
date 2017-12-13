@@ -65,7 +65,7 @@ export const store = new Vuex.Store({
 		statLiveActive:"stats",
 
 		activecalender:{
-			id:null,
+			id:"14",
 			active:false
 		}
 
