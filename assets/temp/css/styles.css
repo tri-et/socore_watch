@@ -483,14 +483,17 @@ body{
     0% {
         -webkit-transform: scale(1);
                 transform: scale(1);
+        opacity:1
     }
     50% {
-        -webkit-transform: scale(0.4);
-                transform: scale(0.4);  
+        -webkit-transform: scale(0.9);
+                transform: scale(0.9);  
+        opacity:0
     }
     100% {
         -webkit-transform: scale(1);
                 transform: scale(1);
+        opacity:1
     }       
 }
 
@@ -498,14 +501,17 @@ body{
     0% {
         -webkit-transform: scale(1);
                 transform: scale(1);
+        opacity:1
     }
     50% {
-        -webkit-transform: scale(0.4);
-                transform: scale(0.4);  
+        -webkit-transform: scale(0.9);
+                transform: scale(0.9);  
+        opacity:0
     }
     100% {
         -webkit-transform: scale(1);
                 transform: scale(1);
+        opacity:1
     }       
 }
 
@@ -1053,7 +1059,7 @@ body{
             overflow-x: hidden;
         }
 
-.row__calendar div:last-child {
+.row__calendar div:nth-child(3) {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -2909,6 +2915,10 @@ body{
 
 .match-livescore--actived {
         background-color:rgba(44, 69, 232, 0.08);
+    }
+
+.match-livescore--live {
+        color:#009933
     }
 
 .help-container {

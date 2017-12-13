@@ -31516,11 +31516,16 @@ if (false) {(function () {
           let date = new Date(time);
           times = date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
           break;
+        default:
+          times = val.indexOf('+') > 0 ? val : val + "'";
       }
       return times;
     }
   },
   methods: {
+    setStyleLive(val) {
+      return this.$options.filters.setStatus(val);
+    },
     livescoreClick(ob, event) {
       let that = this;
       let id = event.currentTarget.id;
@@ -31585,7 +31590,11 @@ var render = function() {
                     value: _vm.items[4] != "FT",
                     expression: "items[4]!='FT'"
                   }
-                ]
+                ],
+                class: {
+                  "match-livescore--live":
+                    _vm.setStyleLive(_vm.items[3]) == "Live"
+                }
               },
               [
                 _c("span", [

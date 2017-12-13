@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<!--version 0.2.5-->
+<!--version 0.2.6-->
 <head>
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>

@@ -2,7 +2,7 @@
   <li :class="{'match-livescore--actived':getId()==$store.state.livescoreSelected.match_code}">
     <div class="match-livescore match-livescore--items" @click="livescoreClick(items,$event)" :id="items[0]">
       <div class="match-livescore--kickoff">
-        <div v-show="items[4]!='FT'">
+        <div v-show="items[4]!='FT'" :class="{'match-livescore--live':setStyleLive(items[3])=='Live'}">
           <span>{{items[4]|setTime(items[10])}}</span>
           <span>{{items[3]|setStatus}}</span>
         </div>
@@ -48,24 +48,36 @@ export default {
       switch (val) {
         case '':
           let date = new Date(time)
-          times =date.getHours() +':' +(date.getMinutes() == '0' ? '00' : date.getMinutes())
+          times =
+            date.getHours() +
+            ':' +
+            (date.getMinutes() == '0' ? '00' : date.getMinutes())
           break
+        default:
+          times = val.indexOf('+')>0?val:val + "'"
       }
       return times
     },
   },
   methods: {
+    setStyleLive(val) {
+      return this.$options.filters.setStatus(val)
+    },
     livescoreClick(ob, event) {
       let that = this
       let id = event.currentTarget.id
       this.$store.state.dataLivescoreDetail = {
         match: ob,
-        stats: this.$root.livescoreStats.r.find(x => x[2] == id)==undefined?[]:this.$root.livescoreStats.r.find(x => x[2] == id),
-        timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id)
+        stats:
+          this.$root.livescoreStats.r.find(x => x[2] == id) == undefined
+            ? []
+            : this.$root.livescoreStats.r.find(x => x[2] == id),
+        timeline: this.$root.livescoreTimeLine.r.filter(x => x[2] == id),
       }
       this.$store.state.livescoreSelected = {
-        match_code:id,
-        isopening:this.$store.state.isOpenLiveScoreDetail == false ? false : true
+        match_code: id,
+        isopening:
+          this.$store.state.isOpenLiveScoreDetail == false ? false : true,
       }
       this.$store.state.isOpenLiveScoreDetail = true
       setTimeout(function() {
@@ -74,7 +86,7 @@ export default {
     },
     getId() {
       return this.items[0]
-    }
+    },
   },
 }
 </script>
