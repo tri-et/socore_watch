@@ -5,10 +5,10 @@
                 <img height="92" src="assets/images/logo@1x.png" width="293">
                 <a class="side-bar-search-content--btnclosemenu" @click="closeSidebar()">&times;</a>
             </div>
-            <div class="side-bar-search-content--input-search">
+            <!--<div class="side-bar-search-content--input-search">
                 <img height="30" src="assets/images/search.png" width="30">
                 <input placeholder="Search for a match" type="text">
-            </div>
+            </div>-->
             <div class="sidebar-list-menu">
                 <div class="sidebar-list-menu--items">
                     <nav>

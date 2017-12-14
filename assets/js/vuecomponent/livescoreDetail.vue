@@ -32,7 +32,7 @@
       <div class="livescore-detail-content--stats-timeline">
         <div class="livescore-detail-content--header-league">
           <div class="livescore-detail-content--header-league--league">
-            <span>kickoff</span>
+            <span>{{items.match[4]|setFT}}</span>
             <span>league</span>
           </div>
           <div class="livescore-detail-content--header-league--nameleague">
@@ -184,6 +184,10 @@ export default {
         ':' +
         (date.getMinutes() == '0' ? '00' : date.getMinutes())
     },
+
+    setFT(val){
+      return val=='FT'?'FT':'kickoff'
+    }
   },
   methods: {
     setTeamWin(val, homeAwayScore) {

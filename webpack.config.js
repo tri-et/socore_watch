@@ -5,10 +5,13 @@ module.exports = {
         new webpack.ProgressPlugin({
         })
     ],
-    entry: "./assets/js/App.js",
+    entry: {
+        app:"./assets/js/App.js",
+        app1:"./assets/js/App1.js"
+    },
     output: {
         path: path.resolve(__dirname, "./assets/temp/js"),
-        filename: "App.js"
+        filename: "[name].js"
     },
     module: {
         loaders: [{

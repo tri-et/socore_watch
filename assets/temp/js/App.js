@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -179,7 +179,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(18);
 var isBuffer = __webpack_require__(62);
 
 /*global toString:true*/
@@ -10746,6 +10746,33 @@ return jQuery;
 /* 3 */
 /***/ (function(module, exports) {
 
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -10933,134 +10960,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(64);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
@@ -21726,756 +21626,10 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(17).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(6).setImmediate))
 
 /***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(40);
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2732684c", Component.options)
-  } else {
-    hotAPI.reload("data-v-2732684c", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(42);
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\livecastLiveScore.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-929415c4", Component.options)
-  } else {
-    hotAPI.reload("data-v-929415c4", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _axios = __webpack_require__(60);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var GetData = function () {
-	function GetData() {
-		_classCallCheck(this, GetData);
-	}
-
-	_createClass(GetData, [{
-		key: 'checkLeague',
-		value: function checkLeague(leaguename, leagueArray) {
-			for (var i = 0; i < leagueArray.length; i++) {
-				if (leagueArray[i].league == leaguename) {
-					return true;
-				}
-			}
-			return false;
-		}
-	}, {
-		key: 'getDataInPlay',
-		value: function getDataInPlay(app) {
-			var that = this;
-			_jquery2.default.ajax({
-				url: 'index.php/api/get_running',
-				jsonp: 'callback',
-				dataType: 'jsonp',
-				success: function success(response) {
-					var data = JSON.parse(response);
-					app.inplay = data.Running;
-					setTimeout(function () {
-						that.getDataInPlay(app);
-					}, 3000);
-				}
-			});
-		}
-	}, {
-		key: 'getDataPregame',
-		value: function getDataPregame(app) {
-			var that = this;
-			_jquery2.default.ajax({
-				url: 'index.php/api/get_pregame',
-				jsonp: 'callback',
-				dataType: 'jsonp',
-				success: function success(response) {
-					var data = JSON.parse(response);
-					app.pregame = data.Pregame;
-
-					setTimeout(function () {
-						that.getDataPregame(app);
-					}, 600000);
-				}
-			});
-		}
-	}, {
-		key: 'getMatchLiveScore',
-		value: function getMatchLiveScore() {
-			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf');
-		}
-	}, {
-		key: 'getDataPreInplay',
-		value: function getDataPreInplay(app) {
-			var that = this;
-			var urlInplay = 'index.php/api/get_running';
-			var urlPregame = 'index.php/api/get_pregame';
-			_jquery2.default.when(_jquery2.default.ajax({
-				url: urlInplay,
-				dataType: 'jsonp'
-			}), _jquery2.default.ajax({
-				url: urlPregame,
-				dataType: 'jsonp'
-			})).done(function (inplay, pregame) {
-				var inplayData = JSON.parse(inplay[0]).Running;
-				var pregameData = JSON.parse(pregame[0]).Pregame;
-				var data = [];
-				var type = '';
-				app.pregame = pregameData;
-				app.inplay = inplayData;
-
-				if (inplayData.length > 0) {
-					data = inplayData[0];
-					type = 'inplay';
-				} else {
-					data = pregameData[0];
-					type = 'pregame';
-				}
-				app.$store.state.dataPredictionDetail = data;
-				app.$store.state.predictionSelected = {
-					match_code: data.match_code,
-					type: type,
-					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
-				};
-				app.$store.state.isOpenPredictionDetail = true;
-				setTimeout(function () {
-					that.getDataInPlay(app);
-				}, 3000);
-
-				setTimeout(function () {
-					that.getDataPregame(app);
-				}, 600000);
-			});
-		}
-	}, {
-		key: 'getDataLiveScore',
-		value: function getDataLiveScore(app) {
-			var that = this;
-			_jquery2.default.when(this.getMatchLiveScore(), this.getStatsData(), this.getTimeLineData()).done(function (matchlivescore, stats, timeline) {
-				var leaguename = [];
-				for (var i = 0; i < matchlivescore.data.r.length; i++) {
-					if (!that.checkLeague(matchlivescore.data.r[i][5], leaguename)) {
-						leaguename.push({
-							league: matchlivescore.data.r[i][5],
-							leagueShortName: matchlivescore.data.r[i][6],
-							leagueColorCode: matchlivescore.data.r[i][7]
-						});
-					}
-				}
-				app.livescore = matchlivescore.data.r;
-				app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2));
-				app.leagueLiveScoreRight = leaguename;
-				app.livescoreStats = that.formatJson(stats.data);
-				app.livescoreTimeLine = that.formatJson(timeline.data);
-
-				var id = app.livescore[0][0];
-				app.$store.state.dataLivescoreDetail = {
-					match: app.livescore[0],
-					stats: app.$root.livescoreStats.r.find(function (x) {
-						return x[2] == id;
-					}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
-						return x[2] == id;
-					}),
-					timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
-						return x[2] == id;
-					})
-				};
-				app.$store.state.livescoreSelected = {
-					match_code: id,
-					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
-				};
-				app.$store.state.isOpenLiveScoreDetail = true;
-			});
-		}
-	}, {
-		key: 'getDataLiveScoreByDate',
-		value: function getDataLiveScoreByDate(date, app) {
-			var that = this;
-			(0, _jquery2.default)('.loading').addClass('loading-is-visible');
-			_jquery2.default.ajax({
-				url: 'http://www.hasilskor.com/API/JSON.aspx?date=' + date + '&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
-				success: function success(res) {
-					var leaguename = [];
-					for (var i = 0; i < res.r.length; i++) {
-						if (!that.checkLeague(res.r[i][5], leaguename)) {
-							leaguename.push({
-								league: res.r[i][5],
-								leagueShortName: res.r[i][6],
-								leagueColorCode: res.r[i][7]
-							});
-						}
-					}
-					app.livescore = res.r;
-					app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2));
-					app.leagueLiveScoreRight = leaguename;
-					(0, _jquery2.default)('.loading').removeClass('loading-is-visible');
-				},
-				error: function error(_error) {
-					app.league = [];
-					app.livescore = [];
-					app.leagueLiveScoreLeft = [];
-					app.leagueLiveScoreRight = [];
-					(0, _jquery2.default)('.loading').removeClass('loading-is-visible');
-				}
-			});
-		}
-	}, {
-		key: 'getTimeLineData',
-		value: function getTimeLineData() {
-			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDA&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506409621930');
-		}
-	}, {
-		key: 'getStatsData',
-		value: function getStatsData() {
-			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDB&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506412139882');
-		}
-	}, {
-		key: 'formatJson',
-		value: function formatJson(data) {
-			return JSON.parse(data.replace('callbackJSON(', '').replace(/\)$/g, ''));
-		}
-	}]);
-
-	return GetData;
-}();
-
-exports.default = GetData;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(1);
-var settle = __webpack_require__(65);
-var buildURL = __webpack_require__(67);
-var parseHeaders = __webpack_require__(68);
-var isURLSameOrigin = __webpack_require__(69);
-var createError = __webpack_require__(12);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(70);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (process.env.NODE_ENV !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(71);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(66);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _jquery = __webpack_require__(2);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var StatsLiveStreamClick = function () {
-  function StatsLiveStreamClick() {
-    _classCallCheck(this, StatsLiveStreamClick);
-
-    this.btnStats = (0, _jquery2.default)('.prediction-detail-content--header-team--stats-livestream-menu>div div');
-    this.statsLiveStreamContent = (0, _jquery2.default)('.prediction-detail-content--stats-livestream-content>div');
-    this.statsContent = (0, _jquery2.default)('.prediction-detail-content--stats');
-    this.liveStreamContent = (0, _jquery2.default)('.prediction-detail-content--livestream');
-    this.predictionDetail = (0, _jquery2.default)('.prediction-detail');
-    this.livestreamContainer = (0, _jquery2.default)('.livestream-container');
-    this.events();
-  }
-
-  _createClass(StatsLiveStreamClick, [{
-    key: 'events',
-    value: function events() {
-      this.btnStats.click(this.menuStatsLiveStreamClick.bind(this));
-    }
-  }, {
-    key: 'menuStatsLiveStreamClick',
-    value: function menuStatsLiveStreamClick(item) {
-      var title = (0, _jquery2.default)(item.currentTarget).find('span')[0];
-      this.btnStats.removeClass('prediction-detail-content--header-team--active');
-      (0, _jquery2.default)(item.currentTarget).addClass('prediction-detail-content--header-team--active');
-      this.statsLiveStreamContent.removeClass('prediction-detail-content--is-visible');
-
-      if (title.innerHTML == 'stats') {
-        this.statsContent.addClass('prediction-detail-content--is-visible');
-      } else {
-        this.liveStreamContent.addClass('prediction-detail-content--is-visible');
-        if (this.predictionDetail.attr('title') == 'pregame') {
-          this.livestreamContainer.addClass('livestream-container--is-visible');
-        }
-      }
-    }
-  }, {
-    key: 'refreshStatLiveStream',
-    value: function refreshStatLiveStream() {
-      this.btnStats.removeClass('prediction-detail-content--header-team--active');
-      this.statsLiveStreamContent.removeClass('prediction-detail-content--is-visible');
-      this.statsContent.addClass('prediction-detail-content--is-visible');
-      this.livestreamContainer.attr('class', 'livestream-container');
-      (0, _jquery2.default)(this.btnStats[0]).addClass('prediction-detail-content--header-team--active');
-    }
-  }]);
-
-  return StatsLiveStreamClick;
-}();
-
-exports.default = StatsLiveStreamClick;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(6);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _store = __webpack_require__(19);
-
-var _vueResize = __webpack_require__(21);
-
-var _vueResize2 = _interopRequireDefault(_vueResize);
-
-var _App = __webpack_require__(22);
-
-var _App2 = _interopRequireDefault(_App);
-
-var _MobileMenu = __webpack_require__(81);
-
-var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
-
-var _DesktopMenu = __webpack_require__(82);
-
-var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
-
-var _StatsLiveStreamClick = __webpack_require__(15);
-
-var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
-
-var _Prediction = __webpack_require__(83);
-
-var _Prediction2 = _interopRequireDefault(_Prediction);
-
-var _LiveSocre = __webpack_require__(84);
-
-var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
-
-var _Get_Data = __webpack_require__(9);
-
-var _Get_Data2 = _interopRequireDefault(_Get_Data);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
-//import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
-
-//import predictionDetailPanel from './vuecomponent/predictionDetailPanel.vue'
-
-_vue2.default.use(_vueResize2.default);
-
-/*let livescore = new LiveScore()
-
-let mobileMenu = new MobileMenu()
-
-let desktopMenu = new DesktopMenu()
-
-let prediction = new Prediction()
-
-let statsLiveStreamClick = new StatsLiveStreamClick()*/
-
-var getdata = new _Get_Data2.default();
-new _vue2.default({
-	el: '#main',
-	store: _store.store,
-	render: function render(h) {
-		return h(_App2.default);
-	},
-	data: {
-		pregame: [],
-		inplay: [],
-		leagueLiveScoreLeft: [],
-		leagueLiveScoreRight: [],
-		livescore: [],
-		livescoreStats: [],
-		livescoreTimeLine: []
-	},
-	mounted: function mounted() {
-		getdata.getDataLiveScore(this);
-		getdata.getDataPreInplay(this);
-	}
-});
-
-/***/ }),
-/* 17 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -22528,13 +21682,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(18);
+__webpack_require__(7);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 18 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -22724,10 +21878,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4), __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)))
 
 /***/ }),
-/* 19 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22738,11 +21892,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.store = undefined;
 
-var _vue = __webpack_require__(6);
+var _vue = __webpack_require__(5);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(20);
+var _vuex = __webpack_require__(9);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -22773,6 +21927,7 @@ var store = exports.store = new _vuex2.default.Store({
 
 		helpOpen: false,
 		aboutOpen: false,
+		newtabOpen: false,
 		menu_side_bar_open: false,
 		iconMenuShow: true,
 
@@ -22820,7 +21975,7 @@ var store = exports.store = new _vuex2.default.Store({
 });
 
 /***/ }),
-/* 20 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23764,10 +22919,10 @@ var index_esm = {
 
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
-/* 21 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23891,16 +23046,1647 @@ if (GlobalVue) {
 
 /* harmony default export */ __webpack_exports__["default"] = (plugin);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(13);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\predictionDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-27617be6", Component.options)
+  } else {
+    hotAPI.reload("data-v-27617be6", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: {
+    items: {
+      type: Object
+    }
+  },
+  filters: {
+    setStatus(value) {
+      return value == '' ? 'Kickoff' : value;
+    },
+
+    setTimeMatch(val, time, minute) {
+      return val == '' ? time : minute + "'";
+    }
+  },
+  methods: {
+    matchDate(value) {
+      var date = new Date(value);
+      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
+    },
+    statLiveClick(ob) {
+      let type = ob.currentTarget.dataset.type;
+      this.$store.state.statLiveActive = type;
+    },
+
+    closePredictionDetail() {
+      this.$store.state.isOpenPredictionDetail = false;
+
+      setTimeout(() => {
+        this.$store.state.predictionSelected = {
+          match_code: '',
+          type: '',
+          isopening: false
+        };
+      }, 500);
+    },
+
+    openNewTab() {
+      this.$store.state.newtabOpen = true;
+    }
+  }
+});
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "prediction-detail",
+      class: {
+        "prediction-detail--is-visible":
+          _vm.$store.state.isOpenPredictionDetail == true
+      },
+      attrs: { title: "inplay" }
+    },
+    [
+      _c("div", { staticClass: "prediction-detail--toolbar" }, [
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail--toolbar--back-icon",
+            on: {
+              click: function($event) {
+                _vm.closePredictionDetail()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "material-icons" }, [
+              _vm._v("keyboard_backspace")
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("Back")])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail--toolbar--opentab-icon",
+            on: {
+              click: function($event) {
+                _vm.openNewTab()
+              }
+            }
+          },
+          [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "prediction-detail-content" }, [
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail-content--header-team",
+            class: {
+              "prediction-detail-content--header-team--inplay":
+                _vm.$store.state.predictionSelected.type == "inplay",
+              "prediction-detail-content--header-team--pregame":
+                _vm.$store.state.predictionSelected.type == "pregame"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "prediction-detail-content--btn",
+                class: {
+                  "prediction-detail-content--btn--pregame":
+                    _vm.$store.state.predictionSelected.type == "pregame",
+                  "prediction-detail-content--btn--inplay":
+                    _vm.$store.state.predictionSelected.type == "inplay"
+                }
+              },
+              [
+                _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]),
+                _vm._v(" "),
+                _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
+                _vm._v(" "),
+                _c("span", [_vm._v(" @ ")]),
+                _vm._v(" "),
+                _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))]),
+                _vm._v(" "),
+                _vm._m(0, false, false),
+                _vm._v(" "),
+                _c("span", [_vm._v("- ")])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "prediction-detail-content--header-team" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "prediction-detail-content--panel-live" },
+                  [
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm._f("setStatus")(_vm.items.match_period))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(
+                          _vm._f("setTimeMatch")(
+                            _vm.items.match_period,
+                            _vm.matchDate(_vm.items.match_dt),
+                            _vm.items.match_minute
+                          )
+                        )
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "prediction-detail-content--team-score" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--home"
+                      },
+                      [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--comma"
+                      },
+                      [
+                        _c("span", [_vm._v(_vm._s(_vm.items.score_home))]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(":")]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v(_vm._s(_vm.items.score_away))])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "prediction-detail-content--team-score--away"
+                      },
+                      [_c("span", [_vm._v(_vm._s(_vm.items.team_away))])]
+                    )
+                  ]
+                )
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "prediction-detail-content--header-team--stats-livestream-menu"
+          },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "row__6 prediction-detail-content--header-team--stats-livestream",
+                  class: {
+                    "prediction-detail-content--header-team--active":
+                      _vm.$store.state.statLiveActive == "stats"
+                  },
+                  attrs: { "data-type": "stats" },
+                  on: {
+                    click: function($event) {
+                      _vm.statLiveClick($event)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("stats")])]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "row__6 prediction-detail-content--header-team--stats-livestream",
+                  class: {
+                    "prediction-detail-content--header-team--active":
+                      _vm.$store.state.statLiveActive == "livestream"
+                  },
+                  attrs: { "data-type": "livestream" },
+                  on: {
+                    click: function($event) {
+                      _vm.statLiveClick($event)
+                    }
+                  }
+                },
+                [_c("span", [_vm._v("live stream")])]
+              )
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "prediction-detail-content--stats-livestream-content"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "prediction-detail-content--stats",
+                class: {
+                  "prediction-detail-content--is-visible":
+                    _vm.$store.state.statLiveActive == "stats"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "odds-ou-header",
+                    class: {
+                      "odds-ou-header--inplay":
+                        _vm.$store.state.predictionSelected.type == "inplay",
+                      "odds-ou-header--pregame":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [
+                    _vm._m(1, false, false),
+                    _vm._v(" "),
+                    _vm._m(2, false, false),
+                    _vm._v(" "),
+                    _vm._m(3, false, false),
+                    _vm._v(" "),
+                    _vm._m(4, false, false)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "odds-ou-content--m8",
+                      class: {
+                        "odds-ou-content--m8--pregame":
+                          _vm.$store.state.predictionSelected.type == "pregame",
+                        "odds-ou-content--m8--inplay":
+                          _vm.$store.state.predictionSelected.type == "inplay"
+                      }
+                    },
+                    [_c("span", [_vm._v("M8")])]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_away))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(5, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.hdp))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_home))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_away))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(6, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.hdp))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_home))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_away))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "odds-ou-header",
+                    class: {
+                      "odds-ou-header--inplay":
+                        _vm.$store.state.predictionSelected.type == "inplay",
+                      "odds-ou-header--pregame":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [
+                    _vm._m(7, false, false),
+                    _vm._v(" "),
+                    _vm._m(8, false, false),
+                    _vm._v(" "),
+                    _vm._m(9, false, false),
+                    _vm._v(" "),
+                    _vm._m(10, false, false)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "odds-ou-content--m8",
+                      class: {
+                        "odds-ou-content--m8--pregame":
+                          _vm.$store.state.predictionSelected.type == "pregame",
+                        "odds-ou-content--m8--inplay":
+                          _vm.$store.state.predictionSelected.type == "inplay"
+                      }
+                    },
+                    [_c("span", [_vm._v("M8")])]
+                  ),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.ou))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_over))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_under))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(11, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.ou))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_over))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_under))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "odds-ou-content" }, [
+                  _vm._m(12, false, false),
+                  _vm._v(" "),
+                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.ou))])]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_over))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_under))])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "prediction-detail-content--livestream",
+                class: {
+                  "prediction-detail-content--is-visible":
+                    _vm.$store.state.statLiveActive == "livestream"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "livestream-container",
+                    class: {
+                      "livestream-container--is-visible":
+                        _vm.$store.state.predictionSelected.type == "pregame"
+                    }
+                  },
+                  [_vm._t("default", null, { items: _vm.items })],
+                  2
+                )
+              ]
+            )
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("img", { staticClass: "stopwatch" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("ODDS")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Handicap")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Home")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Away")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("sbo")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("ibc")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("OU")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Total Goals")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Over")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("Under")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("sbo")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("ibc")])])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27617be6", esExports)
+  }
+}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(1);
+var normalizeHeaderName = __webpack_require__(64);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(19);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(19);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(40);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2732684c", Component.options)
+  } else {
+    hotAPI.reload("data-v-2732684c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(42);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\livecastLiveScore.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-929415c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-929415c4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(2);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _axios = __webpack_require__(60);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GetData = function () {
+	function GetData() {
+		_classCallCheck(this, GetData);
+	}
+
+	_createClass(GetData, [{
+		key: 'checkLeague',
+		value: function checkLeague(leaguename, leagueArray) {
+			for (var i = 0; i < leagueArray.length; i++) {
+				if (leagueArray[i].league == leaguename) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}, {
+		key: 'getDataInPlay',
+		value: function getDataInPlay(app) {
+			var that = this;
+			_jquery2.default.ajax({
+				url: 'index.php/api/get_running',
+				jsonp: 'callback',
+				dataType: 'jsonp',
+				success: function success(response) {
+					var data = JSON.parse(response);
+					app.inplay = data.Running;
+					setTimeout(function () {
+						that.getDataInPlay(app);
+					}, 3000);
+				}
+			});
+		}
+	}, {
+		key: 'getDataPregame',
+		value: function getDataPregame(app) {
+			var that = this;
+			_jquery2.default.ajax({
+				url: 'index.php/api/get_pregame',
+				jsonp: 'callback',
+				dataType: 'jsonp',
+				success: function success(response) {
+					var data = JSON.parse(response);
+					app.pregame = data.Pregame;
+
+					setTimeout(function () {
+						that.getDataPregame(app);
+					}, 600000);
+				}
+			});
+		}
+	}, {
+		key: 'getMatchLiveScore',
+		value: function getMatchLiveScore() {
+			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf');
+		}
+	}, {
+		key: 'getDataPreInplay',
+		value: function getDataPreInplay(app) {
+			var that = this;
+			var urlInplay = 'index.php/api/get_running';
+			var urlPregame = 'index.php/api/get_pregame';
+			_jquery2.default.when(_jquery2.default.ajax({
+				url: urlInplay,
+				dataType: 'jsonp'
+			}), _jquery2.default.ajax({
+				url: urlPregame,
+				dataType: 'jsonp'
+			})).done(function (inplay, pregame) {
+				var inplayData = JSON.parse(inplay[0]).Running;
+				var pregameData = JSON.parse(pregame[0]).Pregame;
+				var data = [];
+				var type = '';
+				app.pregame = pregameData;
+				app.inplay = inplayData;
+
+				if (inplayData.length > 0) {
+					data = inplayData[0];
+					type = 'inplay';
+				} else {
+					data = pregameData[0];
+					type = 'pregame';
+				}
+				app.$store.state.dataPredictionDetail = data;
+				app.$store.state.predictionSelected = {
+					match_code: data.match_code,
+					type: type,
+					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
+				};
+				app.$store.state.isOpenPredictionDetail = true;
+				setTimeout(function () {
+					that.getDataInPlay(app);
+				}, 3000);
+
+				setTimeout(function () {
+					that.getDataPregame(app);
+				}, 600000);
+			});
+		}
+	}, {
+		key: 'getDataLiveScore',
+		value: function getDataLiveScore(app) {
+			var that = this;
+			_jquery2.default.when(this.getMatchLiveScore(), this.getStatsData(), this.getTimeLineData()).done(function (matchlivescore, stats, timeline) {
+				var leaguename = [];
+				for (var i = 0; i < matchlivescore.data.r.length; i++) {
+					if (!that.checkLeague(matchlivescore.data.r[i][5], leaguename)) {
+						leaguename.push({
+							league: matchlivescore.data.r[i][5],
+							leagueShortName: matchlivescore.data.r[i][6],
+							leagueColorCode: matchlivescore.data.r[i][7]
+						});
+					}
+				}
+				app.livescore = matchlivescore.data.r;
+				app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2));
+				app.leagueLiveScoreRight = leaguename;
+				app.livescoreStats = that.formatJson(stats.data);
+				app.livescoreTimeLine = that.formatJson(timeline.data);
+
+				var id = app.livescore[0][0];
+				app.$store.state.dataLivescoreDetail = {
+					match: app.livescore[0],
+					stats: app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
+						return x[2] == id;
+					}),
+					timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
+						return x[2] == id;
+					})
+				};
+				app.$store.state.livescoreSelected = {
+					match_code: id,
+					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
+				};
+				app.$store.state.isOpenLiveScoreDetail = true;
+			});
+		}
+	}, {
+		key: 'getDataLiveScoreByDate',
+		value: function getDataLiveScoreByDate(date, app) {
+			var that = this;
+			(0, _jquery2.default)('.loading').addClass('loading-is-visible');
+			_jquery2.default.ajax({
+				url: 'http://www.hasilskor.com/API/JSON.aspx?date=' + date + '&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
+				success: function success(res) {
+					var leaguename = [];
+					for (var i = 0; i < res.r.length; i++) {
+						if (!that.checkLeague(res.r[i][5], leaguename)) {
+							leaguename.push({
+								league: res.r[i][5],
+								leagueShortName: res.r[i][6],
+								leagueColorCode: res.r[i][7]
+							});
+						}
+					}
+					app.livescore = res.r;
+					app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2));
+					app.leagueLiveScoreRight = leaguename;
+					(0, _jquery2.default)('.loading').removeClass('loading-is-visible');
+				},
+				error: function error(_error) {
+					app.league = [];
+					app.livescore = [];
+					app.leagueLiveScoreLeft = [];
+					app.leagueLiveScoreRight = [];
+					(0, _jquery2.default)('.loading').removeClass('loading-is-visible');
+				}
+			});
+		}
+	}, {
+		key: 'getTimeLineData',
+		value: function getTimeLineData() {
+			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDA&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506409621930');
+		}
+	}, {
+		key: 'getStatsData',
+		value: function getStatsData() {
+			return _axios2.default.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDB&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506412139882');
+		}
+	}, {
+		key: 'formatJson',
+		value: function formatJson(data) {
+			return JSON.parse(data.replace('callbackJSON(', '').replace(/\)$/g, ''));
+		}
+	}]);
+
+	return GetData;
+}();
+
+exports.default = GetData;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(1);
+var settle = __webpack_require__(65);
+var buildURL = __webpack_require__(67);
+var parseHeaders = __webpack_require__(68);
+var isURLSameOrigin = __webpack_require__(69);
+var createError = __webpack_require__(20);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(70);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(71);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(66);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = __webpack_require__(2);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var StatsLiveStreamClick = function () {
+  function StatsLiveStreamClick() {
+    _classCallCheck(this, StatsLiveStreamClick);
+
+    this.btnStats = (0, _jquery2.default)('.prediction-detail-content--header-team--stats-livestream-menu>div div');
+    this.statsLiveStreamContent = (0, _jquery2.default)('.prediction-detail-content--stats-livestream-content>div');
+    this.statsContent = (0, _jquery2.default)('.prediction-detail-content--stats');
+    this.liveStreamContent = (0, _jquery2.default)('.prediction-detail-content--livestream');
+    this.predictionDetail = (0, _jquery2.default)('.prediction-detail');
+    this.livestreamContainer = (0, _jquery2.default)('.livestream-container');
+    this.events();
+  }
+
+  _createClass(StatsLiveStreamClick, [{
+    key: 'events',
+    value: function events() {
+      this.btnStats.click(this.menuStatsLiveStreamClick.bind(this));
+    }
+  }, {
+    key: 'menuStatsLiveStreamClick',
+    value: function menuStatsLiveStreamClick(item) {
+      var title = (0, _jquery2.default)(item.currentTarget).find('span')[0];
+      this.btnStats.removeClass('prediction-detail-content--header-team--active');
+      (0, _jquery2.default)(item.currentTarget).addClass('prediction-detail-content--header-team--active');
+      this.statsLiveStreamContent.removeClass('prediction-detail-content--is-visible');
+
+      if (title.innerHTML == 'stats') {
+        this.statsContent.addClass('prediction-detail-content--is-visible');
+      } else {
+        this.liveStreamContent.addClass('prediction-detail-content--is-visible');
+        if (this.predictionDetail.attr('title') == 'pregame') {
+          this.livestreamContainer.addClass('livestream-container--is-visible');
+        }
+      }
+    }
+  }, {
+    key: 'refreshStatLiveStream',
+    value: function refreshStatLiveStream() {
+      this.btnStats.removeClass('prediction-detail-content--header-team--active');
+      this.statsLiveStreamContent.removeClass('prediction-detail-content--is-visible');
+      this.statsContent.addClass('prediction-detail-content--is-visible');
+      this.livestreamContainer.attr('class', 'livestream-container');
+      (0, _jquery2.default)(this.btnStats[0]).addClass('prediction-detail-content--header-team--active');
+    }
+  }]);
+
+  return StatsLiveStreamClick;
+}();
+
+exports.default = StatsLiveStreamClick;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(5);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _store = __webpack_require__(8);
+
+var _vueResize = __webpack_require__(10);
+
+var _vueResize2 = _interopRequireDefault(_vueResize);
+
+var _App = __webpack_require__(25);
+
+var _App2 = _interopRequireDefault(_App);
+
+var _MobileMenu = __webpack_require__(84);
+
+var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
+
+var _DesktopMenu = __webpack_require__(85);
+
+var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
+
+var _StatsLiveStreamClick = __webpack_require__(23);
+
+var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
+
+var _Prediction = __webpack_require__(86);
+
+var _Prediction2 = _interopRequireDefault(_Prediction);
+
+var _LiveSocre = __webpack_require__(87);
+
+var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
+
+var _Get_Data = __webpack_require__(17);
+
+var _Get_Data2 = _interopRequireDefault(_Get_Data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vueResize2.default);
+
+/*let livescore = new LiveScore()
+
+let mobileMenu = new MobileMenu()
+
+let desktopMenu = new DesktopMenu()
+
+let prediction = new Prediction()
+
+let statsLiveStreamClick = new StatsLiveStreamClick()*/
+
+var getdata = new _Get_Data2.default();
+new _vue2.default({
+	el: '#main',
+	store: _store.store,
+	render: function render(h) {
+		return h(_App2.default);
+	},
+	data: {
+		pregame: [],
+		inplay: [],
+		leagueLiveScoreLeft: [],
+		leagueLiveScoreRight: [],
+		livescore: [],
+		livescoreStats: [],
+		livescoreTimeLine: []
+	},
+	mounted: function mounted() {
+		getdata.getDataLiveScore(this);
+		getdata.getDataPreInplay(this);
+	}
+});
+
+/***/ }),
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e2fe044_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e2fe044_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App_vue__ = __webpack_require__(83);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -23946,21 +24732,22 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__menuHeader_vue__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buttonPrediction_vue__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__predictionDetailPanel_vue__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__livescoreDetail_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__livecastLiveScore_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__menuHeader_vue__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buttonPrediction_vue__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__predictionDetailPanel_vue__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__livescoreDetail_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__livecastLiveScore_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__help_vue__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__about_vue__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__menuSidebar_vue__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__matchLiveScore_vue__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__livescoreDetailPanel_vue__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calender_vue__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__newtab_vue__ = __webpack_require__(80);
 //
 //
 //
@@ -24062,6 +24849,8 @@ if (false) {(function () {
 //
 //
 //
+//
+
 
 
 
@@ -24086,17 +24875,18 @@ if (false) {(function () {
     menusidebar: __WEBPACK_IMPORTED_MODULE_7__menuSidebar_vue__["a" /* default */],
     matchlivescore: __WEBPACK_IMPORTED_MODULE_8__matchLiveScore_vue__["a" /* default */],
     livescoredetailpanel: __WEBPACK_IMPORTED_MODULE_9__livescoreDetailPanel_vue__["a" /* default */],
-    calender: __WEBPACK_IMPORTED_MODULE_10__calender_vue__["a" /* default */]
+    calender: __WEBPACK_IMPORTED_MODULE_10__calender_vue__["a" /* default */],
+    newtab: __WEBPACK_IMPORTED_MODULE_11__newtab_vue__["a" /* default */]
   }
 });
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuHeader_vue__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_103382d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuHeader_vue__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuHeader_vue__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_103382d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuHeader_vue__ = __webpack_require__(29);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -24142,7 +24932,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24247,7 +25037,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24506,12 +25296,12 @@ if (false) {
 }
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(32);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -24557,7 +25347,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24662,7 +25452,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -24814,11 +25604,11 @@ if (false) {
 }
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3b17e7b2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(38);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
@@ -24865,11 +25655,11 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__ = __webpack_require__(35);
 //
 //
@@ -24896,793 +25686,6 @@ if (false) {(function () {
     livecastprediction: __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__["a" /* default */]
   }
 });
-
-/***/ }),
-/* 32 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(34);
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\predictionDetail.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-27617be6", Component.options)
-  } else {
-    hotAPI.reload("data-v-27617be6", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  props: {
-    items: {
-      type: Object
-    }
-  },
-  filters: {
-    setStatus(value) {
-      return value == '' ? 'Kickoff' : value;
-    },
-
-    setTimeMatch(val, time, minute) {
-      return val == '' ? time : minute + "'";
-    }
-  },
-  methods: {
-    matchDate(value) {
-      var date = new Date(value);
-      return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
-    },
-    statLiveClick(ob) {
-      let type = ob.currentTarget.dataset.type;
-      this.$store.state.statLiveActive = type;
-    },
-
-    closePredictionDetail() {
-      this.$store.state.isOpenPredictionDetail = false;
-
-      setTimeout(() => {
-        this.$store.state.predictionSelected = {
-          match_code: '',
-          type: '',
-          isopening: false
-        };
-      }, 500);
-    }
-  }
-});
-
-/***/ }),
-/* 34 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "prediction-detail",
-      class: {
-        "prediction-detail--is-visible":
-          _vm.$store.state.isOpenPredictionDetail == true
-      },
-      attrs: { title: "inplay" }
-    },
-    [
-      _c("div", { staticClass: "prediction-detail--toolbar" }, [
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail--toolbar--back-icon",
-            on: {
-              click: function($event) {
-                _vm.closePredictionDetail()
-              }
-            }
-          },
-          [
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("keyboard_backspace")
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Back")])
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(0, false, false)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "prediction-detail-content" }, [
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail-content--header-team",
-            class: {
-              "prediction-detail-content--header-team--inplay":
-                _vm.$store.state.predictionSelected.type == "inplay",
-              "prediction-detail-content--header-team--pregame":
-                _vm.$store.state.predictionSelected.type == "pregame"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "prediction-detail-content--btn",
-                class: {
-                  "prediction-detail-content--btn--pregame":
-                    _vm.$store.state.predictionSelected.type == "pregame",
-                  "prediction-detail-content--btn--inplay":
-                    _vm.$store.state.predictionSelected.type == "inplay"
-                }
-              },
-              [
-                _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]),
-                _vm._v(" "),
-                _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(" @ ")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))]),
-                _vm._v(" "),
-                _vm._m(1, false, false),
-                _vm._v(" "),
-                _c("span", [_vm._v("- ")])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "prediction-detail-content--header-team" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "prediction-detail-content--panel-live" },
-                  [
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(_vm._f("setStatus")(_vm.items.match_period))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(
-                          _vm._f("setTimeMatch")(
-                            _vm.items.match_period,
-                            _vm.matchDate(_vm.items.match_dt),
-                            _vm.items.match_minute
-                          )
-                        )
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "prediction-detail-content--team-score" },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "prediction-detail-content--team-score--home"
-                      },
-                      [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "prediction-detail-content--team-score--comma"
-                      },
-                      [
-                        _c("span", [_vm._v(_vm._s(_vm.items.score_home))]),
-                        _vm._v(" "),
-                        _c("span", [_vm._v(":")]),
-                        _vm._v(" "),
-                        _c("span", [_vm._v(_vm._s(_vm.items.score_away))])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "prediction-detail-content--team-score--away"
-                      },
-                      [_c("span", [_vm._v(_vm._s(_vm.items.team_away))])]
-                    )
-                  ]
-                )
-              ]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "prediction-detail-content--header-team--stats-livestream-menu"
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "row__6 prediction-detail-content--header-team--stats-livestream",
-                  class: {
-                    "prediction-detail-content--header-team--active":
-                      _vm.$store.state.statLiveActive == "stats"
-                  },
-                  attrs: { "data-type": "stats" },
-                  on: {
-                    click: function($event) {
-                      _vm.statLiveClick($event)
-                    }
-                  }
-                },
-                [_c("span", [_vm._v("stats")])]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "row__6 prediction-detail-content--header-team--stats-livestream",
-                  class: {
-                    "prediction-detail-content--header-team--active":
-                      _vm.$store.state.statLiveActive == "livestream"
-                  },
-                  attrs: { "data-type": "livestream" },
-                  on: {
-                    click: function($event) {
-                      _vm.statLiveClick($event)
-                    }
-                  }
-                },
-                [_c("span", [_vm._v("live stream")])]
-              )
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail-content--stats-livestream-content"
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "prediction-detail-content--stats",
-                class: {
-                  "prediction-detail-content--is-visible":
-                    _vm.$store.state.statLiveActive == "stats"
-                }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "odds-ou-header",
-                    class: {
-                      "odds-ou-header--inplay":
-                        _vm.$store.state.predictionSelected.type == "inplay",
-                      "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
-                    }
-                  },
-                  [
-                    _vm._m(2, false, false),
-                    _vm._v(" "),
-                    _vm._m(3, false, false),
-                    _vm._v(" "),
-                    _vm._m(4, false, false),
-                    _vm._v(" "),
-                    _vm._m(5, false, false)
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "odds-ou-content--m8",
-                      class: {
-                        "odds-ou-content--m8--pregame":
-                          _vm.$store.state.predictionSelected.type == "pregame",
-                        "odds-ou-content--m8--inplay":
-                          _vm.$store.state.predictionSelected.type == "inplay"
-                      }
-                    },
-                    [_c("span", [_vm._v("M8")])]
-                  ),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_away))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(6, false, false),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.hdp))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_home))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_away))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(7, false, false),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.hdp))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_home))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_away))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "odds-ou-header",
-                    class: {
-                      "odds-ou-header--inplay":
-                        _vm.$store.state.predictionSelected.type == "inplay",
-                      "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
-                    }
-                  },
-                  [
-                    _vm._m(8, false, false),
-                    _vm._v(" "),
-                    _vm._m(9, false, false),
-                    _vm._v(" "),
-                    _vm._m(10, false, false),
-                    _vm._v(" "),
-                    _vm._m(11, false, false)
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "odds-ou-content--m8",
-                      class: {
-                        "odds-ou-content--m8--pregame":
-                          _vm.$store.state.predictionSelected.type == "pregame",
-                        "odds-ou-content--m8--inplay":
-                          _vm.$store.state.predictionSelected.type == "inplay"
-                      }
-                    },
-                    [_c("span", [_vm._v("M8")])]
-                  ),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.ou))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_over))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_under))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(12, false, false),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.ou))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_over))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_under))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(13, false, false),
-                  _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.ou))])]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_over))])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_under))])
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "prediction-detail-content--livestream",
-                class: {
-                  "prediction-detail-content--is-visible":
-                    _vm.$store.state.statLiveActive == "livestream"
-                }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "livestream-container",
-                    class: {
-                      "livestream-container--is-visible":
-                        _vm.$store.state.predictionSelected.type == "pregame"
-                    }
-                  },
-                  [_vm._t("default", null, { items: _vm.items })],
-                  2
-                )
-              ]
-            )
-          ]
-        )
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "prediction-detail--toolbar--opentab-icon" },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("img", { attrs: { src: "assets/images/stopwatch_@1x.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("ODDS")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Handicap")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Home")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Away")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("sbo")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("ibc")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("OU")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Total Goals")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Over")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("Under")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("sbo")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("ibc")])])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-27617be6", esExports)
-  }
-}
 
 /***/ }),
 /* 35 */
@@ -27872,6 +27875,10 @@ if (false) {
     setTimeLive(val) {
       let date = new Date(val);
       return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+    },
+
+    setFT(val) {
+      return val == 'FT' ? 'FT' : 'kickoff';
     }
   },
   methods: {
@@ -28112,7 +28119,19 @@ var render = function() {
             "div",
             { staticClass: "livescore-detail-content--header-league" },
             [
-              _vm._m(1, false, false),
+              _c(
+                "div",
+                {
+                  staticClass: "livescore-detail-content--header-league--league"
+                },
+                [
+                  _c("span", [
+                    _vm._v(_vm._s(_vm._f("setFT")(_vm.items.match[4])))
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("league")])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -28131,7 +28150,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(2, false, false),
+          _vm._m(1, false, false),
           _vm._v(" "),
           _c(
             "div",
@@ -28147,7 +28166,7 @@ var render = function() {
               staticClass: "livescore-detail-content--stats-empty"
             },
             [
-              _vm._m(3, false, false),
+              _vm._m(2, false, false),
               _vm._v(" "),
               _c("div", [
                 _c(
@@ -28222,7 +28241,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(4, false, false),
+                  _vm._m(3, false, false),
                   _vm._v(" "),
                   _c("div", [
                     _c("hr", {
@@ -28262,7 +28281,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(5, false, false),
+                  _vm._m(4, false, false),
                   _vm._v(" "),
                   _c("div", [
                     _c("hr", {
@@ -28302,7 +28321,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(6, false, false),
+                  _vm._m(5, false, false),
                   _vm._v(" "),
                   _c("div", [
                     _c("hr", {
@@ -28342,7 +28361,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(7, false, false),
+                  _vm._m(6, false, false),
                   _vm._v(" "),
                   _c("div", [
                     _c("hr", {
@@ -28382,7 +28401,7 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
-                  _vm._m(8, false, false),
+                  _vm._m(7, false, false),
                   _vm._v(" "),
                   _c("div", [
                     _c("hr", {
@@ -28406,7 +28425,7 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(9, false, false),
+          _vm._m(8, false, false),
           _vm._v(" "),
           _c(
             "div",
@@ -28423,7 +28442,7 @@ var render = function() {
               staticClass: "livescore-detail-content--timeline-empty"
             },
             [
-              _vm._m(10, false, false),
+              _vm._m(9, false, false),
               _vm._v(" "),
               _c("div", [
                 _c(
@@ -28526,7 +28545,7 @@ var render = function() {
               ],
               staticClass: "livescore-detail-content--header-livestream"
             },
-            [_vm._m(11, false, false)]
+            [_vm._m(10, false, false)]
           ),
           _vm._v(" "),
           _c(
@@ -28558,20 +28577,6 @@ var staticRenderFns = [
       "div",
       { staticClass: "livescore-detail--toolbar--opentab-icon" },
       [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail-content--header-league--league" },
-      [
-        _c("span", [_vm._v("kickoff")]),
-        _vm._v(" "),
-        _c("span", [_vm._v("league")])
-      ]
     )
   },
   function() {
@@ -31234,8 +31239,6 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(0, false, false),
-          _vm._v(" "),
           _c("div", { staticClass: "sidebar-list-menu" }, [
             _c("div", { staticClass: "sidebar-list-menu--items" }, [
               _c("nav", [
@@ -31309,7 +31312,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._m(1, false, false)]
+                    [_vm._m(0, false, false)]
                   ),
                   _vm._v(" "),
                   _c(
@@ -31322,7 +31325,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._m(2, false, false)]
+                    [_vm._m(1, false, false)]
                   ),
                   _vm._v(" "),
                   _c(
@@ -31335,13 +31338,13 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._m(3, false, false)]
+                    [_vm._m(2, false, false)]
                   )
                 ])
               ])
             ]),
             _vm._v(" "),
-            _vm._m(4, false, false)
+            _vm._m(3, false, false)
           ])
         ]
       )
@@ -31349,20 +31352,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "side-bar-search-content--input-search" }, [
-      _c("img", {
-        attrs: { height: "30", src: "assets/images/search.png", width: "30" }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { placeholder: "Search for a match", type: "text" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -31720,8 +31709,8 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__livescoreDetail_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastLiveScore_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__livescoreDetail_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastLiveScore_vue__ = __webpack_require__(16);
 //
 //
 //
@@ -31877,7 +31866,7 @@ if (false) {(function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__);
 //
 //
@@ -32006,9 +31995,9 @@ module.exports = __webpack_require__(61);
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(10);
+var bind = __webpack_require__(18);
 var Axios = __webpack_require__(63);
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(14);
 
 /**
  * Create an instance of Axios
@@ -32041,9 +32030,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(14);
+axios.Cancel = __webpack_require__(22);
 axios.CancelToken = __webpack_require__(77);
-axios.isCancel = __webpack_require__(13);
+axios.isCancel = __webpack_require__(21);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -32091,7 +32080,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(5);
+var defaults = __webpack_require__(14);
 var utils = __webpack_require__(1);
 var InterceptorManager = __webpack_require__(72);
 var dispatchRequest = __webpack_require__(73);
@@ -32196,7 +32185,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(12);
+var createError = __webpack_require__(20);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -32631,8 +32620,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(74);
-var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(5);
+var isCancel = __webpack_require__(21);
+var defaults = __webpack_require__(14);
 var isAbsoluteURL = __webpack_require__(75);
 var combineURLs = __webpack_require__(76);
 
@@ -32791,7 +32780,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(14);
+var Cancel = __webpack_require__(22);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -32976,6 +32965,199 @@ if (false) {
 
 /***/ }),
 /* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_newtab_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_507eda02_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_newtab_vue__ = __webpack_require__(82);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_newtab_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_507eda02_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_newtab_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\newtab.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-507eda02", Component.options)
+  } else {
+    hotAPI.reload("data-v-507eda02", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  methods: {
+    closeNewTab() {
+      this.$store.state.newtabOpen = false;
+    },
+
+    openTab() {
+      let newWindow;
+      this.$store.state.newtabOpen = false;
+      newWindow = window.open('index.php/home/detailprediction', '_blank');
+      newWindow.predetaildata = {
+        data: this.$store.state.dataPredictionDetail,
+        type: this.$store.state.predictionSelected.type
+      };
+    }
+  }
+});
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "newtab-container",
+      class: { "newtab-container--is-visible": _vm.$store.state.newtabOpen }
+    },
+    [
+      _c("div", { staticClass: "newtabcontent" }, [
+        _vm._m(0, false, false),
+        _vm._v(" "),
+        _vm._m(1, false, false),
+        _vm._v(" "),
+        _vm._m(2, false, false),
+        _vm._v(" "),
+        _c("div", { staticClass: "newtabcontent--btnOpen" }, [
+          _c(
+            "div",
+            {
+              on: {
+                click: function($event) {
+                  _vm.closeNewTab()
+                }
+              }
+            },
+            [_c("span", [_vm._v("don't open")])]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              on: {
+                click: function($event) {
+                  _vm.openTab()
+                }
+              }
+            },
+            [_c("span", [_vm._v("yes, open")])]
+          )
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("open in new tab ?")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("span", [
+        _vm._v(
+          "This will open the link in New Tab. Please make sure that popups are enabled"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", [_c("input", { attrs: { type: "checkbox" } })]),
+      _vm._v(" "),
+      _c("div", [_c("span", [_vm._v("Don't ask me again")])])
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-507eda02", esExports)
+  }
+}
+
+/***/ }),
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33247,6 +33429,8 @@ var render = function() {
       _vm._v(" "),
       _c("about"),
       _vm._v(" "),
+      _c("newtab"),
+      _vm._v(" "),
       _c("menusidebar")
     ],
     1
@@ -33343,7 +33527,7 @@ if (false) {
 }
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33434,7 +33618,7 @@ var MobileMenu = function () {
 exports.default = MobileMenu;
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33522,7 +33706,7 @@ var DesktopMenu = function () {
 exports.default = DesktopMenu;
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33538,7 +33722,7 @@ var _jquery = __webpack_require__(2);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _StatsLiveStreamClick = __webpack_require__(15);
+var _StatsLiveStreamClick = __webpack_require__(23);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
@@ -33636,7 +33820,7 @@ var Prediction = function () {
 exports.default = Prediction;
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

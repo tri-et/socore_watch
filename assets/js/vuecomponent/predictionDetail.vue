@@ -5,7 +5,7 @@
         <i class="material-icons">keyboard_backspace</i>
         <span>Back</span>
       </div>
-      <div class="prediction-detail--toolbar--opentab-icon">
+      <div class="prediction-detail--toolbar--opentab-icon" @click="openNewTab()">
         <i class="material-icons">open_in_new</i>
       </div>
     </div>
@@ -20,7 +20,7 @@
           <span>&nbsp;[{{items.sys.hdp}}]</span>
           <span>&nbsp;@&nbsp;</span>
           <span>{{items.sys.odds_home}}</span>
-          <span><img src="assets/images/stopwatch_@1x.png"></span>
+          <span><img class="stopwatch"></span>
           <span>-&nbsp;</span>
         </div>
         <div class="prediction-detail-content--header-team">
@@ -225,6 +225,10 @@ export default {
           isopening: false,
         }
       }, 500)
+    },
+
+    openNewTab(){
+      this.$store.state.newtabOpen=true
     }
   },
 }
