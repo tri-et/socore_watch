@@ -3,10 +3,6 @@ import Vue from 'vue'
 import {store} from './modules/store'
 import VueResize from 'vue-resize'
 import App from './vuecomponent/App.vue'
-//import LiveScoreDetailVue from './vuecomponent/livescoreDetail.vue'
-//import LiveCastLiveScoreVue from './vuecomponent/livecastLiveScore.vue'
-
-//import predictionDetailPanel from './vuecomponent/predictionDetailPanel.vue'
 
 import MobileMenu from './modules/MobileMenu'
 import DesktopMenu from './modules/DesktopMenu'
@@ -39,6 +35,27 @@ new Vue({
 		livescore:[],
 		livescoreStats:[],
 		livescoreTimeLine:[]
+	},
+	methods:{
+		getCookie(cname){
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie)
+			var ca = decodedCookie.split(';')
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1)
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length)
+				}
+			}
+			return ""
+		},
+
+		setCookie(cname, cvalue){
+			document.cookie = cname + "=" + cvalue + ";path=/";
+		}
 	},
 	mounted() {
 		getdata.getDataLiveScore(this)

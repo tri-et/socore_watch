@@ -1,11 +1,11 @@
 <template>
-  <div class="prediction-detail" :class="{'prediction-detail--is-visible':$store.state.isOpenPredictionDetail==true}" title="inplay">
-    <div class="prediction-detail--toolbar">
+  <div class="prediction-detail" :class="{'prediction-detail--is-visible':$store.state.isOpenPredictionDetail==true,'detailcenter':$store.state.ishidetoolbar}" title="inplay">
+    <div class="prediction-detail--toolbar" :class="{'prediction-detail--toolbar-hide':$store.state.ishidetoolbar}">
       <div class="prediction-detail--toolbar--back-icon" @click="closePredictionDetail()">
         <i class="material-icons">keyboard_backspace</i>
         <span>Back</span>
       </div>
-      <div class="prediction-detail--toolbar--opentab-icon">
+      <div class="prediction-detail--toolbar--opentab-icon" @click="openNewTab()">
         <i class="material-icons">open_in_new</i>
       </div>
     </div>
@@ -20,7 +20,7 @@
           <span>&nbsp;[{{items.sys.hdp}}]</span>
           <span>&nbsp;@&nbsp;</span>
           <span>{{items.sys.odds_home}}</span>
-          <span><img src="assets/images/stopwatch_@1x.png"></span>
+          <span><img class="stopwatch"></span>
           <span>-&nbsp;</span>
         </div>
         <div class="prediction-detail-content--header-team">
@@ -54,7 +54,8 @@
         </div>
       </div>
       <div class="prediction-detail-content--stats-livestream-content">
-        <div class="prediction-detail-content--stats" :class="{'prediction-detail-content--is-visible':$store.state.statLiveActive=='stats'}">
+        <div class="prediction-detail-content--stats" :class="{'prediction-detail-content--is-visible':$store.state.statLiveActive=='stats',
+        'predictionpaddingtop':$store.state.ishidetoolbar}">
           <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
           'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
             <div>
@@ -225,7 +226,25 @@ export default {
           isopening: false,
         }
       }, 500)
-    }
+    },
+
+    openTab() {
+      let newWindow
+      this.$store.state.newtabOpen = false
+      newWindow = window.open('index.php/home/detailprediction', '_blank')
+      newWindow.predetaildata = {
+        data: this.$store.state.dataPredictionDetail,
+        type: this.$store.state.predictionSelected.type
+      }
+    },
+
+    openNewTab() {
+      if (this.$root.$options.methods.getCookie('isopennewtab') == 'true') {
+        this.openTab()
+      } else {
+        this.$store.state.newtabOpen = true
+      }
+    },
   },
 }
 </script>
