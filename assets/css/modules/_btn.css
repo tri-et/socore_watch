@@ -42,6 +42,11 @@
             }
         }
 
+        div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
+        }
+
         div:last-child {
             float:right;
             display:flex;
@@ -80,6 +85,11 @@
                 width:35%;    
                 max-width: 190px;
             }
+        }
+
+        div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
         }
 
         div:last-child {

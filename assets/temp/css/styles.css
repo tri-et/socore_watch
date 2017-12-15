@@ -1262,7 +1262,7 @@ body{
             position:static !important;
             float:left;
             width: 320px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1276,7 +1276,7 @@ body{
             position:static;
             float:left;
             width:480px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1290,7 +1290,7 @@ body{
             position:static;
             float:left;
             width:480px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1553,7 +1553,7 @@ body{
     }
 
 .stopwatch{
-    content:url("../../images/stopwatch_@1x.png")
+    content:url("../../images/icon_clock@2x.png")
 }
 
 .detailcenter{
@@ -1660,10 +1660,24 @@ body{
         display:table;
     }
 
+.livescore-detail--toolbar-hide{
+        display:none
+    }
+
 .livescore-detail--shrink {
         -webkit-animation:fadeInOutScale 1s;
                 animation:fadeInOutScale 1s;
     }
+
+.detailcenterlive{
+    -webkit-transform: translateX(0);
+            transform: translateX(0)
+}
+
+.livepaddingtop{
+    top: 69px !important;
+    bottom: 64px;
+}
 
 .prediction-detail-content {
     float:right;
@@ -2762,6 +2776,11 @@ body{
         }
     }
 
+.btn--inplay div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
+        }
+
 .btn--inplay div:last-child {
             float:right;
             display:-webkit-box;
@@ -2812,6 +2831,11 @@ body{
                 max-width: 190px
         }
     }
+
+.btn--pregame div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
+        }
 
 .btn--pregame div:last-child {
             float:right;

@@ -20,7 +20,7 @@
           <span>&nbsp;[{{items.sys.hdp}}]</span>
           <span>&nbsp;@&nbsp;</span>
           <span>{{items.sys.odds_home}}</span>
-          <span><img class="stopwatch"></span>
+          <span><img class="stopwatch btn--watchicon"></span>
           <span>-&nbsp;</span>
         </div>
         <div class="prediction-detail-content--header-team">

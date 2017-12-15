@@ -7,7 +7,8 @@ module.exports = {
     ],
     entry: {
         app:"./assets/js/App.js",
-        predetail:"./assets/js/preDetail.js"
+        predetail:"./assets/js/preDetail.js",
+        livedetail:"./assets/js/liveDetail.js"
     },
     output: {
         path: path.resolve(__dirname, "./assets/temp/js"),

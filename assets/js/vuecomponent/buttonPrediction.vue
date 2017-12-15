@@ -29,7 +29,7 @@
       </div>
       <div>
         <span>{{items.match_minute }}'</span>
-        <span><img class="btn--watchicon" src="assets/images/stopwatch_@1x.png"></span>
+        <span><img class="btn--watchicon" src="assets/images/icon_clock@2x.png"></span>
       </div>
     </div>
     <resize-observer @notify="setMarquee()" />
