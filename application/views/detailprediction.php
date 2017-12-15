@@ -18,10 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 <div style="display: flex;justify-content:center;overflow: hidden;">
    <div id="detailprediction" style="position: fixed !important;">
-       <app1><app1>
+       <preDetail></preDetail>
    </div>
 </div>
-   <script src="<?php echo base_url();?>assets/temp/js/app1.js"></script>
+   <script src="<?php echo base_url();?>assets/temp/js/predetail.js"></script>
 </body>
 
 </html>

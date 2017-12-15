@@ -119,7 +119,7 @@
             visibility: visible !important;
         }
 
-        a:hover {
+        a:hover:not(&--activemenu) {
              background-color:rgba($mainBlack,0.1) !important;
              color:#36569B;
         }

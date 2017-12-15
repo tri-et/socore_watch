@@ -69,6 +69,10 @@
         @mixin clearfix;
     }
 
+    &--toolbar-hide{
+        display:none
+    }
+
     &--shrink {
         animation:fadeInOutScale 1s;
     }
@@ -76,5 +80,14 @@
 
 .stopwatch{
     content:url("../../images/stopwatch_@1x.png")
+}
+
+.detailcenter{
+    transform: translateX(0)
+}
+
+.predictionpaddingtop{
+    top: 185px !important;
+    bottom: 64px;
 }
 

@@ -7,14 +7,14 @@
             <div>
                 <span>This will open the link in New Tab. Please make sure that popups are enabled</span>
             </div>
-            <div>
-                <div><input type="checkbox"></div>
+            <div @click="askAgain()">
+                <div><input type="checkbox" :checked="$store.state.checkAskAgain"></div>
                 <div>
                     <span>Don't ask me again</span>
                 </div>
             </div>
             <div class="newtabcontent--btnOpen">
-                <div @click="closeNewTab()">
+                <div @click="closeNewTab()" :class="{'askActived':$store.state.checkAskAgain}">
                     <span>don't open</span>
                 </div>
                 <div @click="openTab()">
@@ -40,6 +40,16 @@ export default {
         type:this.$store.state.predictionSelected.type
       }
     },
+
+    askAgain(){
+        this.$store.state.checkAskAgain=!this.$store.state.checkAskAgain
+
+        if(this.$store.state.checkAskAgain){
+            this.$root.$options.methods.setCookie('isopennewtab',true);
+        }else{
+            this.$root.$options.methods.setCookie('isopennewtab',false);
+        }
+    }
   },
 }
 </script>

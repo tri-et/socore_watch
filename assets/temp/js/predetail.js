@@ -546,6 +546,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
@@ -584,8 +585,22 @@ if (false) {(function () {
       }, 500);
     },
 
+    openTab() {
+      let newWindow;
+      this.$store.state.newtabOpen = false;
+      newWindow = window.open('index.php/home/detailprediction', '_blank');
+      newWindow.predetaildata = {
+        data: this.$store.state.dataPredictionDetail,
+        type: this.$store.state.predictionSelected.type
+      };
+    },
+
     openNewTab() {
-      this.$store.state.newtabOpen = true;
+      if (this.$root.$options.methods.getCookie('isopennewtab') == 'true') {
+        this.openTab();
+      } else {
+        this.$store.state.newtabOpen = true;
+      }
     }
   }
 });
@@ -606,44 +621,58 @@ var render = function() {
       staticClass: "prediction-detail",
       class: {
         "prediction-detail--is-visible":
-          _vm.$store.state.isOpenPredictionDetail == true
+          _vm.$store.state.isOpenPredictionDetail == true,
+        detailcenter: _vm.$store.state.ishidetoolbar
       },
       attrs: { title: "inplay" }
     },
     [
-      _c("div", { staticClass: "prediction-detail--toolbar" }, [
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail--toolbar--back-icon",
-            on: {
-              click: function($event) {
-                _vm.closePredictionDetail()
+      _c(
+        "div",
+        {
+          staticClass: "prediction-detail--toolbar",
+          class: {
+            "prediction-detail--toolbar-hide": _vm.$store.state.ishidetoolbar
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "prediction-detail--toolbar--back-icon",
+              on: {
+                click: function($event) {
+                  _vm.closePredictionDetail()
+                }
               }
-            }
-          },
-          [
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("keyboard_backspace")
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Back")])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail--toolbar--opentab-icon",
-            on: {
-              click: function($event) {
-                _vm.openNewTab()
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_backspace")
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("Back")])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "prediction-detail--toolbar--opentab-icon",
+              on: {
+                click: function($event) {
+                  _vm.openNewTab()
+                }
               }
-            }
-          },
-          [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
-        )
-      ]),
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("open_in_new")
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "prediction-detail-content" }, [
         _c(
@@ -816,7 +845,8 @@ var render = function() {
                 staticClass: "prediction-detail-content--stats",
                 class: {
                   "prediction-detail-content--is-visible":
-                    _vm.$store.state.statLiveActive == "stats"
+                    _vm.$store.state.statLiveActive == "stats",
+                  predictionpaddingtop: _vm.$store.state.ishidetoolbar
                 }
               },
               [
@@ -12327,7 +12357,11 @@ var store = exports.store = new _vuex2.default.Store({
 		activecalender: {
 			id: "14",
 			active: false
-		}
+		},
+
+		checkAskAgain: false,
+
+		ishidetoolbar: false
 
 	}
 });
@@ -12350,9 +12384,9 @@ var _vueResize = __webpack_require__(10);
 
 var _vueResize2 = _interopRequireDefault(_vueResize);
 
-var _App = __webpack_require__(89);
+var _preDetail = __webpack_require__(89);
 
-var _App2 = _interopRequireDefault(_App);
+var _preDetail2 = _interopRequireDefault(_preDetail);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12362,12 +12396,12 @@ new _vue2.default({
     el: '#detailprediction',
     store: _store.store,
     render: function render(h) {
-        return h(_App2.default);
+        return h(_preDetail2.default);
     },
     mounted: function mounted() {
         this.$store.state.predictionSelected.type = window.predetaildata.type;
         this.$store.state.dataPredictionDetail = window.predetaildata.data;
-        this.$store.state.isOpenPredictionDetail = true;
+        this.$store.state.ishidetoolbar = true;
     }
 });
 
@@ -12378,8 +12412,8 @@ new _vue2.default({
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App1_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_57d5ba1d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App1_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__ = __webpack_require__(91);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -12395,14 +12429,14 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App1_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_57d5ba1d_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App1_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "assets\\js\\vuecomponent\\App1.vue"
+Component.options.__file = "assets\\js\\vuecomponent\\preDetail.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -12412,9 +12446,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-57d5ba1d", Component.options)
+    hotAPI.createRecord("data-v-670d2157", Component.options)
   } else {
-    hotAPI.reload("data-v-57d5ba1d", Component.options)
+    hotAPI.reload("data-v-670d2157", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -13420,7 +13454,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-57d5ba1d", esExports)
+    require("vue-hot-reload-api")      .rerender("data-v-670d2157", esExports)
   }
 }
 

@@ -21969,7 +21969,11 @@ var store = exports.store = new _vuex2.default.Store({
 		activecalender: {
 			id: "14",
 			active: false
-		}
+		},
+
+		checkAskAgain: false,
+
+		ishidetoolbar: false
 
 	}
 });
@@ -23291,6 +23295,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
@@ -23329,8 +23334,22 @@ if (false) {(function () {
       }, 500);
     },
 
+    openTab() {
+      let newWindow;
+      this.$store.state.newtabOpen = false;
+      newWindow = window.open('index.php/home/detailprediction', '_blank');
+      newWindow.predetaildata = {
+        data: this.$store.state.dataPredictionDetail,
+        type: this.$store.state.predictionSelected.type
+      };
+    },
+
     openNewTab() {
-      this.$store.state.newtabOpen = true;
+      if (this.$root.$options.methods.getCookie('isopennewtab') == 'true') {
+        this.openTab();
+      } else {
+        this.$store.state.newtabOpen = true;
+      }
     }
   }
 });
@@ -23350,44 +23369,58 @@ var render = function() {
       staticClass: "prediction-detail",
       class: {
         "prediction-detail--is-visible":
-          _vm.$store.state.isOpenPredictionDetail == true
+          _vm.$store.state.isOpenPredictionDetail == true,
+        detailcenter: _vm.$store.state.ishidetoolbar
       },
       attrs: { title: "inplay" }
     },
     [
-      _c("div", { staticClass: "prediction-detail--toolbar" }, [
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail--toolbar--back-icon",
-            on: {
-              click: function($event) {
-                _vm.closePredictionDetail()
+      _c(
+        "div",
+        {
+          staticClass: "prediction-detail--toolbar",
+          class: {
+            "prediction-detail--toolbar-hide": _vm.$store.state.ishidetoolbar
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "prediction-detail--toolbar--back-icon",
+              on: {
+                click: function($event) {
+                  _vm.closePredictionDetail()
+                }
               }
-            }
-          },
-          [
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("keyboard_backspace")
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Back")])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "prediction-detail--toolbar--opentab-icon",
-            on: {
-              click: function($event) {
-                _vm.openNewTab()
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_backspace")
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("Back")])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "prediction-detail--toolbar--opentab-icon",
+              on: {
+                click: function($event) {
+                  _vm.openNewTab()
+                }
               }
-            }
-          },
-          [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
-        )
-      ]),
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("open_in_new")
+              ])
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "prediction-detail-content" }, [
         _c(
@@ -23560,7 +23593,8 @@ var render = function() {
                 staticClass: "prediction-detail-content--stats",
                 class: {
                   "prediction-detail-content--is-visible":
-                    _vm.$store.state.statLiveActive == "stats"
+                    _vm.$store.state.statLiveActive == "stats",
+                  predictionpaddingtop: _vm.$store.state.ishidetoolbar
                 }
               },
               [
@@ -24672,6 +24706,26 @@ new _vue2.default({
 		livescore: [],
 		livescoreStats: [],
 		livescoreTimeLine: []
+	},
+	methods: {
+		getCookie: function getCookie(cname) {
+			var name = cname + "=";
+			var decodedCookie = decodeURIComponent(document.cookie);
+			var ca = decodedCookie.split(';');
+			for (var i = 0; i < ca.length; i++) {
+				var c = ca[i];
+				while (c.charAt(0) == ' ') {
+					c = c.substring(1);
+				}
+				if (c.indexOf(name) == 0) {
+					return c.substring(name.length, c.length);
+				}
+			}
+			return "";
+		},
+		setCookie: function setCookie(cname, cvalue) {
+			document.cookie = cname + "=" + cvalue + ";path=/";
+		}
 	},
 	mounted: function mounted() {
 		getdata.getDataLiveScore(this);
@@ -33060,6 +33114,16 @@ if (false) {(function () {
         data: this.$store.state.dataPredictionDetail,
         type: this.$store.state.predictionSelected.type
       };
+    },
+
+    askAgain() {
+      this.$store.state.checkAskAgain = !this.$store.state.checkAskAgain;
+
+      if (this.$store.state.checkAskAgain) {
+        this.$root.$options.methods.setCookie('isopennewtab', true);
+      } else {
+        this.$root.$options.methods.setCookie('isopennewtab', false);
+      }
     }
   }
 });
@@ -33085,12 +33149,32 @@ var render = function() {
         _vm._v(" "),
         _vm._m(1, false, false),
         _vm._v(" "),
-        _vm._m(2, false, false),
+        _c(
+          "div",
+          {
+            on: {
+              click: function($event) {
+                _vm.askAgain()
+              }
+            }
+          },
+          [
+            _c("div", [
+              _c("input", {
+                attrs: { type: "checkbox" },
+                domProps: { checked: _vm.$store.state.checkAskAgain }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(2, false, false)
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "newtabcontent--btnOpen" }, [
           _c(
             "div",
             {
+              class: { askActived: _vm.$store.state.checkAskAgain },
               on: {
                 click: function($event) {
                   _vm.closeNewTab()
@@ -33139,11 +33223,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", [_c("input", { attrs: { type: "checkbox" } })]),
-      _vm._v(" "),
-      _c("div", [_c("span", [_vm._v("Don't ask me again")])])
-    ])
+    return _c("div", [_c("span", [_vm._v("Don't ask me again")])])
   }
 ]
 render._withStripped = true

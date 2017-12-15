@@ -68,7 +68,11 @@ export const store = new Vuex.Store({
 		activecalender:{
 			id:"14",
 			active:false
-		}
+		},
+
+		checkAskAgain:false,
+
+		ishidetoolbar:false
 
 	}
 });
