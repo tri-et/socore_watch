@@ -51,7 +51,7 @@
                         <div class="inplay-pregame--content">
                             <div class="row row__inplay inplay-pregame--inplay">
                                 <template v-for="(league,index) in $root.$data.leagueLiveScoreLeft">
-                                    <div class="header-title header-title--livescore" :key="index">
+                                    <div class="header-title header-title--livescore" :key="index" :style="{'margin-top':(index!=0?'10px':'0px')}">
                                         <div :style="{'background-color':league.leagueColorCode}">
                                             <span>{{league.leagueShortName}}</span>
                                         </div>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="row row__pregame inplay-pregame--pregame">
                                 <template v-for="(league,index) in $root.$data.leagueLiveScoreRight">
-                                    <div class="header-title header-title--livescore" :key="index">
+                                    <div class="header-title header-title--livescore" :key="index" :style="{'margin-top':(index!=0?'10px':'0px')}">
                                         <div :style="{'background-color':league.leagueColorCode}">
                                             <span>{{league.leagueShortName}}</span>
                                         </div>

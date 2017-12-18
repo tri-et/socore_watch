@@ -127,7 +127,9 @@ class GetData {
 				app.$store.state.isOpenLiveScoreDetail = true
 			}
 
-			console.log('test');
+			setTimeout(() => {
+				that.getDataLiveScore(app)
+			}, 5000)
 		})
 	}
 

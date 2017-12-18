@@ -578,6 +578,9 @@ body{
 .primary-nav--is-hide-text-menu {
         display:none;
         color:#36569B;
+        font-weight: normal;
+        font-size: 14px;
+        margin-top: 2px;
     }
 
 @media (min-width:1200px){
@@ -2743,38 +2746,13 @@ body{
         }
 
 .btn--inplay div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
+            margin-right:5px;
         }
-
-@media (min-width:480px){
-
-.btn--inplay div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
-
-@media (min-width:1248px){
-
-.btn--inplay div:nth-child(2) {
-                width: 26%;
-                max-width: 75px
-        }
-    }
-
-@media (min-width:1568px){
-
-.btn--inplay div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
 
 .btn--inplay div:nth-child(3){
             font-size:14px;
@@ -2799,38 +2777,13 @@ body{
         }
 
 .btn--pregame div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
+            margin-right:5px;
         }
-
-@media (min-width:480px){
-
-.btn--pregame div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
-
-@media (min-width:1248px){
-
-.btn--pregame div:nth-child(2) {
-                width: 26%;
-                max-width: 75px
-        }
-    }
-
-@media (min-width:1568px){
-
-.btn--pregame div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
 
 .btn--pregame div:nth-child(3){
             font-size:14px;

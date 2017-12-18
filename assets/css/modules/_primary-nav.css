@@ -26,6 +26,9 @@
     &--is-hide-text-menu {
         display:none;
         color:$mainBlue;
+        font-weight: normal;
+        font-size: 14px;
+        margin-top: 2px;
 
         @mixin atLarge {
             display:block !important;

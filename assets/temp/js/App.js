@@ -25280,7 +25280,9 @@ var GetData = function () {
 					app.$store.state.isOpenLiveScoreDetail = true;
 				}
 
-				console.log('test');
+				setTimeout(function () {
+					that.getDataLiveScore(app);
+				}, 5000);
 			});
 		}
 	}, {
@@ -26490,7 +26492,7 @@ if (false) {(function () {
 //
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  name: "buttonPrediction",
+  name: 'buttonPrediction',
   props: {
     inplaypregame: {
       type: String
@@ -26518,15 +26520,20 @@ if (false) {(function () {
       return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
     },
     setMarquee() {
-      var divContain = this.$el.querySelector('.btn div:nth-child(2)');
-      var textWidth = divContain.children[0].offsetWidth;
-      var divWidth = divContain.offsetWidth;
+      var that = this;
+      this.activeMarquee = false;
 
-      if (divWidth < textWidth) {
-        this.activeMarquee = true;
-      } else {
-        this.activeMarquee = false;
-      }
+      setTimeout(() => {
+        var divContain = that.$el.querySelector('.btn div:nth-child(2)');
+        var textWidth = divContain.children[0].offsetWidth;
+        var divWidth = divContain.offsetWidth;
+
+        if (divWidth < textWidth) {
+          that.activeMarquee = true;
+        } else {
+          that.activeMarquee = false;
+        }
+      }, 300);
     },
     openPredictionDetail(ob) {
       let that = this;
@@ -26634,11 +26641,17 @@ var render = function() {
         [
           _vm._m(0, false, false),
           _vm._v(" "),
-          _c("div", [
-            _c("span", { class: { marquee: _vm.activeMarquee } }, [
-              _vm._v(_vm._s(_vm.items.team_home))
-            ])
-          ]),
+          _c(
+            "div",
+            {
+              style: { "max-width": _vm.activeMarquee ? "75px" : "max-content" }
+            },
+            [
+              _c("span", { class: { marquee: _vm.activeMarquee } }, [
+                _vm._v(_vm._s(_vm.items.team_home))
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c("div", [
             _c("span", [_vm._v("-")]),
@@ -33429,7 +33442,10 @@ var render = function() {
                                 {
                                   key: index,
                                   staticClass:
-                                    "header-title header-title--livescore"
+                                    "header-title header-title--livescore",
+                                  style: {
+                                    "margin-top": index != 0 ? "10px" : "0px"
+                                  }
                                 },
                                 [
                                   _c(
@@ -33498,7 +33514,10 @@ var render = function() {
                                 {
                                   key: index,
                                   staticClass:
-                                    "header-title header-title--livescore"
+                                    "header-title header-title--livescore",
+                                  style: {
+                                    "margin-top": index != 0 ? "10px" : "0px"
+                                  }
                                 },
                                 [
                                   _c(
