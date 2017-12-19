@@ -1,12 +1,8 @@
 .inplay-pregame {
-    //width:100%;
-    //height:100vh;
-    //padding-top:15px;
-    height:auto;
-    overflow:auto;
-    //position: relative;
+    overflow-y: scroll ;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
     @mixin clearfix;
-
     /*div {
         float:left;
     }*/
@@ -72,6 +68,8 @@
     }
 
     &--content {
-        min-height:calc(100vh - 202px)
+        min-height:calc(100vh - 202px);
+        margin-right:5px;    
+        padding-top: 10px;
     }
 }

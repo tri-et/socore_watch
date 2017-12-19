@@ -1,7 +1,9 @@
-
 import Vue from 'vue'
-import {store} from './modules/store'
+import {
+	store
+} from './modules/store'
 import VueResize from 'vue-resize'
+import vueSmoothScroll from 'vue-smooth-scroll'
 import App from './vuecomponent/App.vue'
 
 import MobileMenu from './modules/MobileMenu'
@@ -11,33 +13,23 @@ import Prediction from './modules/Prediction'
 import LiveScore from './modules/LiveSocre'
 import GetData from './modules/Get_Data'
 Vue.use(VueResize)
-
-/*let livescore = new LiveScore()
-
-let mobileMenu = new MobileMenu()
-
-let desktopMenu = new DesktopMenu()
-
-let prediction = new Prediction()
-
-let statsLiveStreamClick = new StatsLiveStreamClick()*/
-
+Vue.use(vueSmoothScroll)
 let getdata = new GetData()
 new Vue({
 	el: '#main',
 	store,
-	render:h=>h(App),
+	render: h => h(App),
 	data: {
 		pregame: [],
-		inplay:[],
-		leagueLiveScoreLeft:[],
-		leagueLiveScoreRight:[],
-		livescore:[],
-		livescoreStats:[],
-		livescoreTimeLine:[]
+		inplay: [],
+		leagueLiveScoreLeft: [],
+		leagueLiveScoreRight: [],
+		livescore: [],
+		livescoreStats: [],
+		livescoreTimeLine: []
 	},
-	methods:{
-		getCookie(cname){
+	methods: {
+		getCookie(cname) {
 			var name = cname + "=";
 			var decodedCookie = decodeURIComponent(document.cookie)
 			var ca = decodedCookie.split(';')
@@ -53,7 +45,7 @@ new Vue({
 			return ""
 		},
 
-		setCookie(cname, cvalue){
+		setCookie(cname, cvalue) {
 			document.cookie = cname + "=" + cvalue + ";path=/";
 		}
 	},
@@ -62,5 +54,3 @@ new Vue({
 		getdata.getDataPreInplay(this)
 	}
 })
-
-

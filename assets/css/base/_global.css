@@ -1,9 +1,9 @@
 body{
-    font-family: 'Roboto-Regular';
+    font-family: 'Roboto';
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
 
 }
 
@@ -15,7 +15,7 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #cacaca;
     border:none;
     border-radius: 10px;
     margin-right: 5px;

@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+import $ from 'jquery'
 export default {
   name: 'buttonPrediction',
   props: {
@@ -86,14 +87,16 @@ export default {
     },
     openPredictionDetail(ob) {
       let that = this
-      this.$store.state.dataPredictionDetail = ob
       this.$store.state.statLiveActive = 'stats'
-      this.$store.state.predictionSelected = {
-        match_code: ob.match_code,
-        type: this.inplaypregame,
-        isopening:
-          this.$store.state.isOpenPredictionDetail == false ? false : true,
-      }
+      this.$store.state.predictionSelected.isopening =this.$store.state.isOpenPredictionDetail == false ? false : true
+      setTimeout(function() {
+        that.$store.state.dataPredictionDetail = ob
+        that.$store.state.predictionSelected = {
+          match_code: ob.match_code,
+          type: that.inplaypregame,
+          isopening:that.$store.state.isOpenPredictionDetail == false ? false : true
+        }
+      }, 500)
       this.$store.state.isOpenPredictionDetail = true
       setTimeout(function() {
         that.$store.state.predictionSelected.isopening = false
