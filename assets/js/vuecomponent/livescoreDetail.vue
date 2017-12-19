@@ -1,11 +1,11 @@
 <template>
-  <div class="livescore-detail" :class="{'livescore-detail--is-visible':$store.state.isOpenLiveScoreDetail==true}">
-    <div class="livescore-detail--toolbar">
+  <div class="livescore-detail" :class="{'livescore-detail--is-visible':$store.state.isOpenLiveScoreDetail==true,'detailcenterlive':$store.state.ishidetoolbar}">
+    <div class="livescore-detail--toolbar" :class="{'livescore-detail--toolbar-hide':$store.state.ishidetoolbar}">
       <div class="livescore-detail--toolbar--back-icon" @click="closeLiveScoreDetail()">
         <i class="material-icons">keyboard_backspace</i>
         <span>Back</span>
       </div>
-      <div class="livescore-detail--toolbar--opentab-icon">
+      <div class="livescore-detail--toolbar--opentab-icon" @click="openNewTab()">
         <i class="material-icons">open_in_new</i>
       </div>
     </div>
@@ -29,7 +29,7 @@
           <span :style="{'font-weight':setTeamWin(items.match[13],items.match[12])}">{{items.match[13]}}</span>
         </div>
       </div>
-      <div class="livescore-detail-content--stats-timeline">
+      <div class="livescore-detail-content--stats-timeline" :class="{'livepaddingtop':$store.state.ishidetoolbar}">
         <div class="livescore-detail-content--header-league">
           <div class="livescore-detail-content--header-league--league">
             <span>{{items.match[4]|setFT}}</span>
@@ -180,14 +180,16 @@ export default {
   filters: {
     setTimeLive(val) {
       let date = new Date(val)
-      return date.getHours() +
+      return (
+        date.getHours() +
         ':' +
         (date.getMinutes() == '0' ? '00' : date.getMinutes())
+      )
     },
 
-    setFT(val){
-      return val=='FT'?'FT':'kickoff'
-    }
+    setFT(val) {
+      return val == 'FT' ? 'FT' : 'kickoff'
+    },
   },
   methods: {
     setTeamWin(val, homeAwayScore) {
@@ -232,10 +234,10 @@ export default {
       let iconl = ''
       switch (homeaway) {
         case 'home':
-          iconl = number == 1 ? 'assets/images/iconl/' + val + '.gif' : ''
+          iconl = number == 1 ? (this.$store.state.ishidetoolbar?'../../assets/images/iconl/':'assets/images/iconl/') + val + '.gif' : ''
           break
         case 'away':
-          iconl = number == 0 ? 'assets/images/iconl/' + val + '.gif' : ''
+          iconl = number == 0 ? (this.$store.state.ishidetoolbar?'../../assets/images/iconl/':'assets/images/iconl/')  + val + '.gif' : ''
           break
       }
       return iconl
@@ -251,7 +253,23 @@ export default {
           isopening: false,
         }
       }, 500)
-    }
+    },
+    openTab() {
+      let newWindow
+      this.$store.state.newtabOpen = false
+      newWindow = window.open('index.php/home/detaillivescore', '_blank')
+      newWindow.livedetaildata = {
+        data: this.$store.state.dataLivescoreDetail
+      }
+    },
+
+    openNewTab() {
+      if (this.$root.$options.methods.getCookie('isopennewtab') == 'true') {
+        this.openTab()
+      } else {
+        this.$store.state.newtabOpen = true
+      }
+    },
   },
 }
 </script>

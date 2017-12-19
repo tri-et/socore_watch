@@ -12,6 +12,9 @@
     width:100%;
     background-size: auto 100%;
     color:$mainWhite;
+    font-size: 14px;
+    display: flex;
+    align-items: baseline;
     div {
         float:left;
         text-align:center;

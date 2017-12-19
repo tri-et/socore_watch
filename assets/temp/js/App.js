@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -179,8 +179,8 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(18);
-var isBuffer = __webpack_require__(62);
+var bind = __webpack_require__(20);
+var isBuffer = __webpack_require__(63);
 
 /*global toString:true*/
 
@@ -484,6 +484,223 @@ module.exports = {
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10740,223 +10957,6 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
 
 
 /***/ }),
@@ -21626,7 +21626,7 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(6).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -21878,7 +21878,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(3)))
 
 /***/ }),
 /* 8 */
@@ -22923,7 +22923,7 @@ var index_esm = {
 
 /* harmony default export */ __webpack_exports__["default"] = (index_esm);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
 /* 10 */
@@ -23050,15 +23050,66 @@ if (GlobalVue) {
 
 /* harmony default export */ __webpack_exports__["default"] = (plugin);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(16);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2732684c", Component.options)
+  } else {
+    hotAPI.reload("data-v-2732684c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(14);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -23104,7 +23155,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23355,7 +23406,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -23447,7 +23498,19 @@ var render = function() {
                 }
               },
               [
-                _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.team_home))])]),
+                _c(
+                  "div",
+                  {
+                    style: {
+                      "max-width": _vm.activeMarquee ? "75px" : "max-content"
+                    }
+                  },
+                  [
+                    _c("span", { class: { marquee: _vm.activeMarquee } }, [
+                      _vm._v(_vm._s(_vm.items.team_home))
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
                 _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
                 _vm._v(" "),
@@ -23787,7 +23850,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", [_c("img", { staticClass: "stopwatch" })])
+    return _c("span", [_c("img", { staticClass: "stopwatch btn--watchicon" })])
   },
   function() {
     var _vm = this
@@ -23873,14 +23936,1053 @@ if (false) {
 }
 
 /***/ }),
-/* 14 */
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: ['items'],
+  filters: {
+    setTimeLive(val) {
+      let date = new Date(val);
+      return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+    },
+
+    setFT(val) {
+      return val == 'FT' ? 'FT' : 'kickoff';
+    }
+  },
+  methods: {
+    setTeamWin(val, homeAwayScore) {
+      return parseInt(val) > parseInt(homeAwayScore) ? 'bold' : '';
+    },
+
+    setStats(val, homeAway) {
+      let stat = '';
+      let homeoraway = [];
+      if (val != undefined) {
+        homeoraway = val == '' ? '0,0'.split(',') : val.split(',');
+        switch (homeAway) {
+          case 'home':
+            stat = homeoraway[0] == '0' ? '-' : homeoraway[0];
+            break;
+          case 'away':
+            stat = homeoraway[1] == '0' ? '-' : homeoraway[1];
+            break;
+        }
+      }
+      return stat;
+    },
+
+    setWidthStats(val) {
+      return val == '-' ? '0%' : parseInt(val) * 100 / 30 + '%';
+    },
+
+    showHidePlayer(val, homeaway, number) {
+      let player = '';
+      switch (homeaway) {
+        case 'home':
+          player = number == 1 ? val : '';
+          break;
+        case 'away':
+          player = number == 0 ? val : '';
+          break;
+      }
+      return player;
+    },
+
+    setIconTimeLine(val, homeaway, number) {
+      let iconl = '';
+      switch (homeaway) {
+        case 'home':
+          iconl = number == 1 ? (this.$store.state.ishidetoolbar ? '../../assets/images/iconl/' : 'assets/images/iconl/') + val + '.gif' : '';
+          break;
+        case 'away':
+          iconl = number == 0 ? (this.$store.state.ishidetoolbar ? '../../assets/images/iconl/' : 'assets/images/iconl/') + val + '.gif' : '';
+          break;
+      }
+      return iconl;
+    },
+
+    closeLiveScoreDetail() {
+      this.$store.state.isOpenLiveScoreDetail = false;
+
+      setTimeout(() => {
+        this.$store.state.livescoreSelected = {
+          match_code: '',
+          type: '',
+          isopening: false
+        };
+      }, 500);
+    },
+    openTab() {
+      let newWindow;
+      this.$store.state.newtabOpen = false;
+      newWindow = window.open('index.php/home/detaillivescore', '_blank');
+      newWindow.livedetaildata = {
+        data: this.$store.state.dataLivescoreDetail
+      };
+    },
+
+    openNewTab() {
+      if (this.$root.$options.methods.getCookie('isopennewtab') == 'true') {
+        this.openTab();
+      } else {
+        this.$store.state.newtabOpen = true;
+      }
+    }
+  }
+});
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "livescore-detail",
+      class: {
+        "livescore-detail--is-visible":
+          _vm.$store.state.isOpenLiveScoreDetail == true,
+        detailcenterlive: _vm.$store.state.ishidetoolbar
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "livescore-detail--toolbar",
+          class: {
+            "livescore-detail--toolbar-hide": _vm.$store.state.ishidetoolbar
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "livescore-detail--toolbar--back-icon",
+              on: {
+                click: function($event) {
+                  _vm.closeLiveScoreDetail()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("keyboard_backspace")
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("Back")])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "livescore-detail--toolbar--opentab-icon",
+              on: {
+                click: function($event) {
+                  _vm.openNewTab()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "material-icons" }, [
+                _vm._v("open_in_new")
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "livescore-detail-content" }, [
+        _c("div", { staticClass: "livescore-detail-content--header" }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.match[3] != "0",
+                  expression: "items.match[3]!='0'"
+                }
+              ],
+              staticClass: "livescore-detail-content--header--status"
+            },
+            [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.items.match[4] != "FT",
+                      expression: "items.match[4]!='FT'"
+                    }
+                  ]
+                },
+                [
+                  _c("span", [_vm._v(_vm._s(_vm.items.match[4] + "'"))]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Live")])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.items.match[4] == "FT",
+                      expression: "items.match[4]=='FT'"
+                    }
+                  ]
+                },
+                [_c("span", [_vm._v("FT")])]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "livescore-detail-content--header--teamname",
+              style: {
+                color:
+                  _vm.items.match[3] == "0"
+                    ? "rgb(54, 204, 100)"
+                    : "rgb(56, 97, 158)"
+              }
+            },
+            [
+              _c(
+                "span",
+                {
+                  style: {
+                    "font-weight": _vm.setTeamWin(
+                      _vm.items.match[12],
+                      _vm.items.match[13]
+                    )
+                  }
+                },
+                [_vm._v(_vm._s(_vm.items.match[8]))]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  style: {
+                    "font-weight": _vm.setTeamWin(
+                      _vm.items.match[13],
+                      _vm.items.match[12]
+                    )
+                  }
+                },
+                [_vm._v(_vm._s(_vm.items.match[9]))]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "livescore-detail-content--header--score" },
+            [
+              _c(
+                "span",
+                {
+                  style: {
+                    "font-weight": _vm.setTeamWin(
+                      _vm.items.match[12],
+                      _vm.items.match[13]
+                    )
+                  }
+                },
+                [_vm._v(_vm._s(_vm.items.match[12]))]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  style: {
+                    "font-weight": _vm.setTeamWin(
+                      _vm.items.match[13],
+                      _vm.items.match[12]
+                    )
+                  }
+                },
+                [_vm._v(_vm._s(_vm.items.match[13]))]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "livescore-detail-content--stats-timeline",
+            class: { livepaddingtop: _vm.$store.state.ishidetoolbar }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "livescore-detail-content--header-league" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "livescore-detail-content--header-league--league"
+                  },
+                  [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setFT")(_vm.items.match[4])))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("league")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "livescore-detail-content--header-league--nameleague"
+                  },
+                  [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setTimeLive")(_vm.items.match[10])))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", [_vm._v(_vm._s(_vm.items.match[5]))])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(0, false, false),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.items.stats.length == 0 || _vm.items.match[3] == 0,
+                    expression: "items.stats.length==0 || items.match[3]==0"
+                  }
+                ],
+                staticClass: "livescore-detail-content--stats-empty"
+              },
+              [
+                _vm._m(1, false, false),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.items.match[3] != 0,
+                          expression: "items.match[3]!=0"
+                        }
+                      ]
+                    },
+                    [_vm._v("Don't have any Stats at the moment!")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.items.match[3] == 0,
+                          expression: "items.match[3]==0"
+                        }
+                      ]
+                    },
+                    [
+                      _vm._v(
+                        "Stats will be shown here when the match starts, at " +
+                          _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items.stats.length != 0,
+                    expression: "items.stats.length!=0"
+                  }
+                ],
+                staticClass: "livescore-detail-content--stats-detail"
+              },
+              [
+                _c("ul", [
+                  _c("li", [
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "home")))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--home-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[6], "home")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--away-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[6], "away")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "away")))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[37], "home"))
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--home-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[37], "home")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--away-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[37], "away")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[37], "away"))
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "home")))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--home-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[9], "home")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(4, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--away-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[9], "away")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "away")))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[14], "home"))
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--home-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[14], "home")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(5, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--away-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[14], "away")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[14], "away"))
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[16], "home"))
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--home-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[16], "home")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(6, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("hr", {
+                        staticClass:
+                          "livescore-detail-content--away-percent-line",
+                        style: {
+                          width: _vm.setWidthStats(
+                            _vm.setStats(_vm.items.stats[16], "away")
+                          )
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.setStats(_vm.items.stats[16], "away"))
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(7, false, false),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value:
+                      _vm.items.timeline.length == 0 || _vm.items.match[3] == 0,
+                    expression: "items.timeline.length==0 || items.match[3]==0"
+                  }
+                ],
+                staticClass: "livescore-detail-content--timeline-empty"
+              },
+              [
+                _vm._m(8, false, false),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.items.match[3] != 0,
+                          expression: "items.match[3]!=0"
+                        }
+                      ]
+                    },
+                    [_vm._v("Don't have any TimeLine at the moment!")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.items.match[3] == 0,
+                          expression: "items.match[3]==0"
+                        }
+                      ]
+                    },
+                    [
+                      _vm._v(
+                        "TimeLine will be shown here when the match starts, at " +
+                          _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "livescore-detail-content--timeline-detail" },
+              [
+                _c(
+                  "ul",
+                  _vm._l(_vm.items.timeline, function(item) {
+                    return _c("li", { key: item[2] }, [
+                      _c("div", [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.setIconTimeLine(item[4], "home", item[3]),
+                            alt: ""
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(_vm.showHidePlayer(item[6], "home", item[3]))
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [_c("span", [_vm._v(_vm._s(item[5] + "'"))])]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(_vm.showHidePlayer(item[6], "away", item[3]))
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.setIconTimeLine(item[4], "away", item[3]),
+                            alt: ""
+                          }
+                        })
+                      ])
+                    ])
+                  })
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items.match[3] != 0,
+                    expression: "items.match[3]!=0"
+                  }
+                ],
+                staticClass: "livescore-detail-content--header-livestream"
+              },
+              [_vm._m(9, false, false)]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.items.match[3] != 0,
+                    expression: "items.match[3]!=0"
+                  }
+                ]
+              },
+              [_vm._t("default", null, { items: _vm.items })],
+              2
+            )
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-stats-timeline" },
+      [
+        _c("div", [_c("span", [_vm._v("home")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("stats")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("away")])])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("shots")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("off target")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("corner kicks")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("yellow cards")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("red cards")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "livescore-detail-content--header-stats-timeline" },
+      [
+        _c("div", [_c("span", [_vm._v("home")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("timeline")])]),
+        _vm._v(" "),
+        _c("div", [_c("span", [_vm._v("away")])])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("span", [_vm._v("livestream")])])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2732684c", esExports)
+  }
+}
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var normalizeHeaderName = __webpack_require__(64);
+var normalizeHeaderName = __webpack_require__(65);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -23896,10 +24998,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(19);
+    adapter = __webpack_require__(21);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(19);
+    adapter = __webpack_require__(21);
   }
   return adapter;
 }
@@ -23970,66 +25072,15 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 15 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__ = __webpack_require__(40);
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2732684c_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetail_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\livescoreDetail.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2732684c", Component.options)
-  } else {
-    hotAPI.reload("data-v-2732684c", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
-
-
-/***/ }),
-/* 16 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_929415c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastLiveScore_vue__ = __webpack_require__(43);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -24075,7 +25126,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24087,11 +25138,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _axios = __webpack_require__(60);
+var _axios = __webpack_require__(61);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -24181,13 +25232,15 @@ var GetData = function () {
 					data = pregameData[0];
 					type = 'pregame';
 				}
-				app.$store.state.dataPredictionDetail = data;
-				app.$store.state.predictionSelected = {
-					match_code: data.match_code,
-					type: type,
-					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
-				};
-				app.$store.state.isOpenPredictionDetail = true;
+				if (!app.$store.state.iconMenuShow) {
+					app.$store.state.dataPredictionDetail = data;
+					app.$store.state.predictionSelected = {
+						match_code: data.match_code,
+						type: type,
+						isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
+					};
+					app.$store.state.isOpenPredictionDetail = true;
+				}
 				setTimeout(function () {
 					that.getDataInPlay(app);
 				}, 3000);
@@ -24219,22 +25272,29 @@ var GetData = function () {
 				app.livescoreTimeLine = that.formatJson(timeline.data);
 
 				var id = app.livescore[0][0];
-				app.$store.state.dataLivescoreDetail = {
-					match: app.livescore[0],
-					stats: app.$root.livescoreStats.r.find(function (x) {
-						return x[2] == id;
-					}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
-						return x[2] == id;
-					}),
-					timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
-						return x[2] == id;
-					})
-				};
-				app.$store.state.livescoreSelected = {
-					match_code: id,
-					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
-				};
-				app.$store.state.isOpenLiveScoreDetail = true;
+
+				if (!app.$store.state.iconMenuShow) {
+					app.$store.state.dataLivescoreDetail = {
+						match: app.livescore[0],
+						stats: app.$root.livescoreStats.r.find(function (x) {
+							return x[2] == id;
+						}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
+							return x[2] == id;
+						}),
+						timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
+							return x[2] == id;
+						})
+					};
+					app.$store.state.livescoreSelected = {
+						match_code: id,
+						isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
+					};
+					app.$store.state.isOpenLiveScoreDetail = true;
+				}
+
+				setTimeout(function () {
+					that.getDataLiveScore(app);
+				}, 5000);
 			});
 		}
 	}, {
@@ -24292,7 +25352,7 @@ var GetData = function () {
 exports.default = GetData;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24310,19 +25370,19 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(1);
-var settle = __webpack_require__(65);
-var buildURL = __webpack_require__(67);
-var parseHeaders = __webpack_require__(68);
-var isURLSameOrigin = __webpack_require__(69);
-var createError = __webpack_require__(20);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(70);
+var settle = __webpack_require__(66);
+var buildURL = __webpack_require__(68);
+var parseHeaders = __webpack_require__(69);
+var isURLSameOrigin = __webpack_require__(70);
+var createError = __webpack_require__(22);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(71);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -24419,7 +25479,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(71);
+      var cookies = __webpack_require__(72);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -24495,16 +25555,16 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(66);
+var enhanceError = __webpack_require__(67);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -24523,7 +25583,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24535,7 +25595,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24561,7 +25621,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24573,7 +25633,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -24633,7 +25693,7 @@ var StatsLiveStreamClick = function () {
 exports.default = StatsLiveStreamClick;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -24649,48 +25709,42 @@ var _vueResize = __webpack_require__(10);
 
 var _vueResize2 = _interopRequireDefault(_vueResize);
 
-var _App = __webpack_require__(25);
+var _vueSmoothScroll = __webpack_require__(27);
+
+var _vueSmoothScroll2 = _interopRequireDefault(_vueSmoothScroll);
+
+var _App = __webpack_require__(28);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _MobileMenu = __webpack_require__(84);
+var _MobileMenu = __webpack_require__(85);
 
 var _MobileMenu2 = _interopRequireDefault(_MobileMenu);
 
-var _DesktopMenu = __webpack_require__(85);
+var _DesktopMenu = __webpack_require__(86);
 
 var _DesktopMenu2 = _interopRequireDefault(_DesktopMenu);
 
-var _StatsLiveStreamClick = __webpack_require__(23);
+var _StatsLiveStreamClick = __webpack_require__(25);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
-var _Prediction = __webpack_require__(86);
+var _Prediction = __webpack_require__(87);
 
 var _Prediction2 = _interopRequireDefault(_Prediction);
 
-var _LiveSocre = __webpack_require__(87);
+var _LiveSocre = __webpack_require__(88);
 
 var _LiveSocre2 = _interopRequireDefault(_LiveSocre);
 
-var _Get_Data = __webpack_require__(17);
+var _Get_Data = __webpack_require__(19);
 
 var _Get_Data2 = _interopRequireDefault(_Get_Data);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueResize2.default);
-
-/*let livescore = new LiveScore()
-
-let mobileMenu = new MobileMenu()
-
-let desktopMenu = new DesktopMenu()
-
-let prediction = new Prediction()
-
-let statsLiveStreamClick = new StatsLiveStreamClick()*/
-
+_vue2.default.use(_vueSmoothScroll2.default);
 var getdata = new _Get_Data2.default();
 new _vue2.default({
 	el: '#main',
@@ -24734,13 +25788,19 @@ new _vue2.default({
 });
 
 /***/ }),
-/* 25 */
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueSmoothScroll=t():e.VueSmoothScroll=t()}(this,function(){return function(e){function t(n){if(o[n])return o[n].exports;var i=o[n]={exports:{},id:n,loaded:!1};return e[n].call(i.exports,i,i.exports,t),i.loaded=!0,i.exports}var o={};return t.m=e,t.c=o,t.p="",t(0)}([function(e,t){"use strict";function o(e){return e<.5?4*e*e*e:(e-1)*(2*e-2)*(2*e-2)+1}var n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};e.exports={install:function(e){e.directive("smooth-scroll",{inserted:function(e,t){"object"===("undefined"==typeof window?"undefined":n(window))&&void 0!==window.pageYOffset&&e.addEventListener("click",function(e){var n=document.getElementById(this.hash.substring(1));if(n){e.preventDefault(),window.history.pushState&&location.hash!==this.hash&&window.history.pushState("","",this.hash);var i=t.value&&t.value.duration?t.value.duration:500,r=t.value&&t.value.offset?t.value.offset:0,u=Date.now(),f="HTML"===n.nodeName?-window.pageYOffset:n.getBoundingClientRect().top+window.pageYOffset;f+=r;var a=window.requestAnimationFrame||window.mozRequestAnimationFrame||window.webkitRequestAnimationFrame||function(e){window.setTimeout(e,15)},s=function e(){var t=Date.now()-u,r=f;t<i?(r=window.pageYOffset+(f-window.pageYOffset)*o(t/i),a(e)):location.replace("#"+n.id),window.scroll(0,r)};s()}})}})}}}])});
+
+/***/ }),
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App_vue__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e2fe044_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App_vue__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_App_vue__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e2fe044_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_App_vue__ = __webpack_require__(84);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -24786,22 +25846,22 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__menuHeader_vue__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buttonPrediction_vue__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__predictionDetailPanel_vue__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__livescoreDetail_vue__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__livecastLiveScore_vue__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__help_vue__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__about_vue__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__menuSidebar_vue__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__matchLiveScore_vue__ = __webpack_require__(52);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__livescoreDetailPanel_vue__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calender_vue__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__newtab_vue__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__menuHeader_vue__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__buttonPrediction_vue__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__predictionDetailPanel_vue__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__livescoreDetail_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__livecastLiveScore_vue__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__help_vue__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__about_vue__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__menuSidebar_vue__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__matchLiveScore_vue__ = __webpack_require__(53);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__livescoreDetailPanel_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calender_vue__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__newtab_vue__ = __webpack_require__(81);
 //
 //
 //
@@ -24935,12 +25995,12 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuHeader_vue__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_103382d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuHeader_vue__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuHeader_vue__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_103382d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuHeader_vue__ = __webpack_require__(32);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -24986,11 +26046,11 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 //
 //
@@ -25091,7 +26151,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25350,12 +26410,12 @@ if (false) {
 }
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_8ebacda4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_buttonPrediction_vue__ = __webpack_require__(35);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -25401,10 +26461,12 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 //
 //
 //
@@ -25443,8 +26505,9 @@ if (false) {(function () {
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-  name: "buttonPrediction",
+  name: 'buttonPrediction',
   props: {
     inplaypregame: {
       type: String
@@ -25472,25 +26535,33 @@ if (false) {(function () {
       return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
     },
     setMarquee() {
-      var divContain = this.$el.querySelector('.btn div:nth-child(2)');
-      var textWidth = divContain.children[0].offsetWidth;
-      var divWidth = divContain.offsetWidth;
+      var that = this;
+      this.activeMarquee = false;
 
-      if (divWidth < textWidth) {
-        this.activeMarquee = true;
-      } else {
-        this.activeMarquee = false;
-      }
+      setTimeout(() => {
+        var divContain = that.$el.querySelector('.btn div:nth-child(2)');
+        var textWidth = divContain.children[0].offsetWidth;
+        var divWidth = divContain.offsetWidth;
+
+        if (divWidth < textWidth) {
+          that.activeMarquee = true;
+        } else {
+          that.activeMarquee = false;
+        }
+      }, 300);
     },
     openPredictionDetail(ob) {
       let that = this;
-      this.$store.state.dataPredictionDetail = ob;
       this.$store.state.statLiveActive = 'stats';
-      this.$store.state.predictionSelected = {
-        match_code: ob.match_code,
-        type: this.inplaypregame,
-        isopening: this.$store.state.isOpenPredictionDetail == false ? false : true
-      };
+      this.$store.state.predictionSelected.isopening = this.$store.state.isOpenPredictionDetail == false ? false : true;
+      setTimeout(function () {
+        that.$store.state.dataPredictionDetail = ob;
+        that.$store.state.predictionSelected = {
+          match_code: ob.match_code,
+          type: that.inplaypregame,
+          isopening: that.$store.state.isOpenPredictionDetail == false ? false : true
+        };
+      }, 500);
       this.$store.state.isOpenPredictionDetail = true;
       setTimeout(function () {
         that.$store.state.predictionSelected.isopening = false;
@@ -25506,7 +26577,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25588,11 +26659,17 @@ var render = function() {
         [
           _vm._m(0, false, false),
           _vm._v(" "),
-          _c("div", [
-            _c("span", { class: { marquee: _vm.activeMarquee } }, [
-              _vm._v(_vm._s(_vm.items.team_home))
-            ])
-          ]),
+          _c(
+            "div",
+            {
+              style: { "max-width": _vm.activeMarquee ? "75px" : "max-content" }
+            },
+            [
+              _c("span", { class: { marquee: _vm.activeMarquee } }, [
+                _vm._v(_vm._s(_vm.items.team_home))
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c("div", [
             _c("span", [_vm._v("-")]),
@@ -25642,7 +26719,7 @@ var staticRenderFns = [
     return _c("span", [
       _c("img", {
         staticClass: "btn--watchicon",
-        attrs: { src: "assets/images/stopwatch_@1x.png" }
+        attrs: { src: "assets/images/icon_clock@2x.png" }
       })
     ])
   }
@@ -25658,12 +26735,12 @@ if (false) {
 }
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3b17e7b2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3b17e7b2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetailPanel_vue__ = __webpack_require__(41);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -25709,12 +26786,12 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__predictionDetail_vue__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastPrediction_vue__ = __webpack_require__(38);
 //
 //
 //
@@ -25742,12 +26819,12 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_307d8727_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livecastPrediction_vue__ = __webpack_require__(40);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -25793,7 +26870,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -26080,7 +27157,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27671,7 +28748,7 @@ if (false) {
 }
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -27742,994 +28819,7 @@ if (false) {
 }
 
 /***/ }),
-/* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  props: ['items'],
-  filters: {
-    setTimeLive(val) {
-      let date = new Date(val);
-      return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
-    },
-
-    setFT(val) {
-      return val == 'FT' ? 'FT' : 'kickoff';
-    }
-  },
-  methods: {
-    setTeamWin(val, homeAwayScore) {
-      return parseInt(val) > parseInt(homeAwayScore) ? 'bold' : '';
-    },
-
-    setStats(val, homeAway) {
-      let stat = '';
-      let homeoraway = [];
-      if (val != undefined) {
-        homeoraway = val == '' ? '0,0'.split(',') : val.split(',');
-        switch (homeAway) {
-          case 'home':
-            stat = homeoraway[0] == '0' ? '-' : homeoraway[0];
-            break;
-          case 'away':
-            stat = homeoraway[1] == '0' ? '-' : homeoraway[1];
-            break;
-        }
-      }
-      return stat;
-    },
-
-    setWidthStats(val) {
-      return val == '-' ? '0%' : parseInt(val) * 100 / 30 + '%';
-    },
-
-    showHidePlayer(val, homeaway, number) {
-      let player = '';
-      switch (homeaway) {
-        case 'home':
-          player = number == 1 ? val : '';
-          break;
-        case 'away':
-          player = number == 0 ? val : '';
-          break;
-      }
-      return player;
-    },
-
-    setIconTimeLine(val, homeaway, number) {
-      let iconl = '';
-      switch (homeaway) {
-        case 'home':
-          iconl = number == 1 ? 'assets/images/iconl/' + val + '.gif' : '';
-          break;
-        case 'away':
-          iconl = number == 0 ? 'assets/images/iconl/' + val + '.gif' : '';
-          break;
-      }
-      return iconl;
-    },
-
-    closeLiveScoreDetail() {
-      this.$store.state.isOpenLiveScoreDetail = false;
-
-      setTimeout(() => {
-        this.$store.state.livescoreSelected = {
-          match_code: '',
-          type: '',
-          isopening: false
-        };
-      }, 500);
-    }
-  }
-});
-
-/***/ }),
-/* 40 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "livescore-detail",
-      class: {
-        "livescore-detail--is-visible":
-          _vm.$store.state.isOpenLiveScoreDetail == true
-      }
-    },
-    [
-      _c("div", { staticClass: "livescore-detail--toolbar" }, [
-        _c(
-          "div",
-          {
-            staticClass: "livescore-detail--toolbar--back-icon",
-            on: {
-              click: function($event) {
-                _vm.closeLiveScoreDetail()
-              }
-            }
-          },
-          [
-            _c("i", { staticClass: "material-icons" }, [
-              _vm._v("keyboard_backspace")
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Back")])
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(0, false, false)
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "livescore-detail-content" }, [
-        _c("div", { staticClass: "livescore-detail-content--header" }, [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items.match[3] != "0",
-                  expression: "items.match[3]!='0'"
-                }
-              ],
-              staticClass: "livescore-detail-content--header--status"
-            },
-            [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.items.match[4] != "FT",
-                      expression: "items.match[4]!='FT'"
-                    }
-                  ]
-                },
-                [
-                  _c("span", [_vm._v(_vm._s(_vm.items.match[4] + "'"))]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Live")])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.items.match[4] == "FT",
-                      expression: "items.match[4]=='FT'"
-                    }
-                  ]
-                },
-                [_c("span", [_vm._v("FT")])]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "livescore-detail-content--header--teamname",
-              style: {
-                color:
-                  _vm.items.match[3] == "0"
-                    ? "rgb(54, 204, 100)"
-                    : "rgb(56, 97, 158)"
-              }
-            },
-            [
-              _c(
-                "span",
-                {
-                  style: {
-                    "font-weight": _vm.setTeamWin(
-                      _vm.items.match[12],
-                      _vm.items.match[13]
-                    )
-                  }
-                },
-                [_vm._v(_vm._s(_vm.items.match[8]))]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  style: {
-                    "font-weight": _vm.setTeamWin(
-                      _vm.items.match[13],
-                      _vm.items.match[12]
-                    )
-                  }
-                },
-                [_vm._v(_vm._s(_vm.items.match[9]))]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header--score" },
-            [
-              _c(
-                "span",
-                {
-                  style: {
-                    "font-weight": _vm.setTeamWin(
-                      _vm.items.match[12],
-                      _vm.items.match[13]
-                    )
-                  }
-                },
-                [_vm._v(_vm._s(_vm.items.match[12]))]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  style: {
-                    "font-weight": _vm.setTeamWin(
-                      _vm.items.match[13],
-                      _vm.items.match[12]
-                    )
-                  }
-                },
-                [_vm._v(_vm._s(_vm.items.match[13]))]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "livescore-detail-content--stats-timeline" }, [
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--header-league" },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "livescore-detail-content--header-league--league"
-                },
-                [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm._f("setFT")(_vm.items.match[4])))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("league")])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "livescore-detail-content--header-league--nameleague"
-                },
-                [
-                  _c("span", [
-                    _vm._v(_vm._s(_vm._f("setTimeLive")(_vm.items.match[10])))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(_vm.items.match[5]))])
-                ]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _vm._m(1, false, false),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items.stats.length == 0 || _vm.items.match[3] == 0,
-                  expression: "items.stats.length==0 || items.match[3]==0"
-                }
-              ],
-              staticClass: "livescore-detail-content--stats-empty"
-            },
-            [
-              _vm._m(2, false, false),
-              _vm._v(" "),
-              _c("div", [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.items.match[3] != 0,
-                        expression: "items.match[3]!=0"
-                      }
-                    ]
-                  },
-                  [_vm._v("Don't have any Stats at the moment!")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.items.match[3] == 0,
-                        expression: "items.match[3]==0"
-                      }
-                    ]
-                  },
-                  [
-                    _vm._v(
-                      "Stats will be shown here when the match starts, at " +
-                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
-                    )
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items.stats.length != 0,
-                  expression: "items.stats.length!=0"
-                }
-              ],
-              staticClass: "livescore-detail-content--stats-detail"
-            },
-            [
-              _c("ul", [
-                _c("li", [
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "home")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--home-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[6], "home")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(3, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--away-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[6], "away")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[6], "away")))
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "home")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--home-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[37], "home")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(4, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--away-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[37], "away")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[37], "away")))
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "home")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--home-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[9], "home")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(5, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--away-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[9], "away")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[9], "away")))
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "home")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--home-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[14], "home")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(6, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--away-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[14], "away")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[14], "away")))
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "home")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--home-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[16], "home")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(7, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("hr", {
-                      staticClass:
-                        "livescore-detail-content--away-percent-line",
-                      style: {
-                        width: _vm.setWidthStats(
-                          _vm.setStats(_vm.items.stats[16], "away")
-                        )
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.setStats(_vm.items.stats[16], "away")))
-                    ])
-                  ])
-                ])
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _vm._m(8, false, false),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value:
-                    _vm.items.timeline.length == 0 || _vm.items.match[3] == 0,
-                  expression: "items.timeline.length==0 || items.match[3]==0"
-                }
-              ],
-              staticClass: "livescore-detail-content--timeline-empty"
-            },
-            [
-              _vm._m(9, false, false),
-              _vm._v(" "),
-              _c("div", [
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.items.match[3] != 0,
-                        expression: "items.match[3]!=0"
-                      }
-                    ]
-                  },
-                  [_vm._v("Don't have any TimeLine at the moment!")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.items.match[3] == 0,
-                        expression: "items.match[3]==0"
-                      }
-                    ]
-                  },
-                  [
-                    _vm._v(
-                      "TimeLine will be shown here when the match starts, at " +
-                        _vm._s(_vm._f("setTimeLive")(_vm.items.match[10]))
-                    )
-                  ]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "livescore-detail-content--timeline-detail" },
-            [
-              _c(
-                "ul",
-                _vm._l(_vm.items.timeline, function(item) {
-                  return _c("li", { key: item[2] }, [
-                    _c("div", [
-                      _c("img", {
-                        attrs: {
-                          src: _vm.setIconTimeLine(item[4], "home", item[3]),
-                          alt: ""
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("span", [
-                        _vm._v(
-                          _vm._s(_vm.showHidePlayer(item[6], "home", item[3]))
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [_c("span", [_vm._v(_vm._s(item[5] + "'"))])]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("span", [
-                        _vm._v(
-                          _vm._s(_vm.showHidePlayer(item[6], "away", item[3]))
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      _c("img", {
-                        attrs: {
-                          src: _vm.setIconTimeLine(item[4], "away", item[3]),
-                          alt: ""
-                        }
-                      })
-                    ])
-                  ])
-                })
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items.match[3] != 0,
-                  expression: "items.match[3]!=0"
-                }
-              ],
-              staticClass: "livescore-detail-content--header-livestream"
-            },
-            [_vm._m(10, false, false)]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.items.match[3] != 0,
-                  expression: "items.match[3]!=0"
-                }
-              ]
-            },
-            [_vm._t("default", null, { items: _vm.items })],
-            2
-          )
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail--toolbar--opentab-icon" },
-      [_c("i", { staticClass: "material-icons" }, [_vm._v("open_in_new")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail-content--header-stats-timeline" },
-      [
-        _c("div", [_c("span", [_vm._v("home")])]),
-        _vm._v(" "),
-        _c("div", [_c("span", [_vm._v("stats")])]),
-        _vm._v(" "),
-        _c("div", [_c("span", [_vm._v("away")])])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("shots")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("off target")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("corner kicks")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("yellow cards")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("red cards")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "livescore-detail-content--header-stats-timeline" },
-      [
-        _c("div", [_c("span", [_vm._v("home")])]),
-        _vm._v(" "),
-        _c("div", [_c("span", [_vm._v("timeline")])]),
-        _vm._v(" "),
-        _c("div", [_c("span", [_vm._v("away")])])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", { attrs: { src: "assets/images/nodata.png", alt: "" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("span", [_vm._v("livestream")])])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2732684c", esExports)
-  }
-}
-
-/***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29011,7 +29101,7 @@ if (false) {
 });
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30602,12 +30692,12 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_help_vue__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3c392ae4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_help_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_help_vue__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3c392ae4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_help_vue__ = __webpack_require__(46);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -30653,7 +30743,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30725,7 +30815,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30859,12 +30949,12 @@ if (false) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_about_vue__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_800805e0_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_about_vue__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_about_vue__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_800805e0_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_about_vue__ = __webpack_require__(49);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -30910,7 +31000,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30975,7 +31065,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31099,12 +31189,12 @@ if (false) {
 }
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuSidebar_vue__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_cc658b80_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuSidebar_vue__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_menuSidebar_vue__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_cc658b80_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_menuSidebar_vue__ = __webpack_require__(52);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -31150,7 +31240,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31241,7 +31331,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31468,12 +31558,12 @@ if (false) {
 }
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_matchLiveScore_vue__ = __webpack_require__(53);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_647b61ce_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_matchLiveScore_vue__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_matchLiveScore_vue__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_647b61ce_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_matchLiveScore_vue__ = __webpack_require__(55);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -31519,10 +31609,11 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+//
 //
 //
 //
@@ -31554,6 +31645,12 @@ if (false) {(function () {
       type: Array
     }
   },
+  data() {
+    return {
+      activeMarqueeaway: false,
+      activeMarqueehome: false
+    };
+  },
   filters: {
     setStatus(val) {
       var st = val;
@@ -31582,6 +31679,33 @@ if (false) {(function () {
     }
   },
   methods: {
+    setMarquee() {
+      var that = this;
+      this.activeMarqueehome = false;
+      this.activeMarqueeaway = false;
+
+      setTimeout(() => {
+        var divContainaway = that.$el.querySelector('.match-livescore--teamname div:nth-child(2)');
+        var textWidthaway = divContainaway.children[0].offsetWidth;
+        var divWidthaway = divContainaway.offsetWidth;
+
+        if (divWidthaway < textWidthaway) {
+          that.activeMarqueeaway = true;
+        } else {
+          that.activeMarqueeaway = false;
+        }
+
+        var divContainhome = that.$el.querySelector('.match-livescore--teamname div:nth-child(1)');
+        var textWidthhome = divContainhome.children[0].offsetWidth;
+        var divWidthhome = divContainhome.offsetWidth;
+
+        if (divWidthhome < textWidthhome) {
+          that.activeMarqueehome = true;
+        } else {
+          that.activeMarqueehome = false;
+        }
+      }, 300);
+    },
     setStyleLive(val) {
       return this.$options.filters.setStatus(val);
     },
@@ -31609,7 +31733,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31681,9 +31805,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "match-livescore--teamname" }, [
-            _c("span", [_vm._v(_vm._s(_vm.items[8]))]),
+            _c("div", [
+              _c("span", { class: { marquee: _vm.activeMarqueehome } }, [
+                _vm._v(_vm._s(_vm.items[8]))
+              ])
+            ]),
             _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.items[9]))])
+            _c("div", [
+              _c("span", { class: { marquee: _vm.activeMarqueeaway } }, [
+                _vm._v(_vm._s(_vm.items[9]))
+              ])
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "match-livescore--score" }, [
@@ -31692,8 +31824,17 @@ var render = function() {
             _c("span", [_vm._v(_vm._s(_vm.items[13]))])
           ])
         ]
-      )
-    ]
+      ),
+      _vm._v(" "),
+      _c("resize-observer", {
+        on: {
+          notify: function($event) {
+            _vm.setMarquee()
+          }
+        }
+      })
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -31708,12 +31849,12 @@ if (false) {
 }
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetailPanel_vue__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7e7b9a7a_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetailPanel_vue__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_livescoreDetailPanel_vue__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7e7b9a7a_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_livescoreDetailPanel_vue__ = __webpack_require__(58);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -31759,12 +31900,12 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__livescoreDetail_vue__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastLiveScore_vue__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__livescoreDetail_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__livecastLiveScore_vue__ = __webpack_require__(18);
 //
 //
 //
@@ -31792,7 +31933,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31863,12 +32004,12 @@ if (false) {
 }
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_calender_vue__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_628f1007_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_calender_vue__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_calender_vue__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_628f1007_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_calender_vue__ = __webpack_require__(80);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -31914,13 +32055,13 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__modules_Get_Data__);
 //
 //
@@ -32036,22 +32177,22 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
 });
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(61);
+module.exports = __webpack_require__(62);
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(18);
-var Axios = __webpack_require__(63);
-var defaults = __webpack_require__(14);
+var bind = __webpack_require__(20);
+var Axios = __webpack_require__(64);
+var defaults = __webpack_require__(17);
 
 /**
  * Create an instance of Axios
@@ -32084,15 +32225,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(22);
-axios.CancelToken = __webpack_require__(77);
-axios.isCancel = __webpack_require__(21);
+axios.Cancel = __webpack_require__(24);
+axios.CancelToken = __webpack_require__(78);
+axios.isCancel = __webpack_require__(23);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(78);
+axios.spread = __webpack_require__(79);
 
 module.exports = axios;
 
@@ -32101,7 +32242,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports) {
 
 /*!
@@ -32128,16 +32269,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(14);
+var defaults = __webpack_require__(17);
 var utils = __webpack_require__(1);
-var InterceptorManager = __webpack_require__(72);
-var dispatchRequest = __webpack_require__(73);
+var InterceptorManager = __webpack_require__(73);
+var dispatchRequest = __webpack_require__(74);
 
 /**
  * Create a new instance of Axios
@@ -32214,7 +32355,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32233,13 +32374,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(20);
+var createError = __webpack_require__(22);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -32266,7 +32407,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32294,7 +32435,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32369,7 +32510,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32429,7 +32570,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32504,7 +32645,7 @@ module.exports = (
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32547,7 +32688,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32607,7 +32748,7 @@ module.exports = (
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32666,18 +32807,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(1);
-var transformData = __webpack_require__(74);
-var isCancel = __webpack_require__(21);
-var defaults = __webpack_require__(14);
-var isAbsoluteURL = __webpack_require__(75);
-var combineURLs = __webpack_require__(76);
+var transformData = __webpack_require__(75);
+var isCancel = __webpack_require__(23);
+var defaults = __webpack_require__(17);
+var isAbsoluteURL = __webpack_require__(76);
+var combineURLs = __webpack_require__(77);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -32759,7 +32900,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32786,7 +32927,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32807,7 +32948,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32828,13 +32969,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(22);
+var Cancel = __webpack_require__(24);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -32892,7 +33033,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32926,7 +33067,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33018,12 +33159,12 @@ if (false) {
 }
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_newtab_vue__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_507eda02_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_newtab_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_newtab_vue__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_507eda02_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_newtab_vue__ = __webpack_require__(83);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -33069,7 +33210,7 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33129,7 +33270,7 @@ if (false) {(function () {
 });
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33237,7 +33378,7 @@ if (false) {
 }
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33370,7 +33511,10 @@ var render = function() {
                                 {
                                   key: index,
                                   staticClass:
-                                    "header-title header-title--livescore"
+                                    "header-title header-title--livescore",
+                                  style: {
+                                    "margin-top": index != 0 ? "10px" : "0px"
+                                  }
                                 },
                                 [
                                   _c(
@@ -33439,7 +33583,10 @@ var render = function() {
                                 {
                                   key: index,
                                   staticClass:
-                                    "header-title header-title--livescore"
+                                    "header-title header-title--livescore",
+                                  style: {
+                                    "margin-top": index != 0 ? "10px" : "0px"
+                                  }
                                 },
                                 [
                                   _c(
@@ -33607,7 +33754,7 @@ if (false) {
 }
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33619,7 +33766,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -33698,7 +33845,7 @@ var MobileMenu = function () {
 exports.default = MobileMenu;
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33710,7 +33857,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -33786,7 +33933,7 @@ var DesktopMenu = function () {
 exports.default = DesktopMenu;
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33798,11 +33945,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _StatsLiveStreamClick = __webpack_require__(23);
+var _StatsLiveStreamClick = __webpack_require__(25);
 
 var _StatsLiveStreamClick2 = _interopRequireDefault(_StatsLiveStreamClick);
 
@@ -33900,7 +34047,7 @@ var Prediction = function () {
 exports.default = Prediction;
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33912,7 +34059,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _jquery = __webpack_require__(2);
+var _jquery = __webpack_require__(4);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 

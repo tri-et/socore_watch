@@ -69,7 +69,20 @@
         @mixin clearfix;
     }
 
+    &--toolbar-hide{
+        display:none
+    }
+
      &--shrink {
         animation:fadeInOutScale 1s;
     }
+}
+
+.detailcenterlive{
+    transform: translateX(0)
+}
+
+.livepaddingtop{
+    top: 69px !important;
+    bottom: 64px;
 }

@@ -451,11 +451,11 @@ template {
 }
 
 body{
-    font-family: 'Roboto-Regular';
+    font-family: 'Roboto';
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
 
 }
 
@@ -467,7 +467,7 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #cacaca;
     border:none;
     border-radius: 10px;
     margin-right: 5px;
@@ -578,6 +578,9 @@ body{
 .primary-nav--is-hide-text-menu {
         display:none;
         color:#36569B;
+        font-weight: normal;
+        font-size: 14px;
+        margin-top: 2px;
     }
 
 @media (min-width:1200px){
@@ -967,7 +970,7 @@ body{
     max-width:1568px;
     margin-left:auto;
     margin-right:auto;
-    background-color:#f2f2f2;
+    background-color:#333;
     width:100%;
     height:calc(100vh - 64px);
     overflow:hidden;
@@ -1082,10 +1085,10 @@ body{
         width:100%;
         height:100vh;
         position:relative;
-        overflow: auto;
+        //overflow: auto;
         bottom: 0;
         height: -webkit-fill-available;
-        margin-top: 10px;
+        margin-top: 0px;
     }
 
 .row__livescore {
@@ -1114,6 +1117,7 @@ body{
         width:100%;
         height:100vh;
         position: absolute;
+        height: calc(100vh - 128px) !important;
     }
 
 @media (min-width:480px){
@@ -1124,7 +1128,7 @@ body{
             left:0;
             right:0;
             position:absolute; 
-            top: 63px; 
+            //top: 63px; 
             bottom: 0
     }
     }
@@ -1137,7 +1141,7 @@ body{
             position:absolute;
             left:0;
             right:0;
-            top:63px;
+            //top:63px;
             bottom:0;
             padding-left:auto;
             padding-right:auto
@@ -1153,7 +1157,7 @@ body{
             position:absolute;
             left:16px;
             right:16px;
-            top:63px;
+            //top:63px;
             bottom:0;
             padding-left:auto;
             padding-right:auto
@@ -1175,7 +1179,7 @@ body{
             position:absolute;
             left:0;
             right:0;
-            top:63px;
+            //top:63px;
             bottom:0;
             padding-left:auto;
             padding-right:auto
@@ -1262,7 +1266,7 @@ body{
             position:static !important;
             float:left;
             width: 320px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1276,7 +1280,7 @@ body{
             position:static;
             float:left;
             width:480px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1290,7 +1294,7 @@ body{
             position:static;
             float:left;
             width:480px;
-            background-color:#FFF;
+            background-color:transparent;
         }
     }
 
@@ -1326,12 +1330,9 @@ body{
 }
 
 .inplay-pregame {
-    //width:100%;
-    //height:100vh;
-    //padding-top:15px;
-    height:auto;
-    overflow:auto;
-    //position: relative;
+    overflow-y: scroll ;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 .inplay-pregame::after{
@@ -1446,7 +1447,9 @@ body{
     }
 
 .inplay-pregame--content {
-        min-height:calc(100vh - 202px)
+        min-height:calc(100vh - 202px);
+        margin-right:5px;    
+        padding-top: 10px;
     }
 
 .prediction-detail {
@@ -1553,7 +1556,7 @@ body{
     }
 
 .stopwatch{
-    content:url("../../images/stopwatch_@1x.png")
+    content:url("../../images/icon_clock@2x.png")
 }
 
 .detailcenter{
@@ -1660,10 +1663,24 @@ body{
         display:table;
     }
 
+.livescore-detail--toolbar-hide{
+        display:none
+    }
+
 .livescore-detail--shrink {
         -webkit-animation:fadeInOutScale 1s;
                 animation:fadeInOutScale 1s;
     }
+
+.detailcenterlive{
+    -webkit-transform: translateX(0);
+            transform: translateX(0)
+}
+
+.livepaddingtop{
+    top: 69px !important;
+    bottom: 64px;
+}
 
 .prediction-detail-content {
     float:right;
@@ -2399,6 +2416,13 @@ body{
     width:100%;
     background-size: auto 100%;
     color:#FFF;
+    font-size: 14px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
 }
 
 .odds-ou-header--inplay {
@@ -2522,6 +2546,7 @@ body{
         font-size: 14px;
         font-weight:bold;
         text-transform:uppercase;
+        margin-top: 16px;
      }
 
 .header-title--livescore{
@@ -2729,38 +2754,18 @@ body{
         }
 
 .btn--inplay div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
+            margin-right:5px;
         }
 
-@media (min-width:480px){
-
-.btn--inplay div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
+.btn--inplay div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
         }
-    }
-
-@media (min-width:1248px){
-
-.btn--inplay div:nth-child(2) {
-                width: 26%;
-                max-width: 75px
-        }
-    }
-
-@media (min-width:1568px){
-
-.btn--inplay div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
 
 .btn--inplay div:last-child {
             float:right;
@@ -2780,38 +2785,18 @@ body{
         }
 
 .btn--pregame div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
+            margin-right:5px;
         }
 
-@media (min-width:480px){
-
-.btn--pregame div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
+.btn--pregame div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
         }
-    }
-
-@media (min-width:1248px){
-
-.btn--pregame div:nth-child(2) {
-                width: 26%;
-                max-width: 75px
-        }
-    }
-
-@media (min-width:1568px){
-
-.btn--pregame div:nth-child(2) {
-                width:35%;    
-                max-width: 190px
-        }
-    }
 
 .btn--pregame div:last-child {
             float:right;
@@ -2905,15 +2890,26 @@ body{
         display: inline-grid;
         line-height:1.5;
         float:left;
+        width:60%;
     }
 
-.match-livescore--teamname span:first-child {
+.match-livescore--teamname div:first-child {
             color:#38619E;
             font-weight:bold;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: 24px;
+            //width:35%;
         }
 
-.match-livescore--teamname span:nth-child(2) {
+.match-livescore--teamname div:nth-child(2) {
             color:#C2CFE1;
+            //width:35%;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: 24px;
         }
 
 .match-livescore--score {

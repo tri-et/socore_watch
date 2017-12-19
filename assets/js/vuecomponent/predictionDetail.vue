@@ -14,13 +14,13 @@
       'prediction-detail-content--header-team--pregame':$store.state.predictionSelected.type=='pregame'}">
         <div class="prediction-detail-content--btn" :class="{'prediction-detail-content--btn--pregame':$store.state.predictionSelected.type=='pregame',
         'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay'}">
-          <div>
-            <span>{{items.team_home}}</span>
+          <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
+            <span :class="{'marquee':activeMarquee}">{{items.team_home}}</span>
           </div>
           <span>&nbsp;[{{items.sys.hdp}}]</span>
           <span>&nbsp;@&nbsp;</span>
           <span>{{items.sys.odds_home}}</span>
-          <span><img class="stopwatch"></span>
+          <span><img class="stopwatch btn--watchicon"></span>
           <span>-&nbsp;</span>
         </div>
         <div class="prediction-detail-content--header-team">
@@ -234,7 +234,7 @@ export default {
       newWindow = window.open('index.php/home/detailprediction', '_blank')
       newWindow.predetaildata = {
         data: this.$store.state.dataPredictionDetail,
-        type: this.$store.state.predictionSelected.type
+        type: this.$store.state.predictionSelected.type,
       }
     },
 

@@ -19,27 +19,17 @@
         }
 
         div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
-            @mixin atSmaller {
-                width:35%;    
-                max-width: 190px;
-            }
+            margin-right:5px;
+        }
 
-            @mixin at1248{
-                width: 26%;
-                max-width: 75px; 
-            }
-
-            @mixin atLarger {
-                width:35%;    
-                max-width: 190px;
-            }
+        div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
         }
 
         div:last-child {
@@ -59,27 +49,17 @@
         }
 
         div:nth-child(2) {
-            width: 27%;
-            max-width: 190px;
-            min-width:75px;
+            width: 35%;
             overflow: hidden;
             white-space: nowrap;
             position:relative;
             height: inherit;
-            @mixin atSmaller {
-                width:35%;    
-                max-width: 190px;
-            }
+            margin-right:5px;
+        }
 
-            @mixin at1248{
-                width: 26%;
-                max-width: 75px; 
-            }
-
-            @mixin atLarger {
-                width:35%;    
-                max-width: 190px;
-            }
+        div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
         }
 
         div:last-child {

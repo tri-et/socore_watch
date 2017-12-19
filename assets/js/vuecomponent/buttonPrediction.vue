@@ -18,7 +18,7 @@
     <div :id="items.match_code" class="btn" :class="{'btn--inplay':inplaypregame=='inplay',
     'btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected.match_code}">
       <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
-      <div>
+      <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
         <span :class="{'marquee':activeMarquee}">{{items.team_home}}</span>
       </div>
       <div>
@@ -29,15 +29,16 @@
       </div>
       <div>
         <span>{{items.match_minute }}'</span>
-        <span><img class="btn--watchicon" src="assets/images/stopwatch_@1x.png"></span>
+        <span><img class="btn--watchicon" src="assets/images/icon_clock@2x.png"></span>
       </div>
     </div>
     <resize-observer @notify="setMarquee()" />
   </div>
 </template>
 <script>
+import $ from 'jquery'
 export default {
-  name:"buttonPrediction",
+  name: 'buttonPrediction',
   props: {
     inplaypregame: {
       type: String,
@@ -57,35 +58,45 @@ export default {
     },
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
-    }
+    },
   },
   methods: {
     matchDate(value) {
       var date = new Date(value)
       return (
-        date.getHours() +':' +(date.getMinutes() == 0 ? '00' : date.getMinutes())
+        date.getHours() +
+        ':' +
+        (date.getMinutes() == 0 ? '00' : date.getMinutes())
       )
     },
     setMarquee() {
-      var divContain = this.$el.querySelector('.btn div:nth-child(2)')
-      var textWidth = divContain.children[0].offsetWidth
-      var divWidth = divContain.offsetWidth
+      var that = this
+      this.activeMarquee = false
 
-      if (divWidth < textWidth) {
-        this.activeMarquee = true
-      } else {
-        this.activeMarquee = false
-      }
+      setTimeout(() => {
+        var divContain = that.$el.querySelector('.btn div:nth-child(2)')
+        var textWidth = divContain.children[0].offsetWidth
+        var divWidth = divContain.offsetWidth
+
+        if (divWidth < textWidth) {
+          that.activeMarquee = true
+        } else {
+          that.activeMarquee = false
+        }
+      }, 300)
     },
     openPredictionDetail(ob) {
       let that = this
-      this.$store.state.dataPredictionDetail = ob
-      this.$store.state.statLiveActive='stats'
-      this.$store.state.predictionSelected = {
-        match_code: ob.match_code,
-        type: this.inplaypregame,
-        isopening:this.$store.state.isOpenPredictionDetail == false ? false : true
-      }
+      this.$store.state.statLiveActive = 'stats'
+      this.$store.state.predictionSelected.isopening =this.$store.state.isOpenPredictionDetail == false ? false : true
+      setTimeout(function() {
+        that.$store.state.dataPredictionDetail = ob
+        that.$store.state.predictionSelected = {
+          match_code: ob.match_code,
+          type: that.inplaypregame,
+          isopening:that.$store.state.isOpenPredictionDetail == false ? false : true
+        }
+      }, 500)
       this.$store.state.isOpenPredictionDetail = true
       setTimeout(function() {
         that.$store.state.predictionSelected.isopening = false

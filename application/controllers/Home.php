@@ -26,4 +26,8 @@ class Home extends CI_Controller {
 	public function detailprediction(){
 		$this->load->view('detailprediction');
 	}
+
+	public function detaillivescore(){
+		$this->load->view('detaillivescore');
+	}
 }

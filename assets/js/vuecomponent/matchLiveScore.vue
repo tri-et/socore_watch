@@ -12,14 +12,15 @@
 
       </div>
       <div class="match-livescore--teamname">
-        <span>{{items[8]}}</span>
-        <span>{{items[9]}}</span>
+        <div><span :class="{'marquee':activeMarqueehome}">{{items[8]}}</span></div>
+        <div><span :class="{'marquee':activeMarqueeaway}">{{items[9]}}</span></div>
       </div>
       <div class="match-livescore--score">
         <span>{{items[12]}}</span>
         <span>{{items[13]}}</span>
       </div>
     </div>
+    <resize-observer @notify="setMarquee()" />
   </li>
 </template>
 <script>
@@ -28,6 +29,12 @@ export default {
     items: {
       type: Array,
     },
+  },
+  data() {
+    return {
+      activeMarqueeaway: false,
+      activeMarqueehome:false
+    }
   },
   filters: {
     setStatus(val) {
@@ -60,6 +67,34 @@ export default {
     },
   },
   methods: {
+    setMarquee() {
+      var that = this
+      this.activeMarqueehome = false
+      this.activeMarqueeaway = false
+
+      setTimeout(() => {
+        var divContainaway = that.$el.querySelector('.match-livescore--teamname div:nth-child(2)')
+        var textWidthaway = divContainaway.children[0].offsetWidth
+        var divWidthaway = divContainaway.offsetWidth
+
+        if (divWidthaway < textWidthaway) {
+          that.activeMarqueeaway = true
+        } else {
+          that.activeMarqueeaway = false
+        }
+
+
+        var divContainhome = that.$el.querySelector('.match-livescore--teamname div:nth-child(1)')
+        var textWidthhome = divContainhome.children[0].offsetWidth
+        var divWidthhome = divContainhome.offsetWidth
+
+        if (divWidthhome < textWidthhome) {
+          that.activeMarqueehome = true
+        } else {
+          that.activeMarqueehome = false
+        }
+      }, 300)
+    },
     setStyleLive(val) {
       return this.$options.filters.setStatus(val)
     },
