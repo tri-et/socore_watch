@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div id="main">
         <app></app>
     </div>
-    <script src="assets/temp/js/App.js">
+    <script src="assets/temp/js/app.js">
     </script>
 </body>
 

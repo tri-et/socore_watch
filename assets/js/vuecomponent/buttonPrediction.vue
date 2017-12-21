@@ -18,8 +18,8 @@
     <div :id="items.match_code" class="btn" :class="{'btn--inplay':inplaypregame=='inplay',
     'btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected.match_code}">
       <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
-      <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
-        <span :class="{'marquee':activeMarquee}">{{items.team_home}}</span>
+      <div :style="{'max-width':activeMarquee1?'75px':'max-content'}">
+        <span :class="{'marquee':activeMarquee1}">{{items.team_home}}</span>
       </div>
       <div>
         <span>-</span>
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      activeMarquee: false,
+      activeMarquee1: false,
     }
   },
   filters: {
@@ -71,7 +71,7 @@ export default {
     },
     setMarquee() {
       var that = this
-      this.activeMarquee = false
+      this.activeMarquee1 = false
 
       setTimeout(() => {
         var divContain = that.$el.querySelector('.btn div:nth-child(2)')
@@ -79,9 +79,9 @@ export default {
         var divWidth = divContain.offsetWidth
 
         if (divWidth < textWidth) {
-          that.activeMarquee = true
+          that.activeMarquee1 = true
         } else {
-          that.activeMarquee = false
+          that.activeMarquee1 = false
         }
       }, 300)
     },

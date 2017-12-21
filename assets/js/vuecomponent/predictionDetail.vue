@@ -17,11 +17,13 @@
           <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
             <span :class="{'marquee':activeMarquee}">{{items.team_home}}</span>
           </div>
-          <span>&nbsp;[{{items.sys.hdp}}]</span>
-          <span>&nbsp;@&nbsp;</span>
-          <span>{{items.sys.odds_home}}</span>
-          <span><img class="stopwatch btn--watchicon"></span>
-          <span>-&nbsp;</span>
+          <div>
+            <span>&nbsp;[{{items.sys.hdp}}]</span>
+            <span>&nbsp;@&nbsp;</span>
+            <span>{{items.sys.odds_home}}</span>
+            <span><img class="stopwatch btn--watchicon"></span>
+            <span>-&nbsp;</span>
+          </div>
         </div>
         <div class="prediction-detail-content--header-team">
           <div class="prediction-detail-content--panel-live">
@@ -42,6 +44,7 @@
             </div>
           </div>
         </div>
+        <resize-observer @notify="setMarquee()" />
       </div>
       <div class="prediction-detail-content--header-team--stats-livestream-menu">
         <div class="row">
@@ -193,6 +196,11 @@ export default {
       type: Object,
     },
   },
+  data() {
+    return {
+      activeMarquee: false
+    }
+  },
   filters: {
     setStatus(value) {
       return value == '' ? 'Kickoff' : value
@@ -203,6 +211,22 @@ export default {
     },
   },
   methods: {
+    setMarquee() {
+      var that = this
+      this.activeMarquee = false
+
+      setTimeout(() => {
+        var divContain = that.$el.querySelector('.prediction-detail-content--btn div:nth-child(1)')
+        var textWidth = divContain.children[0].offsetWidth
+        var divWidth = divContain.offsetWidth
+
+        if (divWidth < textWidth) {
+          that.activeMarquee = true
+        } else {
+          that.activeMarquee = false
+        }
+      }, 300)
+    },
     matchDate(value) {
       var date = new Date(value)
       return (
@@ -246,6 +270,9 @@ export default {
       }
     },
   },
+  mounted() {
+    this.setMarquee()
+  }
 }
 </script>
 

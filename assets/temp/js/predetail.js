@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 89);
+/******/ 	return __webpack_require__(__webpack_require__.s = 85);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -172,134 +172,6 @@ module.exports = function normalizeComponent (
   }
 }
 
-
-/***/ }),
-
-/***/ 10:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResizeObserver", function() { return ResizeObserver; });
-function getInternetExplorerVersion() {
-	var ua = window.navigator.userAgent;
-
-	var msie = ua.indexOf('MSIE ');
-	if (msie > 0) {
-		// IE 10 or older => return version number
-		return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
-	}
-
-	var trident = ua.indexOf('Trident/');
-	if (trident > 0) {
-		// IE 11 => return version number
-		var rv = ua.indexOf('rv:');
-		return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
-	}
-
-	var edge = ua.indexOf('Edge/');
-	if (edge > 0) {
-		// Edge (IE 12+) => return version number
-		return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
-	}
-
-	// other browser
-	return -1;
-}
-
-var isIE = void 0;
-
-function initCompat() {
-	if (!initCompat.init) {
-		initCompat.init = true;
-		isIE = getInternetExplorerVersion() !== -1;
-	}
-}
-
-var ResizeObserver = { render: function render() {
-		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "resize-observer", attrs: { "tabindex": "-1" } });
-	}, staticRenderFns: [], _scopeId: 'data-v-b329ee4c',
-	name: 'resize-observer',
-
-	methods: {
-		notify: function notify() {
-			this.$emit('notify');
-		},
-		addResizeHandlers: function addResizeHandlers() {
-			this._resizeObject.contentDocument.defaultView.addEventListener('resize', this.notify);
-			if (this._w !== this.$el.offsetWidth || this._h !== this.$el.offsetHeight) {
-				this.notify();
-			}
-		},
-		removeResizeHandlers: function removeResizeHandlers() {
-			if (this._resizeObject && this._resizeObject.onload) {
-				if (!isIE && this._resizeObject.contentDocument) {
-					this._resizeObject.contentDocument.defaultView.removeEventListener('resize', this.notify);
-				}
-				delete this._resizeObject.onload;
-			}
-		}
-	},
-
-	mounted: function mounted() {
-		var _this = this;
-
-		initCompat();
-		this.$nextTick(function () {
-			_this._w = _this.$el.offsetWidth;
-			_this._h = _this.$el.offsetHeight;
-		});
-		var object = document.createElement('object');
-		this._resizeObject = object;
-		object.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
-		object.setAttribute('aria-hidden', 'true');
-		object.onload = this.addResizeHandlers;
-		object.type = 'text/html';
-		if (isIE) {
-			this.$el.appendChild(object);
-		}
-		object.data = 'about:blank';
-		if (!isIE) {
-			this.$el.appendChild(object);
-		}
-	},
-	beforeDestroy: function beforeDestroy() {
-		this.removeResizeHandlers();
-	}
-};
-
-// Install the components
-function install(Vue) {
-	Vue.component('resize-observer', ResizeObserver);
-	/* -- Add more components here -- */
-}
-
-/* -- Plugin definition & Auto-install -- */
-/* You shouldn't have to modify the code below */
-
-// Plugin
-var plugin = {
-	// eslint-disable-next-line no-undef
-	version: "0.4.3",
-	install: install
-};
-
-// Auto-install
-var GlobalVue = null;
-if (typeof window !== 'undefined') {
-	GlobalVue = window.Vue;
-} else if (typeof global !== 'undefined') {
-	GlobalVue = global.Vue;
-}
-if (GlobalVue) {
-	GlobalVue.use(plugin);
-}
-
-
-/* harmony default export */ __webpack_exports__["default"] = (plugin);
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 
@@ -547,12 +419,20 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
     items: {
       type: Object
     }
+  },
+  data() {
+    return {
+      activeMarquee: false
+    };
   },
   filters: {
     setStatus(value) {
@@ -564,6 +444,22 @@ if (false) {(function () {
     }
   },
   methods: {
+    setMarquee() {
+      var that = this;
+      this.activeMarquee = false;
+
+      setTimeout(() => {
+        var divContain = that.$el.querySelector('.prediction-detail-content--btn div:nth-child(1)');
+        var textWidth = divContain.children[0].offsetWidth;
+        var divWidth = divContain.offsetWidth;
+
+        if (divWidth < textWidth) {
+          that.activeMarquee = true;
+        } else {
+          that.activeMarquee = false;
+        }
+      }, 300);
+    },
     matchDate(value) {
       var date = new Date(value);
       return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
@@ -602,6 +498,9 @@ if (false) {(function () {
         this.$store.state.newtabOpen = true;
       }
     }
+  },
+  mounted() {
+    this.setMarquee();
   }
 });
 
@@ -713,15 +612,17 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(" @ ")]),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))]),
-                _vm._v(" "),
-                _vm._m(0, false, false),
-                _vm._v(" "),
-                _c("span", [_vm._v("- ")])
+                _c("div", [
+                  _c("span", [_vm._v(" [" + _vm._s(_vm.items.sys.hdp) + "]")]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(" @ ")]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))]),
+                  _vm._v(" "),
+                  _vm._m(0, false, false),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("- ")])
+                ])
               ]
             ),
             _vm._v(" "),
@@ -792,8 +693,17 @@ var render = function() {
                   ]
                 )
               ]
-            )
-          ]
+            ),
+            _vm._v(" "),
+            _c("resize-observer", {
+              on: {
+                notify: function($event) {
+                  _vm.setMarquee()
+                }
+              }
+            })
+          ],
+          1
         ),
         _vm._v(" "),
         _c(
@@ -1357,7 +1267,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 5:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
@@ -12023,11 +11933,11 @@ return Vue$3;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(6).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(5).setImmediate))
 
 /***/ }),
 
-/***/ 6:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -12080,14 +11990,14 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(6);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
 
-/***/ 7:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -12281,7 +12191,7 @@ exports.clearImmediate = clearImmediate;
 
 /***/ }),
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12292,11 +12202,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.store = undefined;
 
-var _vue = __webpack_require__(5);
+var _vue = __webpack_require__(4);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _vuex = __webpack_require__(9);
+var _vuex = __webpack_require__(8);
 
 var _vuex2 = _interopRequireDefault(_vuex);
 
@@ -12314,7 +12224,6 @@ var store = exports.store = new _vuex2.default.Store({
 
 		livescoreSelected: {
 			match_code: '',
-			type: '',
 			isopening: false
 		},
 
@@ -12380,46 +12289,7 @@ var store = exports.store = new _vuex2.default.Store({
 
 /***/ }),
 
-/***/ 89:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(5);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _store = __webpack_require__(8);
-
-var _vueResize = __webpack_require__(10);
-
-var _vueResize2 = _interopRequireDefault(_vueResize);
-
-var _preDetail = __webpack_require__(90);
-
-var _preDetail2 = _interopRequireDefault(_preDetail);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_vue2.default.use(_vueResize2.default);
-
-new _vue2.default({
-    el: '#detailprediction',
-    store: _store.store,
-    render: function render(h) {
-        return h(_preDetail2.default);
-    },
-    mounted: function mounted() {
-        this.$store.state.predictionSelected.type = window.predetaildata.type;
-        this.$store.state.dataPredictionDetail = window.predetaildata.data;
-        this.$store.state.ishidetoolbar = true;
-    }
-});
-
-/***/ }),
-
-/***/ 9:
+/***/ 8:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13367,13 +13237,52 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 90:
+/***/ 85:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(4);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _store = __webpack_require__(7);
+
+var _vueResize = __webpack_require__(9);
+
+var _vueResize2 = _interopRequireDefault(_vueResize);
+
+var _preDetail = __webpack_require__(86);
+
+var _preDetail2 = _interopRequireDefault(_preDetail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vueResize2.default);
+
+new _vue2.default({
+    el: '#detailprediction',
+    store: _store.store,
+    render: function render(h) {
+        return h(_preDetail2.default);
+    },
+    mounted: function mounted() {
+        this.$store.state.predictionSelected.type = window.predetaildata.type;
+        this.$store.state.dataPredictionDetail = window.predetaildata.data;
+        this.$store.state.ishidetoolbar = true;
+    }
+});
+
+/***/ }),
+
+/***/ 86:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__ = __webpack_require__(88);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -13420,7 +13329,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 91:
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13440,7 +13349,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 92:
+/***/ 88:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13469,6 +13378,134 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-670d2157", esExports)
   }
 }
+
+/***/ }),
+
+/***/ 9:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResizeObserver", function() { return ResizeObserver; });
+function getInternetExplorerVersion() {
+	var ua = window.navigator.userAgent;
+
+	var msie = ua.indexOf('MSIE ');
+	if (msie > 0) {
+		// IE 10 or older => return version number
+		return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+	}
+
+	var trident = ua.indexOf('Trident/');
+	if (trident > 0) {
+		// IE 11 => return version number
+		var rv = ua.indexOf('rv:');
+		return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+	}
+
+	var edge = ua.indexOf('Edge/');
+	if (edge > 0) {
+		// Edge (IE 12+) => return version number
+		return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+	}
+
+	// other browser
+	return -1;
+}
+
+var isIE = void 0;
+
+function initCompat() {
+	if (!initCompat.init) {
+		initCompat.init = true;
+		isIE = getInternetExplorerVersion() !== -1;
+	}
+}
+
+var ResizeObserver = { render: function render() {
+		var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "resize-observer", attrs: { "tabindex": "-1" } });
+	}, staticRenderFns: [], _scopeId: 'data-v-b329ee4c',
+	name: 'resize-observer',
+
+	methods: {
+		notify: function notify() {
+			this.$emit('notify');
+		},
+		addResizeHandlers: function addResizeHandlers() {
+			this._resizeObject.contentDocument.defaultView.addEventListener('resize', this.notify);
+			if (this._w !== this.$el.offsetWidth || this._h !== this.$el.offsetHeight) {
+				this.notify();
+			}
+		},
+		removeResizeHandlers: function removeResizeHandlers() {
+			if (this._resizeObject && this._resizeObject.onload) {
+				if (!isIE && this._resizeObject.contentDocument) {
+					this._resizeObject.contentDocument.defaultView.removeEventListener('resize', this.notify);
+				}
+				delete this._resizeObject.onload;
+			}
+		}
+	},
+
+	mounted: function mounted() {
+		var _this = this;
+
+		initCompat();
+		this.$nextTick(function () {
+			_this._w = _this.$el.offsetWidth;
+			_this._h = _this.$el.offsetHeight;
+		});
+		var object = document.createElement('object');
+		this._resizeObject = object;
+		object.setAttribute('style', 'display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;');
+		object.setAttribute('aria-hidden', 'true');
+		object.onload = this.addResizeHandlers;
+		object.type = 'text/html';
+		if (isIE) {
+			this.$el.appendChild(object);
+		}
+		object.data = 'about:blank';
+		if (!isIE) {
+			this.$el.appendChild(object);
+		}
+	},
+	beforeDestroy: function beforeDestroy() {
+		this.removeResizeHandlers();
+	}
+};
+
+// Install the components
+function install(Vue) {
+	Vue.component('resize-observer', ResizeObserver);
+	/* -- Add more components here -- */
+}
+
+/* -- Plugin definition & Auto-install -- */
+/* You shouldn't have to modify the code below */
+
+// Plugin
+var plugin = {
+	// eslint-disable-next-line no-undef
+	version: "0.4.3",
+	install: install
+};
+
+// Auto-install
+var GlobalVue = null;
+if (typeof window !== 'undefined') {
+	GlobalVue = window.Vue;
+} else if (typeof global !== 'undefined') {
+	GlobalVue = global.Vue;
+}
+if (GlobalVue) {
+	GlobalVue.use(plugin);
+}
+
+
+/* harmony default export */ __webpack_exports__["default"] = (plugin);
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ })
 

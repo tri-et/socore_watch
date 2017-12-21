@@ -115,14 +115,16 @@ class GetData {
 			let id = app.livescore[0][0]
 
 			if (!app.$store.state.iconMenuShow) {
-				app.$store.state.dataLivescoreDetail = {
-					match: app.livescore[0],
-					stats: app.$root.livescoreStats.r.find(x => x[2] == id) == undefined ? [] : app.$root.livescoreStats.r.find(x => x[2] == id),
-					timeline: app.$root.livescoreTimeLine.r.filter(x => x[2] == id)
-				}
-				app.$store.state.livescoreSelected = {
-					match_code: id,
-					isopening: app.$store.state.isOpenLiveScoreDetail == false ? false : true
+				if (!app.$store.state.isOpenLiveScoreDetail) {
+					app.$store.state.dataLivescoreDetail = {
+						match: app.livescore[0],
+						stats: app.$root.livescoreStats.r.find(x => x[2] == id) == undefined ? [] : app.$root.livescoreStats.r.find(x => x[2] == id),
+						timeline: app.$root.livescoreTimeLine.r.filter(x => x[2] == id)
+					}
+					app.$store.state.livescoreSelected = {
+						match_code: id,
+						isopening: false
+					}
 				}
 				app.$store.state.isOpenLiveScoreDetail = true
 			}

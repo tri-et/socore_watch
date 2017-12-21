@@ -6,11 +6,7 @@ import VueResize from 'vue-resize'
 import vueSmoothScroll from 'vue-smooth-scroll'
 import App from './vuecomponent/App.vue'
 
-import MobileMenu from './modules/MobileMenu'
-import DesktopMenu from './modules/DesktopMenu'
 import StatsLiveStreamClick from './modules/StatsLiveStreamClick'
-import Prediction from './modules/Prediction'
-import LiveScore from './modules/LiveSocre'
 import GetData from './modules/Get_Data'
 Vue.use(VueResize)
 Vue.use(vueSmoothScroll)
