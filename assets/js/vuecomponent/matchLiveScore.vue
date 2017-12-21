@@ -101,6 +101,7 @@ export default {
     livescoreClick(ob, event) {
       let that = this
       let id = event.currentTarget.id
+      this.$store.state.livescoreSelected.isopening=true
       this.$store.state.dataLivescoreDetail = {
         match: ob,
         stats:
@@ -111,8 +112,7 @@ export default {
       }
       this.$store.state.livescoreSelected = {
         match_code: id,
-        isopening:
-          this.$store.state.isOpenLiveScoreDetail == false ? false : true,
+        isopening:this.$store.state.isOpenLiveScoreDetail == false ? false : true,
       }
       this.$store.state.isOpenLiveScoreDetail = true
       setTimeout(function() {

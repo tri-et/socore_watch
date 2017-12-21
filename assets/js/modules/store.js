@@ -13,7 +13,6 @@ export const store = new Vuex.Store({
 
 		livescoreSelected: {
 			match_code: '',
-			type: '',
 			isopening: false,
 		},
 

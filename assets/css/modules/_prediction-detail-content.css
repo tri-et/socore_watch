@@ -76,41 +76,15 @@
         }
 
         div:first-child {
-            width: 126px;
+            width: 35%;
             height:18px;
             position:relative;
             float: left;
             overflow: hidden;
             white-space: nowrap;
 
-            @mixin atSmaller {
-                max-width:230px;
-                width: auto;
-            } 
-            @mixin at672 {
-                 width: 126px;
-            }
-            @mixin at912 {
-                max-width:230px;
-                width: auto;
-            }
-
             span {
-                //position:absolute;
                 left:0;
-                //animation: leftmarquee 5s linear infinite;
-                
-                /*@mixin atSmaller {
-                    position:static;
-                }
-
-                @mixin at672 {
-                    position:absolute;
-                }
-
-                @mixin at912 {
-                    position:static;
-                }*/
             }
             
         }
@@ -235,6 +209,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 16px;
     }
 
     
