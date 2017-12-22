@@ -452,6 +452,7 @@ template {
 
 body{
     font-family: 'Roboto';
+    background-color:#333;
 }
 
 ::-webkit-scrollbar {
@@ -1030,6 +1031,7 @@ body{
         display:-webkit-box;
         display:-ms-flexbox;
         display:flex;
+        background-color: #f0f0f0;
     }
 
 .row__calendar::after{
@@ -1123,7 +1125,7 @@ body{
 @media (min-width:480px){
 
 .row__livescorecontent {
-            width:480px;
+            width:100%;
             margin:auto;
             left:0;
             right:0;
@@ -1137,7 +1139,7 @@ body{
 
 .row__livescorecontent {
             width:100%;
-            max-width: 480px;
+            //max-width: 480px;
             position:absolute;
             left:0;
             right:0;
@@ -1151,12 +1153,12 @@ body{
 @media (min-width:912px){
 
 .row__livescorecontent {
-            min-width:320px;
-            max-width:480px;
-            width:auto;
+            //min-width:320px;
+            //max-width:480px;
+            width:100%;
             position:absolute;
-            left:16px;
-            right:16px;
+            //left:16px;
+            //right:16px;
             //top:63px;
             bottom:0;
             padding-left:auto;
@@ -1167,15 +1169,11 @@ body{
 @media (min-width:1248px){
 
 .row__livescorecontent {
-            width:-webkit-max-content;
-            width:-moz-max-content;
-            width:max-content;
+            width:100%;
             min-width:-webkit-max-content;
             min-width:-moz-max-content;
             min-width:max-content;
-            max-width:-webkit-max-content;
-            max-width:-moz-max-content;
-            max-width:max-content;
+            max-width:100%;
             position:absolute;
             left:0;
             right:0;
@@ -1195,7 +1193,7 @@ body{
 @media (min-width:480px){
 
 .row__inplay-pregame {
-            width:480px;
+            width:100%;
             margin:auto;
             left:0;
             right:0;
@@ -1207,7 +1205,7 @@ body{
 
 .row__inplay-pregame {
             width:100%;
-            max-width: 480px;
+            //max-width: 480px;
             position:absolute;
             left:0;
             right:0;
@@ -1221,12 +1219,12 @@ body{
 @media (min-width:912px){
 
 .row__inplay-pregame {
-            min-width:320px;
-            max-width:480px;
+            //min-width:320px;
+            //max-width:480px;
             width:auto;
             position:absolute;
-            left:16px;
-            right:16px;
+            //left:16px;
+            //right:16px;
             top:0;
             bottom:0;
             padding-left:auto;
@@ -1237,15 +1235,11 @@ body{
 @media (min-width:1248px){
 
 .row__inplay-pregame {
-            width:-webkit-max-content;
-            width:-moz-max-content;
-            width:max-content;
+            width:100%;
             min-width:-webkit-max-content;
             min-width:-moz-max-content;
             min-width:max-content;
-            max-width:-webkit-max-content;
-            max-width:-moz-max-content;
-            max-width:max-content;
+            max-width:100%;
             position:absolute;
             left:0;
             right:0;
@@ -1360,7 +1354,7 @@ body{
 
 .inplay-pregame--inplay {
             width:100%;
-            max-width:480px;
+            //max-width:480px;
             min-width:320px
     }
     }
@@ -1369,22 +1363,22 @@ body{
 
 .inplay-pregame--inplay {
             width:100%;
-            min-width:320px;
-            max-width:480px
+            //min-width:320px;
+            //max-width:480px
     }
     }
 
 @media (min-width:1200px){
 
 .inplay-pregame--inplay {
-            width:480px
+            width:100%
     }
     }
 
 @media (min-width:1248px){
 
 .inplay-pregame--inplay {
-            width:320px;
+            width:calc(50% - 8px);
             margin-right:16px
     }
     }
@@ -1392,7 +1386,7 @@ body{
 @media (min-width:1568px){
 
 .inplay-pregame--inplay {
-            width:480px
+            width:calc(50% - 8px)
     }
     }
 
@@ -1411,7 +1405,7 @@ body{
 
 .inplay-pregame--pregame {
             width:100%;
-            max-width:480px;
+            //max-width:480px;
             min-width:320px
     }
     }
@@ -1420,36 +1414,50 @@ body{
 
 .inplay-pregame--pregame {
             width:100%;
-            min-width:320px;
-            max-width:480px
+            //min-width:320px;
+            //max-width:480px
     }
     }
 
 @media (min-width:1200px){
 
 .inplay-pregame--pregame {
-            width:480px
+            width:100%
     }
     }
 
 @media (min-width:1248px){
 
 .inplay-pregame--pregame {
-            width:320px
+            width:calc(50% - 8px)
     }
     }
 
 @media (min-width:1568px){
 
 .inplay-pregame--pregame {
-            width:480px
+            width:calc(50% - 8px)
     }
     }
 
 .inplay-pregame--content {
         min-height:calc(100vh - 202px);
-        margin-right:5px;    
         padding-top: 10px;
+    }
+
+@media (min-width:560px){
+
+.inplay-pregame--content {
+            padding-left:16px;
+            padding-right:16px
+    }
+    }
+
+@media (min-width:1568px){
+
+.inplay-pregame--content {
+             padding-left:0px
+    }
     }
 
 .prediction-detail {
@@ -4173,7 +4181,7 @@ body{
         list-style:none;
         height: 30px;
         display:inline-block;
-        padding:10px;
+        padding:15px;
     }
 
 .calenders li div {
@@ -4190,6 +4198,10 @@ body{
 .calenders li div span:nth-child(2){
                 font-size: 12px;
             }
+
+.calenders li:hover{
+        background-color:grey;
+    }
 
 .calenders--active {
         background-color: rgba(0,0,0,0.1);

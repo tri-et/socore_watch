@@ -128,7 +128,7 @@ export default {
       let outer = this.$el.querySelector('.calenders ul').clientWidth
       let inner = this.$el.querySelector('.calenders').scrollWidth
       $(this.$el.querySelector('.calenders')).scrollLeft(
-        (inner - outer) / 2 - 60,
+        (inner - outer) / 2 - 30,
       )
     },
   },
