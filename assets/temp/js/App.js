@@ -32121,7 +32121,7 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
     setDateCenter() {
       let outer = this.$el.querySelector('.calenders ul').clientWidth;
       let inner = this.$el.querySelector('.calenders').scrollWidth;
-      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).scrollLeft((inner - outer) / 2 - 60);
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).scrollLeft((inner - outer) / 2 - 30);
     }
   },
   created() {

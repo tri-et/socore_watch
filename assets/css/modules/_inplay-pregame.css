@@ -13,27 +13,27 @@
         float:left;
         @mixin at672 {
             width:100%;
-            max-width:480px;
+            //max-width:480px;
             min-width:320px;
         }
 
         @mixin at912 {
             width:100%;
-            min-width:320px;
-            max-width:480px;
+            //min-width:320px;
+            //max-width:480px;
         }
 
         @mixin atLarge {
-            width:480px;
+            width:100%;
         }
         
         @mixin at1248 {
-            width:320px;
+            width:calc(50% - 8px);
             margin-right:16px;
         }
 
         @mixin atLarger {
-            width:480px;
+            width:calc(50% - 8px);
         }
     }
 
@@ -44,32 +44,40 @@
 
         @mixin at672 {
             width:100%;
-            max-width:480px;
+            //max-width:480px;
             min-width:320px;
         }
 
         @mixin at912 {
             width:100%;
-            min-width:320px;
-            max-width:480px;
+            //min-width:320px;
+            //max-width:480px;
         }
 
         @mixin atLarge {
-            width:480px;
+            width:100%;
         }
 
         @mixin at1248 {
-            width:320px;
+            width:calc(50% - 8px);
         }
 
         @mixin atLarger {
-            width:480px;
+            width:calc(50% - 8px);
         }
     }
 
     &--content {
         min-height:calc(100vh - 202px);
-        margin-right:5px;    
         padding-top: 10px;
+
+        @mixin atSmall{
+            padding-left:16px;
+            padding-right:16px;
+        }
+
+        @mixin atLarger {
+             padding-left:0px;
+        }
     }
 }
