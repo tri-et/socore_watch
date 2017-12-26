@@ -25,6 +25,7 @@ export const store = new Vuex.Store({
 
 		helpOpen: false,
 		aboutOpen: false,
+		accountOpen: false,
 		newtabOpen:false,
 		menu_side_bar_open: false,
 		iconMenuShow: true,

@@ -45,6 +45,12 @@
                                     <span>about us</span>
                                 </a>
                             </li>
+                            <!--<li data-menu-type="myaccount" @click="itemClick($event)">
+                                <a>
+                                    <div></div><img src="assets/images/menu_my_account@1x.png">
+                                    <span>my account</span>
+                                </a>
+                            </li>-->
                             <!--<li data-menu-type="login">
                                     <a><div></div><img class="sidebar-list-menu--icon-login" src="<?php echo base_url()?>assets/images/menu_login@1x.png"><span>login/sign up</span></a>
                                 </li>-->
@@ -78,6 +84,9 @@ export default {
           break
         case 'about':
           this.$store.state.aboutOpen = true
+          break
+        case 'myaccount':
+          this.$store.state.accountOpen = true
           break
       }
     },

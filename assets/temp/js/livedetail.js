@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 89);
+/******/ 	return __webpack_require__(__webpack_require__.s = 92);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -12456,6 +12456,7 @@ var store = exports.store = new _vuex2.default.Store({
 
 		helpOpen: false,
 		aboutOpen: false,
+		accountOpen: false,
 		newtabOpen: false,
 		menu_side_bar_open: false,
 		iconMenuShow: true,
@@ -13457,44 +13458,6 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 89:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _store = __webpack_require__(7);
-
-var _vueResize = __webpack_require__(9);
-
-var _vueResize2 = _interopRequireDefault(_vueResize);
-
-var _liveDetail = __webpack_require__(90);
-
-var _liveDetail2 = _interopRequireDefault(_liveDetail);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_vue2.default.use(_vueResize2.default);
-
-new _vue2.default({
-    el: '#detaillivescore',
-    store: _store.store,
-    render: function render(h) {
-        return h(_liveDetail2.default);
-    },
-    mounted: function mounted() {
-        this.$store.state.dataLivescoreDetail = window.livedetaildata.data;
-        this.$store.state.ishidetoolbar = true;
-    }
-});
-
-/***/ }),
-
 /***/ 9:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13623,13 +13586,51 @@ if (GlobalVue) {
 
 /***/ }),
 
-/***/ 90:
+/***/ 92:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(4);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _store = __webpack_require__(7);
+
+var _vueResize = __webpack_require__(9);
+
+var _vueResize2 = _interopRequireDefault(_vueResize);
+
+var _liveDetail = __webpack_require__(93);
+
+var _liveDetail2 = _interopRequireDefault(_liveDetail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vueResize2.default);
+
+new _vue2.default({
+    el: '#detaillivescore',
+    store: _store.store,
+    render: function render(h) {
+        return h(_liveDetail2.default);
+    },
+    mounted: function mounted() {
+        this.$store.state.dataLivescoreDetail = window.livedetaildata.data;
+        this.$store.state.ishidetoolbar = true;
+    }
+});
+
+/***/ }),
+
+/***/ 93:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_liveDetail_vue__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_240085ea_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_liveDetail_vue__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_liveDetail_vue__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_240085ea_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_liveDetail_vue__ = __webpack_require__(95);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -13676,7 +13677,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 91:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13696,7 +13697,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 92:
+/***/ 95:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

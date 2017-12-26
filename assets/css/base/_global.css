@@ -19,7 +19,7 @@ body{
     background-color: #cacaca;
     border:none;
     border-radius: 10px;
-    margin-right: 5px;
+    //margin-right: 5px;
 }
 .marquee {
     position:absolute;
