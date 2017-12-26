@@ -29,4 +29,5 @@
 @import "modules/_livecast";
 @import "modules/_calenders";
 @import "modules/_new-tab-container";
+@import "modules/_account-container";
 @import "vue-resize/dist/vue-resize.css"

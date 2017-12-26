@@ -97,6 +97,7 @@
     <help></help>
     <about></about>
     <newtab></newtab>
+    <myaccount></myaccount>
     <menusidebar></menusidebar>
 </div>
 </template>
@@ -113,6 +114,7 @@ import matchlivescore from './matchLiveScore.vue'
 import livescoredetailpanel from './livescoreDetailPanel.vue'
 import calender from './calender.vue'
 import newtab from './newtab.vue'
+import myaccount from './myAccount.vue'
 export default {
   components: {
     menuheader,
@@ -126,7 +128,8 @@ export default {
     matchlivescore,
     livescoredetailpanel,
     calender,
-    newtab
+    newtab,
+    myaccount
   },
 }
 </script>
