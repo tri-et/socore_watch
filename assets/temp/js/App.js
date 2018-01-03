@@ -11713,7 +11713,9 @@ var store = exports.store = new _vuex2.default.Store({
 
 		checkAskAgain: false,
 
-		ishidetoolbar: false
+		ishidetoolbar: false,
+
+		timer: null
 
 	}
 });
@@ -23534,7 +23536,13 @@ var render = function() {
                   },
                   [
                     _c("span", { class: { marquee: _vm.activeMarquee } }, [
-                      _vm._v(_vm._s(_vm.items.team_home))
+                      _vm._v(
+                        _vm._s(
+                          _vm.items.pick_hdp == "H"
+                            ? _vm.items.team_home
+                            : _vm.items.team_away
+                        )
+                      )
                     ])
                   ]
                 ),
@@ -25208,12 +25216,23 @@ var GetData = function () {
 		value: function getDataInPlay(app) {
 			var that = this;
 			_jquery2.default.ajax({
-				url: 'index.php/api/get_running',
+				url: 'index.php/api/get_running?timestamp=' + new Date().getTime(),
 				jsonp: 'callback',
 				dataType: 'jsonp',
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.inplay = data.Running;
+					if (app.$store.state.predictionSelected.match_code != '') {
+						var type = app.$store.state.predictionSelected.type;
+						var match_code = app.$store.state.predictionSelected.match_code;
+						switch (type) {
+							case 'inplay':
+								app.$store.state.predictionSelected.match_code = data.Running.find(function (x) {
+									return x.match_code == match_code;
+								});
+								break;
+						}
+					}
 					setTimeout(function () {
 						that.getDataInPlay(app);
 					}, 3000);
@@ -25231,6 +25250,17 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.pregame = data.Pregame;
+					if (app.$store.state.predictionSelected.match_code != '') {
+						var type = app.$store.state.predictionSelected.type;
+						var match_code = app.$store.state.predictionSelected.match_code;
+						switch (type) {
+							case 'pregame':
+								app.$store.state.predictionSelected.match_code = data.Pregame.find(function (x) {
+									return x.match_code == match_code;
+								});
+								break;
+						}
+					}
 
 					setTimeout(function () {
 						that.getDataPregame(app);
@@ -25279,6 +25309,7 @@ var GetData = function () {
 					};
 					app.$store.state.isOpenPredictionDetail = true;
 				}
+
 				setTimeout(function () {
 					that.getDataInPlay(app);
 				}, 3000);
@@ -25332,7 +25363,25 @@ var GetData = function () {
 					app.$store.state.isOpenLiveScoreDetail = true;
 				}
 
-				setTimeout(function () {
+				//update data for detail panel
+				if (app.$store.state.dataLivescoreDetail.match[0] != undefined) {
+					var _id = app.$store.state.dataLivescoreDetail.match[0];
+					app.$store.state.dataLivescoreDetail = {
+						match: app.livescore.find(function (x) {
+							return x[0] == _id;
+						}),
+						stats: app.$root.livescoreStats.r.find(function (x) {
+							return x[2] == _id;
+						}) == undefined ? [] : app.$root.livescoreStats.r.find(function (x) {
+							return x[2] == _id;
+						}),
+						timeline: app.$root.livescoreTimeLine.r.filter(function (x) {
+							return x[2] == _id;
+						})
+					};
+				}
+
+				app.$store.state.timer = setTimeout(function () {
 					that.getDataLiveScore(app);
 				}, 5000);
 			});
@@ -25342,6 +25391,7 @@ var GetData = function () {
 		value: function getDataLiveScoreByDate(date, app) {
 			var that = this;
 			(0, _jquery2.default)('.loading').addClass('loading-is-visible');
+			clearTimeout(app.$store.state.timer);
 			_jquery2.default.ajax({
 				url: 'http://www.hasilskor.com/API/JSON.aspx?date=' + date + '&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
 				success: function success(res) {
@@ -25707,6 +25757,7 @@ new _vue2.default({
 	data: {
 		pregame: [],
 		inplay: [],
+		inplayExpired: [],
 		leagueLiveScoreLeft: [],
 		leagueLiveScoreRight: [],
 		livescore: [],
@@ -26249,34 +26300,6 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("li", [
-            _c(
-              "a",
-              {
-                attrs: { "data-type-menu": "notification", href: "#" },
-                on: {
-                  click: function($event) {
-                    _vm.itemMenuClick($event)
-                  }
-                }
-              },
-              [
-                _c("img", {
-                  staticClass: "primary-nav--icon-menu-notification",
-                  attrs: {
-                    width: "24",
-                    src:
-                      "assets/images/notification/notification_icon_disabled.png"
-                  }
-                }),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("div", { staticClass: "primary-nav--highlightmenuright" })
-              ]
-            )
-          ]),
-          _vm._v(" "),
           _c("li", { staticClass: "primary-nav--tooltip" }, [
             _c(
               "a",
@@ -26484,6 +26507,7 @@ if (false) {(function () {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'";
     }
+
   },
   methods: {
     matchDate(value) {
@@ -26624,13 +26648,19 @@ var render = function() {
             },
             [
               _c("span", { class: { marquee: _vm.activeMarquee1 } }, [
-                _vm._v(_vm._s(_vm.items.team_home))
+                _vm._v(
+                  _vm._s(
+                    _vm.items.pick_hdp == "H"
+                      ? _vm.items.team_home
+                      : _vm.items.team_away
+                  )
+                )
               ])
             ]
           ),
           _vm._v(" "),
           _c("div", [
-            _c("span", [_vm._v("-")]),
+            _c("span", [_vm._v(" ")]),
             _vm._v(" "),
             _c("span", [_vm._v("[" + _vm._s(_vm.items.sys.hdp) + "]")]),
             _vm._v(" "),
@@ -31416,7 +31446,7 @@ var render = function() {
                   _c(
                     "li",
                     {
-                      attrs: { "data-menu-type": "notification" },
+                      attrs: { "data-menu-type": "help" },
                       on: {
                         click: function($event) {
                           _vm.itemClick($event)
@@ -31429,19 +31459,6 @@ var render = function() {
                   _c(
                     "li",
                     {
-                      attrs: { "data-menu-type": "help" },
-                      on: {
-                        click: function($event) {
-                          _vm.itemClick($event)
-                        }
-                      }
-                    },
-                    [_vm._m(1, false, false)]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
                       attrs: { "data-menu-type": "about" },
                       on: {
                         click: function($event) {
@@ -31449,13 +31466,13 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._m(2, false, false)]
+                    [_vm._m(1, false, false)]
                   )
                 ])
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3, false, false)
+            _vm._m(2, false, false)
           ])
         ]
       )
@@ -31463,23 +31480,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", [
-      _c("div"),
-      _c("img", {
-        staticClass: "sidebar-list-menu--icon-notification",
-        attrs: {
-          width: "24",
-          src: "assets/images/notification/notification_icon_disabled.png"
-        }
-      }),
-      _vm._v(" "),
-      _c("span", [_vm._v("notification")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -32048,6 +32048,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 
 
@@ -32091,11 +32092,11 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
     },
 
     nextday(val) {
-      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).animate({ scrollLeft: '-=' + 95 });
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).animate({ scrollLeft: '-=' + 380 });
     },
 
     preday(val) {
-      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).animate({ scrollLeft: '+=' + 95 });
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).animate({ scrollLeft: '+=' + 380 });
     },
 
     setActive(val, index) {
@@ -32135,12 +32136,15 @@ var getdata = new __WEBPACK_IMPORTED_MODULE_1__modules_Get_Data___default.a();
     setDateCenter() {
       let outer = this.$el.querySelector('.calenders ul').clientWidth;
       let inner = this.$el.querySelector('.calenders').scrollWidth;
-      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).scrollLeft((inner - outer) / 2 - 30);
+      __WEBPACK_IMPORTED_MODULE_0_jquery___default()(this.$el.querySelector('.calenders')).scrollLeft((inner - outer) / 2 - 20);
     }
   },
   created() {
     let that = this;
     this.renderDays();
+  },
+  mounted() {
+    this.setDateCenter();
   }
 });
 
@@ -33083,7 +33087,9 @@ var render = function() {
                 _c("div", [
                   _c("span", [_vm._v(_vm._s(_vm._f("date")(item)))]),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(_vm._f("day")(item)))])
+                  _c("span", [_vm._v(_vm._s(_vm._f("day")(item)))]),
+                  _vm._v(" "),
+                  _c("span")
                 ])
               ]
             )

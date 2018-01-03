@@ -607,7 +607,13 @@ var render = function() {
                   },
                   [
                     _c("span", { class: { marquee: _vm.activeMarquee } }, [
-                      _vm._v(_vm._s(_vm.items.team_home))
+                      _vm._v(
+                        _vm._s(
+                          _vm.items.pick_hdp == "H"
+                            ? _vm.items.team_home
+                            : _vm.items.team_away
+                        )
+                      )
                     ])
                   ]
                 ),
@@ -12283,7 +12289,9 @@ var store = exports.store = new _vuex2.default.Store({
 
 		checkAskAgain: false,
 
-		ishidetoolbar: false
+		ishidetoolbar: false,
+
+		timer: null
 
 	}
 });

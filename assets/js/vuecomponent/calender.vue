@@ -7,6 +7,7 @@
           <div>
             <span>{{item|date}}</span>
             <span>{{item|day}}</span>
+            <span></span>
           </div>
         </li>
       </ul>
@@ -75,11 +76,11 @@ export default {
     },
 
     nextday(val) {
-      $(this.$el.querySelector('.calenders')).animate({ scrollLeft: '-=' + 95 })
+      $(this.$el.querySelector('.calenders')).animate({ scrollLeft: '-=' + 380 })
     },
 
     preday(val) {
-      $(this.$el.querySelector('.calenders')).animate({ scrollLeft: '+=' + 95 })
+      $(this.$el.querySelector('.calenders')).animate({ scrollLeft: '+=' + 380 })
     },
 
     setActive(val, index) {
@@ -128,7 +129,7 @@ export default {
       let outer = this.$el.querySelector('.calenders ul').clientWidth
       let inner = this.$el.querySelector('.calenders').scrollWidth
       $(this.$el.querySelector('.calenders')).scrollLeft(
-        (inner - outer) / 2 - 30,
+        (inner - outer) / 2 - 20
       )
     },
   },
@@ -136,6 +137,9 @@ export default {
     let that = this
     this.renderDays()
   },
+  mounted() {
+    this.setDateCenter()
+  }
 }
 </script>
 

@@ -13,36 +13,51 @@
         height: 30px;
         display:inline-block;
         padding:15px;
+        transition: all 0.3s linear;
+
 
         div {
             display:grid !important;
             text-align:center;
-            color: rgb(194, 207, 225) !important;
             line-height: 1.4;
+            width:43px;
 
             span:first-child{
-                font-size: 16px;
+                font-size: 14px;
+                color:#9B9B9B;
             }
 
             span:nth-child(2){
-                font-size: 12px;
+                font-size: 10px;
+                color:#656565;
             }
         }
     }
 
     li:hover{
-        background-color:grey;
+        background-color:#484848;
     }
 
     &--active {
-        background-color: rgba(0,0,0,0.1);
-
-        span:first-child{
-            font-weight: bold;
-            color: rgb(56, 97, 158);
-        }
-        span:nth-child(2){
-            color: rgb(194, 207, 225);
+        >div {
+            span:first-child{
+                //font-weight: bold;
+                font-size: 16px;
+                color: $mainWhite !important;
+            }
+            span:nth-child(2){
+                color: rgb(194, 207, 225);
+                font-size: 12px !important;
+                margin-bottom:2px;
+            }
+            span:last-child{
+                width: 30px;
+                height: 2px;
+                background-color: #fff;
+                border-radius: 10px;
+                margin: auto;
+            }
+            
         }
     }
 }

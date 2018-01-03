@@ -72,7 +72,9 @@ export const store = new Vuex.Store({
 
 		checkAskAgain:false,
 
-		ishidetoolbar:false
+		ishidetoolbar:false,
+		
+		timer:null
 
 	}
 });

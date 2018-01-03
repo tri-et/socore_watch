@@ -15,7 +15,7 @@
         <div class="prediction-detail-content--btn" :class="{'prediction-detail-content--btn--pregame':$store.state.predictionSelected.type=='pregame',
         'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay'}">
           <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
-            <span :class="{'marquee':activeMarquee}">{{items.team_home}}</span>
+            <span :class="{'marquee':activeMarquee}">{{items.pick_hdp=="H"?items.team_home:items.team_away}}</span>
           </div>
           <div>
             <span>&nbsp;[{{items.sys.hdp}}]</span>

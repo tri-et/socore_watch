@@ -25,13 +25,13 @@
                         <div class="primary-nav--highlight"></div>
                     </a>
                 </li>
-                <li>
+                <!--<li>
                     <a @click="itemMenuClick($event)" data-type-menu="notification" href="#">
                         <img width="24" class="primary-nav--icon-menu-notification" src="assets/images/notification/notification_icon_disabled.png">
                         <br>
                         <div class="primary-nav--highlightmenuright"></div>
                     </a>
-                </li>
+                </li>-->
                 <li class="primary-nav--tooltip">
                     <a @click="itemMenuClick($event)" data-type-menu="help" href="#">
                         <img class="primary-nav--icon-menu-help primary-nav--icon-padding" src="assets/images/icon_help@1x.png">
