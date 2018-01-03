@@ -10,7 +10,7 @@
                             <div class="header-title header-title--inplay">
                                 <span>inplay</span>
                             </div>
-                            <buttonprediction :items="item" v-for="(item,index) in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
+                            <buttonprediction :items="item" v-for="item in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
                             <div class="header-title header-title--expired">
                                 <span>EXPIRED inplay</span>
                             </div>
@@ -22,7 +22,7 @@
                             <div class="header-title header-title--pregame">
                                 <span>pregame</span>
                             </div>
-                            <buttonprediction :items="item" v-for="(item,index) in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame"></buttonprediction>
+                            <buttonprediction :items="item" v-for="item in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame"></buttonprediction>
                             <div class="header-title header-title--expired">
                                 <span>EXPIRED Pregame</span>
                             </div>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="footer">
-                        <span>All Right Reserved. © 2017. Powered by In-Play</span>
+                        <span>All Right Reserved. © 2018. Powered by In-Play</span>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="footer">
-                        <span>All Right Reserved. © 2017. Powered by In-Play</span>
+                        <span>All Right Reserved. © 2018. Powered by In-Play</span>
                     </div>
                 </div>
             </div>

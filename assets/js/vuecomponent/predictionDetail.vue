@@ -80,13 +80,13 @@
               <span>M8</span>
             </div>
             <div>
-              <span>{{items.sys.hdp}}</span>
+              <span>{{items.sys.hdp|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sys.odds_home}}</span>
+              <span>{{items.sys.odds_home|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sys.odds_away}}</span>
+              <span>{{items.sys.odds_away|setDash}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -94,13 +94,13 @@
               <span>sbo</span>
             </div>
             <div>
-              <span>{{items.sbo.hdp}}</span>
+              <span>{{items.sbo.hdp|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sbo.odds_home}}</span>
+              <span>{{items.sbo.odds_home|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sbo.odds_away}}</span>
+              <span>{{items.sbo.odds_away|setDash}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -108,13 +108,13 @@
               <span>ibc</span>
             </div>
             <div>
-              <span>{{items.ibc.hdp}}</span>
+              <span>{{items.ibc.hdp|setDash}}</span>
             </div>
             <div>
-              <span>{{items.ibc.odds_home}}</span>
+              <span>{{items.ibc.odds_home|setDash}}</span>
             </div>
             <div>
-              <span>{{items.ibc.odds_away}}</span>
+              <span>{{items.ibc.odds_away|setDash}}</span>
             </div>
           </div>
           <!-- end Odds-->
@@ -140,13 +140,13 @@
               <span>M8</span>
             </div>
             <div>
-              <span>{{items.sys.ou}}</span>
+              <span>{{items.sys.ou|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sys.odds_over}}</span>
+              <span>{{items.sys.odds_over|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sys.odds_under}}</span>
+              <span>{{items.sys.odds_under|setDash}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -154,13 +154,13 @@
               <span>sbo</span>
             </div>
             <div>
-              <span>{{items.sbo.ou}}</span>
+              <span>{{items.sbo.ou|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sbo.odds_over}}</span>
+              <span>{{items.sbo.odds_over|setDash}}</span>
             </div>
             <div>
-              <span>{{items.sbo.odds_under}}</span>
+              <span>{{items.sbo.odds_under|setDash}}</span>
             </div>
           </div>
           <div class="odds-ou-content">
@@ -168,13 +168,13 @@
               <span>ibc</span>
             </div>
             <div>
-              <span>{{items.ibc.ou}}</span>
+              <span>{{items.ibc.ou|setDash}}</span>
             </div>
             <div>
-              <span>{{items.ibc.odds_over}}</span>
+              <span>{{items.ibc.odds_over|setDash}}</span>
             </div>
             <div>
-              <span>{{items.ibc.odds_under}}</span>
+              <span>{{items.ibc.odds_under|setDash}}</span>
             </div>
           </div>
           <!-- end OU-->
@@ -209,6 +209,10 @@ export default {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
     },
+
+    setDash(value){
+      return value == '' ? '-' : value
+    }
   },
   methods: {
     setMarquee() {

@@ -2246,8 +2246,8 @@ body{
 
 .livescore-detail-content--timeline-empty,.livescore-detail-content--stats-empty {
         text-align:center;
-        margin-top:15px;
-        margin-bottom:15px;
+        margin-top:50px;
+        margin-bottom:50px;
         font-size: 14px;
         color:rgb(166, 166, 166);
     }

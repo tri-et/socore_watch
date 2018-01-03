@@ -23371,6 +23371,10 @@ if (false) {(function () {
 
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'";
+    },
+
+    setDash(value) {
+      return value == '' ? '-' : value;
     }
   },
   methods: {
@@ -23744,42 +23748,66 @@ var render = function() {
                     [_c("span", [_vm._v("M8")])]
                   ),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.hdp)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_away))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_home)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_away)))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "odds-ou-content" }, [
                   _vm._m(5, false, false),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.hdp))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_home))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.hdp)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_away))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_home)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_away)))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "odds-ou-content" }, [
                   _vm._m(6, false, false),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.hdp))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_home))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.hdp)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_away))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_home)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_away)))
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
@@ -23820,42 +23848,72 @@ var render = function() {
                     [_c("span", [_vm._v("M8")])]
                   ),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sys.ou))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_over))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.ou)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_under))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_over)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm._f("setDash")(_vm.items.sys.odds_under))
+                      )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "odds-ou-content" }, [
                   _vm._m(11, false, false),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.sbo.ou))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_over))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.ou)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.sbo.odds_under))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_over)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm._f("setDash")(_vm.items.sbo.odds_under))
+                      )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "odds-ou-content" }, [
                   _vm._m(12, false, false),
                   _vm._v(" "),
-                  _c("div", [_c("span", [_vm._v(_vm._s(_vm.items.ibc.ou))])]),
-                  _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_over))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.ou)))
+                    ])
                   ]),
                   _vm._v(" "),
                   _c("div", [
-                    _c("span", [_vm._v(_vm._s(_vm.items.ibc.odds_under))])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_over)))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("span", [
+                      _vm._v(
+                        _vm._s(_vm._f("setDash")(_vm.items.ibc.odds_under))
+                      )
+                    ])
                   ])
                 ])
               ]
@@ -31510,7 +31568,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "footerSidebar" }, [
-      _c("span", [_vm._v("Made by AMSB. All Right Reserved. © 2017")])
+      _c("span", [_vm._v("Made by AMSB. All Right Reserved. © 2018")])
     ])
   }
 ]
@@ -33612,7 +33670,7 @@ var render = function() {
                     [
                       _vm._m(0, false, false),
                       _vm._v(" "),
-                      _vm._l(_vm.$root.$data.inplay, function(item, index) {
+                      _vm._l(_vm.$root.$data.inplay, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
                           attrs: { items: item, inplaypregame: "inplay" }
@@ -33632,7 +33690,7 @@ var render = function() {
                     [
                       _vm._m(3, false, false),
                       _vm._v(" "),
-                      _vm._l(_vm.$root.$data.pregame, function(item, index) {
+                      _vm._l(_vm.$root.$data.pregame, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
                           attrs: { items: item, inplaypregame: "pregame" }
@@ -33919,7 +33977,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "footer" }, [
-      _c("span", [_vm._v("All Right Reserved. © 2017. Powered by In-Play")])
+      _c("span", [_vm._v("All Right Reserved. © 2018. Powered by In-Play")])
     ])
   },
   function() {
@@ -33941,7 +33999,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "footer" }, [
-      _c("span", [_vm._v("All Right Reserved. © 2017. Powered by In-Play")])
+      _c("span", [_vm._v("All Right Reserved. © 2018. Powered by In-Play")])
     ])
   }
 ]
