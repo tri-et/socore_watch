@@ -19,10 +19,10 @@
     'btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected.match_code}">
       <div><img class="btn--tickicon" src="assets/images/icon_tick@2x.png"></div>
       <div :style="{'max-width':activeMarquee1?'75px':'max-content'}">
-        <span :class="{'marquee':activeMarquee1}">{{items.team_home}}</span>
+        <span :class="{'marquee':activeMarquee1}">{{items.pick_hdp=="H"?items.team_home:items.team_away}}</span>
       </div>
       <div>
-        <span>-</span>
+        <span>&nbsp;</span>
         <span>[{{items.sys.hdp}}]</span>
         <span> @ </span>
         <span>{{items.sys.odds_home}}</span>
@@ -59,6 +59,7 @@ export default {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
     },
+
   },
   methods: {
     matchDate(value) {

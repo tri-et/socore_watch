@@ -31,6 +31,7 @@ class Api extends CI_Controller {
 		}else{
 			$prediction=$this->get_running_cron();
 		};
+		//$prediction=$this->get_running_cron();
 		if (array_key_exists('callback', $_GET) == TRUE) {
 			$callback = $_GET['callback'];
 		}

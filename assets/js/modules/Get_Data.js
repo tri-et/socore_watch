@@ -2,29 +2,37 @@ import $ from 'jquery'
 import axios from 'axios'
 class GetData {
 	constructor() {}
-
 	checkLeague(leaguename, leagueArray) {
 		for (var i = 0; i < leagueArray.length; i++) {
 			if (leagueArray[i].league == leaguename) {
-				return true;
+				return true
 			}
 		}
-		return false;
+		return false
 	}
 
 	getDataInPlay(app) {
 		let that = this
 		$.ajax({
-			url: 'index.php/api/get_running',
+			url: 'index.php/api/get_running?timestamp=' + new Date().getTime(),
 			jsonp: 'callback',
 			dataType: 'jsonp',
-			success: function (response) {
-				let data = JSON.parse(response);
-				app.inplay = data.Running;
+			success: function(response) {
+				let data = JSON.parse(response)
+				app.inplay = data.Running
+				if (app.$store.state.predictionSelected.match_code != '') {
+					let type = app.$store.state.predictionSelected.type
+					let match_code = app.$store.state.predictionSelected.match_code
+					switch (type) {
+						case 'inplay':
+						app.$store.state.predictionSelected.match_code=data.Running.find(x=>x.match_code==match_code)
+							break
+					}
+				}
 				setTimeout(() => {
 					that.getDataInPlay(app)
 				}, 3000)
-			}
+			},
 		})
 	}
 
@@ -34,32 +42,46 @@ class GetData {
 			url: 'index.php/api/get_pregame',
 			jsonp: 'callback',
 			dataType: 'jsonp',
-			success: function (response) {
-				let data = JSON.parse(response);
-				app.pregame = data.Pregame;
+			success: function(response) {
+				let data = JSON.parse(response)
+				app.pregame = data.Pregame
+				if (app.$store.state.predictionSelected.match_code != '') {
+					let type = app.$store.state.predictionSelected.type
+					let match_code = app.$store.state.predictionSelected.match_code
+					switch (type) {
+						case 'pregame':
+						app.$store.state.predictionSelected.match_code=data.Pregame.find(x=>x.match_code==match_code)
+							break
+					}
+				}
 
 				setTimeout(() => {
 					that.getDataPregame(app)
 				}, 600000)
-			}
+			},
 		})
 	}
 
 	getMatchLiveScore() {
-		return axios.get('http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf')
+		return axios.get(
+			'http://www.hasilskor.com/API/JSON.aspx?sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
+		)
 	}
 
 	getDataPreInplay(app) {
 		let that = this
 		let urlInplay = 'index.php/api/get_running'
 		let urlPregame = 'index.php/api/get_pregame'
-		$.when($.ajax({
-			url: urlInplay,
-			dataType: 'jsonp'
-		}), $.ajax({
-			url: urlPregame,
-			dataType: 'jsonp'
-		})).done((inplay, pregame) => {
+		$.when(
+			$.ajax({
+				url: urlInplay,
+				dataType: 'jsonp',
+			}),
+			$.ajax({
+				url: urlPregame,
+				dataType: 'jsonp',
+			}),
+		).done((inplay, pregame) => {
 			let inplayData = JSON.parse(inplay[0]).Running
 			let pregameData = JSON.parse(pregame[0]).Pregame
 			let data = []
@@ -79,10 +101,12 @@ class GetData {
 				app.$store.state.predictionSelected = {
 					match_code: data.match_code,
 					type: type,
-					isopening: app.$store.state.isOpenPredictionDetail == false ? false : true
+					isopening:
+						app.$store.state.isOpenPredictionDetail == false ? false : true,
 				}
 				app.$store.state.isOpenPredictionDetail = true
 			}
+			
 			setTimeout(() => {
 				that.getDataInPlay(app)
 			}, 3000)
@@ -95,19 +119,26 @@ class GetData {
 
 	getDataLiveScore(app) {
 		let that = this
-		$.when(this.getMatchLiveScore(), this.getStatsData(), this.getTimeLineData()).done(function (matchlivescore, stats, timeline) {
+		$.when(
+			this.getMatchLiveScore(),
+			this.getStatsData(),
+			this.getTimeLineData(),
+		).done(function(matchlivescore, stats, timeline) {
 			var leaguename = []
 			for (var i = 0; i < matchlivescore.data.r.length; i++) {
 				if (!that.checkLeague(matchlivescore.data.r[i][5], leaguename)) {
 					leaguename.push({
 						league: matchlivescore.data.r[i][5],
 						leagueShortName: matchlivescore.data.r[i][6],
-						leagueColorCode: matchlivescore.data.r[i][7]
-					});
+						leagueColorCode: matchlivescore.data.r[i][7],
+					})
 				}
 			}
 			app.livescore = matchlivescore.data.r
-			app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2))
+			app.leagueLiveScoreLeft = leaguename.splice(
+				0,
+				Math.round(leaguename.length / 2),
+			)
 			app.leagueLiveScoreRight = leaguename
 			app.livescoreStats = that.formatJson(stats.data)
 			app.livescoreTimeLine = that.formatJson(timeline.data)
@@ -118,18 +149,34 @@ class GetData {
 				if (!app.$store.state.isOpenLiveScoreDetail) {
 					app.$store.state.dataLivescoreDetail = {
 						match: app.livescore[0],
-						stats: app.$root.livescoreStats.r.find(x => x[2] == id) == undefined ? [] : app.$root.livescoreStats.r.find(x => x[2] == id),
-						timeline: app.$root.livescoreTimeLine.r.filter(x => x[2] == id)
+						stats:
+							app.$root.livescoreStats.r.find(x => x[2] == id) == undefined
+								? []
+								: app.$root.livescoreStats.r.find(x => x[2] == id),
+						timeline: app.$root.livescoreTimeLine.r.filter(x => x[2] == id),
 					}
 					app.$store.state.livescoreSelected = {
 						match_code: id,
-						isopening: false
+						isopening: false,
 					}
 				}
 				app.$store.state.isOpenLiveScoreDetail = true
 			}
 
-			setTimeout(() => {
+			//update data for detail panel
+			if (app.$store.state.dataLivescoreDetail.match[0] != undefined) {
+				let id = app.$store.state.dataLivescoreDetail.match[0]
+				app.$store.state.dataLivescoreDetail = {
+					match: app.livescore.find(x => x[0] == id),
+					stats:
+						app.$root.livescoreStats.r.find(x => x[2] == id) == undefined
+							? []
+							: app.$root.livescoreStats.r.find(x => x[2] == id),
+					timeline: app.$root.livescoreTimeLine.r.filter(x => x[2] == id),
+				}
+			}
+
+			app.$store.state.timer = setTimeout(() => {
 				that.getDataLiveScore(app)
 			}, 5000)
 		})
@@ -138,46 +185,56 @@ class GetData {
 	getDataLiveScoreByDate(date, app) {
 		let that = this
 		$('.loading').addClass('loading-is-visible')
+		clearTimeout(app.$store.state.timer)
 		$.ajax({
-			url: 'http://www.hasilskor.com/API/JSON.aspx?date=' + date + '&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
-			success: function (res) {
+			url:
+				'http://www.hasilskor.com/API/JSON.aspx?date=' +
+				date +
+				'&sport=soccer&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf',
+			success: function(res) {
 				var leaguename = []
 				for (var i = 0; i < res.r.length; i++) {
 					if (!that.checkLeague(res.r[i][5], leaguename)) {
 						leaguename.push({
 							league: res.r[i][5],
 							leagueShortName: res.r[i][6],
-							leagueColorCode: res.r[i][7]
-						});
+							leagueColorCode: res.r[i][7],
+						})
 					}
 				}
 				app.livescore = res.r
-				app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2))
+				app.leagueLiveScoreLeft = leaguename.splice(
+					0,
+					Math.round(leaguename.length / 2),
+				)
 				app.leagueLiveScoreRight = leaguename
 				$('.loading').removeClass('loading-is-visible')
 			},
-			error: function (error) {
+			error: function(error) {
 				app.league = []
 				app.livescore = []
 				app.leagueLiveScoreLeft = []
 				app.leagueLiveScoreRight = []
 				$('.loading').removeClass('loading-is-visible')
-			}
+			},
 		})
 	}
 
 	getTimeLineData() {
-		return axios.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDA&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506409621930')
+		return axios.get(
+			'http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDA&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506409621930',
+		)
 	}
 
 	getStatsData() {
-		return axios.get('http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDB&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506412139882')
+		return axios.get(
+			'http://www.hasilskor.com/API/JSON.aspx?callback=callbackJSON&sport=soccerDB&s=26PDpiffaaBbGrBdfgnrK2pknndskc1f3IMeKLW6PqdprBMHMqSTQ7gcmlcx7jZMxmyeTTBXRqwDh5p044MJHrf&date=&lut=&isJSONP=true&_=1506412139882',
+		)
 	}
 
 	formatJson(data) {
-		return JSON.parse(data.replace('callbackJSON(', '').replace(/\)$/g, ''));
+		return JSON.parse(data.replace('callbackJSON(', '').replace(/\)$/g, ''))
 	}
-
 }
 
-export default GetData;
+export default GetData

@@ -20,7 +20,7 @@
     }
 
     ul li:hover {
-        background-color:rgba(44, 69, 232, 0.08);
+        background-color:rgba(0,0,0,0.1);
         cursor:pointer;
     }
 
@@ -91,7 +91,7 @@
     }
 
     &--actived {
-        background-color:rgba(44, 69, 232, 0.08);
+        background-color:rgba(0,0,0,0.1);
     }
 
     &--live {

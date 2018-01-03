@@ -12503,7 +12503,9 @@ var store = exports.store = new _vuex2.default.Store({
 
 		checkAskAgain: false,
 
-		ishidetoolbar: false
+		ishidetoolbar: false,
+
+		timer: null
 
 	}
 });

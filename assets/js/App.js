@@ -18,6 +18,7 @@ new Vue({
 	data: {
 		pregame: [],
 		inplay: [],
+		inplayExpired:[],
 		leagueLiveScoreLeft: [],
 		leagueLiveScoreRight: [],
 		livescore: [],

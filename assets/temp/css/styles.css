@@ -1031,7 +1031,6 @@ body{
         display:-webkit-box;
         display:-ms-flexbox;
         display:flex;
-        background-color: #f0f0f0;
     }
 
 .row__calendar::after{
@@ -1044,7 +1043,7 @@ body{
             float:left
         }
 
-.row__calendar div:first-child {
+.row__calendar >div:first-child {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -1052,8 +1051,12 @@ body{
                 -ms-flex-align: center;
                     align-items: center;
             font-size: 30px;
-            color: #577DBB;
+            color: #FFF;
             cursor: pointer;
+            width:40px;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
         }
 
 .row__calendar div:nth-child(2) {
@@ -1073,8 +1076,12 @@ body{
                 -ms-flex-align: center;
                     align-items: center;
             font-size: 30px;
-            color: #577DBB;
+            color: #FFF;
             cursor: pointer;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            width:40px;
         }
 
 .row__6{
@@ -1441,7 +1448,7 @@ body{
     }
 
 .inplay-pregame--content {
-        min-height:calc(100vh - 202px);
+        min-height:calc(100vh - 215px);
         padding-top: 10px;
     }
 
@@ -2239,8 +2246,8 @@ body{
 
 .livescore-detail-content--timeline-empty,.livescore-detail-content--stats-empty {
         text-align:center;
-        margin-top:15px;
-        margin-bottom:15px;
+        margin-top:50px;
+        margin-bottom:50px;
         font-size: 14px;
         color:rgb(166, 166, 166);
     }
@@ -2445,7 +2452,7 @@ body{
         float:left;
         width:25%;
         text-align:center;
-        padding:14px 0;
+        padding:10px 0;
     }
 
 .odds-ou-content div:first-child {
@@ -2827,7 +2834,7 @@ body{
     }
 
 .match-livescore ul li:hover {
-        background-color:rgba(44, 69, 232, 0.08);
+        background-color:rgba(0,0,0,0.1);
         cursor:pointer;
     }
 
@@ -2898,7 +2905,7 @@ body{
         }
 
 .match-livescore--actived {
-        background-color:rgba(44, 69, 232, 0.08);
+        background-color:rgba(0,0,0,0.1);
     }
 
 .match-livescore--live {
@@ -4182,39 +4189,50 @@ body{
         height: 30px;
         display:inline-block;
         padding:15px;
+        -webkit-transition: all 0.3s linear;
+        transition: all 0.3s linear;
     }
 
 .calenders li div {
             display:grid !important;
             text-align:center;
-            color: rgb(194, 207, 225) !important;
             line-height: 1.4;
+            width:43px;
         }
 
 .calenders li div span:first-child{
-                font-size: 16px;
+                font-size: 14px;
+                color:#9B9B9B;
             }
 
 .calenders li div span:nth-child(2){
-                font-size: 12px;
+                font-size: 10px;
+                color:#656565;
             }
 
 .calenders li:hover{
-        background-color:grey;
+        background-color:#484848;
     }
 
-.calenders--active {
-        background-color: rgba(0,0,0,0.1);
-    }
+.calenders--active >div span:first-child{
+                //font-weight: bold;
+                font-size: 16px;
+                color: #FFF !important;
+            }
 
-.calenders--active span:first-child{
-            font-weight: bold;
-            color: rgb(56, 97, 158);
-        }
+.calenders--active >div span:nth-child(2){
+                color: rgb(194, 207, 225);
+                font-size: 12px !important;
+                margin-bottom:2px;
+            }
 
-.calenders--active span:nth-child(2){
-            color: rgb(194, 207, 225);
-        }
+.calenders--active >div span:last-child{
+                width: 30px;
+                height: 2px;
+                background-color: #fff;
+                border-radius: 10px;
+                margin: auto;
+            }
 
 .newtab-container{
     visibility:hidden;
