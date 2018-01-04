@@ -24225,8 +24225,8 @@ if (false) {
   props: ['items'],
   filters: {
     setTimeLive(val) {
-      let date = new Date(val);
-      return date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+      let date = new Date(val.replace(/-/g, '/'));
+      return (date.getHours().toString().length == 1 ? "0" + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
     },
 
     setFT(val) {
@@ -31694,8 +31694,8 @@ if (false) {(function () {
       let times = val;
       switch (val) {
         case '':
-          let date = new Date(time);
-          times = date.getHours() + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+          let date = new Date(time.replace(/-/g, '/'));
+          times = (date.getHours().toString().length == 1 ? "0" + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
           break;
         default:
           times = val.indexOf('+') > 0 ? val : val + "'";

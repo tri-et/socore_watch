@@ -54,11 +54,9 @@ export default {
       let times = val
       switch (val) {
         case '':
-          let date = new Date(time)
+          let date = new Date(time.replace(/-/g,'/'))
           times =
-            date.getHours() +
-            ':' +
-            (date.getMinutes() == '0' ? '00' : date.getMinutes())
+            (date.getHours().toString().length==1?("0"+date.getHours()):(date.getHours())) +':' + (date.getMinutes() == '0' ? '00' : date.getMinutes())
           break
         default:
           times = val.indexOf('+')>0?val:val + "'"

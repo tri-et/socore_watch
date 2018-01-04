@@ -179,11 +179,9 @@ export default {
   props: ['items'],
   filters: {
     setTimeLive(val) {
-      let date = new Date(val)
+      let date = new Date(val.replace(/-/g,'/'))
       return (
-        date.getHours() +
-        ':' +
-        (date.getMinutes() == '0' ? '00' : date.getMinutes())
+         (date.getHours().toString().length==1?("0"+date.getHours()):(date.getHours())) +':' + (date.getMinutes() == '0' ? '00' : date.getMinutes())
       )
     },
 

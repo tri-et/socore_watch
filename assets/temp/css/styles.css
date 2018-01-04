@@ -4212,6 +4212,7 @@ body{
 
 .calenders li:hover{
         background-color:#484848;
+        cursor:pointer;
     }
 
 .calenders--active >div span:first-child{
