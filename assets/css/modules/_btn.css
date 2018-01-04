@@ -39,6 +39,36 @@
         
     }
 
+    &--expired {
+        background-image:url("../../images/bg_expired_row.png"); 
+        color:$mainWhite;
+
+        div {
+            float:left;
+            margin-top:9px;
+        }
+
+        div:nth-child(2) {
+            width: 35%;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: inherit;
+            margin-right:5px;
+        }
+
+        div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
+        }
+
+        div:last-child {
+            float:right;
+            display:flex;
+        }
+        
+    }
+
     &--pregame {
         background-image:url("../../images/bg_pre_game_item@2x.png"); 
         color:$mainWhite;
@@ -73,6 +103,12 @@
        width:20px;
        height:19px;
        margin:-2px 12px 0 12px;
+    }
+
+    &--winicon{
+        margin: -9px 12px 0 0px;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
     }
 
     &--watchicon {

@@ -18,6 +18,18 @@
         margin-top: 7px;
     }
 
+    &--kickoff-expired {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#C9C9C9;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 12px;
+        float:left;
+        margin-top: 7px;
+    }
+
     &--kickoff-pregame {
         width:82px;
         text-align:center;
@@ -53,7 +65,7 @@
         margin:auto;
     }
 
-    &--pregame:nth-child(2n),&--inplay:nth-child(2n){
+    &--pregame:nth-child(2n),&--inplay:nth-child(2n),&--expired:nth-child(2n){
         background-color:$mainWhite;
     }
 
@@ -63,6 +75,10 @@
 
     &--pregame:nth-child(2n+1){
         background-color:#adebc1;
+    }
+
+    &--expired:nth-child(2n+1){
+        background-color:#F0F1F1;
     }
     
     &--inplay:hover {

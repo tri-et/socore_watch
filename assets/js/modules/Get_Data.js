@@ -19,7 +19,8 @@ class GetData {
 			dataType: 'jsonp',
 			success: function(response) {
 				let data = JSON.parse(response)
-				app.inplay = data.Running
+				//app.inplay = data.Running
+				app.inplayExpired=[]
 				if (app.$store.state.predictionSelected.match_code != '') {
 					let type = app.$store.state.predictionSelected.type
 					let match_code = app.$store.state.predictionSelected.match_code
@@ -29,6 +30,15 @@ class GetData {
 							break
 					}
 				}
+
+				data.Running.forEach(v=>{
+					if(v.match_period=='FT'){
+						app.inplayExpired.push(v)
+					}else{
+						app.inplay.push(v)
+					}
+				})
+
 				setTimeout(() => {
 					that.getDataInPlay(app)
 				}, 3000)
@@ -87,10 +97,18 @@ class GetData {
 			let data = []
 			let type = ''
 			app.pregame = pregameData
-			app.inplay = inplayData
+			//app.inplay = inplayData
+			app.inplayExpired=[]
+			inplayData.forEach(v=>{
+				if(v.match_period=='FT'){
+					app.inplayExpired.push(v)
+				}else{
+					app.inplay.push(v)
+				}
+			})
 
-			if (inplayData.length > 0) {
-				data = inplayData[0]
+			if (app.inplay > 0) {
+				data = app.inplay[0]
 				type = 'inplay'
 			} else {
 				data = pregameData[0]

@@ -25279,7 +25279,8 @@ var GetData = function () {
 				dataType: 'jsonp',
 				success: function success(response) {
 					var data = JSON.parse(response);
-					app.inplay = data.Running;
+					//app.inplay = data.Running
+					app.inplayExpired = [];
 					if (app.$store.state.predictionSelected.match_code != '') {
 						var type = app.$store.state.predictionSelected.type;
 						var match_code = app.$store.state.predictionSelected.match_code;
@@ -25291,6 +25292,15 @@ var GetData = function () {
 								break;
 						}
 					}
+
+					data.Running.forEach(function (v) {
+						if (v.match_period == 'FT') {
+							app.inplayExpired.push(v);
+						} else {
+							app.inplay.push(v);
+						}
+					});
+
 					setTimeout(function () {
 						that.getDataInPlay(app);
 					}, 3000);
@@ -25349,10 +25359,18 @@ var GetData = function () {
 				var data = [];
 				var type = '';
 				app.pregame = pregameData;
-				app.inplay = inplayData;
+				//app.inplay = inplayData
+				app.inplayExpired = [];
+				inplayData.forEach(function (v) {
+					if (v.match_period == 'FT') {
+						app.inplayExpired.push(v);
+					} else {
+						app.inplay.push(v);
+					}
+				});
 
-				if (inplayData.length > 0) {
-					data = inplayData[0];
+				if (app.inplay > 0) {
+					data = app.inplay[0];
 					type = 'inplay';
 				} else {
 					data = pregameData[0];
@@ -26027,6 +26045,10 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -26541,6 +26563,9 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -26565,9 +26590,26 @@ if (false) {(function () {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'";
     }
-
   },
   methods: {
+    setSrcIcon(value, data) {
+      let url = '';
+      let score_home = parseInt(data.score_home);
+      let score_away = parseInt(data.score_away);
+      if (value == 'expired') {
+        switch (data.pick_hdp) {
+          case 'H':
+            url = score_home > score_away ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            break;
+          default:
+            url = score_away > score_home ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            break;
+        }
+      } else {
+        url = 'assets/images/icon_tick@2x.png';
+      }
+      return url;
+    },
     matchDate(value) {
       var date = new Date(value);
       return date.getHours() + ':' + (date.getMinutes() == 0 ? '00' : date.getMinutes());
@@ -26629,7 +26671,8 @@ var render = function() {
       staticClass: "match-prediction",
       class: {
         "match-prediction--inplay": _vm.inplaypregame == "inplay",
-        "match-prediction--pregame": _vm.inplaypregame == "pregame"
+        "match-prediction--pregame": _vm.inplaypregame == "pregame",
+        "match-prediction--expired": _vm.inplaypregame == "expired"
       },
       attrs: { "data-pridiction-type": "inplay" },
       on: {
@@ -26644,6 +26687,8 @@ var render = function() {
           "div",
           {
             class: {
+              "match-prediction--kickoff-expired":
+                _vm.inplaypregame == "expired",
               "match-prediction--kickoff-inplay": _vm.inplaypregame == "inplay",
               "match-prediction--kickoff-pregame":
                 _vm.inplaypregame == "pregame"
@@ -26687,6 +26732,7 @@ var render = function() {
         {
           staticClass: "btn",
           class: {
+            "btn--expired": _vm.inplaypregame == "expired",
             "btn--inplay": _vm.inplaypregame == "inplay",
             "btn--pregame": _vm.inplaypregame == "pregame",
             "btn--btn-selected":
@@ -26695,7 +26741,15 @@ var render = function() {
           attrs: { id: _vm.items.match_code }
         },
         [
-          _vm._m(0, false, false),
+          _c("div", [
+            _c("img", {
+              class: {
+                "btn--tickicon": _vm.inplaypregame != "expired",
+                "btn--winicon": _vm.inplaypregame == "expired"
+              },
+              attrs: { src: _vm.setSrcIcon(_vm.inplaypregame, _vm.items) }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -26730,7 +26784,7 @@ var render = function() {
           _c("div", [
             _c("span", [_vm._v(_vm._s(_vm.items.match_minute) + "'")]),
             _vm._v(" "),
-            _vm._m(1, false, false)
+            _vm._m(0, false, false)
           ])
         ]
       ),
@@ -26747,17 +26801,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", {
-        staticClass: "btn--tickicon",
-        attrs: { src: "assets/images/icon_tick@2x.png" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -33670,6 +33713,26 @@ var render = function() {
                     [
                       _vm._m(0, false, false),
                       _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.inplay.length == 0,
+                              expression: "$root.$data.inplay.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No In-Play Predictions for today")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
                       _vm._l(_vm.$root.$data.inplay, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
@@ -33679,7 +33742,32 @@ var render = function() {
                       _vm._v(" "),
                       _vm._m(1, false, false),
                       _vm._v(" "),
-                      _vm._m(2, false, false)
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.inplayExpired.length == 0,
+                              expression: "$root.$data.inplayExpired.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No In-Play Predictions for today")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.$root.$data.inplayExpired, function(item) {
+                        return _c("buttonprediction", {
+                          key: item.match_code,
+                          attrs: { items: item, inplaypregame: "expired" }
+                        })
+                      })
                     ],
                     2
                   ),
@@ -33688,7 +33776,7 @@ var render = function() {
                     "div",
                     { staticClass: "row row__inplay inplay-pregame--pregame" },
                     [
-                      _vm._m(3, false, false),
+                      _vm._m(2, false, false),
                       _vm._v(" "),
                       _vm._l(_vm.$root.$data.pregame, function(item) {
                         return _c("buttonprediction", {
@@ -33697,15 +33785,15 @@ var render = function() {
                         })
                       }),
                       _vm._v(" "),
-                      _vm._m(4, false, false),
+                      _vm._m(3, false, false),
                       _vm._v(" "),
-                      _vm._m(5, false, false)
+                      _vm._m(4, false, false)
                     ],
                     2
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(6, false, false)
+                _vm._m(5, false, false)
               ])
             ]),
             _vm._v(" "),
@@ -33728,7 +33816,7 @@ var render = function() {
               "div",
               { staticClass: "row__livescore" },
               [
-                _vm._m(7, false, false),
+                _vm._m(6, false, false),
                 _vm._v(" "),
                 _c("calender"),
                 _vm._v(" "),
@@ -33897,7 +33985,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(8, false, false)
+                    _vm._m(7, false, false)
                   ]
                 )
               ],
@@ -33937,15 +34025,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-title header-title--expired" }, [
-      _c("span", [_vm._v("EXPIRED inplay")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "prediction-detail-content--expired" }, [
-      _c("span", [_vm._v("No In-Play Predictions for today")])
+      _c("span", [_vm._v("EXPIRED Inplay")])
     ])
   },
   function() {
