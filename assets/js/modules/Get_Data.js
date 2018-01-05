@@ -25,7 +25,9 @@ class GetData {
 					let match_code = app.$store.state.predictionSelected.match_code
 					switch (type) {
 						case 'inplay':
-						app.$store.state.predictionSelected.match_code=data.Running.find(x=>x.match_code==match_code)
+							app.$store.state.predictionSelected.match_code = data.Running.find(
+								x => x.match_code == match_code,
+							)
 							break
 					}
 				}
@@ -50,7 +52,9 @@ class GetData {
 					let match_code = app.$store.state.predictionSelected.match_code
 					switch (type) {
 						case 'pregame':
-						app.$store.state.predictionSelected.match_code=data.Pregame.find(x=>x.match_code==match_code)
+							app.$store.state.predictionSelected.match_code = data.Pregame.find(
+								x => x.match_code == match_code,
+							)
 							break
 					}
 				}
@@ -106,7 +110,7 @@ class GetData {
 				}
 				app.$store.state.isOpenPredictionDetail = true
 			}
-			
+
 			setTimeout(() => {
 				that.getDataInPlay(app)
 			}, 3000)
@@ -125,6 +129,10 @@ class GetData {
 			this.getTimeLineData(),
 		).done(function(matchlivescore, stats, timeline) {
 			var leaguename = []
+			var leagueLeft = []
+			var leagueRight = []
+			var dataleftcoln = []
+			var datarightcoln = []
 			for (var i = 0; i < matchlivescore.data.r.length; i++) {
 				if (!that.checkLeague(matchlivescore.data.r[i][5], leaguename)) {
 					leaguename.push({
@@ -134,12 +142,37 @@ class GetData {
 					})
 				}
 			}
+
+			for (var i = 0; i < leaguename.length; i++) {
+				let dataArr = matchlivescore.data.r.filter(
+					x => x[5] == leaguename[i].league,
+				)
+
+				if (
+					dataleftcoln.length < datarightcoln.length ||
+					dataleftcoln.length == 0
+				) {
+					leagueLeft.push(leaguename[i])
+					for (var l = 0; l < dataArr.length; l++) {
+						dataleftcoln.push(dataArr[l])
+					}
+				} else {
+					leagueRight.push(leaguename[i])
+					for (var l = 0; l < dataArr.length; l++) {
+						datarightcoln.push(dataArr[l])
+					}
+				}
+			}
+			console.log(dataleftcoln)
+			console.log(datarightcoln)
 			app.livescore = matchlivescore.data.r
-			app.leagueLiveScoreLeft = leaguename.splice(
+			/*app.leagueLiveScoreLeft = leaguename.splice(
 				0,
 				Math.round(leaguename.length / 2),
 			)
-			app.leagueLiveScoreRight = leaguename
+			app.leagueLiveScoreRight = leaguename*/
+			app.leagueLiveScoreLeft = leagueLeft
+			app.leagueLiveScoreRight = leagueRight
 			app.livescoreStats = that.formatJson(stats.data)
 			app.livescoreTimeLine = that.formatJson(timeline.data)
 
@@ -176,9 +209,9 @@ class GetData {
 				}
 			}
 
-			app.$store.state.timer = setTimeout(() => {
+			/*app.$store.state.timer = setTimeout(() => {
 				that.getDataLiveScore(app)
-			}, 5000)
+			}, 5000)*/
 		})
 	}
 

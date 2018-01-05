@@ -412,8 +412,11 @@ if (false) {(function () {
   props: ['items'],
   filters: {
     setTimeLive(val) {
-      let date = new Date(val.replace(/-/g, '/'));
-      return (date.getHours().toString().length == 1 ? "0" + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+      if (typeof val === 'string') {
+        val = val.replace(/-/g, '/');
+      }
+      let date = new Date(val);
+      return (date.getHours().toString().length == 1 ? '0' + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
     },
 
     setFT(val) {

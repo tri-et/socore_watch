@@ -24225,8 +24225,11 @@ if (false) {
   props: ['items'],
   filters: {
     setTimeLive(val) {
-      let date = new Date(val.replace(/-/g, '/'));
-      return (date.getHours().toString().length == 1 ? "0" + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
+      if (typeof val === 'string') {
+        val = val.replace(/-/g, '/');
+      }
+      let date = new Date(val);
+      return (date.getHours().toString().length == 1 ? '0' + date.getHours() : date.getHours()) + ':' + (date.getMinutes() == '0' ? '00' : date.getMinutes());
     },
 
     setFT(val) {
@@ -25383,6 +25386,10 @@ var GetData = function () {
 			var that = this;
 			_jquery2.default.when(this.getMatchLiveScore(), this.getStatsData(), this.getTimeLineData()).done(function (matchlivescore, stats, timeline) {
 				var leaguename = [];
+				var leagueLeft = [];
+				var leagueRight = [];
+				var dataleftcoln = [];
+				var datarightcoln = [];
 				for (var i = 0; i < matchlivescore.data.r.length; i++) {
 					if (!that.checkLeague(matchlivescore.data.r[i][5], leaguename)) {
 						leaguename.push({
@@ -25392,9 +25399,34 @@ var GetData = function () {
 						});
 					}
 				}
+
+				for (var i = 0; i < leaguename.length; i++) {
+					var dataArr = matchlivescore.data.r.filter(function (x) {
+						return x[5] == leaguename[i].league;
+					});
+
+					if (dataleftcoln.length < datarightcoln.length || dataleftcoln.length == 0) {
+						leagueLeft.push(leaguename[i]);
+						for (var l = 0; l < dataArr.length; l++) {
+							dataleftcoln.push(dataArr[l]);
+						}
+					} else {
+						leagueRight.push(leaguename[i]);
+						for (var l = 0; l < dataArr.length; l++) {
+							datarightcoln.push(dataArr[l]);
+						}
+					}
+				}
+				console.log(dataleftcoln);
+				console.log(datarightcoln);
 				app.livescore = matchlivescore.data.r;
-				app.leagueLiveScoreLeft = leaguename.splice(0, Math.round(leaguename.length / 2));
-				app.leagueLiveScoreRight = leaguename;
+				/*app.leagueLiveScoreLeft = leaguename.splice(
+    	0,
+    	Math.round(leaguename.length / 2),
+    )
+    app.leagueLiveScoreRight = leaguename*/
+				app.leagueLiveScoreLeft = leagueLeft;
+				app.leagueLiveScoreRight = leagueRight;
 				app.livescoreStats = that.formatJson(stats.data);
 				app.livescoreTimeLine = that.formatJson(timeline.data);
 
@@ -25439,9 +25471,9 @@ var GetData = function () {
 					};
 				}
 
-				app.$store.state.timer = setTimeout(function () {
-					that.getDataLiveScore(app);
-				}, 5000);
+				/*app.$store.state.timer = setTimeout(() => {
+    	that.getDataLiveScore(app)
+    }, 5000)*/
 			});
 		}
 	}, {
