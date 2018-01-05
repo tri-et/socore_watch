@@ -179,9 +179,16 @@ export default {
   props: ['items'],
   filters: {
     setTimeLive(val) {
-      let date = new Date(val.replace(/-/g,'/'))
+      if (typeof val === 'string') {
+        val = val.replace(/-/g, '/')
+      }
+      let date = new Date(val)
       return (
-         (date.getHours().toString().length==1?("0"+date.getHours()):(date.getHours())) +':' + (date.getMinutes() == '0' ? '00' : date.getMinutes())
+        (date.getHours().toString().length == 1
+          ? '0' + date.getHours()
+          : date.getHours()) +
+        ':' +
+        (date.getMinutes() == '0' ? '00' : date.getMinutes())
       )
     },
 
@@ -232,10 +239,24 @@ export default {
       let iconl = ''
       switch (homeaway) {
         case 'home':
-          iconl = number == 1 ? (this.$store.state.ishidetoolbar?'../../assets/images/iconl/':'assets/images/iconl/') + val + '.gif' : ''
+          iconl =
+            number == 1
+              ? (this.$store.state.ishidetoolbar
+                  ? '../../assets/images/iconl/'
+                  : 'assets/images/iconl/') +
+                val +
+                '.gif'
+              : ''
           break
         case 'away':
-          iconl = number == 0 ? (this.$store.state.ishidetoolbar?'../../assets/images/iconl/':'assets/images/iconl/')  + val + '.gif' : ''
+          iconl =
+            number == 0
+              ? (this.$store.state.ishidetoolbar
+                  ? '../../assets/images/iconl/'
+                  : 'assets/images/iconl/') +
+                val +
+                '.gif'
+              : ''
           break
       }
       return iconl
@@ -257,7 +278,7 @@ export default {
       this.$store.state.newtabOpen = false
       newWindow = window.open('index.php/home/detaillivescore', '_blank')
       newWindow.livedetaildata = {
-        data: this.$store.state.dataLivescoreDetail
+        data: this.$store.state.dataLivescoreDetail,
       }
     },
 
