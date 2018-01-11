@@ -34,12 +34,12 @@
         color :rgba($mainBlack,0.3);
     }
 
-    div:last-child {
+    /*div:last-child {
         text-align:right;
         span {
             padding:16px;
         }
-    }
+    }*/
 
     @mixin clearfix;
 }

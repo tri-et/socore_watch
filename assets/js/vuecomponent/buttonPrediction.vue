@@ -59,9 +59,17 @@ export default {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
     },
-
   },
   methods: {
+    setOdds(newdata, olddata) {
+      let newHpd = newdata.sys.hdp
+      let oldHpd = olddata.sys.hdp
+      if (newHpd == '') {
+        this.items.sys.hdp = newHpd
+      } else {
+        this.items.sys.hdp = oldHpd
+      }
+    },
     matchDate(value) {
       var date = new Date(value)
       return (
@@ -89,13 +97,15 @@ export default {
     openPredictionDetail(ob) {
       let that = this
       this.$store.state.statLiveActive = 'stats'
-      this.$store.state.predictionSelected.isopening =this.$store.state.isOpenPredictionDetail == false ? false : true
+      this.$store.state.predictionSelected.isopening =
+        this.$store.state.isOpenPredictionDetail == false ? false : true
       setTimeout(function() {
         that.$store.state.dataPredictionDetail = ob
         that.$store.state.predictionSelected = {
           match_code: ob.match_code,
           type: that.inplaypregame,
-          isopening:that.$store.state.isOpenPredictionDetail == false ? false : true
+          isopening:
+            that.$store.state.isOpenPredictionDetail == false ? false : true,
         }
       }, 500)
       this.$store.state.isOpenPredictionDetail = true
@@ -105,6 +115,11 @@ export default {
     },
     getId() {
       return this.items.match_code
+    },
+  },
+  watch: {
+    items: function(newdata, olddata) {
+      this.setOdds(newdata, olddata)
     },
   },
   mounted() {

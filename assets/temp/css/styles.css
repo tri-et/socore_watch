@@ -1942,6 +1942,30 @@ body{
         display:none;
     }
 
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    cursor: pointer;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: 5px;
+    opacity: 0;
+    -webkit-transition: all .5s ;
+    transition: all .5s ;
+}
+
+.arrow--down{
+        border-top: 7px solid #FF7754;
+        opacity:1
+    }
+
+.arrow--up{
+        border-bottom: 7px solid #2ACE5F;
+        opacity:1
+    }
+
 @-webkit-keyframes leftmarquee {
     0%   { -webkit-transform: translateX(100%); transform: translateX(100%); }
     100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
@@ -1950,6 +1974,18 @@ body{
 @keyframes leftmarquee {
     0%   { -webkit-transform: translateX(100%); transform: translateX(100%); }
     100% { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+}
+
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 0;}
+    20%  {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@keyframes cssAnimation {
+    0%   {opacity: 0;}
+    20%  {opacity: 1;}
+    100% {opacity: 0;}
 }
 
 .livescore-detail-content {
@@ -2399,6 +2435,13 @@ body{
     -webkit-box-align: baseline;
         -ms-flex-align: baseline;
             align-items: baseline;
+
+    /*div:last-child {
+        text-align:right;
+        span {
+            padding:16px;
+        }
+    }*/
 }
 
 .odds-ou-header--inplay {
@@ -2414,6 +2457,7 @@ body{
         text-align:center;
         padding-top:15px;
         width:25%;
+        padding-right: 14px
     }
 
 .odds-ou-header div:first-child {
@@ -2426,14 +2470,6 @@ body{
 
 .odds-ou-header div:first-child span {
             padding-left:16px;
-        }
-
-.odds-ou-header div:last-child {
-        text-align:right;
-    }
-
-.odds-ou-header div:last-child span {
-            padding:16px;
         }
 
 .odds-ou-content--m8 {
@@ -2469,13 +2505,12 @@ body{
         color: rgba(0,0,0,0.3);
     }
 
-.odds-ou-content div:last-child {
+/*div:last-child {
         text-align:right;
-    }
-
-.odds-ou-content div:last-child span {
+        span {
             padding:16px;
         }
+    }*/
 
 .odds-ou-content::after{
         content:"";

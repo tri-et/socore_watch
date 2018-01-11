@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 88);
+/******/ 	return __webpack_require__(__webpack_require__.s = 91);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -180,7 +180,7 @@ module.exports = function normalizeComponent (
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_27617be6_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_predictionDetail_vue__ = __webpack_require__(17);
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -231,6 +231,31 @@ if (false) {(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__oddsPredictions_vue__ = __webpack_require__(14);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -423,17 +448,83 @@ if (false) {(function () {
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
   props: {
     items: {
-      type: Object
+      type: Object,
+      default: () => {}
     }
+  },
+  components: {
+    oddspredictions: __WEBPACK_IMPORTED_MODULE_0__oddsPredictions_vue__["a" /* default */]
   },
   data() {
     return {
-      activeMarquee: false
+      activeMarquee: false,
+      status: {
+        m8odds_home: '',
+        m8odds_way: '',
+        sboodds_home: '',
+        sboodds_away: '',
+        ibcodds_home: '',
+        ibcodds_away: '',
+        m8odds_over: '',
+        m8odds_under: '',
+        sboodds_over: '',
+        sboodds_under: '',
+        ibcodds_over: '',
+        ibcodds_under: ''
+      }
     };
   },
+  /*watch: {
+    items: function(newData, oldData) {
+      var match_code = this.$store.state.predictionSelected.match_code
+      if (
+        match_code == newData.match_code &&
+        newData.match_code == oldData.match_code
+      ) {
+        let m8keys = Object.keys(newData.sys).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+        let ibckeys = Object.keys(newData.ibc).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+        let sbokeys = Object.keys(newData.sbo).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+          for (var i = 0; i < m8keys.length; i++) {
+          let newVal = parseFloat(newData.sys[m8keys[i]])
+          let oldVal = parseFloat(oldData.sys[m8keys[i]])
+            if (newVal > oldVal) {
+            this.status['m8' + m8keys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['m8' + m8keys[i]] = 'arrow--down'
+          }
+        }
+          for (var i = 0; i < sbokeys.length; i++) {
+          let newVal = parseFloat(newData.sbo[sbokeys[i]])
+          let oldVal = parseFloat(oldData.sbo[sbokeys[i]])
+          if (newVal > oldVal) {
+            this.status['sbo' + sbokeys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['sbo' + sbokeys[i]] = 'arrow--down'
+          }
+        }
+          for (var i = 0; i < ibckeys.length; i++) {
+          let newVal = parseFloat(newData.ibc[ibckeys[i]])
+          let oldVal = parseFloat(oldData.ibc[ibckeys[i]])
+            if (newVal > oldVal) {
+            this.status['ibc' + ibckeys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['ibc' + ibckeys[i]] = 'arrow--down'
+          }
+        }
+      }
+    },
+  },*/
+
   filters: {
     setStatus(value) {
       return value == '' ? 'Kickoff' : value;
@@ -511,6 +602,148 @@ if (false) {(function () {
 /***/ }),
 
 /***/ 14:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_oddsPredictions_vue__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e0e3843_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_oddsPredictions_vue__ = __webpack_require__(16);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_oddsPredictions_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6e0e3843_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_oddsPredictions_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\oddsPredictions.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e0e3843", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e0e3843", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 15:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+  props: ['items', 'currentmatchcode'],
+  data() {
+    return {
+      current_code: '',
+      arrow: ''
+    };
+  },
+  methods: {
+    setArrow(olddata, newdata) {
+      let that = this;
+      if (olddata != '') {
+        let oldvalue = parseFloat(olddata);
+        let newvalue = parseFloat(newdata);
+        if (newvalue > oldvalue) {
+          this.arrow = 'arrow--up';
+
+          setTimeout(() => {
+            that.arrow = '';
+          }, 3000);
+        } else if (newvalue < oldvalue) {
+          this.arrow = 'arrow--down';
+          setTimeout(() => {
+            that.arrow = '';
+          }, 3000);
+        } else {
+          this.arrow = '';
+        }
+      }
+    }
+  },
+  filters: {
+    setDash(value) {
+      return value == '' ? '-' : value;
+    }
+  },
+  watch: {
+    items: function (newdata, olddata) {
+      if (this.current_code == '' || this.current_code != this.currentmatchcode) {
+        this.current_code = this.currentmatchcode;
+        this.arrow = '';
+      } else {
+        this.setArrow(olddata, newdata);
+        this.current_code = this.currentmatchcode;
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ 16:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("span", [_vm._v(_vm._s(_vm._f("setDash")(_vm.items)))]),
+    _vm._v(" "),
+    _c("span", { staticClass: "arrow", class: _vm.arrow })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6e0e3843", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 17:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -804,83 +1037,105 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "odds-ou-content--m8",
-                      class: {
-                        "odds-ou-content--m8--pregame":
-                          _vm.$store.state.predictionSelected.type == "pregame",
-                        "odds-ou-content--m8--inplay":
-                          _vm.$store.state.predictionSelected.type == "inplay"
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "odds-ou-content--m8",
+                        class: {
+                          "odds-ou-content--m8--pregame":
+                            _vm.$store.state.predictionSelected.type ==
+                            "pregame",
+                          "odds-ou-content--m8--inplay":
+                            _vm.$store.state.predictionSelected.type == "inplay"
+                        }
+                      },
+                      [_c("span", [_vm._v("M8")])]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.hdp)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sys.odds_home,
+                        currentmatchcode: _vm.items.match_code
                       }
-                    },
-                    [_c("span", [_vm._v("M8")])]
-                  ),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.hdp)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_home)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_away)))
-                    ])
-                  ])
-                ]),
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sys.odds_away,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(5, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.hdp)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_home)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_away)))
-                    ])
-                  ])
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _vm._m(5, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.hdp)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sbo.odds_home,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sbo.odds_away,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(6, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.hdp)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_home)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_away)))
-                    ])
-                  ])
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _vm._m(6, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.hdp)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.ibc.odds_home,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.ibc.odds_away,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -904,89 +1159,105 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "odds-ou-content--m8",
-                      class: {
-                        "odds-ou-content--m8--pregame":
-                          _vm.$store.state.predictionSelected.type == "pregame",
-                        "odds-ou-content--m8--inplay":
-                          _vm.$store.state.predictionSelected.type == "inplay"
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "odds-ou-content--m8",
+                        class: {
+                          "odds-ou-content--m8--pregame":
+                            _vm.$store.state.predictionSelected.type ==
+                            "pregame",
+                          "odds-ou-content--m8--inplay":
+                            _vm.$store.state.predictionSelected.type == "inplay"
+                        }
+                      },
+                      [_c("span", [_vm._v("M8")])]
+                    ),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.ou)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sys.odds_over,
+                        currentmatchcode: _vm.items.match_code
                       }
-                    },
-                    [_c("span", [_vm._v("M8")])]
-                  ),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.ou)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sys.odds_over)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(_vm._f("setDash")(_vm.items.sys.odds_under))
-                      )
-                    ])
-                  ])
-                ]),
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sys.odds_under,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(11, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.ou)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.odds_over)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(_vm._f("setDash")(_vm.items.sbo.odds_under))
-                      )
-                    ])
-                  ])
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _vm._m(11, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.sbo.ou)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sbo.odds_over,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.sbo.odds_under,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "odds-ou-content" }, [
-                  _vm._m(12, false, false),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.ou)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.odds_over)))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", [
-                    _c("span", [
-                      _vm._v(
-                        _vm._s(_vm._f("setDash")(_vm.items.ibc.odds_under))
-                      )
-                    ])
-                  ])
-                ])
+                _c(
+                  "div",
+                  { staticClass: "odds-ou-content" },
+                  [
+                    _vm._m(12, false, false),
+                    _vm._v(" "),
+                    _c("div", [
+                      _c("span", [
+                        _vm._v(_vm._s(_vm._f("setDash")(_vm.items.ibc.ou)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.ibc.odds_over,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("oddspredictions", {
+                      attrs: {
+                        items: _vm.items.ibc.odds_under,
+                        currentmatchcode: _vm.items.match_code
+                      }
+                    })
+                  ],
+                  1
+                )
               ]
             ),
             _vm._v(" "),
@@ -13304,98 +13575,6 @@ var index_esm = {
 
 /***/ }),
 
-/***/ 88:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(4);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _store = __webpack_require__(7);
-
-var _vueResize = __webpack_require__(9);
-
-var _vueResize2 = _interopRequireDefault(_vueResize);
-
-var _preDetail = __webpack_require__(89);
-
-var _preDetail2 = _interopRequireDefault(_preDetail);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_vue2.default.use(_vueResize2.default);
-
-new _vue2.default({
-    el: '#detailprediction',
-    store: _store.store,
-    render: function render(h) {
-        return h(_preDetail2.default);
-    },
-    mounted: function mounted() {
-        this.$store.state.predictionSelected.type = window.predetaildata.type;
-        this.$store.state.dataPredictionDetail = window.predetaildata.data;
-        this.$store.state.ishidetoolbar = true;
-    }
-});
-
-/***/ }),
-
-/***/ 89:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__ = __webpack_require__(91);
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "assets\\js\\vuecomponent\\preDetail.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-670d2157", Component.options)
-  } else {
-    hotAPI.reload("data-v-670d2157", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
 /***/ 9:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -13524,7 +13703,99 @@ if (GlobalVue) {
 
 /***/ }),
 
-/***/ 90:
+/***/ 91:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(4);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _store = __webpack_require__(7);
+
+var _vueResize = __webpack_require__(9);
+
+var _vueResize2 = _interopRequireDefault(_vueResize);
+
+var _preDetail = __webpack_require__(92);
+
+var _preDetail2 = _interopRequireDefault(_preDetail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_vue2.default.use(_vueResize2.default);
+
+new _vue2.default({
+    el: '#detailprediction',
+    store: _store.store,
+    render: function render(h) {
+        return h(_preDetail2.default);
+    },
+    mounted: function mounted() {
+        this.$store.state.predictionSelected.type = window.predetaildata.type;
+        this.$store.state.dataPredictionDetail = window.predetaildata.data;
+        this.$store.state.ishidetoolbar = true;
+    }
+});
+
+/***/ }),
+
+/***/ 92:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__ = __webpack_require__(94);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_preDetail_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_670d2157_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_preDetail_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "assets\\js\\vuecomponent\\preDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-670d2157", Component.options)
+  } else {
+    hotAPI.reload("data-v-670d2157", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 93:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13544,7 +13815,7 @@ if (GlobalVue) {
 
 /***/ }),
 
-/***/ 91:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

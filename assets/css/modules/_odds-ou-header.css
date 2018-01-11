@@ -20,6 +20,7 @@
         text-align:center;
         padding-top:15px;
         width:25%;
+        padding-right: 14px
     }
 
     div:first-child {
@@ -34,10 +35,10 @@
         }
     }
 
-    div:last-child {
+    /*div:last-child {
         text-align:right;
         span {
             padding:16px;
         }
-    }
+    }*/
 }

@@ -82,12 +82,16 @@
             <div>
               <span>{{items.sys.hdp|setDash}}</span>
             </div>
-            <div>
+            <!-- <div>
               <span>{{items.sys.odds_home|setDash}}</span>
+              <span class="arrow" :class="status.m8odds_home"></span>
             </div>
             <div>
               <span>{{items.sys.odds_away|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.m8odds_away"></span>
+            </div> -->
+            <oddspredictions :items="items.sys.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sys.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -96,12 +100,16 @@
             <div>
               <span>{{items.sbo.hdp|setDash}}</span>
             </div>
-            <div>
+            <!--<div>
               <span>{{items.sbo.odds_home|setDash}}</span>
+              <span class="arrow" :class="status.sboodds_home"></span>
             </div>
             <div>
               <span>{{items.sbo.odds_away|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.sboodds_away"></span>
+            </div>-->
+            <oddspredictions :items="items.sbo.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -110,12 +118,16 @@
             <div>
               <span>{{items.ibc.hdp|setDash}}</span>
             </div>
-            <div>
+            <!-- <div>
               <span>{{items.ibc.odds_home|setDash}}</span>
+              <span class="arrow" :class="status.iboodds_home"></span>
             </div>
             <div>
               <span>{{items.ibc.odds_away|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.iboodds_away"></span>
+            </div> -->
+            <oddspredictions :items="items.ibc.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <!-- end Odds-->
           <!--start OD-->
@@ -142,12 +154,16 @@
             <div>
               <span>{{items.sys.ou|setDash}}</span>
             </div>
-            <div>
+            <!-- <div>
               <span>{{items.sys.odds_over|setDash}}</span>
+              <span class="arrow" :class="status.m8odds_over"></span>
             </div>
             <div>
               <span>{{items.sys.odds_under|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.m8odds_under"></span>
+            </div> -->
+            <oddspredictions :items="items.sys.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sys.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -156,12 +172,16 @@
             <div>
               <span>{{items.sbo.ou|setDash}}</span>
             </div>
-            <div>
+            <!--<div>
               <span>{{items.sbo.odds_over|setDash}}</span>
+              <span class="arrow" :class="status.sboodds_over"></span>
             </div>
             <div>
               <span>{{items.sbo.odds_under|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.sboodds_under"></span>
+            </div>-->
+            <oddspredictions :items="items.sbo.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -170,12 +190,16 @@
             <div>
               <span>{{items.ibc.ou|setDash}}</span>
             </div>
-            <div>
+            <!-- <div>
               <span>{{items.ibc.odds_over|setDash}}</span>
+              <span class="arrow" :class="status.ibcodds_over"></span>
             </div>
             <div>
               <span>{{items.ibc.odds_under|setDash}}</span>
-            </div>
+              <span class="arrow" :class="status.ibcodds_under"></span>
+            </div> -->
+            <oddspredictions :items="items.ibc.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <!-- end OU-->
         </div>
@@ -190,17 +214,88 @@
 </template>
 
 <script>
+import oddspredictions from './oddsPredictions.vue'
 export default {
   props: {
     items: {
       type: Object,
+      default: () => {},
     },
+  },
+  components: {
+    oddspredictions,
   },
   data() {
     return {
-      activeMarquee: false
+      activeMarquee: false,
+      status: {
+        m8odds_home: '',
+        m8odds_way: '',
+        sboodds_home: '',
+        sboodds_away: '',
+        ibcodds_home: '',
+        ibcodds_away: '',
+        m8odds_over: '',
+        m8odds_under: '',
+        sboodds_over: '',
+        sboodds_under: '',
+        ibcodds_over: '',
+        ibcodds_under: '',
+      },
     }
   },
+  /*watch: {
+    items: function(newData, oldData) {
+      var match_code = this.$store.state.predictionSelected.match_code
+      if (
+        match_code == newData.match_code &&
+        newData.match_code == oldData.match_code
+      ) {
+        let m8keys = Object.keys(newData.sys).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+        let ibckeys = Object.keys(newData.ibc).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+        let sbokeys = Object.keys(newData.sbo).filter(
+          item => !['hdp', 'ou'].includes(item),
+        )
+
+        for (var i = 0; i < m8keys.length; i++) {
+          let newVal = parseFloat(newData.sys[m8keys[i]])
+          let oldVal = parseFloat(oldData.sys[m8keys[i]])
+
+          if (newVal > oldVal) {
+            this.status['m8' + m8keys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['m8' + m8keys[i]] = 'arrow--down'
+          }
+        }
+
+        for (var i = 0; i < sbokeys.length; i++) {
+          let newVal = parseFloat(newData.sbo[sbokeys[i]])
+          let oldVal = parseFloat(oldData.sbo[sbokeys[i]])
+          if (newVal > oldVal) {
+            this.status['sbo' + sbokeys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['sbo' + sbokeys[i]] = 'arrow--down'
+          }
+        }
+
+        for (var i = 0; i < ibckeys.length; i++) {
+          let newVal = parseFloat(newData.ibc[ibckeys[i]])
+          let oldVal = parseFloat(oldData.ibc[ibckeys[i]])
+
+          if (newVal > oldVal) {
+            this.status['ibc' + ibckeys[i]] = 'arrow--up'
+          } else if (newVal < oldVal) {
+            this.status['ibc' + ibckeys[i]] = 'arrow--down'
+          }
+        }
+      }
+    },
+  },*/
+
   filters: {
     setStatus(value) {
       return value == '' ? 'Kickoff' : value
@@ -210,9 +305,9 @@ export default {
       return val == '' ? time : minute + "'"
     },
 
-    setDash(value){
+    setDash(value) {
       return value == '' ? '-' : value
-    }
+    },
   },
   methods: {
     setMarquee() {
@@ -220,7 +315,9 @@ export default {
       this.activeMarquee = false
 
       setTimeout(() => {
-        var divContain = that.$el.querySelector('.prediction-detail-content--btn div:nth-child(1)')
+        var divContain = that.$el.querySelector(
+          '.prediction-detail-content--btn div:nth-child(1)',
+        )
         var textWidth = divContain.children[0].offsetWidth
         var divWidth = divContain.offsetWidth
 
@@ -276,7 +373,7 @@ export default {
   },
   mounted() {
     this.setMarquee()
-  }
+  },
 }
 </script>
 
