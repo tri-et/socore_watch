@@ -25552,7 +25552,8 @@ var GetData = function () {
 					//let data={"Pregame":[{"active":"1","match_code":"57023","match_dt":"09 Jan 2018 05:00","match_period":"Part2","match_minute":"56","league":"PORTUGAL LIGA NOS","team_home":"Estoril Praia","team_away":"Feirense","score_home":"0","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"-0.50","odds_home":"1.00","odds_away":"0.92","ou":"2.25","odds_over":"-0.98","odds_under":"0.88"},"sbo":{"hdp":"-0.50","odds_home":"1.00","odds_away":"0.92","ou":"2.25","odds_over":"-0.98","odds_under":"0.88"},"ibc":{"hdp":"-0.50","odds_home":"0.95","odds_away":"0.97","ou":"2.25","odds_over":"0.98","odds_under":"0.92"}},{"active":"1","match_code":"57020","match_dt":"09 Jan 2018 04:00","match_period":"Part2","match_minute":"45","league":"SPAIN LA LIGA","team_home":"Malaga","team_away":"RCD Espanyol","score_home":"0","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"-0.85","odds_away":"0.80","ou":"2.00","odds_over":"0.94","odds_under":"0.98"},"sbo":{"hdp":"0.00","odds_home":"-0.85","odds_away":"0.80","ou":"2.00","odds_over":"0.94","odds_under":"0.98"},"ibc":{"hdp":"0.00","odds_home":"-0.83","odds_away":"0.78","ou":"2.00","odds_over":"0.91","odds_under":"-0.99"}},{"active":"1","match_code":"57024","match_dt":"09 Jan 2018 04:00","match_period":"Part2","match_minute":"89","league":"FRANCE CUP","team_home":"Lens","team_away":"Boulogne","score_home":"2","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"-1.00","odds_home":"-0.91","odds_away":"0.83","ou":"2.75","odds_over":"-0.86","odds_under":"0.76"},"sbo":{"hdp":"-0.75","odds_home":"0.81","odds_away":"-0.89","ou":"2.50","odds_over":"0.80","odds_under":"-0.90"},"ibc":{"hdp":"-1.00","odds_home":"-0.92","odds_away":"0.84","ou":"2.75","odds_over":"-0.97","odds_under":"0.87"}},{"active":"1","match_code":"57021","match_dt":"09 Jan 2018 03:45","match_period":"Part2","match_minute":"87","league":"ENGLISH FA CUP","team_home":"Brighton \u0026 Hove Albion","team_away":"Crystal Palace","score_home":"2","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.25","odds_home":"0.94","odds_away":"0.98","ou":"2.00","odds_over":"1.00","odds_under":"0.90"},"sbo":{"hdp":"0.25","odds_home":"0.80","odds_away":"-0.88","ou":"2.00","odds_over":"0.92","odds_under":"0.98"},"ibc":{"hdp":"0.00","odds_home":"-0.82","odds_away":"0.74","ou":"2.00","odds_over":"0.91","odds_under":"0.99"}},{"active":"1","match_code":"57022","match_dt":"09 Jan 2018 03:00","match_period":"Part2","match_minute":"73","league":"PORTUGAL LIGA NOS","team_home":"Pacos de Ferreira","team_away":"Portimonense","score_home":"1","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"-0.50","odds_home":"0.83","odds_away":"-0.93","ou":"1.50","odds_over":"0.94","odds_under":"0.96"},"sbo":{"hdp":"0.00","odds_home":"0.95","odds_away":"0.97","ou":"2.25","odds_over":"0.90","odds_under":"1.00"},"ibc":{"hdp":"0.00","odds_home":"0.97","odds_away":"0.95","ou":"2.25","odds_over":"0.91","odds_under":"0.99"}}],"Running":[{"active":"1","match_code":"57026","match_dt":"09 Jan 2018 03:00","match_period":"FT","match_minute":"98","league":"PORTUGAL LIGA NOS","team_home":"Pacos de Ferreira","team_away":"Portimonense","score_home":"1","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"","odds_home":"","odds_away":"","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.24","odds_away":"-0.4","ou":"2.50","odds_over":"-0.11","odds_under":"0.03"},"ibc":{"hdp":"0.00","odds_home":"0.28","odds_away":"-0.38","ou":"2.50","odds_over":"-0.13","odds_under":"0.05"}},{"active":"1","match_code":"57027","match_dt":"09 Jan 2018 03:45","match_period":"FT","match_minute":"94","league":"ENGLISH FA CUP","team_home":"Brighton \u0026 Hove Albion","team_away":"Crystal Palace","score_home":"2","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.90","odds_away":"-0.98","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.82","odds_away":"-0.90","ou":"3.50","odds_over":"-0.13","odds_under":"0.05"},"ibc":{"hdp":"0.00","odds_home":"0.83","odds_away":"-0.91","ou":"3.50","odds_over":"-0.11","odds_under":"0.03"}},{"active":"1","match_code":"57029","match_dt":"09 Jan 2018 04:00","match_period":"FT","match_minute":"94","league":"FRANCE CUP","team_home":"Lens","team_away":"Boulogne","score_home":"2","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.50","odds_away":"-0.58","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.42","odds_away":"-0.50","ou":"4.50","odds_over":"-0.13","odds_under":"0.05"},"ibc":{"hdp":"0.00","odds_home":"0.49","odds_away":"-0.57","ou":"4.50","odds_over":"-0.11","odds_under":"0.03"}},{"active":"1","match_code":"57028","match_dt":"09 Jan 2018 04:00","match_period":"FT","match_minute":"95","league":"SPAIN LA LIGA","team_home":"Malaga","team_away":"RCD Espanyol","score_home":"0","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"O","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.87","odds_away":"-0.95","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.84","odds_away":"-0.92","ou":"1.50","odds_over":"-0.14","odds_under":"0.06"},"ibc":{"hdp":"0.00","odds_home":"0.83","odds_away":"-0.91","ou":"1.50","odds_over":"-0.10","odds_under":"0.02"}},{"active":"1","match_code":"57030","match_dt":"09 Jan 2018 05:00","match_period":"FT","match_minute":"94","league":"PORTUGAL LIGA NOS","team_home":"Estoril Praia","team_away":"Feirense","score_home":"0","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.60","odds_away":"-0.68","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.59","odds_away":"-0.67","ou":"2.50","odds_over":"-0.10","odds_under":"0.02"},"ibc":{"hdp":"0.00","odds_home":"0.60","odds_away":"-0.68","ou":"2.50","odds_over":"-0.10","odds_under":"0.02"}}]}
 
 					var data = JSON.parse(response);
-					app.inplay = data.Running;
+					//app.inplay = data.Running
+					app.inplayExpired = [];
 					if (app.$store.state.predictionSelected.match_code != '') {
 						var type = app.$store.state.predictionSelected.type;
 						var match_code = app.$store.state.predictionSelected.match_code;
@@ -25564,6 +25565,15 @@ var GetData = function () {
 								break;
 						}
 					}
+
+					data.Running.forEach(function (v) {
+						if (v.match_period == 'FT') {
+							app.inplayExpired.push(v);
+						} else {
+							app.inplay.push(v);
+						}
+					});
+
 					setTimeout(function () {
 						that.getDataInPlay(app);
 					}, 3000);
@@ -25622,10 +25632,18 @@ var GetData = function () {
 				var data = [];
 				var type = '';
 				app.pregame = pregameData;
-				app.inplay = inplayData;
+				//app.inplay = inplayData
+				app.inplayExpired = [];
+				inplayData.forEach(function (v) {
+					if (v.match_period == 'FT') {
+						app.inplayExpired.push(v);
+					} else {
+						app.inplay.push(v);
+					}
+				});
 
-				if (inplayData.length > 0) {
-					data = inplayData[0];
+				if (app.inplay > 0) {
+					data = app.inplay[0];
 					type = 'inplay';
 				} else {
 					data = pregameData[0];
@@ -26327,6 +26345,10 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -26841,6 +26863,9 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -26875,6 +26900,24 @@ if (false) {(function () {
       } else {
         this.items.sys.hdp = oldHpd;
       }
+    },
+    setSrcIcon(value, data) {
+      let url = '';
+      let score_home = parseInt(data.score_home);
+      let score_away = parseInt(data.score_away);
+      if (value == 'expired') {
+        switch (data.pick_hdp) {
+          case 'H':
+            url = score_home > score_away ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            break;
+          default:
+            url = score_away > score_home ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            break;
+        }
+      } else {
+        url = 'assets/images/icon_tick@2x.png';
+      }
+      return url;
     },
     matchDate(value) {
       var date = new Date(value);
@@ -26942,7 +26985,8 @@ var render = function() {
       staticClass: "match-prediction",
       class: {
         "match-prediction--inplay": _vm.inplaypregame == "inplay",
-        "match-prediction--pregame": _vm.inplaypregame == "pregame"
+        "match-prediction--pregame": _vm.inplaypregame == "pregame",
+        "match-prediction--expired": _vm.inplaypregame == "expired"
       },
       attrs: { "data-pridiction-type": "inplay" },
       on: {
@@ -26957,6 +27001,8 @@ var render = function() {
           "div",
           {
             class: {
+              "match-prediction--kickoff-expired":
+                _vm.inplaypregame == "expired",
               "match-prediction--kickoff-inplay": _vm.inplaypregame == "inplay",
               "match-prediction--kickoff-pregame":
                 _vm.inplaypregame == "pregame"
@@ -27000,6 +27046,7 @@ var render = function() {
         {
           staticClass: "btn",
           class: {
+            "btn--expired": _vm.inplaypregame == "expired",
             "btn--inplay": _vm.inplaypregame == "inplay",
             "btn--pregame": _vm.inplaypregame == "pregame",
             "btn--btn-selected":
@@ -27008,7 +27055,15 @@ var render = function() {
           attrs: { id: _vm.items.match_code }
         },
         [
-          _vm._m(0, false, false),
+          _c("div", [
+            _c("img", {
+              class: {
+                "btn--tickicon": _vm.inplaypregame != "expired",
+                "btn--winicon": _vm.inplaypregame == "expired"
+              },
+              attrs: { src: _vm.setSrcIcon(_vm.inplaypregame, _vm.items) }
+            })
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -27043,7 +27098,7 @@ var render = function() {
           _c("div", [
             _c("span", [_vm._v(_vm._s(_vm.items.match_minute) + "'")]),
             _vm._v(" "),
-            _vm._m(1, false, false)
+            _vm._m(0, false, false)
           ])
         ]
       ),
@@ -27060,17 +27115,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", {
-        staticClass: "btn--tickicon",
-        attrs: { src: "assets/images/icon_tick@2x.png" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -33983,6 +34027,26 @@ var render = function() {
                     [
                       _vm._m(0, false, false),
                       _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.inplay.length == 0,
+                              expression: "$root.$data.inplay.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No In-Play Predictions for today")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
                       _vm._l(_vm.$root.$data.inplay, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
@@ -33992,7 +34056,32 @@ var render = function() {
                       _vm._v(" "),
                       _vm._m(1, false, false),
                       _vm._v(" "),
-                      _vm._m(2, false, false)
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.inplayExpired.length == 0,
+                              expression: "$root.$data.inplayExpired.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No In-Play Predictions for today")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.$root.$data.inplayExpired, function(item) {
+                        return _c("buttonprediction", {
+                          key: item.match_code,
+                          attrs: { items: item, inplaypregame: "expired" }
+                        })
+                      })
                     ],
                     2
                   ),
@@ -34001,7 +34090,7 @@ var render = function() {
                     "div",
                     { staticClass: "row row__inplay inplay-pregame--pregame" },
                     [
-                      _vm._m(3, false, false),
+                      _vm._m(2, false, false),
                       _vm._v(" "),
                       _vm._l(_vm.$root.$data.pregame, function(item) {
                         return _c("buttonprediction", {
@@ -34010,15 +34099,15 @@ var render = function() {
                         })
                       }),
                       _vm._v(" "),
-                      _vm._m(4, false, false),
+                      _vm._m(3, false, false),
                       _vm._v(" "),
-                      _vm._m(5, false, false)
+                      _vm._m(4, false, false)
                     ],
                     2
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(6, false, false)
+                _vm._m(5, false, false)
               ])
             ]),
             _vm._v(" "),
@@ -34041,7 +34130,7 @@ var render = function() {
               "div",
               { staticClass: "row__livescore" },
               [
-                _vm._m(7, false, false),
+                _vm._m(6, false, false),
                 _vm._v(" "),
                 _c("calender"),
                 _vm._v(" "),
@@ -34210,7 +34299,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(8, false, false)
+                    _vm._m(7, false, false)
                   ]
                 )
               ],
@@ -34250,15 +34339,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-title header-title--expired" }, [
-      _c("span", [_vm._v("EXPIRED inplay")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "prediction-detail-content--expired" }, [
-      _c("span", [_vm._v("No In-Play Predictions for today")])
+      _c("span", [_vm._v("EXPIRED Inplay")])
     ])
   },
   function() {

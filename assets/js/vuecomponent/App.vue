@@ -10,13 +10,17 @@
                             <div class="header-title header-title--inplay">
                                 <span>inplay</span>
                             </div>
-                            <buttonprediction :items="item" v-for="item in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
-                            <div class="header-title header-title--expired">
-                                <span>EXPIRED inplay</span>
-                            </div>
-                            <div class="prediction-detail-content--expired">
+                             <div v-show="$root.$data.inplay.length==0" class="prediction-detail-content--expired">
                                 <span>No In-Play Predictions for today</span>
                             </div>
+                            <buttonprediction :items="item" v-for="item in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
+                            <div class="header-title header-title--expired">
+                                <span>EXPIRED Inplay</span>
+                            </div>
+                            <div v-show="$root.$data.inplayExpired.length==0" class="prediction-detail-content--expired">
+                                <span>No In-Play Predictions for today</span>
+                            </div>
+                            <buttonprediction :items="item" v-for="item in $root.$data.inplayExpired" :key="item.match_code" inplaypregame="expired"></buttonprediction>
                         </div>
                         <div class="row row__inplay inplay-pregame--pregame">
                             <div class="header-title header-title--pregame">

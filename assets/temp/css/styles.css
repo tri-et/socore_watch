@@ -2635,6 +2635,18 @@ body{
         margin-top: 7px;
     }
 
+.match-prediction--kickoff-expired {
+        width:82px;
+        text-align:center;
+        display: inline-grid;
+        color:#C9C9C9;
+        text-transform: capitalize;
+        line-height:1.5;
+        font-size: 12px;
+        float:left;
+        margin-top: 7px;
+    }
+
 .match-prediction--kickoff-pregame {
         width:82px;
         text-align:center;
@@ -2670,7 +2682,7 @@ body{
         margin:auto;
     }
 
-.match-prediction--pregame:nth-child(2n),.match-prediction--inplay:nth-child(2n){
+.match-prediction--pregame:nth-child(2n),.match-prediction--inplay:nth-child(2n),.match-prediction--expired:nth-child(2n){
         background-color:#FFF;
     }
 
@@ -2680,6 +2692,10 @@ body{
 
 .match-prediction--pregame:nth-child(2n+1){
         background-color:#adebc1;
+    }
+
+.match-prediction--expired:nth-child(2n+1){
+        background-color:#F0F1F1;
     }
 
 .match-prediction--inplay:hover {
@@ -2785,6 +2801,38 @@ body{
             display:flex;
         }
 
+.btn--expired {
+        background-image:url("../../images/bg_expired_row.png"); 
+        color:#FFF;
+        
+    }
+
+.btn--expired div {
+            float:left;
+            margin-top:9px;
+        }
+
+.btn--expired div:nth-child(2) {
+            width: 35%;
+            overflow: hidden;
+            white-space: nowrap;
+            position:relative;
+            height: inherit;
+            margin-right:5px;
+        }
+
+.btn--expired div:nth-child(3){
+            font-size:14px;
+            margin-top:10px;
+        }
+
+.btn--expired div:last-child {
+            float:right;
+            display:-webkit-box;
+            display:-ms-flexbox;
+            display:flex;
+        }
+
 .btn--pregame {
         background-image:url("../../images/bg_pre_game_item@2x.png"); 
         color:#FFF;
@@ -2821,6 +2869,12 @@ body{
        width:20px;
        height:19px;
        margin:-2px 12px 0 12px;
+    }
+
+.btn--winicon{
+        margin: -9px 12px 0 0px;
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
     }
 
 .btn--watchicon {
