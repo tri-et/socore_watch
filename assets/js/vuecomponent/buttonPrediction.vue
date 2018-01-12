@@ -1,6 +1,6 @@
 <template>
   <div class="match-prediction" :class="{'match-prediction--inplay':inplaypregame=='inplay',
-  'match-prediction--pregame':inplaypregame=='pregame','match-prediction--expired':inplaypregame=='expired'}" data-pridiction-type="inplay" @click="openPredictionDetail(items)">
+  'match-prediction--pregame':inplaypregame=='pregame','match-prediction--expired':inplaypregame=='expired','match-prediction--active':(getId()==$store.state.predictionSelected.match_code && inplaypregame=='expired')}" data-pridiction-type="inplay" @click="openPredictionDetail(items)">
     <div class="match-prediction--items">
       <div :class="{'match-prediction--kickoff-expired':inplaypregame=='expired','match-prediction--kickoff-inplay':inplaypregame=='inplay','match-prediction--kickoff-pregame':inplaypregame=='pregame'}">
         <span>{{items.match_period|setTimeMatch(matchDate(items.match_dt),items.match_minute)}}</span>
@@ -16,7 +16,7 @@
       </div>
     </div><br>
     <div :id="items.match_code" class="btn" :class="{'btn--expired':inplaypregame=='expired','btn--inplay':inplaypregame=='inplay',
-    'btn--pregame':inplaypregame=='pregame','btn--btn-selected':getId()==$store.state.predictionSelected.match_code}">
+    'btn--pregame':inplaypregame=='pregame','btn--btn-selected':(getId()==$store.state.predictionSelected.match_code && inplaypregame!='expired')}">
       <div>
         <!--<img class="btn--tickicon" src="assets/images/icon_tick@2x.png">-->
         <img :class="{'btn--tickicon':inplaypregame!='expired','btn--winicon':inplaypregame=='expired'}" :src="setSrcIcon(inplaypregame,items)">
@@ -28,7 +28,7 @@
         <span>&nbsp;</span>
         <span>[{{items.sys.hdp}}]</span>
         <span> @ </span>
-        <span>{{items.sys.odds_home}}</span>
+        <span>{{items.pick_hdp=="H"?items.sys.odds_home:items.sys.odds_away}}</span>
       </div>
       <div>
         <span>{{items.match_minute }}'</span>
@@ -77,17 +77,17 @@ export default {
       let url = ''
       let score_home = parseInt(data.score_home)
       let score_away = parseInt(data.score_away)
+      let hpd=parseFloat(data.sys.hdp)
       if (value == 'expired') {
         switch (data.pick_hdp) {
           case 'H':
+          
             url =
-              score_home > score_away
-                ? 'assets/images/icon_expired_win@1x_2.png'
-                : 'assets/images/icon_expired_lose@1x_2.png'
+              (hpd+score_home) > score_away? 'assets/images/icon_expired_win@1x_2.png': 'assets/images/icon_expired_lose@1x_2.png'
             break
           default:
             url =
-              score_away > score_home
+              (hpd+score_away) > score_home
                 ? 'assets/images/icon_expired_win@1x_2.png'
                 : 'assets/images/icon_expired_lose@1x_2.png'
             break

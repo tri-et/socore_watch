@@ -22,6 +22,14 @@
             height:110px;
         }
 
+        &--expired {
+            background-image: url("../../images/bg_expired_row.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
         &--stats-livestream-menu {
             background-color:$mainWhite;
             height:75px;     
@@ -73,6 +81,10 @@
 
         &--pregame{
             background-image:url("../../images/bg_pre_game_item@2x.png");
+        }
+
+        &--expired{
+            background-image:url("../../images/bg_expired_row.png");
         }
 
         div:first-child {
