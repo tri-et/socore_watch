@@ -423,30 +423,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -461,69 +437,9 @@ if (false) {(function () {
   },
   data() {
     return {
-      activeMarquee: false,
-      status: {
-        m8odds_home: '',
-        m8odds_way: '',
-        sboodds_home: '',
-        sboodds_away: '',
-        ibcodds_home: '',
-        ibcodds_away: '',
-        m8odds_over: '',
-        m8odds_under: '',
-        sboodds_over: '',
-        sboodds_under: '',
-        ibcodds_over: '',
-        ibcodds_under: ''
-      }
+      activeMarquee: false
     };
   },
-  /*watch: {
-    items: function(newData, oldData) {
-      var match_code = this.$store.state.predictionSelected.match_code
-      if (
-        match_code == newData.match_code &&
-        newData.match_code == oldData.match_code
-      ) {
-        let m8keys = Object.keys(newData.sys).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let ibckeys = Object.keys(newData.ibc).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let sbokeys = Object.keys(newData.sbo).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-          for (var i = 0; i < m8keys.length; i++) {
-          let newVal = parseFloat(newData.sys[m8keys[i]])
-          let oldVal = parseFloat(oldData.sys[m8keys[i]])
-            if (newVal > oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--down'
-          }
-        }
-          for (var i = 0; i < sbokeys.length; i++) {
-          let newVal = parseFloat(newData.sbo[sbokeys[i]])
-          let oldVal = parseFloat(oldData.sbo[sbokeys[i]])
-          if (newVal > oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--down'
-          }
-        }
-          for (var i = 0; i < ibckeys.length; i++) {
-          let newVal = parseFloat(newData.ibc[ibckeys[i]])
-          let oldVal = parseFloat(oldData.ibc[ibckeys[i]])
-            if (newVal > oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--down'
-          }
-        }
-      }
-    },
-  },*/
 
   filters: {
     setStatus(value) {
@@ -819,7 +735,9 @@ var render = function() {
               "prediction-detail-content--header-team--inplay":
                 _vm.$store.state.predictionSelected.type == "inplay",
               "prediction-detail-content--header-team--pregame":
-                _vm.$store.state.predictionSelected.type == "pregame"
+                _vm.$store.state.predictionSelected.type == "pregame",
+              "prediction-detail-content--header-team--expired":
+                _vm.$store.state.predictionSelected.type == "expired"
             }
           },
           [
@@ -831,7 +749,9 @@ var render = function() {
                   "prediction-detail-content--btn--pregame":
                     _vm.$store.state.predictionSelected.type == "pregame",
                   "prediction-detail-content--btn--inplay":
-                    _vm.$store.state.predictionSelected.type == "inplay"
+                    _vm.$store.state.predictionSelected.type == "inplay",
+                  "prediction-detail-content--btn--expired":
+                    _vm.$store.state.predictionSelected.type == "expired"
                 }
               },
               [
@@ -1023,7 +943,9 @@ var render = function() {
                       "odds-ou-header--inplay":
                         _vm.$store.state.predictionSelected.type == "inplay",
                       "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
+                        _vm.$store.state.predictionSelected.type == "pregame",
+                      "odds-ou-header--expired":
+                        _vm.$store.state.predictionSelected.type == "expired"
                     }
                   },
                   [
@@ -1145,7 +1067,9 @@ var render = function() {
                       "odds-ou-header--inplay":
                         _vm.$store.state.predictionSelected.type == "inplay",
                       "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
+                        _vm.$store.state.predictionSelected.type == "pregame",
+                      "odds-ou-header--expired":
+                        _vm.$store.state.predictionSelected.type == "expired"
                     }
                   },
                   [

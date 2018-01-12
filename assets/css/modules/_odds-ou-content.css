@@ -13,14 +13,15 @@
 
     
     
-    div {
+    >div {
         float:left;
         width:25%;
         text-align:center;
         padding:10px 0;
+        font-size:14px;
     }
 
-   div:first-child {
+   >div:first-child {
         text-align:left;
         font-size:14px;
         text-transform:uppercase;

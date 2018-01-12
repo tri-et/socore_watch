@@ -1448,7 +1448,7 @@ body{
     }
 
 .inplay-pregame--content {
-        min-height:calc(100vh - 215px);
+        min-height:calc(100vh - 148px);
         padding-top: 10px;
     }
 
@@ -1728,6 +1728,14 @@ body{
             height:110px;
         }
 
+.prediction-detail-content--header-team--expired {
+            background-image: url("../../images/bg_expired_row.png");
+            background-size: cover;
+            background-position: top;
+            position: relative;
+            height:110px;
+        }
+
 .prediction-detail-content--header-team--stats-livestream-menu {
             background-color:#FFF;
             height:75px;     
@@ -1785,6 +1793,10 @@ body{
 
 .prediction-detail-content--btn--pregame{
             background-image:url("../../images/bg_pre_game_item@2x.png");
+        }
+
+.prediction-detail-content--btn--expired{
+            background-image:url("../../images/bg_expired_row.png");
         }
 
 .prediction-detail-content--btn div:first-child {
@@ -2452,12 +2464,20 @@ body{
         background-image:url("../../images/bg_header_match_pregame_detail.png"); 
     }
 
+.odds-ou-header--expired {
+        background-image:url("../../images/bg_expired_row.png"); 
+    }
+
 .odds-ou-header div {
         float:left;
         text-align:center;
         padding-top:15px;
         width:25%;
         padding-right: 14px
+    }
+
+.odds-ou-header div:nth-child(2){
+        padding-right: 0px;
     }
 
 .odds-ou-header div:first-child {
@@ -2484,20 +2504,21 @@ body{
             color:#009933;
         }
 
-.odds-ou-content div {
+.odds-ou-content >div {
         float:left;
         width:25%;
         text-align:center;
         padding:10px 0;
+        font-size:14px;
     }
 
-.odds-ou-content div:first-child {
+.odds-ou-content >div:first-child {
         text-align:left;
         font-size:14px;
         text-transform:uppercase;
     }
 
-.odds-ou-content div:first-child span {
+.odds-ou-content >div:first-child span {
             padding-left:16px;
         }
 
@@ -2720,6 +2741,10 @@ body{
 
 .match-prediction--pregame:hover {
         background-color:#26994B;
+    }
+
+.match-prediction--active{
+        background-color:#d8dada !important
     }
 
 .footer {

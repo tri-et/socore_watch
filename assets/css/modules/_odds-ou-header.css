@@ -7,6 +7,10 @@
         background-image:url("../../images/bg_header_match_pregame_detail.png"); 
     }
 
+    &--expired {
+        background-image:url("../../images/bg_expired_row.png"); 
+    }
+
     background-repeat: round;
     height:50px;
     width:100%;
@@ -21,6 +25,10 @@
         padding-top:15px;
         width:25%;
         padding-right: 14px
+    }
+
+    div:nth-child(2){
+        padding-right: 0px;
     }
 
     div:first-child {

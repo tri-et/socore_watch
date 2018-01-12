@@ -23353,30 +23353,6 @@ if (false) {(function () {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -23391,69 +23367,9 @@ if (false) {(function () {
   },
   data() {
     return {
-      activeMarquee: false,
-      status: {
-        m8odds_home: '',
-        m8odds_way: '',
-        sboodds_home: '',
-        sboodds_away: '',
-        ibcodds_home: '',
-        ibcodds_away: '',
-        m8odds_over: '',
-        m8odds_under: '',
-        sboodds_over: '',
-        sboodds_under: '',
-        ibcodds_over: '',
-        ibcodds_under: ''
-      }
+      activeMarquee: false
     };
   },
-  /*watch: {
-    items: function(newData, oldData) {
-      var match_code = this.$store.state.predictionSelected.match_code
-      if (
-        match_code == newData.match_code &&
-        newData.match_code == oldData.match_code
-      ) {
-        let m8keys = Object.keys(newData.sys).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let ibckeys = Object.keys(newData.ibc).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let sbokeys = Object.keys(newData.sbo).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-          for (var i = 0; i < m8keys.length; i++) {
-          let newVal = parseFloat(newData.sys[m8keys[i]])
-          let oldVal = parseFloat(oldData.sys[m8keys[i]])
-            if (newVal > oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--down'
-          }
-        }
-          for (var i = 0; i < sbokeys.length; i++) {
-          let newVal = parseFloat(newData.sbo[sbokeys[i]])
-          let oldVal = parseFloat(oldData.sbo[sbokeys[i]])
-          if (newVal > oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--down'
-          }
-        }
-          for (var i = 0; i < ibckeys.length; i++) {
-          let newVal = parseFloat(newData.ibc[ibckeys[i]])
-          let oldVal = parseFloat(oldData.ibc[ibckeys[i]])
-            if (newVal > oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--down'
-          }
-        }
-      }
-    },
-  },*/
 
   filters: {
     setStatus(value) {
@@ -23745,7 +23661,9 @@ var render = function() {
               "prediction-detail-content--header-team--inplay":
                 _vm.$store.state.predictionSelected.type == "inplay",
               "prediction-detail-content--header-team--pregame":
-                _vm.$store.state.predictionSelected.type == "pregame"
+                _vm.$store.state.predictionSelected.type == "pregame",
+              "prediction-detail-content--header-team--expired":
+                _vm.$store.state.predictionSelected.type == "expired"
             }
           },
           [
@@ -23757,7 +23675,9 @@ var render = function() {
                   "prediction-detail-content--btn--pregame":
                     _vm.$store.state.predictionSelected.type == "pregame",
                   "prediction-detail-content--btn--inplay":
-                    _vm.$store.state.predictionSelected.type == "inplay"
+                    _vm.$store.state.predictionSelected.type == "inplay",
+                  "prediction-detail-content--btn--expired":
+                    _vm.$store.state.predictionSelected.type == "expired"
                 }
               },
               [
@@ -23949,7 +23869,9 @@ var render = function() {
                       "odds-ou-header--inplay":
                         _vm.$store.state.predictionSelected.type == "inplay",
                       "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
+                        _vm.$store.state.predictionSelected.type == "pregame",
+                      "odds-ou-header--expired":
+                        _vm.$store.state.predictionSelected.type == "expired"
                     }
                   },
                   [
@@ -24071,7 +23993,9 @@ var render = function() {
                       "odds-ou-header--inplay":
                         _vm.$store.state.predictionSelected.type == "inplay",
                       "odds-ou-header--pregame":
-                        _vm.$store.state.predictionSelected.type == "pregame"
+                        _vm.$store.state.predictionSelected.type == "pregame",
+                      "odds-ou-header--expired":
+                        _vm.$store.state.predictionSelected.type == "expired"
                     }
                   },
                   [
@@ -25549,11 +25473,11 @@ var GetData = function () {
 				jsonp: 'callback',
 				dataType: 'jsonp',
 				success: function success(response) {
-					//let data={"Pregame":[{"active":"1","match_code":"57023","match_dt":"09 Jan 2018 05:00","match_period":"Part2","match_minute":"56","league":"PORTUGAL LIGA NOS","team_home":"Estoril Praia","team_away":"Feirense","score_home":"0","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"-0.50","odds_home":"1.00","odds_away":"0.92","ou":"2.25","odds_over":"-0.98","odds_under":"0.88"},"sbo":{"hdp":"-0.50","odds_home":"1.00","odds_away":"0.92","ou":"2.25","odds_over":"-0.98","odds_under":"0.88"},"ibc":{"hdp":"-0.50","odds_home":"0.95","odds_away":"0.97","ou":"2.25","odds_over":"0.98","odds_under":"0.92"}},{"active":"1","match_code":"57020","match_dt":"09 Jan 2018 04:00","match_period":"Part2","match_minute":"45","league":"SPAIN LA LIGA","team_home":"Malaga","team_away":"RCD Espanyol","score_home":"0","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"-0.85","odds_away":"0.80","ou":"2.00","odds_over":"0.94","odds_under":"0.98"},"sbo":{"hdp":"0.00","odds_home":"-0.85","odds_away":"0.80","ou":"2.00","odds_over":"0.94","odds_under":"0.98"},"ibc":{"hdp":"0.00","odds_home":"-0.83","odds_away":"0.78","ou":"2.00","odds_over":"0.91","odds_under":"-0.99"}},{"active":"1","match_code":"57024","match_dt":"09 Jan 2018 04:00","match_period":"Part2","match_minute":"89","league":"FRANCE CUP","team_home":"Lens","team_away":"Boulogne","score_home":"2","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"-1.00","odds_home":"-0.91","odds_away":"0.83","ou":"2.75","odds_over":"-0.86","odds_under":"0.76"},"sbo":{"hdp":"-0.75","odds_home":"0.81","odds_away":"-0.89","ou":"2.50","odds_over":"0.80","odds_under":"-0.90"},"ibc":{"hdp":"-1.00","odds_home":"-0.92","odds_away":"0.84","ou":"2.75","odds_over":"-0.97","odds_under":"0.87"}},{"active":"1","match_code":"57021","match_dt":"09 Jan 2018 03:45","match_period":"Part2","match_minute":"87","league":"ENGLISH FA CUP","team_home":"Brighton \u0026 Hove Albion","team_away":"Crystal Palace","score_home":"2","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.25","odds_home":"0.94","odds_away":"0.98","ou":"2.00","odds_over":"1.00","odds_under":"0.90"},"sbo":{"hdp":"0.25","odds_home":"0.80","odds_away":"-0.88","ou":"2.00","odds_over":"0.92","odds_under":"0.98"},"ibc":{"hdp":"0.00","odds_home":"-0.82","odds_away":"0.74","ou":"2.00","odds_over":"0.91","odds_under":"0.99"}},{"active":"1","match_code":"57022","match_dt":"09 Jan 2018 03:00","match_period":"Part2","match_minute":"73","league":"PORTUGAL LIGA NOS","team_home":"Pacos de Ferreira","team_away":"Portimonense","score_home":"1","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"-0.50","odds_home":"0.83","odds_away":"-0.93","ou":"1.50","odds_over":"0.94","odds_under":"0.96"},"sbo":{"hdp":"0.00","odds_home":"0.95","odds_away":"0.97","ou":"2.25","odds_over":"0.90","odds_under":"1.00"},"ibc":{"hdp":"0.00","odds_home":"0.97","odds_away":"0.95","ou":"2.25","odds_over":"0.91","odds_under":"0.99"}}],"Running":[{"active":"1","match_code":"57026","match_dt":"09 Jan 2018 03:00","match_period":"FT","match_minute":"98","league":"PORTUGAL LIGA NOS","team_home":"Pacos de Ferreira","team_away":"Portimonense","score_home":"1","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"O","sys_company":"M8","sys":{"hdp":"","odds_home":"","odds_away":"","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.24","odds_away":"-0.4","ou":"2.50","odds_over":"-0.11","odds_under":"0.03"},"ibc":{"hdp":"0.00","odds_home":"0.28","odds_away":"-0.38","ou":"2.50","odds_over":"-0.13","odds_under":"0.05"}},{"active":"1","match_code":"57027","match_dt":"09 Jan 2018 03:45","match_period":"FT","match_minute":"94","league":"ENGLISH FA CUP","team_home":"Brighton \u0026 Hove Albion","team_away":"Crystal Palace","score_home":"2","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.90","odds_away":"-0.98","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.82","odds_away":"-0.90","ou":"3.50","odds_over":"-0.13","odds_under":"0.05"},"ibc":{"hdp":"0.00","odds_home":"0.83","odds_away":"-0.91","ou":"3.50","odds_over":"-0.11","odds_under":"0.03"}},{"active":"1","match_code":"57029","match_dt":"09 Jan 2018 04:00","match_period":"FT","match_minute":"94","league":"FRANCE CUP","team_home":"Lens","team_away":"Boulogne","score_home":"2","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.50","odds_away":"-0.58","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.42","odds_away":"-0.50","ou":"4.50","odds_over":"-0.13","odds_under":"0.05"},"ibc":{"hdp":"0.00","odds_home":"0.49","odds_away":"-0.57","ou":"4.50","odds_over":"-0.11","odds_under":"0.03"}},{"active":"1","match_code":"57028","match_dt":"09 Jan 2018 04:00","match_period":"FT","match_minute":"95","league":"SPAIN LA LIGA","team_home":"Malaga","team_away":"RCD Espanyol","score_home":"0","score_away":"1","rb_id":"","bet_period":"90","pick_hdp":"H","pick_ou":"O","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.87","odds_away":"-0.95","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.84","odds_away":"-0.92","ou":"1.50","odds_over":"-0.14","odds_under":"0.06"},"ibc":{"hdp":"0.00","odds_home":"0.83","odds_away":"-0.91","ou":"1.50","odds_over":"-0.10","odds_under":"0.02"}},{"active":"1","match_code":"57030","match_dt":"09 Jan 2018 05:00","match_period":"FT","match_minute":"94","league":"PORTUGAL LIGA NOS","team_home":"Estoril Praia","team_away":"Feirense","score_home":"0","score_away":"2","rb_id":"","bet_period":"90","pick_hdp":"A","pick_ou":"U","sys_company":"M8","sys":{"hdp":"0.00","odds_home":"0.60","odds_away":"-0.68","ou":"","odds_over":"","odds_under":""},"sbo":{"hdp":"0.00","odds_home":"0.59","odds_away":"-0.67","ou":"2.50","odds_over":"-0.10","odds_under":"0.02"},"ibc":{"hdp":"0.00","odds_home":"0.60","odds_away":"-0.68","ou":"2.50","odds_over":"-0.10","odds_under":"0.02"}}]}
 
 					var data = JSON.parse(response);
 					//app.inplay = data.Running
 					app.inplayExpired = [];
+					app.inplay = [];
 					if (app.$store.state.predictionSelected.match_code != '') {
 						var type = app.$store.state.predictionSelected.type;
 						var match_code = app.$store.state.predictionSelected.match_code;
@@ -25632,7 +25556,7 @@ var GetData = function () {
 				var data = [];
 				var type = '';
 				app.pregame = pregameData;
-				//app.inplay = inplayData
+				app.inplay = [];
 				app.inplayExpired = [];
 				inplayData.forEach(function (v) {
 					if (v.match_period == 'FT') {
@@ -25642,7 +25566,7 @@ var GetData = function () {
 					}
 				});
 
-				if (app.inplay > 0) {
+				if (app.inplay.length > 0) {
 					data = app.inplay[0];
 					type = 'inplay';
 				} else {
@@ -25659,13 +25583,12 @@ var GetData = function () {
 					app.$store.state.isOpenPredictionDetail = true;
 				}
 
-				setTimeout(function () {
-					that.getDataInPlay(app);
-				}, 3000);
-
-				setTimeout(function () {
-					that.getDataPregame(app);
-				}, 600000);
+				/*setTimeout(() => {
+    	that.getDataInPlay(app)
+    }, 3000)
+    		setTimeout(() => {
+    	that.getDataPregame(app)
+    }, 600000)*/
 			});
 		}
 	}, {
@@ -26905,13 +26828,15 @@ if (false) {(function () {
       let url = '';
       let score_home = parseInt(data.score_home);
       let score_away = parseInt(data.score_away);
+      let hpd = parseFloat(data.sys.hdp);
       if (value == 'expired') {
         switch (data.pick_hdp) {
           case 'H':
-            url = score_home > score_away ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+
+            url = hpd + score_home > score_away ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
             break;
           default:
-            url = score_away > score_home ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            url = hpd + score_away > score_home ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
             break;
         }
       } else {
@@ -26986,7 +26911,10 @@ var render = function() {
       class: {
         "match-prediction--inplay": _vm.inplaypregame == "inplay",
         "match-prediction--pregame": _vm.inplaypregame == "pregame",
-        "match-prediction--expired": _vm.inplaypregame == "expired"
+        "match-prediction--expired": _vm.inplaypregame == "expired",
+        "match-prediction--active":
+          _vm.getId() == _vm.$store.state.predictionSelected.match_code &&
+          _vm.inplaypregame == "expired"
       },
       attrs: { "data-pridiction-type": "inplay" },
       on: {
@@ -27050,7 +26978,8 @@ var render = function() {
             "btn--inplay": _vm.inplaypregame == "inplay",
             "btn--pregame": _vm.inplaypregame == "pregame",
             "btn--btn-selected":
-              _vm.getId() == _vm.$store.state.predictionSelected.match_code
+              _vm.getId() == _vm.$store.state.predictionSelected.match_code &&
+              _vm.inplaypregame != "expired"
           },
           attrs: { id: _vm.items.match_code }
         },
@@ -27092,7 +27021,15 @@ var render = function() {
             _vm._v(" "),
             _c("span", [_vm._v(" @ ")]),
             _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.items.sys.odds_home))])
+            _c("span", [
+              _vm._v(
+                _vm._s(
+                  _vm.items.pick_hdp == "H"
+                    ? _vm.items.sys.odds_home
+                    : _vm.items.sys.odds_away
+                )
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("div", [

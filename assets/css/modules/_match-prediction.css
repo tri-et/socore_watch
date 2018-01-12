@@ -102,6 +102,10 @@
     &--pregame:hover {
         background-color:#26994B;
     }
+
+    &--active{
+        background-color:#d8dada !important
+    }
     
 }
 

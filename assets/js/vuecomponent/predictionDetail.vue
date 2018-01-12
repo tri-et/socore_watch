@@ -11,9 +11,9 @@
     </div>
     <div class="prediction-detail-content">
       <div class="prediction-detail-content--header-team" :class="{'prediction-detail-content--header-team--inplay':$store.state.predictionSelected.type=='inplay',
-      'prediction-detail-content--header-team--pregame':$store.state.predictionSelected.type=='pregame'}">
+      'prediction-detail-content--header-team--pregame':$store.state.predictionSelected.type=='pregame','prediction-detail-content--header-team--expired':$store.state.predictionSelected.type=='expired'}">
         <div class="prediction-detail-content--btn" :class="{'prediction-detail-content--btn--pregame':$store.state.predictionSelected.type=='pregame',
-        'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay'}">
+        'prediction-detail-content--btn--inplay':$store.state.predictionSelected.type=='inplay','prediction-detail-content--btn--expired':$store.state.predictionSelected.type=='expired'}">
           <div :style="{'max-width':activeMarquee?'75px':'max-content'}">
             <span :class="{'marquee':activeMarquee}">{{items.pick_hdp=="H"?items.team_home:items.team_away}}</span>
           </div>
@@ -60,7 +60,7 @@
         <div class="prediction-detail-content--stats" :class="{'prediction-detail-content--is-visible':$store.state.statLiveActive=='stats',
         'predictionpaddingtop':$store.state.ishidetoolbar}">
           <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
-          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
+          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame','odds-ou-header--expired':$store.state.predictionSelected.type=='expired'}">
             <div>
               <span>ODDS</span>
             </div>
@@ -82,14 +82,6 @@
             <div>
               <span>{{items.sys.hdp|setDash}}</span>
             </div>
-            <!-- <div>
-              <span>{{items.sys.odds_home|setDash}}</span>
-              <span class="arrow" :class="status.m8odds_home"></span>
-            </div>
-            <div>
-              <span>{{items.sys.odds_away|setDash}}</span>
-              <span class="arrow" :class="status.m8odds_away"></span>
-            </div> -->
             <oddspredictions :items="items.sys.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
             <oddspredictions :items="items.sys.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
@@ -100,14 +92,6 @@
             <div>
               <span>{{items.sbo.hdp|setDash}}</span>
             </div>
-            <!--<div>
-              <span>{{items.sbo.odds_home|setDash}}</span>
-              <span class="arrow" :class="status.sboodds_home"></span>
-            </div>
-            <div>
-              <span>{{items.sbo.odds_away|setDash}}</span>
-              <span class="arrow" :class="status.sboodds_away"></span>
-            </div>-->
             <oddspredictions :items="items.sbo.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
             <oddspredictions :items="items.sbo.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
@@ -118,21 +102,13 @@
             <div>
               <span>{{items.ibc.hdp|setDash}}</span>
             </div>
-            <!-- <div>
-              <span>{{items.ibc.odds_home|setDash}}</span>
-              <span class="arrow" :class="status.iboodds_home"></span>
-            </div>
-            <div>
-              <span>{{items.ibc.odds_away|setDash}}</span>
-              <span class="arrow" :class="status.iboodds_away"></span>
-            </div> -->
             <oddspredictions :items="items.ibc.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
             <oddspredictions :items="items.ibc.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
           </div>
           <!-- end Odds-->
           <!--start OD-->
           <div class="odds-ou-header" :class="{'odds-ou-header--inplay':$store.state.predictionSelected.type=='inplay',
-          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame'}">
+          'odds-ou-header--pregame':$store.state.predictionSelected.type=='pregame','odds-ou-header--expired':$store.state.predictionSelected.type=='expired'}">
             <div>
               <span>OU</span>
             </div>
@@ -228,73 +204,8 @@ export default {
   data() {
     return {
       activeMarquee: false,
-      status: {
-        m8odds_home: '',
-        m8odds_way: '',
-        sboodds_home: '',
-        sboodds_away: '',
-        ibcodds_home: '',
-        ibcodds_away: '',
-        m8odds_over: '',
-        m8odds_under: '',
-        sboodds_over: '',
-        sboodds_under: '',
-        ibcodds_over: '',
-        ibcodds_under: '',
-      },
     }
   },
-  /*watch: {
-    items: function(newData, oldData) {
-      var match_code = this.$store.state.predictionSelected.match_code
-      if (
-        match_code == newData.match_code &&
-        newData.match_code == oldData.match_code
-      ) {
-        let m8keys = Object.keys(newData.sys).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let ibckeys = Object.keys(newData.ibc).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-        let sbokeys = Object.keys(newData.sbo).filter(
-          item => !['hdp', 'ou'].includes(item),
-        )
-
-        for (var i = 0; i < m8keys.length; i++) {
-          let newVal = parseFloat(newData.sys[m8keys[i]])
-          let oldVal = parseFloat(oldData.sys[m8keys[i]])
-
-          if (newVal > oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['m8' + m8keys[i]] = 'arrow--down'
-          }
-        }
-
-        for (var i = 0; i < sbokeys.length; i++) {
-          let newVal = parseFloat(newData.sbo[sbokeys[i]])
-          let oldVal = parseFloat(oldData.sbo[sbokeys[i]])
-          if (newVal > oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['sbo' + sbokeys[i]] = 'arrow--down'
-          }
-        }
-
-        for (var i = 0; i < ibckeys.length; i++) {
-          let newVal = parseFloat(newData.ibc[ibckeys[i]])
-          let oldVal = parseFloat(oldData.ibc[ibckeys[i]])
-
-          if (newVal > oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--up'
-          } else if (newVal < oldVal) {
-            this.status['ibc' + ibckeys[i]] = 'arrow--down'
-          }
-        }
-      }
-    },
-  },*/
 
   filters: {
     setStatus(value) {

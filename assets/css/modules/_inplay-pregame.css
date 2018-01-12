@@ -68,7 +68,7 @@
     }
 
     &--content {
-        min-height:calc(100vh - 215px);
+        min-height:calc(100vh - 148px);
         padding-top: 10px;
 
         @mixin atSmall{
