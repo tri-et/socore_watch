@@ -11,14 +11,29 @@
         }
     }
 
-    
-    
+    &--heighlighOdd{
+        background-image: url(../../images/odds.png);
+        background-position: center;
+        border-radius: 4px;
+        background-size: cover;
+        color:#fff;
+    }
     >div {
         float:left;
         width:25%;
         text-align:center;
-        padding:10px 0;
+        padding:3px 0;
         font-size:14px;
+        >div{
+            width: fit-content;
+            margin: auto;
+            padding: 7px;
+        }
+    }
+
+    >div:first-child,>div:nth-child(2){
+        
+        padding:10px 0;
     }
 
    >div:first-child {

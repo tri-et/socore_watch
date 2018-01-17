@@ -25,13 +25,15 @@
         <span :class="{'marquee':activeMarquee1}">{{items.pick_hdp=="H"?items.team_home:items.team_away}}</span>
       </div>
       <div>
+        <span v-show="inplaypregame!='pregame'">[{{items.score_home+':'+items.score_away}}]</span>
         <span>&nbsp;</span>
-        <span>[{{items.sys.hdp}}]</span>
+        <span>{{items.sys.hdp}}</span>
         <span> @ </span>
         <span>{{items.pick_hdp=="H"?items.sys.odds_home:items.sys.odds_away}}</span>
       </div>
       <div>
-        <span>{{items.match_minute }}'</span>
+        <!-- <span>{{items.match_minute }}'</span> -->
+        <span>{{items.match_minute|setTimeExpired(inplaypregame,items.minute_expired)}}</span>
         <span><img class="btn--watchicon" src="assets/images/icon_clock@2x.png"></span>
       </div>
     </div>
@@ -62,6 +64,15 @@ export default {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
     },
+    setTimeExpired(val,inplaypregame,minute_expired) {
+      let time = ''
+      if (inplaypregame == 'expired' || inplaypregame == 'pregame') {
+        time = val+"'"
+      }else{
+        time=(minute_expired==0||minute_expired==undefined?val+"'":minute_expired+'m')
+      }
+      return time;
+    },
   },
   methods: {
     setOdds(newdata, olddata) {
@@ -77,17 +88,18 @@ export default {
       let url = ''
       let score_home = parseInt(data.score_home)
       let score_away = parseInt(data.score_away)
-      let hpd=parseFloat(data.sys.hdp)
+      let hpd = parseFloat(data.sys.hdp)
       if (value == 'expired') {
         switch (data.pick_hdp) {
           case 'H':
-          
             url =
-              (hpd+score_home) > score_away? 'assets/images/icon_expired_win@1x_2.png': 'assets/images/icon_expired_lose@1x_2.png'
+              hpd + score_home > score_away
+                ? 'assets/images/icon_expired_win@1x_2.png'
+                : 'assets/images/icon_expired_lose@1x_2.png'
             break
           default:
             url =
-              (hpd+score_away) > score_home
+              hpd + score_away > score_home
                 ? 'assets/images/icon_expired_win@1x_2.png'
                 : 'assets/images/icon_expired_lose@1x_2.png'
             break

@@ -580,13 +580,17 @@ if (false) {(function () {
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-  props: ['items', 'currentmatchcode'],
+  props: ['items', 'currentmatchcode', 'comp', 'odds'],
   data() {
     return {
       current_code: '',
-      arrow: ''
+      arrow: '',
+      bgupdown: '',
+      odds_type: false
     };
   },
   methods: {
@@ -596,18 +600,30 @@ if (false) {(function () {
         let oldvalue = parseFloat(olddata);
         let newvalue = parseFloat(newdata);
         if (newvalue > oldvalue) {
-          this.arrow = 'arrow--up';
-
+          this.arrow = this.comp == 'M8' ? 'arrow--upodd' : 'arrow--up';
+          this.bgupdown = 'up';
+          if (this.odds != undefined) {
+            this.odds_type = this.odds.split('-')[0] == this.odds.split('-')[1] ? true : false;
+          }
           setTimeout(() => {
             that.arrow = '';
+            that.odds_type = false;
+            this.bgupdown = '';
           }, 3000);
         } else if (newvalue < oldvalue) {
-          this.arrow = 'arrow--down';
+          this.arrow = this.comp == 'M8' ? 'arrow--downodd' : 'arrow--down';
+          this.bgupdown = 'down';
+          if (this.odds != undefined) {
+            this.odds_type = this.odds.split('-')[0] == this.odds.split('-')[1] ? true : false;
+          }
           setTimeout(() => {
             that.arrow = '';
+            that.odds_type = false;
+            this.bgupdown = '';
           }, 3000);
         } else {
           this.arrow = '';
+          this.odds_type = false;
         }
       }
     }
@@ -641,9 +657,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("span", [_vm._v(_vm._s(_vm._f("setDash")(_vm.items)))]),
-    _vm._v(" "),
-    _c("span", { staticClass: "arrow", class: _vm.arrow })
+    _c(
+      "div",
+      {
+        class: {
+          "odds-ou-content--heighlighOdd":
+            _vm.comp == "M8" && _vm.odds_type == true,
+          "bg-up": _vm.bgupdown == "up",
+          "bg-down": _vm.bgupdown == "down"
+        }
+      },
+      [
+        _c("span", [_vm._v(_vm._s(_vm._f("setDash")(_vm.items)))]),
+        _vm._v(" "),
+        _c("span", { staticClass: "arrow", class: _vm.arrow })
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -987,14 +1016,18 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sys.odds_home,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: "M8",
+                        odds: "H-" + _vm.items.pick_hdp
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sys.odds_away,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: "M8",
+                        odds: "A-" + _vm.items.pick_hdp
                       }
                     })
                   ],
@@ -1016,14 +1049,16 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sbo.odds_home,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sbo.odds_away,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     })
                   ],
@@ -1045,14 +1080,16 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.ibc.odds_home,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.ibc.odds_away,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     })
                   ],
@@ -1111,14 +1148,16 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sys.odds_over,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sys.odds_under,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     })
                   ],
@@ -1140,14 +1179,16 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sbo.odds_over,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.sbo.odds_under,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     })
                   ],
@@ -1169,14 +1210,16 @@ var render = function() {
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.ibc.odds_over,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     }),
                     _vm._v(" "),
                     _c("oddspredictions", {
                       attrs: {
                         items: _vm.items.ibc.odds_under,
-                        currentmatchcode: _vm.items.match_code
+                        currentmatchcode: _vm.items.match_code,
+                        comp: ""
                       }
                     })
                   ],
