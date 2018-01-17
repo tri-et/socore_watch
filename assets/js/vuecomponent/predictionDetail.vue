@@ -82,8 +82,8 @@
             <div>
               <span>{{items.sys.hdp|setDash}}</span>
             </div>
-            <oddspredictions :items="items.sys.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.sys.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sys.odds_home" :currentmatchcode="items.match_code" comp="M8" :odds="'H-'+items.pick_hdp"></oddspredictions>
+            <oddspredictions :items="items.sys.odds_away" :currentmatchcode="items.match_code" comp="M8" :odds="'A-'+items.pick_hdp"></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -92,8 +92,8 @@
             <div>
               <span>{{items.sbo.hdp|setDash}}</span>
             </div>
-            <oddspredictions :items="items.sbo.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.sbo.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_home" :currentmatchcode="items.match_code" comp=""></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_away" :currentmatchcode="items.match_code" comp=""></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -102,8 +102,8 @@
             <div>
               <span>{{items.ibc.hdp|setDash}}</span>
             </div>
-            <oddspredictions :items="items.ibc.odds_home" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.ibc.odds_away" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_home" :currentmatchcode="items.match_code" comp=""></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_away" :currentmatchcode="items.match_code" comp=""></oddspredictions>
           </div>
           <!-- end Odds-->
           <!--start OD-->
@@ -138,8 +138,8 @@
               <span>{{items.sys.odds_under|setDash}}</span>
               <span class="arrow" :class="status.m8odds_under"></span>
             </div> -->
-            <oddspredictions :items="items.sys.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.sys.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sys.odds_over" :currentmatchcode="items.match_code" comp=""></oddspredictions>
+            <oddspredictions :items="items.sys.odds_under" :currentmatchcode="items.match_code" comp=""></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -156,8 +156,8 @@
               <span>{{items.sbo.odds_under|setDash}}</span>
               <span class="arrow" :class="status.sboodds_under"></span>
             </div>-->
-            <oddspredictions :items="items.sbo.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.sbo.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_over" :currentmatchcode="items.match_code" comp=""></oddspredictions>
+            <oddspredictions :items="items.sbo.odds_under" :currentmatchcode="items.match_code" comp=""></oddspredictions>
           </div>
           <div class="odds-ou-content">
             <div>
@@ -174,8 +174,8 @@
               <span>{{items.ibc.odds_under|setDash}}</span>
               <span class="arrow" :class="status.ibcodds_under"></span>
             </div> -->
-            <oddspredictions :items="items.ibc.odds_over" :currentmatchcode="items.match_code"></oddspredictions>
-            <oddspredictions :items="items.ibc.odds_under" :currentmatchcode="items.match_code"></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_over" :currentmatchcode="items.match_code" comp=""></oddspredictions>
+            <oddspredictions :items="items.ibc.odds_under" :currentmatchcode="items.match_code" comp=""></oddspredictions>
           </div>
           <!-- end OU-->
         </div>

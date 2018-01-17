@@ -253,6 +253,22 @@
         border-bottom: 7px solid #2ACE5F;
         opacity:1
     }
+    &--downodd{
+        border-top: 7px solid #fff;
+        opacity:1
+    }
+
+    &--upodd{
+        border-bottom: 7px solid #fff;
+        opacity:1
+    }
+}
+.bg-up{
+    color:#2ACE5F
+}
+
+.bg-down{
+    color:#FF7754
 }
 
 @keyframes leftmarquee {
