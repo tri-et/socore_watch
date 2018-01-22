@@ -13,26 +13,27 @@
                              <div v-show="$root.$data.inplay.length==0" class="prediction-detail-content--expired">
                                 <span>No In-Play Predictions for today</span>
                             </div>
-                            <buttonprediction :items="item" v-for="item in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay"></buttonprediction>
+                            <buttonprediction :items="item" v-for="item in $root.$data.inplay" :key="item.match_code" inplaypregame="inplay" expiredpregame="false"></buttonprediction>
                             <div class="header-title header-title--expired">
                                 <span>EXPIRED Inplay</span>
                             </div>
                             <div v-show="$root.$data.inplayExpired.length==0" class="prediction-detail-content--expired">
                                 <span>No In-Play Predictions for today</span>
                             </div>
-                            <buttonprediction :items="item" v-for="item in $root.$data.inplayExpired" :key="item.match_code" inplaypregame="expired"></buttonprediction>
+                            <buttonprediction :items="item" v-for="item in $root.$data.inplayExpired" :key="item.match_code" inplaypregame="expired" expiredpregame="false"></buttonprediction>
                         </div>
                         <div class="row row__inplay inplay-pregame--pregame">
                             <div class="header-title header-title--pregame">
                                 <span>pregame</span>
                             </div>
-                            <buttonprediction :items="item" v-for="item in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame"></buttonprediction>
+                            <buttonprediction :items="item" v-for="item in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame" expiredpregame="false"></buttonprediction>
                             <div class="header-title header-title--expired">
                                 <span>EXPIRED Pregame</span>
                             </div>
-                            <div class="prediction-detail-content--expired">
+                            <div v-show="$root.$data.expiredPregame.length==0" class="prediction-detail-content--expired">
                                 <span>No Pregame Predictions for today</span>
                             </div>
+                            <buttonprediction :items="item" v-for="item in $root.$data.expiredPregame" :key="item.match_code" inplaypregame="expired" expiredpregame="true"></buttonprediction>
                         </div>
                     </div>
                     <div class="footer">

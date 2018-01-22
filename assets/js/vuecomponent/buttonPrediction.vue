@@ -10,9 +10,12 @@
         <span>{{items.team_home}}</span>
         <span>{{items.team_away}}</span>
       </div>
-      <div class="match-prediction--score">
-        <span>{{items.score_home}}</span>
-        <span>{{items.score_away}}</span>
+      <div class="match-prediction--time" v-show="items.match_period==''">
+        <span>{{items.match_dt|setremaining}}</span>
+      </div>
+      <div class="match-prediction--score" v-show="items.match_period!=''">
+        <span>{{expiredpregame=='true'?'0':items.score_home}}</span>
+        <span>{{expiredpregame=='true'?'0':items.score_away}}</span>
       </div>
     </div><br>
     <div :id="items.match_code" class="btn" :class="{'btn--expired':inplaypregame=='expired','btn--inplay':inplaypregame=='inplay',
@@ -31,9 +34,9 @@
         <span> @ </span>
         <span>{{items.pick_hdp=="H"?items.sys.odds_home:items.sys.odds_away}}</span>
       </div>
-      <div>
+      <div v-show="items.match_period!=''">
         <!-- <span>{{items.match_minute }}'</span> -->
-        <span>{{items.match_minute|setTimeExpired(inplaypregame,items.minute_expired)}}</span>
+        <span>{{items.match_minute|setTimeExpired(inplaypregame,items.minute_expired,expiredpregame)}}</span>
         <span><img class="btn--watchicon" src="assets/images/icon_clock@2x.png"></span>
       </div>
     </div>
@@ -51,6 +54,9 @@ export default {
     items: {
       type: Object,
     },
+    expiredpregame: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -64,14 +70,38 @@ export default {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'"
     },
-    setTimeExpired(val,inplaypregame,minute_expired) {
+    setTimeExpired(val, inplaypregame, minute_expired, expiredpregame) {
       let time = ''
       if (inplaypregame == 'expired' || inplaypregame == 'pregame') {
-        time = val+"'"
-      }else{
-        time=(minute_expired==0||minute_expired==undefined?val+"'":minute_expired+'m')
+        time = expiredpregame == 'true' ? '0' : val + "'"
+      } else {
+        time =
+          minute_expired == 0 || minute_expired == undefined
+            ? val + "'"
+            : minute_expired + 'm'
       }
-      return time;
+      return time
+    },
+    setremaining(matchdate) {
+      var matchDate=new Date(matchdate)
+      var currentDate=new Date()
+      var millisec=matchDate.getTime()-currentDate.getTime()
+      var seconds = (millisec / 1000).toFixed(0)
+      var minutes = Math.floor(seconds / 60)
+      var hours = ''
+      if (minutes > 59) {
+        hours = Math.floor(minutes / 60)
+        hours = hours >= 10 ? hours : '0' + hours
+        minutes = minutes - hours * 60
+        minutes = minutes >= 10 ? minutes : '0' + minutes
+      }
+
+      seconds = Math.floor(seconds % 60)
+      seconds = seconds >= 10 ? seconds : '0' + seconds
+      if (hours != '') {
+        return hours + 'h:' + minutes+'m'
+      }
+      return minutes+'m'
     },
   },
   methods: {

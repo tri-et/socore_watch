@@ -23,7 +23,8 @@ new Vue({
 		leagueLiveScoreRight: [],
 		livescore: [],
 		livescoreStats: [],
-		livescoreTimeLine: []
+		livescoreTimeLine: [],
+		expiredPregame:[]
 	},
 	methods: {
 		getCookie(cname) {

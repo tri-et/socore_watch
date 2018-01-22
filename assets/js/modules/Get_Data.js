@@ -60,6 +60,7 @@ class GetData {
 			success: function(response) {
 				let data = JSON.parse(response)
 				app.pregame = data.Pregame
+				app.expiredPregame=data.MatchesFinished
 				if (app.$store.state.predictionSelected.match_code != '') {
 					let type = app.$store.state.predictionSelected.type
 					let match_code = app.$store.state.predictionSelected.match_code
@@ -75,6 +76,19 @@ class GetData {
 				setTimeout(() => {
 					that.getDataPregame(app)
 				}, 600000)
+			},
+		})
+	}
+
+	getDataExpiredPregame(app) {
+		let that = this
+		$.ajax({
+			url: 'index.php/api/get_expired_pregame',
+			jsonp: 'callback',
+			dataType: 'jsonp',
+			success: function(response) {
+				let data = JSON.parse(response)
+				app.expiredPregame=data.MatchesFinished
 			},
 		})
 	}
@@ -104,6 +118,7 @@ class GetData {
 			let data = []
 			let type = ''
 			app.pregame = pregameData
+			app.expiredPregame=JSON.parse(pregame[0]).MatchesFinished
 			app.inplay = []
 			app.inplayExpired=[]
 			inplayData.forEach(v=>{
