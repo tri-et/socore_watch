@@ -38,6 +38,20 @@ class Api extends CI_Controller {
 		echo $callback . '(' . json_encode($prediction) . ');';
 	}
 
+	public function get_expired_pregame(){
+		$prediction=null;
+		$callback="";
+		if($this->cache->file->is_supported() && $this->cache->file->get('matchfinished')) {
+			$prediction=$this->cache->file->get('matchfinished') ;
+		}else{
+			$prediction='{"MatchesFinished":[]}';
+		};
+		if (array_key_exists('callback', $_GET) == TRUE) {
+			$callback = $_GET['callback'];
+		}
+		echo $callback . '(' . json_encode($prediction) . ');';
+	}
+
 	public function get_running_cron(){
 		set_time_limit(0);
 		$soap_client=new SoapClient('http://118.107.179.27:13881/Vig_WebService/Vig_WebService.asmx?WSDL');
@@ -48,6 +62,8 @@ class Api extends CI_Controller {
 			for($j=0;$j<count($oldData);$j++){
 				if($prediction[$i]["match_code"]==$oldData[$j]["match_code"]){
 					$prediction[$i]['sys']['hdp']=($prediction[$i]['sys']['hdp']==""?$oldData[$j]['sys']['hdp']:$prediction[$i]['sys']['hdp']);
+					$prediction[$i]['sys']['odds_home']=($prediction[$i]['sys']['odds_home']==""?$oldData[$j]['sys']['odds_home']:$prediction[$i]['sys']['odds_home']);
+					$prediction[$i]['sys']['odds_away']=($prediction[$i]['sys']['odds_away']==""?$oldData[$j]['sys']['odds_away']:$prediction[$i]['sys']['odds_away']);
 					$match_minute=intval($prediction[$i]["match_minute"]);
 					$oldmatch_minute=intval($oldData[$j]["match_minute"]);
 					
@@ -118,8 +134,61 @@ class Api extends CI_Controller {
 	public function get_pregame_cron(){
 		$soap_client=new SoapClient('http://118.107.179.27:13881/Vig_WebService/Vig_WebService.asmx?WSDL');
 		$prediction=json_decode($soap_client->Prediction_Pregame()->Prediction_PregameResult,true)['Pregame'];
-		$this->cache->file->save('pregame', "{\"Pregame\":".json_encode($prediction)."}", 0);
-		return $prediction;
+		//$this->cache->file->save('pregame', "{\"Pregame\":".json_encode($prediction)."}", 0);
+		$matchfinished=null;
+		$expired=null;
+		if($this->cache->file->is_supported() && $this->cache->file->get('yesterday_match')) {
+			$matchfinished=json_decode($this->cache->file->get('yesterday_match'),true)['MatchesFinished'];
+		}else{
+			$matchfinished=array();
+		};
+		foreach($prediction as $item){
+			if($item['match_period']=='FT'){
+				$match_code=$item['match_code'];
+				$matchExist=$this->existsInArray($matchfinished,$match_code);
+				if(!$matchExist){
+					array_push($matchfinished,$item);
+				}
+				
+			}
+		}
+		$this->cache->file->save('pregame', '{"Pregame":'.json_encode($prediction).',"MatchesFinished":'.json_encode($matchfinished).'}', 0);
+		$this->cache->file->save('yesterday_match', "{\"MatchesFinished\":".json_encode($matchfinished)."}", 0);
 	}
 
+	public function matchWdate($matchdt){
+		$dt=date('d',strtotime('-12 hours',strtotime($matchdt)));
+		return $dt;
+	}
+
+	public function wDate(){
+		$wdate=0;
+		if(strtotime(date('H:i'))>=strtotime("12:00 pm")){
+			$wdate=intval(date('d'));
+		}else{
+			$wdate=intval(date('d'))-1;
+		}
+		return $wdate;
+	}
+
+	public function existsInArray($array,$match_code) {
+    foreach ($array as $item) {
+        if ($item['match_code'] == $match_code) {
+					return true;
+				}
+		}
+    return false;
+	}
+
+	public function removeMatch(){
+		$matchfinished=json_decode($this->cache->file->get('yesterday_match'),true)['MatchesFinished'];
+		$wdate=$this->wDate();
+		for($i=0;$i<count($matchfinished);$i++){
+			$macthDate=$this->matchWdate($matchfinished[$i]['match_dt']);
+			if(intval($macthDate)>$wdate || intval($macthDate)<$wdate-1){
+				unset($matchfinished[$i]);
+			}
+		}
+		$this->cache->file->save('yesterday_match', "{\"MatchesFinished\":".json_encode($matchfinished)."}", 0);
+	}
 }

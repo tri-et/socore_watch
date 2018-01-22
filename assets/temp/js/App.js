@@ -25558,6 +25558,7 @@ var GetData = function () {
 				success: function success(response) {
 					var data = JSON.parse(response);
 					app.pregame = data.Pregame;
+					app.expiredPregame = data.MatchesFinished;
 					if (app.$store.state.predictionSelected.match_code != '') {
 						var type = app.$store.state.predictionSelected.type;
 						var match_code = app.$store.state.predictionSelected.match_code;
@@ -25573,6 +25574,20 @@ var GetData = function () {
 					setTimeout(function () {
 						that.getDataPregame(app);
 					}, 600000);
+				}
+			});
+		}
+	}, {
+		key: 'getDataExpiredPregame',
+		value: function getDataExpiredPregame(app) {
+			var that = this;
+			_jquery2.default.ajax({
+				url: 'index.php/api/get_expired_pregame',
+				jsonp: 'callback',
+				dataType: 'jsonp',
+				success: function success(response) {
+					var data = JSON.parse(response);
+					app.expiredPregame = data.MatchesFinished;
 				}
 			});
 		}
@@ -25599,6 +25614,7 @@ var GetData = function () {
 				var data = [];
 				var type = '';
 				app.pregame = pregameData;
+				app.expiredPregame = JSON.parse(pregame[0]).MatchesFinished;
 				app.inplay = [];
 				app.inplayExpired = [];
 				inplayData.forEach(function (v) {
@@ -26105,7 +26121,8 @@ new _vue2.default({
 		leagueLiveScoreRight: [],
 		livescore: [],
 		livescoreStats: [],
-		livescoreTimeLine: []
+		livescoreTimeLine: [],
+		expiredPregame: []
 	},
 	methods: {
 		getCookie: function getCookie(cname) {
@@ -26209,6 +26226,7 @@ if (false) {(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calender_vue__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__newtab_vue__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__myAccount_vue__ = __webpack_require__(86);
+//
 //
 //
 //
@@ -26835,6 +26853,9 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -26845,6 +26866,9 @@ if (false) {(function () {
     },
     items: {
       type: Object
+    },
+    expiredpregame: {
+      type: String
     }
   },
   data() {
@@ -26859,14 +26883,35 @@ if (false) {(function () {
     setTimeMatch(val, time, minute) {
       return val == '' ? time : minute + "'";
     },
-    setTimeExpired(val, inplaypregame, minute_expired) {
+    setTimeExpired(val, inplaypregame, minute_expired, expiredpregame) {
       let time = '';
       if (inplaypregame == 'expired' || inplaypregame == 'pregame') {
-        time = val + "'";
+        time = expiredpregame == 'true' ? '0' : val + "'";
       } else {
         time = minute_expired == 0 || minute_expired == undefined ? val + "'" : minute_expired + 'm';
       }
       return time;
+    },
+    setremaining(matchdate) {
+      var matchDate = new Date(matchdate);
+      var currentDate = new Date();
+      var millisec = matchDate.getTime() - currentDate.getTime();
+      var seconds = (millisec / 1000).toFixed(0);
+      var minutes = Math.floor(seconds / 60);
+      var hours = '';
+      if (minutes > 59) {
+        hours = Math.floor(minutes / 60);
+        hours = hours >= 10 ? hours : '0' + hours;
+        minutes = minutes - hours * 60;
+        minutes = minutes >= 10 ? minutes : '0' + minutes;
+      }
+
+      seconds = Math.floor(seconds % 60);
+      seconds = seconds >= 10 ? seconds : '0' + seconds;
+      if (hours != '') {
+        return hours + 'h:' + minutes + 'm';
+      }
+      return minutes + 'm';
     }
   },
   methods: {
@@ -27015,11 +27060,57 @@ var render = function() {
           _c("span", [_vm._v(_vm._s(_vm.items.team_away))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "match-prediction--score" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items.score_home))]),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items.score_away))])
-        ])
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.items.match_period == "",
+                expression: "items.match_period==''"
+              }
+            ],
+            staticClass: "match-prediction--time"
+          },
+          [
+            _c("span", [
+              _vm._v(_vm._s(_vm._f("setremaining")(_vm.items.match_dt)))
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.items.match_period != "",
+                expression: "items.match_period!=''"
+              }
+            ],
+            staticClass: "match-prediction--score"
+          },
+          [
+            _c("span", [
+              _vm._v(
+                _vm._s(
+                  _vm.expiredpregame == "true" ? "0" : _vm.items.score_home
+                )
+              )
+            ]),
+            _vm._v(" "),
+            _c("span", [
+              _vm._v(
+                _vm._s(
+                  _vm.expiredpregame == "true" ? "0" : _vm.items.score_away
+                )
+              )
+            ])
+          ]
+        )
       ]),
       _c("br"),
       _vm._v(" "),
@@ -27107,21 +27198,35 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", [
-            _c("span", [
-              _vm._v(
-                _vm._s(
-                  _vm._f("setTimeExpired")(
-                    _vm.items.match_minute,
-                    _vm.inplaypregame,
-                    _vm.items.minute_expired
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.items.match_period != "",
+                  expression: "items.match_period!=''"
+                }
+              ]
+            },
+            [
+              _c("span", [
+                _vm._v(
+                  _vm._s(
+                    _vm._f("setTimeExpired")(
+                      _vm.items.match_minute,
+                      _vm.inplaypregame,
+                      _vm.items.minute_expired,
+                      _vm.expiredpregame
+                    )
                   )
                 )
-              )
-            ]),
-            _vm._v(" "),
-            _vm._m(0, false, false)
-          ])
+              ]),
+              _vm._v(" "),
+              _vm._m(0, false, false)
+            ]
+          )
         ]
       ),
       _vm._v(" "),
@@ -34072,7 +34177,11 @@ var render = function() {
                       _vm._l(_vm.$root.$data.inplay, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
-                          attrs: { items: item, inplaypregame: "inplay" }
+                          attrs: {
+                            items: item,
+                            inplaypregame: "inplay",
+                            expiredpregame: "false"
+                          }
                         })
                       }),
                       _vm._v(" "),
@@ -34101,7 +34210,11 @@ var render = function() {
                       _vm._l(_vm.$root.$data.inplayExpired, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
-                          attrs: { items: item, inplaypregame: "expired" }
+                          attrs: {
+                            items: item,
+                            inplaypregame: "expired",
+                            expiredpregame: "false"
+                          }
                         })
                       })
                     ],
@@ -34117,19 +34230,52 @@ var render = function() {
                       _vm._l(_vm.$root.$data.pregame, function(item) {
                         return _c("buttonprediction", {
                           key: item.match_code,
-                          attrs: { items: item, inplaypregame: "pregame" }
+                          attrs: {
+                            items: item,
+                            inplaypregame: "pregame",
+                            expiredpregame: "false"
+                          }
                         })
                       }),
                       _vm._v(" "),
                       _vm._m(3, false, false),
                       _vm._v(" "),
-                      _vm._m(4, false, false)
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.expiredPregame.length == 0,
+                              expression: "$root.$data.expiredPregame.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No Pregame Predictions for today")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.$root.$data.expiredPregame, function(item) {
+                        return _c("buttonprediction", {
+                          key: item.match_code,
+                          attrs: {
+                            items: item,
+                            inplaypregame: "expired",
+                            expiredpregame: "true"
+                          }
+                        })
+                      })
                     ],
                     2
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(5, false, false)
+                _vm._m(4, false, false)
               ])
             ]),
             _vm._v(" "),
@@ -34152,7 +34298,7 @@ var render = function() {
               "div",
               { staticClass: "row__livescore" },
               [
-                _vm._m(6, false, false),
+                _vm._m(5, false, false),
                 _vm._v(" "),
                 _c("calender"),
                 _vm._v(" "),
@@ -34321,7 +34467,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(7, false, false)
+                    _vm._m(6, false, false)
                   ]
                 )
               ],
@@ -34378,14 +34524,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "header-title header-title--expired" }, [
       _c("span", [_vm._v("EXPIRED Pregame")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "prediction-detail-content--expired" }, [
-      _c("span", [_vm._v("No Pregame Predictions for today")])
     ])
   },
   function() {
