@@ -116,6 +116,17 @@
         height: 52px;
         font-size:14px;
     }
+
+    &--live{
+        display: flex;
+        float: right !important;
+        padding-right: 25px;
+        align-items: center;
+        justify-content: center;
+        height: 52px;
+        font-size:14px;
+        color:#009933
+    }
     
 }
 

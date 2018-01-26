@@ -147,9 +147,9 @@ class GetData {
 				app.$store.state.isOpenPredictionDetail = true
 			}
 
-			setTimeout(() => {
+			/*setTimeout(() => {
 				that.getDataInPlay(app)
-			}, 3000)
+			}, 3000)*/
 
 			setTimeout(() => {
 				that.getDataPregame(app)
