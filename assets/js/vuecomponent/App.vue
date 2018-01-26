@@ -26,6 +26,9 @@
                             <div class="header-title header-title--pregame">
                                 <span>pregame</span>
                             </div>
+                            <div v-show="$root.$data.pregame.length==0" class="prediction-detail-content--expired">
+                                <span>No Pre-Game Predictions for today</span>
+                            </div>
                             <buttonprediction :items="item" v-for="item in $root.$data.pregame" :key="item.match_code" inplaypregame="pregame" expiredpregame="false"></buttonprediction>
                             <div class="header-title header-title--expired">
                                 <span>EXPIRED Pregame</span>

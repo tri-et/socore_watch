@@ -25642,9 +25642,9 @@ var GetData = function () {
 					app.$store.state.isOpenPredictionDetail = true;
 				}
 
-				setTimeout(function () {
-					that.getDataInPlay(app);
-				}, 3000);
+				/*setTimeout(() => {
+    	that.getDataInPlay(app)
+    }, 3000)*/
 
 				setTimeout(function () {
 					that.getDataPregame(app);
@@ -26334,6 +26334,9 @@ if (false) {(function () {
 //
 //
 //
+//
+//
+//
 
 
 
@@ -26856,6 +26859,7 @@ if (false) {(function () {
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -26873,20 +26877,40 @@ if (false) {(function () {
   },
   data() {
     return {
-      activeMarquee1: false
+      activeMarquee1: false,
+      homewin: {},
+      awaywin: {}
     };
   },
   filters: {
     setStatus(value) {
-      return value == '' ? 'Kickoff' : value;
+      var st = '';
+      switch (value) {
+        case '':
+          st = 'Kickoff';
+          break;
+        case 'Part1':
+          st = '1H';
+        case 'Part2':
+          st = '2H';
+          break;
+        default:
+          st = value;
+      }
+      return st;
     },
-    setTimeMatch(val, time, minute) {
-      return val == '' ? time : minute + "'";
+    setTimeMatch(val, time, minute, inplaypregame) {
+      var matchtime = val == '' || inplaypregame == 'expired' ? time : minute + "'";
+      return matchtime;
     },
     setTimeExpired(val, inplaypregame, minute_expired, expiredpregame) {
       let time = '';
       if (inplaypregame == 'expired' || inplaypregame == 'pregame') {
-        time = expiredpregame == 'true' ? '0' : val + "'";
+        if (inplaypregame == 'expired') {
+          time = 'expired';
+        } else {
+          time = val + "'";
+        }
       } else {
         time = minute_expired == 0 || minute_expired == undefined ? val + "'" : minute_expired + 'm';
       }
@@ -26909,7 +26933,7 @@ if (false) {(function () {
       seconds = Math.floor(seconds % 60);
       seconds = seconds >= 10 ? seconds : '0' + seconds;
       if (hours != '') {
-        return hours + 'h:' + minutes + 'm';
+        return hours + 'h ' + minutes + 'm';
       }
       return minutes + 'm';
     }
@@ -26924,6 +26948,38 @@ if (false) {(function () {
         this.items.sys.hdp = oldHpd;
       }
     },
+    setTeamWin(homescore, awayscore) {
+      if (this.inplaypregame == 'expired') {
+        if (homescore > awayscore) {
+          this.homewin = {
+            fontWeight: 'bold'
+          };
+          this.awaywin = {
+            color: 'rgba(0,0,0,0.54)'
+          };
+        } else if (awayscore > homescore) {
+          this.homewin = {
+            color: 'rgba(0,0,0,0.54)'
+          };
+          this.awaywin = {
+            fontWeight: 'bold'
+          };
+        } else {
+          this.homewin = {};
+          this.awaywin = {};
+        }
+      } else {
+        this.homewin = {};
+        this.awaywin = {};
+      }
+    },
+    /*setTeamWin(val, homeAwayScore) {
+      var winstyle='';
+      if(this.inplaypregame=='expired'){
+        winstyle=parseInt(val) > parseInt(homeAwayScore) ? 'bold' : ''
+      }
+      return winstyle
+    },*/
     setSrcIcon(value, data) {
       let url = '';
       let score_home = parseInt(data.score_home);
@@ -26932,10 +26988,22 @@ if (false) {(function () {
       if (value == 'expired') {
         switch (data.pick_hdp) {
           case 'H':
-            url = hpd + score_home > score_away ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            if (hpd + score_home > score_away) {
+              url = 'assets/images/icon_expired_win@1x_2.png';
+            } else if (hpd + score_home < score_away) {
+              url = 'assets/images/icon_expired_lose@1x_2.png';
+            } else {
+              url = 'assets/images/icon_draw@x1.png';
+            }
             break;
           default:
-            url = hpd + score_away > score_home ? 'assets/images/icon_expired_win@1x_2.png' : 'assets/images/icon_expired_lose@1x_2.png';
+            if (hpd + score_away > score_home) {
+              url = 'assets/images/icon_expired_win@1x_2.png';
+            } else if (hpd + score_away < score_home) {
+              url = 'assets/images/icon_expired_lose@1x_2.png';
+            } else {
+              url = 'assets/images/icon_draw@x1.png';
+            }
             break;
         }
       } else {
@@ -26991,6 +27059,7 @@ if (false) {(function () {
   },
   mounted() {
     this.setMarquee();
+    this.setTeamWin(parseInt(this.items.score_home), parseInt(this.items.score_away));
   }
 });
 
@@ -27042,7 +27111,8 @@ var render = function() {
                   _vm._f("setTimeMatch")(
                     _vm.items.match_period,
                     _vm.matchDate(_vm.items.match_dt),
-                    _vm.items.match_minute
+                    _vm.items.match_minute,
+                    _vm.inplaypregame
                   )
                 )
               )
@@ -27055,9 +27125,13 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("div", { staticClass: "match-prediction--teamname" }, [
-          _c("span", [_vm._v(_vm._s(_vm.items.team_home))]),
+          _c("span", { style: _vm.homewin }, [
+            _vm._v(_vm._s(_vm.items.team_home))
+          ]),
           _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.items.team_away))])
+          _c("span", { style: _vm.awaywin }, [
+            _vm._v(_vm._s(_vm.items.team_away))
+          ])
         ]),
         _vm._v(" "),
         _c(
@@ -27087,27 +27161,42 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.items.match_period != "",
-                expression: "items.match_period!=''"
+                value:
+                  _vm.items.match_period != "" &&
+                  _vm.items.match_period != "FT" &&
+                  _vm.inplaypregame == "pregame",
+                expression:
+                  "items.match_period!='' && items.match_period!='FT' && inplaypregame=='pregame'"
+              }
+            ],
+            staticClass: "match-prediction--live"
+          },
+          [_c("span", [_vm._v("Live")])]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value:
+                  _vm.items.match_period == "FT" ||
+                  _vm.inplaypregame == "inplay",
+                expression:
+                  "items.match_period=='FT' || inplaypregame=='inplay'"
               }
             ],
             staticClass: "match-prediction--score"
           },
           [
-            _c("span", [
-              _vm._v(
-                _vm._s(
-                  _vm.expiredpregame == "true" ? "0" : _vm.items.score_home
-                )
-              )
+            _c("span", { style: _vm.homewin }, [
+              _vm._v(_vm._s(_vm.items.score_home))
             ]),
             _vm._v(" "),
-            _c("span", [
-              _vm._v(
-                _vm._s(
-                  _vm.expiredpregame == "true" ? "0" : _vm.items.score_away
-                )
-              )
+            _c("span", { style: _vm.awaywin }, [
+              _vm._v(_vm._s(_vm.items.score_away))
             ])
           ]
         )
@@ -27142,6 +27231,7 @@ var render = function() {
           _c(
             "div",
             {
+              class: { "btn--font-expired": _vm.inplaypregame == "expired" },
               style: {
                 "max-width": _vm.activeMarquee1 ? "75px" : "max-content"
               }
@@ -27159,44 +27249,50 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("div", [
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.inplaypregame != "pregame",
-                    expression: "inplaypregame!='pregame'"
-                  }
+          _c(
+            "div",
+            { class: { "btn--font-expired": _vm.inplaypregame == "expired" } },
+            [
+              _c(
+                "span",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.inplaypregame != "pregame",
+                      expression: "inplaypregame!='pregame'"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "[" +
+                      _vm._s(
+                        _vm.items.score_home + ":" + _vm.items.score_away
+                      ) +
+                      "]"
+                  )
                 ]
-              },
-              [
+              ),
+              _vm._v(" "),
+              _c("span", [_vm._v(" ")]),
+              _vm._v(" "),
+              _c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))]),
+              _vm._v(" "),
+              _c("span", [_vm._v(" @ ")]),
+              _vm._v(" "),
+              _c("span", [
                 _vm._v(
-                  "[" +
-                    _vm._s(_vm.items.score_home + ":" + _vm.items.score_away) +
-                    "]"
+                  _vm._s(
+                    _vm.items.pick_hdp == "H"
+                      ? _vm.items.sys.odds_home
+                      : _vm.items.sys.odds_away
+                  )
                 )
-              ]
-            ),
-            _vm._v(" "),
-            _c("span", [_vm._v(" ")]),
-            _vm._v(" "),
-            _c("span", [_vm._v(_vm._s(_vm.items.sys.hdp))]),
-            _vm._v(" "),
-            _c("span", [_vm._v(" @ ")]),
-            _vm._v(" "),
-            _c("span", [
-              _vm._v(
-                _vm._s(
-                  _vm.items.pick_hdp == "H"
-                    ? _vm.items.sys.odds_home
-                    : _vm.items.sys.odds_away
-                )
-              )
-            ])
-          ]),
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -34226,6 +34322,26 @@ var render = function() {
                     { staticClass: "row row__inplay inplay-pregame--pregame" },
                     [
                       _vm._m(2, false, false),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.$root.$data.pregame.length == 0,
+                              expression: "$root.$data.pregame.length==0"
+                            }
+                          ],
+                          staticClass: "prediction-detail-content--expired"
+                        },
+                        [
+                          _c("span", [
+                            _vm._v("No Pre-Game Predictions for today")
+                          ])
+                        ]
+                      ),
                       _vm._v(" "),
                       _vm._l(_vm.$root.$data.pregame, function(item) {
                         return _c("buttonprediction", {

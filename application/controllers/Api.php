@@ -136,6 +136,7 @@ class Api extends CI_Controller {
 		$prediction=json_decode($soap_client->Prediction_Pregame()->Prediction_PregameResult,true)['Pregame'];
 		//$this->cache->file->save('pregame', "{\"Pregame\":".json_encode($prediction)."}", 0);
 		$matchfinished=null;
+		$pregame=array();
 		$expired=null;
 		if($this->cache->file->is_supported() && $this->cache->file->get('yesterday_match')) {
 			$matchfinished=json_decode($this->cache->file->get('yesterday_match'),true)['MatchesFinished'];
@@ -149,10 +150,13 @@ class Api extends CI_Controller {
 				if(!$matchExist){
 					array_push($matchfinished,$item);
 				}
-				
+			}else{
+				array_push($pregame,$item);
 			}
 		}
-		$this->cache->file->save('pregame', '{"Pregame":'.json_encode($prediction).',"MatchesFinished":'.json_encode($matchfinished).'}', 0);
+		usort($matchfinished, $this->date_sort($a,$b,'DESC'));
+		usort($pregame, $this->date_sort($a,$b,'ASC'));
+		$this->cache->file->save('pregame', '{"Pregame":'.json_encode($pregame).',"MatchesFinished":'.json_encode($matchfinished).'}', 0);
 		$this->cache->file->save('yesterday_match', "{\"MatchesFinished\":".json_encode($matchfinished)."}", 0);
 	}
 
@@ -182,13 +186,30 @@ class Api extends CI_Controller {
 
 	public function removeMatch(){
 		$matchfinished=json_decode($this->cache->file->get('yesterday_match'),true)['MatchesFinished'];
-		$wdate=$this->wDate();
+		$wdate=$this->matchWdate(date('Y-m-d H:i:s'));
+		$newmatches=array();
 		for($i=0;$i<count($matchfinished);$i++){
 			$macthDate=$this->matchWdate($matchfinished[$i]['match_dt']);
-			if(intval($macthDate)>$wdate || intval($macthDate)<$wdate-1){
-				unset($matchfinished[$i]);
+			if(intval($macthDate)==intval($wdate) || intval($macthDate)==intval($wdate)-1){
+				//unset($matchfinished[$i]);
+				array_push($newmatches,$matchfinished[$i]);
 			}
 		}
-		$this->cache->file->save('yesterday_match', "{\"MatchesFinished\":".json_encode($matchfinished)."}", 0);
+		$this->cache->file->save('yesterday_match', "{\"MatchesFinished\":".json_encode($newmatches)."}", 0);
+	}
+
+	public function date_sort($a,$b,$direction){
+			$ad = intval((new DateTime($a['match_dt']))->format('d'));
+			$bd = intval((new DateTime($b['match_dt']))->format('d'));
+		
+			if ($ad == $bd) {
+				return 0;
+			}
+		
+			if($direction=='DESC'){
+				return $ad < $bd ? 1 : -1;
+			}else{
+				return $ad < $bd ? -1 : 1;
+			}
 	}
 }

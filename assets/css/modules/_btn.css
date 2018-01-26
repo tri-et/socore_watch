@@ -125,5 +125,10 @@
             margin-top:6px !important;
         }
     }
+
+    &--font-expired{
+        font-weight: bold;
+        font-family: roboto-regular;
+    }
 }
 
